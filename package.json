@@ -1,0 +1,18 @@
+{
+  "name": "stocked-up",
+  "version": "1.0.0",
+  "description": "",
+  "author": "MrBartusek",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.13"
+  }
+}
