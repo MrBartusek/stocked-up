@@ -7,12 +7,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build"
+    "build": "turbo run build",
+    "start": "node apps/api/dist/main"
   },
   "workspaces": [
     "apps/*"
   ],
   "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-plugin-react": "^7.33.2",
     "turbo": "^1.10.13"
   }
 }
