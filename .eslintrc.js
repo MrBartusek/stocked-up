@@ -19,7 +19,9 @@ module.exports = {
 	},
 	plugins: [
 		'react',
-		'@typescript-eslint'
+		'@typescript-eslint',
+		'react-refresh',
+		'react-hooks'
 	],
 	settings: {
 		react: {
@@ -41,6 +43,10 @@ module.exports = {
 		'@typescript-eslint/no-this-alias': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-empty-interface': 'off',
-		'array-bracket-spacing': [ 'error', 'always' ]
+		'array-bracket-spacing': [ 'error', 'always' ],
+		'react-refresh/only-export-components': 'warn',
+		'react-hooks/rules-of-hooks': 'error',
+		'react-hooks/exhaustive-deps': 'warn',
+		'react/react-in-jsx-scope': 'off'
 	}
 };
