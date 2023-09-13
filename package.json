@@ -3,25 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "author": "MrBartusek",
-  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "start": "node apps/api/dist/main"
+    "start": "node apps/api/dist/main",
+    "lint": "turbo run lint"
   },
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "devDependencies": {
     "turbo": "^1.10.13"
-  },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "eslint": "^8.49.0",
-    "eslint-plugin-react": "^7.33.2"
   }
 }

@@ -4,6 +4,7 @@
         "dev": {
             "cache": false
         },
+        "lint": {},
         "build": {
             "dependsOn": [
                 "^build"
