@@ -17,13 +17,7 @@ module.exports = {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 	},
-	plugins: [
-		'react',
-		'@typescript-eslint',
-		'react-refresh',
-		'react-hooks',
-		'prettier',
-	],
+	plugins: ['react', '@typescript-eslint', 'react-refresh', 'react-hooks', 'prettier'],
 	settings: {
 		react: {
 			version: 'detect',
@@ -46,6 +40,7 @@ module.exports = {
 				endOfLine: 'auto',
 				useTabs: true,
 				singleQuote: true,
+				printWidth: 100,
 			},
 		],
 	},
