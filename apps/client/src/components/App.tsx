@@ -12,23 +12,21 @@ function App() {
 			children: [
 				{
 					path: '',
-					element: <DashboardHomePage />
+					element: <DashboardHomePage />,
 				},
 				{
 					path: 'products',
-					element: <ProductsPage />
+					element: <ProductsPage />,
 				},
 				{
 					path: 'products/:id',
-					element: <ProductViewPage />
-				}
-			]
-		}
+					element: <ProductViewPage />,
+				},
+			],
+		},
 	]);
 
-	return (
-		<RouterProvider router={router} />
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;

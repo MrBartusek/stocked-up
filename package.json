@@ -8,7 +8,8 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "start": "node apps/api/dist/main",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "clean": "turbo daemon clean"
   },
   "workspaces": [
     "apps/*",
