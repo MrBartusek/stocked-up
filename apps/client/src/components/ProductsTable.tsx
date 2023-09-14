@@ -65,7 +65,7 @@ function ProductsTable({ products }: ProductsTableProps) {
 	});
 
 	function onClickRow(product: SharedTypes.Product) {
-		navigate(`/dashboard/products/${product.id}`);
+		navigate(`/dashboard/products/${product._id}`);
 	}
 
 	return <Table table={table} onClickRow={onClickRow} />;
