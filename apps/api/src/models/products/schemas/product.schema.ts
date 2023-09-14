@@ -1,10 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import Utils from 'src/utils';
 
 export type ProductDocument = HydratedDocument<Product>;
 
-@Schema({ ...Utils.schemaSerializerHelper })
+@Schema()
 export class Product {
 	@Prop({ required: true })
 	name: string;
