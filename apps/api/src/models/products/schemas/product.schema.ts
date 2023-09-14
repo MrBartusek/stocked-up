@@ -12,10 +12,10 @@ export class Product {
 	description: string;
 
 	@Prop({ default: 0 })
-	buyPrice: string;
+	buyPrice: number;
 
 	@Prop({ default: 0 })
-	sellPrice: string;
+	sellPrice: number;
 
 	@Prop()
 	unit: string;
