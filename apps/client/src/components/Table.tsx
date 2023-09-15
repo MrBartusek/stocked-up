@@ -34,7 +34,10 @@ function Table({ table, onClickRow }: TableProps) {
 						onClick={() => (onClickRow ? onClickRow(row.original) : null)}
 					>
 						{row.getVisibleCells().map((cell, i) => (
-							<td key={i} className="p-3">
+							<td
+								key={i}
+								className="p-3"
+							>
 								{flexRender(cell.column.columnDef.cell, cell.getContext())}
 							</td>
 						))}

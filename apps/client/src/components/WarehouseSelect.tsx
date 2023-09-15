@@ -1,10 +1,9 @@
-import { useContext, useMemo } from 'react';
-import { WarehouseContext } from '../context/WarehouseContext';
+import classNames from 'classnames';
+import { useContext } from 'react';
 import Select from 'react-select';
 import SharedTypes from 'shared-types';
-import { Utils } from '../utils';
 import tailwindConfig from '../../tailwind.config.js';
-import classNames from 'classnames';
+import { WarehouseContext } from '../context/WarehouseContext';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
@@ -30,7 +29,10 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 	}
 
 	return (
-		<fieldset {...props} className={classNames('py-4', props.className)}>
+		<fieldset
+			{...props}
+			className={classNames('py-4', props.className)}
+		>
 			<label className="ms-1 text-muted">Warehouse</label>
 			<Select
 				className="mt-1"

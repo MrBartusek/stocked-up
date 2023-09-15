@@ -8,20 +8,21 @@ export interface SidebarLinkProps extends LinkProps {
 	text: string;
 }
 
-function SidebarLink({icon, text, ...props}: SidebarLinkProps) {
+function SidebarLink({ icon, text, ...props }: SidebarLinkProps) {
 	const location = useLocation();
 	const isCurrent = location.pathname == props.to;
 
 	const iconElement = React.createElement(icon, {
-		className: 'text-xl text-primary'
+		className: 'text-xl text-primary',
 	});
 
 	return (
 		<Link
 			{...props}
-			className={classNames(
-				'flex flex-row items-center gap-3 custom-button-simple',
-				{ 'font-semibold bg-gray-200': isCurrent })}>
+			className={classNames('flex flex-row items-center gap-3 custom-button-simple', {
+				'font-semibold bg-gray-200': isCurrent,
+			})}
+		>
 			{iconElement} {text}
 		</Link>
 	);

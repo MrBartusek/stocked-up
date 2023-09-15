@@ -10,7 +10,10 @@ function WarehousesPage() {
 	return (
 		<DashboardContent header={'Warehouses'}>
 			<Card>
-				<Loader height="70vh" isLoading={isLoading}>
+				<Loader
+					height="70vh"
+					isLoading={isLoading}
+				>
 					<WarehousesTable warehouses={warehouses} />
 				</Loader>
 			</Card>

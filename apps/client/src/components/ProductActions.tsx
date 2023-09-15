@@ -1,19 +1,28 @@
+import { Row } from '@tanstack/react-table';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import ActionButton from './ActionButton';
 import TableActionsWrapper from './TableActionsWrapper';
-import { Row } from '@tanstack/react-table';
-import Product from '../types/product';
+import SharedTypes from 'shared-types';
 
 export interface ProductActionsProps {
-	row: Row<Product>;
+	row: Row<SharedTypes.Product>;
 }
 
 function ProductActions({ row }: ProductActionsProps) {
 	return (
 		<TableActionsWrapper>
-			<ActionButton icon={BsInfoCircleFill} className="text-blue-600" />
-			<ActionButton icon={BsPencilFill} className="text-primary" />
-			<ActionButton icon={BsTrashFill} className="text-red-600" />
+			<ActionButton
+				icon={BsInfoCircleFill}
+				className="text-blue-600"
+			/>
+			<ActionButton
+				icon={BsPencilFill}
+				className="text-primary"
+			/>
+			<ActionButton
+				icon={BsTrashFill}
+				className="text-red-600"
+			/>
 		</TableActionsWrapper>
 	);
 }

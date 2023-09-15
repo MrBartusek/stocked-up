@@ -1,21 +1,22 @@
 {
-  "name": "stocked-up",
-  "version": "1.0.0",
-  "description": "",
-  "author": "MrBartusek",
-  "license": "MIT",
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "start": "node apps/api/dist/main",
-    "lint": "turbo run lint",
-    "clean": "turbo daemon clean"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "devDependencies": {
-    "turbo": "^1.10.13"
-  }
+    "name": "stocked-up",
+    "version": "1.0.0",
+    "description": "",
+    "author": "MrBartusek",
+    "license": "MIT",
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "start": "node apps/api/dist/main",
+        "lint": "turbo run lint",
+        "lint:fix": "turbo run lint:fix",
+        "clean": "turbo daemon clean"
+    },
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "devDependencies": {
+        "turbo": "^1.10.13"
+    }
 }

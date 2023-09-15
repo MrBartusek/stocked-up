@@ -68,6 +68,11 @@ function ProductsTable({ products }: ProductsTableProps) {
 		navigate(`/dashboard/products/${product._id}`);
 	}
 
-	return <Table table={table} onClickRow={onClickRow} />;
+	return (
+		<Table
+			table={table}
+			onClickRow={onClickRow}
+		/>
+	);
 }
 export default ProductsTable;

@@ -7,9 +7,7 @@ function ProductViewPage() {
 
 	return (
 		<DashboardContent header={`Product no. ${id}`}>
-			<Card>
-				sss
-			</Card>
+			<Card>sss</Card>
 		</DashboardContent>
 	);
 }
