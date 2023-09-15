@@ -15,7 +15,7 @@ function Table({ table, onClickRow }: TableProps) {
 						{headerGroup.headers.map((header, i) => (
 							<th
 								key={i}
-								className="p-3 text-white font-semibold text-left first:text-center"
+								className="p-3 text-left font-semibold text-white first:text-center"
 								style={{ width: header.getSize() }}
 							>
 								{flexRender(header.column.columnDef.header, header.getContext())}
@@ -24,12 +24,12 @@ function Table({ table, onClickRow }: TableProps) {
 					</tr>
 				))}
 			</thead>
-			<tbody className="border-l border-r border-b border-gray-200">
+			<tbody className="border-b border-l border-r border-gray-200">
 				{table.getRowModel().rows.map((row, i) => (
 					<tr
 						key={i}
-						className={classNames('even:bg-gray-150 border-b border-gray-200 last:border-b', {
-							'hover:bg-gray-200 cursor-pointer': onClickRow,
+						className={classNames('border-b border-gray-200 last:border-b even:bg-gray-150', {
+							'cursor-pointer hover:bg-gray-200': onClickRow,
 						})}
 						onClick={() => (onClickRow ? onClickRow(row.original) : null)}
 					>

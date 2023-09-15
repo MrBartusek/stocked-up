@@ -37,6 +37,7 @@ module.exports = {
 		'prettier/prettier': [
 			'error',
 			{
+				plugins: ['prettier-plugin-tailwindcss'],
 				endOfLine: 'auto',
 				useTabs: true,
 				singleQuote: true,

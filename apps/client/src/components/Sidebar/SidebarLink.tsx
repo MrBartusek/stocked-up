@@ -19,8 +19,8 @@ function SidebarLink({ icon, text, ...props }: SidebarLinkProps) {
 	return (
 		<Link
 			{...props}
-			className={classNames('flex flex-row items-center gap-3 custom-button-simple', {
-				'font-semibold bg-gray-200': isCurrent,
+			className={classNames('custom-button-simple flex flex-row items-center gap-3', {
+				'bg-gray-200 font-semibold': isCurrent,
 			})}
 		>
 			{iconElement} {text}

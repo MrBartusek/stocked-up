@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar/Sidebar';
 
 function DashboardPage() {
 	return (
-		<div className="flex flex-row h-full">
+		<div className="flex h-full flex-row">
 			<Sidebar />
 			<Outlet />
 		</div>

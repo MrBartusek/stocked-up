@@ -14,9 +14,9 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 		return (
 			<div
 				style={{ height }}
-				className="w-full flex justify-center items-center"
+				className="flex w-full items-center justify-center"
 			>
-				<BsBoxSeam className="text-gray-600 text-5xl animate-pulse" />
+				<BsBoxSeam className="animate-pulse text-5xl text-gray-600" />
 			</div>
 		);
 	}

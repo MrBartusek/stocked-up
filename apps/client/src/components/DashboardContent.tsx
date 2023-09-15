@@ -9,7 +9,7 @@ export interface DashboardContentProps {
 function DashboardContent({ children, header }: DashboardContentProps) {
 	return (
 		<div className="flex-1 p-8">
-			<div className="flex justify-between items-center pb-8">
+			<div className="flex items-center justify-between pb-8">
 				<h2 className="block text-3xl">{header}</h2>
 				<UserInfo />
 			</div>

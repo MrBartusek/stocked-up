@@ -8,7 +8,7 @@ export interface BigNumberCardProps {
 
 function BigNumberCard({ title, children }: BigNumberCardProps) {
 	return (
-		<Card className="flex flex-col gap-5 justify-center items-center text-center">
+		<Card className="flex flex-col items-center justify-center gap-5 text-center">
 			<h2 className="text-xl text-muted">{title}</h2>
 			<p className="text-3xl font-bold">{children}</p>
 		</Card>
