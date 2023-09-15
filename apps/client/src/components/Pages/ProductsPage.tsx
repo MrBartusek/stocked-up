@@ -1,4 +1,3 @@
-import ReactPlaceholder from 'react-placeholder';
 import useProductsList from '../../hooks/useProductsList';
 import Card from '../Card';
 import DashboardContent from '../DashboardContent';

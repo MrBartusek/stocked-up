@@ -1,69 +1,80 @@
-import { BsArrowLeftRight, BsBoxFill, BsBoxSeamFill, BsClipboard2DataFill, BsDashSquareFill, BsGeoAltFill, BsPencilSquare, BsPersonFill, BsPlusSquareFill, BsTagFill } from 'react-icons/bs';
+import {
+	BsArrowLeftRight,
+	BsBoxFill,
+	BsBoxSeamFill,
+	BsClipboard2DataFill,
+	BsDashSquareFill,
+	BsGeoAltFill,
+	BsPencilSquare,
+	BsPersonFill,
+	BsPlusSquareFill,
+	BsTagFill,
+} from 'react-icons/bs';
 import SidebarLink from './SidebarLink';
 import SidebarSection from './SidebarSection';
 
 function SidebarNavigation() {
 	return (
-		<nav className='my-3 flex flex-col gap-5'>
-			<SidebarSection name='Dashboard'>
+		<nav className="my-3 flex flex-col gap-5">
+			<SidebarSection name="Dashboard">
 				<SidebarLink
-					to='/dashboard'
+					to="/dashboard"
 					icon={BsClipboard2DataFill}
-					text='Dashboard'
+					text="Dashboard"
 				/>
 				<SidebarLink
-					to='/dashboard/products'
+					to="/dashboard/products"
 					icon={BsTagFill}
-					text='Products'
+					text="Products"
 				/>
 				<SidebarLink
-					to='/dashboard/warehouses'
+					to="/dashboard/warehouses"
 					icon={BsGeoAltFill}
-					text='Warehouses'
+					text="Warehouses"
 				/>
 			</SidebarSection>
-			<SidebarSection name='Inventory'>
+			<SidebarSection name="Inventory">
 				<SidebarLink
-					to='/dashboard/inventory'
+					to="/dashboard/inventory"
 					icon={BsBoxFill}
-					text='Inventory'
+					text="Inventory"
 				/>
 				<SidebarLink
-					to='/dashboard/inventory/add'
+					to="/dashboard/inventory/add"
 					icon={BsPlusSquareFill}
-					text='Add inventory'
+					text="Add inventory"
 				/>
 				<SidebarLink
-					to='/dashboard/inventory/remove'
+					to="/dashboard/inventory/remove"
 					icon={BsDashSquareFill}
-					text='Remove inventory'
+					text="Remove inventory"
 				/>
 				<SidebarLink
-					to='/dashboard/inventory/move'
+					to="/dashboard/inventory/move"
 					icon={BsArrowLeftRight}
-					text='Move inventory'
+					text="Move inventory"
 				/>
 				<SidebarLink
-					to='/dashboard/inventory/adjust'
+					to="/dashboard/inventory/adjust"
 					icon={BsPencilSquare}
-					text='Adjust inventory'
+					text="Adjust inventory"
 				/>
 			</SidebarSection>
-			<SidebarSection name='Orders'>
+			<SidebarSection name="Orders">
 				<SidebarLink
-					to='/dashboard/orders'
+					to="/dashboard/orders"
 					icon={BsBoxSeamFill}
-					text='Orders'
+					text="Orders"
 				/>
 				<SidebarLink
-					to='/dashboard/orders/add'
+					to="/dashboard/orders/add"
 					icon={BsPlusSquareFill}
-					text='Create order'
+					text="Create order"
 				/>
 				<SidebarLink
-					to='/dashboard/orders/customers'
+					to="/dashboard/orders/customers"
 					icon={BsPersonFill}
-					text='Customers'
+					text="Customers"
 				/>
 			</SidebarSection>
 		</nav>

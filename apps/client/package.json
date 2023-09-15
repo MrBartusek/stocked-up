@@ -21,6 +21,7 @@
         "react-icons": "^4.11.0",
         "react-query": "^3.39.3",
         "react-router-dom": "^6.15.0",
+        "react-select": "^5.7.4",
         "shared-types": "*",
         "tailwindcss": "^3.3.3"
     },

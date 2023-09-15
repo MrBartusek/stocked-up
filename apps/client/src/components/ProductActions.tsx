@@ -11,9 +11,9 @@ export interface ProductActionsProps {
 function ProductActions({ row }: ProductActionsProps) {
 	return (
 		<TableActionsWrapper>
-			<ActionButton icon={BsInfoCircleFill} className='text-blue-600' />
-			<ActionButton icon={BsPencilFill} className='text-primary' />
-			<ActionButton icon={BsTrashFill} className='text-red-600' />
+			<ActionButton icon={BsInfoCircleFill} className="text-blue-600" />
+			<ActionButton icon={BsPencilFill} className="text-primary" />
+			<ActionButton icon={BsTrashFill} className="text-red-600" />
 		</TableActionsWrapper>
 	);
 }

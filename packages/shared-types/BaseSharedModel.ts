@@ -1,3 +1,3 @@
 export interface BaseSharedModel {
-    _id: string | unknown;
+    _id: string;
 }
