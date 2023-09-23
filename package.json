@@ -18,8 +18,5 @@
     ],
     "devDependencies": {
         "turbo": "^1.10.13"
-    },
-    "dependencies": {
-        "@auth0/auth0-react": "^2.2.1"
     }
 }
