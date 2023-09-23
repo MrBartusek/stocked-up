@@ -5,12 +5,17 @@ import ProductViewPage from './Pages/ProductViewPage';
 import ProductsPage from './Pages/ProductsPage';
 import WarehousesPage from './Pages/WarehousesPage';
 import HomePage from './Pages/HomePage';
+import LoginPage from './Pages/LoginPage';
 
 function Router() {
 	const router = createBrowserRouter([
 		{
 			path: '/',
 			element: <HomePage />,
+		},
+		{
+			path: '/login',
+			element: <LoginPage />,
 		},
 		{
 			path: '/dashboard',
