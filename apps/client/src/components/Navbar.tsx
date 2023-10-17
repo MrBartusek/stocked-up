@@ -1,5 +1,5 @@
 import { BsArrowRight } from 'react-icons/bs';
-import ActionButton from './ActionButton';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 import Container from './Container';
 import StockedUpLogo from './StockedUpLogo';
@@ -12,12 +12,14 @@ function Navbar() {
 					variant="black"
 					className="h-16 w-auto"
 				/>
-				<Button>
-					<div className="flex items-center justify-center gap-2">
-						Get started for free
-						<BsArrowRight size={20} />
-					</div>
-				</Button>
+				<Link to="/login">
+					<Button>
+						<div className="flex items-center justify-center gap-2">
+							Get started for free
+							<BsArrowRight size={20} />
+						</div>
+					</Button>
+				</Link>
 			</Container>
 		</nav>
 	);

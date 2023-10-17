@@ -1,4 +1,5 @@
-import { BsBoxSeam, BsBoxes, BsRocketTakeoff, BsShop, BsTruck } from 'react-icons/bs';
+import { BsBoxes, BsGlobeAmericas, BsShop, BsTruck } from 'react-icons/bs';
+import HeroImage from '../../public/undraw_logistics.svg';
 import Container from './Container';
 import FeaturesListElement from './FeaturesListElement';
 
@@ -16,19 +17,19 @@ function Hero() {
 					</p>
 					<ul className="my-10">
 						<FeaturesListElement icon={BsBoxes}>Monitor your whole inventory</FeaturesListElement>
-						<FeaturesListElement icon={BsTruck}>Order resupplied when needed</FeaturesListElement>
+						<FeaturesListElement icon={BsTruck}>Order products automatically</FeaturesListElement>
 						<FeaturesListElement icon={BsShop}>
 							Sell your inventory and manage orders
 						</FeaturesListElement>
-						<FeaturesListElement icon={BsRocketTakeoff}>
-							Scale your organization to the moon
+						<FeaturesListElement icon={BsGlobeAmericas}>
+							StockedUp scales with your organization
 						</FeaturesListElement>
 					</ul>
 				</div>
-				<div className="hidden flex-1 items-center justify-center xl:flex">
-					<BsBoxSeam
-						size={280}
-						className="text-gray-400"
+				<div className="mx-24 hidden flex-1 items-center justify-center xl:flex">
+					<img
+						src={HeroImage}
+						alt="hero image"
 					/>
 				</div>
 			</Container>
