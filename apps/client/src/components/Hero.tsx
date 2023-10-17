@@ -1,5 +1,5 @@
 import { BsBoxes, BsGlobeAmericas, BsShop, BsTruck } from 'react-icons/bs';
-import HeroImage from '../../public/undraw_logistics.svg';
+import HeroImage from '../assets/undraw_logistics.svg';
 import Container from './Container';
 import FeaturesListElement from './FeaturesListElement';
 
