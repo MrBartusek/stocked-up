@@ -6,10 +6,10 @@ import FeaturesListElement from './FeaturesListElement';
 function Hero() {
 	return (
 		<div className="border-b border-gray-200">
-			<Container className="flex items-center justify-between gap-24 py-24">
+			<Container className="flex justify-center gap-24 py-24">
 				<div className="max-w-xl text-center xl:text-left">
 					<h1 className="mb-8 text-7xl font-light">
-						Stocked<span className="text-primary">Up!</span>
+						Stocked<span className="text-primary">Up</span>
 					</h1>
 					<p className="text-xl">
 						Advanced cloud-based Inventory Management System (IMS) that makes it efortless to menage
@@ -26,7 +26,7 @@ function Hero() {
 						</FeaturesListElement>
 					</ul>
 				</div>
-				<div className="mx-24 hidden flex-1 items-center justify-center xl:flex">
+				<div className="hidden flex-1 items-center justify-center xl:flex">
 					<img
 						src={HeroImage}
 						alt="hero image"

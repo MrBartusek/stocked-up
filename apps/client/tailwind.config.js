@@ -15,6 +15,15 @@ export default {
 					150: '#ECEEF1',
 				},
 			},
+			container: {
+				screens: {
+					sm: '576px',
+					md: '786px',
+					lg: '992px',
+					xl: '1200px',
+					'2xl': '1400px',
+				},
+			},
 		},
 	},
 	plugins: [],
