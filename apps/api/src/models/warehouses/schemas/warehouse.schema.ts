@@ -7,6 +7,9 @@ export type WarehouseDocument = HydratedDocument<Warehouse>;
 @Schema()
 export class Warehouse {
 	@Prop({ required: true })
+	id: string;
+
+	@Prop({ required: true })
 	name: string;
 
 	@Prop()

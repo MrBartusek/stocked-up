@@ -11,17 +11,17 @@ export class ProductsController {
 	constructor(private readonly productsService: ProductsService) {}
 
 	@Post()
-	create(@Body() createProductDto: CreateProductDto): Promise<SharedTypes.Product> {
+	create(@Body() createProductDto: CreateProductDto): Promise<SharedTypes.ProductDto> {
 		return this.productsService.create(createProductDto);
 	}
 
 	@Get()
-	findAll(): Promise<SharedTypes.Product[]> {
+	findAll(): Promise<SharedTypes.ProductDto[]> {
 		return this.productsService.findAll();
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string): Promise<SharedTypes.Product> {
+	findOne(@Param('id') id: string): Promise<SharedTypes.ProductDto> {
 		return this.productsService.findById(id);
 	}
 

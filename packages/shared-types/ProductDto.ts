@@ -1,6 +1,7 @@
-import { BaseSharedModel } from "./BaseSharedModel";
+import { BaseDto } from "./BaseDto";
 
-export interface Product extends BaseSharedModel {
+export class ProductDto extends BaseDto {
+    _id: any;
     name: string;
     description?: string;
     imageUrl?: string;

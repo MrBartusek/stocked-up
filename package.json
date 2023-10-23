@@ -17,6 +17,10 @@
         "packages/*"
     ],
     "devDependencies": {
+        "@types/express-session": "^1.17.9",
         "turbo": "^1.10.13"
+    },
+    "dependencies": {
+        "express-session": "^1.17.3"
     }
 }

@@ -1,4 +1,5 @@
 import { Document, Model, FilterQuery, UpdateQuery } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 const DEFAULT_PROJECTIONS = {
 	__v: 0,
@@ -26,6 +27,9 @@ export abstract class EntityRepository<T extends Document> {
 	}
 
 	async findById(id: string, projection?: Record<string, unknown>): Promise<T | null> {
+		if (!mongoose.Types.ObjectId.isValid(id)) {
+			return null;
+		}
 		return this.entityModel.findById(id, { ...DEFAULT_PROJECTIONS, ...projection }).exec();
 	}
 

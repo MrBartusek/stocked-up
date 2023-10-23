@@ -1,10 +1,12 @@
-import { Product } from './Product'
-import { BaseWarehouse } from './Warehouse'
+import { ProductDto } from './ProductDto'
+import { BasicWarehouseDto } from './BasicWarehouseDto'
+import { UserDto } from './UserDto'
 
 declare module SharedTypes {
     export {
-        Product,
-        BaseWarehouse
+        ProductDto,
+        BasicWarehouseDto,
+        UserDto
     }
 }
 
