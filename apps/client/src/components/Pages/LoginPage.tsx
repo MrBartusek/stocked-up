@@ -7,10 +7,19 @@ import SideBySideImage from '../SideBySideImage';
 function LoginPage() {
 	return (
 		<FullFocusContainer>
-			<SideBySideImage imageSrc={UndrawTwoFactor}>
+			<SideBySideImage
+				imageSrc={UndrawTwoFactor}
+				className="flex-1"
+			>
 				<h2 className="mb-2 text-center text-4xl">Login to your account</h2>
 				<div className="flex flex-row justify-center gap-1">
-					<span>Don&apos;t have an account?</span> <Link to="singup">Signup for free</Link>
+					<span>Don&apos;t have an account?</span>{' '}
+					<Link
+						to="/register"
+						className="link-primary"
+					>
+						Signup for free
+					</Link>
 				</div>
 				<LoginForm />
 			</SideBySideImage>

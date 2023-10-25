@@ -12,7 +12,7 @@ function Navbar() {
 					variant="black"
 					className="h-16 w-auto"
 				/>
-				<Link to="/login">
+				<Link to="/register">
 					<Button>
 						<div className="flex items-center justify-center gap-2">
 							Get started for free

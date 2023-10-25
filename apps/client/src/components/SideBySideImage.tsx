@@ -1,20 +1,22 @@
+import classNames from 'classnames';
 import React from 'react';
 
 export interface SideBySideImageProps {
 	imageSrc: string;
 	children?: React.ReactNode;
+	className?: string;
 }
 
-function SideBySideImage({ imageSrc, children }: SideBySideImageProps) {
+function SideBySideImage({ imageSrc, children, className }: SideBySideImageProps) {
 	return (
-		<div className="flex flex-row items-center lg:gap-24">
-			<div className="lg:w-[45%]">
-				<img
-					className="hidden w-96 lg:block"
-					src={imageSrc}
-				></img>
-			</div>
-			<div className="flex flex-col lg:w-[55%]">{children}</div>
+		<div className={classNames(className, 'flex flex-row items-center lg:gap-16')}>
+			<img
+				className="hidden w-full max-w-[45%] lg:block"
+				width={150}
+				height={50}
+				src={imageSrc}
+			></img>
+			<div className="flex flex-1 flex-col">{children}</div>
 		</div>
 	);
 }
