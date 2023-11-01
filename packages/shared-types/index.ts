@@ -1,13 +1,15 @@
-import { ProductDto } from './ProductDto'
-import { BasicWarehouseDto } from './BasicWarehouseDto'
-import { UserDto } from './UserDto'
-import { SimpleResponseDto } from './SimpleResponseDto'
-import { UserLoginDto } from './UserLoginDto'
+import { ProductDto } from './src/ProductDto'
+import { BasicWarehouseDto } from './src/BasicWarehouseDto'
+import { UserDto } from './src/UserDto'
+import { SimpleResponseDto } from './src/SimpleResponseDto'
+import { UserLoginDto } from './src/auth/UserLoginDto'
+import { UserRegisterDto } from './src/auth/UserRegisterDto'
 
 export {
     ProductDto,
     BasicWarehouseDto,
     UserDto,
     SimpleResponseDto,
-    UserLoginDto
+    UserLoginDto,
+    UserRegisterDto
 }

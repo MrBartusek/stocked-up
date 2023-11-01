@@ -33,7 +33,7 @@ export abstract class EntityRepository<T extends Document> {
 		return this.entityModel.findById(id, { ...DEFAULT_PROJECTIONS, ...projection }).exec();
 	}
 
-	async create(createEntityData: unknown): Promise<T> {
+	async create(createEntityData: Partial<T>): Promise<T> {
 		const entity = new this.entityModel(createEntityData);
 		return entity.save() as Promise<T>;
 	}
