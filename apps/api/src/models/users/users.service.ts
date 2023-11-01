@@ -20,7 +20,7 @@ export class UsersService {
 	}
 
 	findOne(username: string): Promise<UserDocument | undefined> {
-		return this.userRepository.findOne({ profile: { username } });
+		return this.userRepository.findOne({ 'profile.username': username });
 	}
 
 	findById(id: string): Promise<UserDocument | undefined> {

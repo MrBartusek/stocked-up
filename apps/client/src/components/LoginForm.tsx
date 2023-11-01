@@ -16,7 +16,8 @@ function LoginForm() {
 	const navigate = useNavigate();
 
 	function onSubmit(inputs: Inputs) {
-		const dto = new UserLoginDto(inputs.username, inputs.password);
+		console.log(inputs);
+		const dto: UserLoginDto = inputs;
 		Utils.postFetcher(`/api/auth/login`, dto)
 			.then(() => navigate('/dashboard'))
 			.catch(console.error);
@@ -30,14 +31,14 @@ function LoginForm() {
 			<TextInput
 				label="Username"
 				placeholder="Type your username"
-				{...(register('username'), { required: true })}
+				{...register('username', { required: true })}
 				icon={BsPerson}
 			/>
 			<TextInput
 				label="Password"
 				type="password"
 				placeholder="Type your password"
-				{...(register('password'), { required: true })}
+				{...register('password', { required: true })}
 				icon={BsShieldLock}
 			/>
 			<Link

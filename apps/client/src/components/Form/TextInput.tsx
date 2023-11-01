@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { IconType } from 'react-icons';
 
 type InputProps = React.DetailedHTMLProps<
@@ -12,7 +12,10 @@ export interface TextInputProps extends InputProps {
 	icon: IconType;
 }
 
-function TextInput({ label, icon, ...props }: TextInputProps) {
+const TextInput = forwardRef(function TextInput(
+	{ label, icon, ...props }: TextInputProps,
+	ref: any,
+) {
 	const [isFocused, setIsFocused] = useState(false);
 
 	const iconElement = React.createElement(icon, {
@@ -21,7 +24,7 @@ function TextInput({ label, icon, ...props }: TextInputProps) {
 	});
 
 	return (
-		<p className="relative my-6">
+		<div className="relative my-6">
 			<label className="ms-1 block">{label}</label>
 			<div
 				className={classNames(
@@ -32,13 +35,15 @@ function TextInput({ label, icon, ...props }: TextInputProps) {
 			>
 				{iconElement}
 				<input
+					{...props}
+					ref={ref}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
 					className={classNames('block flex-1 bg-inherit px-2 py-2 text-lg outline-none')}
-					{...props}
 				></input>
 			</div>
-		</p>
+		</div>
 	);
-}
+});
+
 export default TextInput;
