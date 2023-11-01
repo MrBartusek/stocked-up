@@ -17,7 +17,7 @@ function Navbar() {
 						<li>
 							<Link
 								to="/login"
-								className="link-muted"
+								className="link-muted "
 							>
 								Login
 							</Link>
