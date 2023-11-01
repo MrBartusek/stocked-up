@@ -28,7 +28,7 @@ export class AuthService {
 
 		const RANDOM_STRING = 'e8a4462c2fea6008ff67b00f890';
 
-		const passwordValid = bcrypt.compare(password, user?.auth?.password || RANDOM_STRING);
+		const passwordValid = await bcrypt.compare(password, user?.auth.password || RANDOM_STRING);
 
 		if (user && passwordValid) {
 			return user;
