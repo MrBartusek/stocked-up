@@ -1,14 +1,13 @@
 import { useQuery } from 'react-query';
 import { Utils } from '../utils';
-import SharedTypes from 'shared-types';
 
 function useWarehousesList() {
 	const { data, error, isLoading } = useQuery(['warehouses', 'list'], () =>
-		Utils.simpleFetcher(`/api/warehouses`),
+		Utils.getFetcher(`/api/warehouses`),
 	);
 
 	return {
-		warehouses: data as SharedTypes.BaseWarehouse[],
+		warehouses: data as BaseWarehouse[],
 		isLoading,
 		error: error,
 	};

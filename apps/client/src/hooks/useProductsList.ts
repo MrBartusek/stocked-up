@@ -4,7 +4,7 @@ import SharedTypes from 'shared-types';
 
 function useProductsList() {
 	const { data, error, isLoading } = useQuery(['products', 'list'], () =>
-		Utils.simpleFetcher(`/api/products`),
+		Utils.getFetcher(`/api/products`),
 	);
 
 	return {

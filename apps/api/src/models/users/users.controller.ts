@@ -1,8 +1,8 @@
 import { Controller, Get, NotFoundException, Param, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import SharedTypes from 'shared-types';
 import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Request } from 'express';
+import { UserDto } from 'shared-types';
 
 @Controller('users')
 export class UsersController {
@@ -10,7 +10,7 @@ export class UsersController {
 
 	@UseGuards(AuthenticatedGuard)
 	@Get('me')
-	async findAuthenticated(@Req() request: Request): Promise<SharedTypes.UserDto> {
+	async findAuthenticated(@Req() request: Request): Promise<UserDto> {
 		const user = await this.usersService.findById(request.user.id);
 
 		return {
@@ -20,7 +20,7 @@ export class UsersController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id') id: string): Promise<SharedTypes.UserDto> {
+	async findOne(@Param('id') id: string): Promise<UserDto> {
 		const user = await this.usersService.findById(id);
 
 		if (!user) {

@@ -1,8 +1,10 @@
-import { BsPerson, BsShieldLock } from 'react-icons/bs';
-import TextInput from './Form/TextInput';
-import Button from './Button';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { BsPerson, BsShieldLock } from 'react-icons/bs';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserLoginDto } from 'shared-types';
+import { Utils } from '../utils';
+import Button from './Button';
+import TextInput from './Form/TextInput';
 
 type Inputs = {
 	username: string;
@@ -11,9 +13,13 @@ type Inputs = {
 
 function LoginForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
+	const navigate = useNavigate();
 
-	function onSubmit(data: Inputs) {
-		console.log(data);
+	function onSubmit(inputs: Inputs) {
+		const dto = new UserLoginDto(inputs.username, inputs.password);
+		Utils.postFetcher(`/api/auth/login`, dto)
+			.then(() => navigate('/dashboard'))
+			.catch(console.error);
 	}
 
 	return (

@@ -1,8 +1,7 @@
 import { createContext } from 'react';
-import SharedTypes from 'shared-types';
 
 export const WarehouseContext = createContext<{
-	currentWarehouse: SharedTypes.BaseWarehouse | null;
-	setCurrentWarehouse: React.Dispatch<React.SetStateAction<SharedTypes.BaseWarehouse | null>>;
-	warehouses: SharedTypes.BaseWarehouse[];
+	currentWarehouse: BaseWarehouse | null;
+	setCurrentWarehouse: React.Dispatch<React.SetStateAction<BaseWarehouse | null>>;
+	warehouses: BaseWarehouse[];
 }>(null as any);

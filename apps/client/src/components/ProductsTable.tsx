@@ -3,10 +3,10 @@ import Table from './Table';
 import humanFormat from 'human-format';
 import ProductActions from './ProductActions';
 import { useNavigate } from 'react-router-dom';
-import SharedTypes from 'shared-types';
 import placeholderImage from '../assets/placeholder.png';
+import { ProductDto } from 'shared-types';
 
-const columnHelper = createColumnHelper<SharedTypes.Product>();
+const columnHelper = createColumnHelper<ProductDto>();
 
 const columns = [
 	columnHelper.accessor('imageUrl', {
@@ -52,7 +52,7 @@ const columns = [
 ];
 
 export interface ProductsTableProps {
-	products: SharedTypes.Product[];
+	products: ProductDto[];
 }
 
 function ProductsTable({ products }: ProductsTableProps) {
@@ -64,7 +64,7 @@ function ProductsTable({ products }: ProductsTableProps) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	function onClickRow(product: SharedTypes.Product) {
+	function onClickRow(product: ProductDto) {
 		navigate(`/dashboard/products/${product._id}`);
 	}
 

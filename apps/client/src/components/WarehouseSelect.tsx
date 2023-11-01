@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { useContext } from 'react';
 import Select from 'react-select';
-import SharedTypes from 'shared-types';
 import tailwindConfig from '../../tailwind.config.js';
 import { WarehouseContext } from '../context/WarehouseContext';
 
@@ -21,7 +20,7 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 		setCurrentWarehouse(warehouse);
 	}
 
-	function generateOption(warehouse: SharedTypes.BaseWarehouse) {
+	function generateOption(warehouse: BaseWarehouse) {
 		return {
 			value: warehouse._id,
 			label: warehouse.name,

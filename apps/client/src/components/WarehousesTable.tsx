@@ -1,11 +1,10 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import humanFormat from 'human-format';
 import { useNavigate } from 'react-router-dom';
-import SharedTypes from 'shared-types';
 import ProductActions from './ProductActions';
 import Table from './Table';
 
-const columnHelper = createColumnHelper<SharedTypes.BaseWarehouse>();
+const columnHelper = createColumnHelper<BaseWarehouse>();
 
 const columns = [
 	columnHelper.display({
@@ -34,7 +33,7 @@ const columns = [
 ];
 
 export interface WarehousesTableProps {
-	warehouses: SharedTypes.BaseWarehouse[];
+	warehouses: BaseWarehouse[];
 }
 
 function WarehousesTable({ warehouses }: WarehousesTableProps) {
@@ -46,7 +45,7 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	function onClickRow(warehouse: SharedTypes.BaseWarehouse) {
+	function onClickRow(warehouse: BaseWarehouse) {
 		navigate(`/dashboard/warehouses/${warehouse._id}`);
 	}
 

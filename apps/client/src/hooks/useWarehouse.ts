@@ -1,10 +1,9 @@
-import SharedTypes from 'shared-types';
 import { useEffect, useState } from 'react';
 import useWarehousesList from './useWarehousesList';
 
 function useWarehouse() {
 	const { warehouses } = useWarehousesList();
-	const [currentWarehouse, setCurrentWarehouse] = useState<SharedTypes.BaseWarehouse | null>(null);
+	const [currentWarehouse, setCurrentWarehouse] = useState<BaseWarehouse | null>(null);
 
 	useEffect(() => {
 		// Quite ideally, at least one warehouse should be present at all times

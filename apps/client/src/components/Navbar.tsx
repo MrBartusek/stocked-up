@@ -12,14 +12,26 @@ function Navbar() {
 					variant="black"
 					className="h-16 w-auto"
 				/>
-				<Link to="/register">
-					<Button>
-						<div className="flex items-center justify-center gap-2">
-							Get started for free
-							<BsArrowRight size={20} />
-						</div>
-					</Button>
-				</Link>
+				<div className="flex flex-row gap-8">
+					<ul className="flex items-center">
+						<li>
+							<Link
+								to="/login"
+								className="link-muted"
+							>
+								Login
+							</Link>
+						</li>
+					</ul>
+					<Link to="/register">
+						<Button>
+							<div className="flex items-center justify-center gap-2">
+								Get started for free
+								<BsArrowRight size={20} />
+							</div>
+						</Button>
+					</Link>
+				</div>
 			</Container>
 		</nav>
 	);
