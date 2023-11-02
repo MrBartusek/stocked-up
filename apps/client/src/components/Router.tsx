@@ -11,6 +11,10 @@ import RegisterSelect from './RegisterSelect';
 import RegisterForm from './RegisterForm';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
+import InventoryManagementPage from './Pages/InventoryManagementPage';
+import InventoryListPage from './Pages/InventoryListPage';
+import InventoryAddPage from './Pages/InventoryAddPage';
+import InventoryRemovePage from './Pages/InventoryRemovePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -62,6 +66,24 @@ function Router() {
 				{
 					path: 'warehouses',
 					element: <WarehousesPage />,
+				},
+				{
+					path: 'inventory',
+					element: <InventoryManagementPage />,
+					children: [
+						{
+							path: '',
+							element: <InventoryListPage />,
+						},
+						{
+							path: 'add',
+							element: <InventoryAddPage />,
+						},
+						{
+							path: 'remove',
+							element: <InventoryRemovePage />,
+						},
+					],
 				},
 			],
 		},
