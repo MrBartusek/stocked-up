@@ -15,6 +15,7 @@ function Button({ loading, ...props }: ButtonProps) {
 	}
 	return (
 		<button
+			{...props}
 			className={classNames(
 				'rounded-md bg-primary px-3.5 py-2.5 text-light',
 				'transition-opacity',

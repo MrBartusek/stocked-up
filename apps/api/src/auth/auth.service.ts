@@ -16,12 +16,12 @@ export class AuthService {
 	async registerUser(data: UserRegisterData): Promise<UserDocument> {
 		const hash = await bcrypt.hash(data.password, 12);
 
-		const isEmailTaken = this.usersService.isEmailTaken(data.email);
+		const isEmailTaken = await this.usersService.isEmailTaken(data.email);
 		if (isEmailTaken) {
 			throw new BadRequestException({ description: 'This email is already taken' });
 		}
 
-		const isUsernameTaken = this.usersService.isUsernameTaken(data.email);
+		const isUsernameTaken = await this.usersService.isUsernameTaken(data.email);
 		if (isUsernameTaken) {
 			throw new BadRequestException({ description: 'This username is already taken' });
 		}

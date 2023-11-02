@@ -19,12 +19,14 @@ function LoginForm() {
 	const [loading, setLoading] = useState(false);
 
 	function onSubmit(inputs: Inputs) {
-		console.log(inputs);
-		const dto: UserLoginDto = inputs;
 		setLoading(true);
+		const dto: UserLoginDto = inputs;
 		Utils.postFetcher(`/api/auth/login`, dto)
 			.then(() => navigate('/dashboard'))
-			.catch(console.error);
+			.catch((err) => {
+				console.error(err);
+				setLoading(false);
+			});
 	}
 
 	return (
