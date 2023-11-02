@@ -26,4 +26,12 @@ export class UsersService {
 	findById(id: string): Promise<UserDocument | undefined> {
 		return this.userRepository.findById(id);
 	}
+
+	isEmailTaken(email: string) {
+		return this.userRepository.exist({ 'profile.email': email });
+	}
+
+	isUsernameTaken(username: string) {
+		return this.userRepository.exist({ 'profile.username': username });
+	}
 }

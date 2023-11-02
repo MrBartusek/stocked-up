@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import { IconType } from 'react-icons';
 
 type InputProps = React.DetailedHTMLProps<
@@ -16,12 +16,18 @@ const TextInput = forwardRef(function TextInput(
 	{ label, icon, ...props }: TextInputProps,
 	ref: any,
 ) {
-	const [isFocused, setIsFocused] = useState(false);
+	const [focused, setFocused] = useState(false);
 
 	const iconElement = React.createElement(icon, {
 		size: 24,
-		className: classNames('transition-colors', isFocused ? 'text-primary' : 'text-gray-400'),
+		className: classNames('transition-colors', focused ? 'text-primary' : 'text-gray-400'),
 	});
+
+	useEffect(() => {
+		if (props.disabled) {
+			setFocused(false);
+		}
+	}, [props.disabled]);
 
 	return (
 		<div className="relative my-6">
@@ -30,15 +36,15 @@ const TextInput = forwardRef(function TextInput(
 				className={classNames(
 					'border-b-2 transition-colors',
 					'flex flex-row items-center gap-1',
-					isFocused ? 'border-primary' : 'border-gray-300',
+					focused ? 'border-primary' : 'border-gray-300',
 				)}
 			>
 				{iconElement}
 				<input
 					{...props}
 					ref={ref}
-					onFocus={() => setIsFocused(true)}
-					onBlur={() => setIsFocused(false)}
+					onFocus={() => setFocused(true)}
+					onBlur={() => setFocused(false)}
 					className={classNames('block flex-1 bg-inherit px-2 py-2 text-lg outline-none')}
 				></input>
 			</div>

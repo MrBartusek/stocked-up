@@ -38,6 +38,11 @@ export abstract class EntityRepository<T extends Document> {
 		return entity.save() as Promise<T>;
 	}
 
+	async exist(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+		const count = await this.entityModel.countDocuments(entityFilterQuery).exec();
+		return count > 0;
+	}
+
 	async findOneAndUpdate(
 		entityFilterQuery: FilterQuery<T>,
 		updateEntityData: UpdateQuery<T>,

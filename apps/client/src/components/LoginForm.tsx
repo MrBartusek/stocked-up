@@ -5,6 +5,7 @@ import { UserLoginDto } from 'shared-types';
 import { Utils } from '../utils';
 import Button from './Button';
 import TextInput from './Form/TextInput';
+import { useState } from 'react';
 
 type Inputs = {
 	username: string;
@@ -15,9 +16,12 @@ function LoginForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const navigate = useNavigate();
 
+	const [loading, setLoading] = useState(false);
+
 	function onSubmit(inputs: Inputs) {
 		console.log(inputs);
 		const dto: UserLoginDto = inputs;
+		setLoading(true);
 		Utils.postFetcher(`/api/auth/login`, dto)
 			.then(() => navigate('/dashboard'))
 			.catch(console.error);
@@ -32,6 +36,7 @@ function LoginForm() {
 				label="Username"
 				placeholder="Type your username"
 				{...register('username', { required: true })}
+				disabled={loading}
 				icon={BsPerson}
 			/>
 			<TextInput
@@ -39,6 +44,7 @@ function LoginForm() {
 				type="password"
 				placeholder="Type your password"
 				{...register('password', { required: true })}
+				disabled={loading}
 				icon={BsShieldLock}
 			/>
 			<Link
@@ -50,6 +56,7 @@ function LoginForm() {
 			<Button
 				className="mt-8 w-full text-lg"
 				type="submit"
+				loading={loading}
 			>
 				Login
 			</Button>
