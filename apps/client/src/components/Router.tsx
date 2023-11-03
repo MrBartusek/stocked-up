@@ -15,6 +15,7 @@ import InventoryManagementPage from './Pages/InventoryManagementPage';
 import InventoryListPage from './Pages/InventoryListPage';
 import InventoryAddPage from './Pages/InventoryAddPage';
 import InventoryRemovePage from './Pages/InventoryRemovePage';
+import OrganizationSelectPage from './Pages/OrganizationSelectPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -49,6 +50,10 @@ function Router() {
 		},
 		{
 			path: '/dashboard',
+			element: <OrganizationSelectPage />,
+		},
+		{
+			path: '/dashboard/:org',
 			element: <DashboardPage />,
 			children: [
 				{
