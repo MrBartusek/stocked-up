@@ -26,7 +26,10 @@ export abstract class EntityRepository<T extends Document> {
 			.exec();
 	}
 
-	async findById(id: string, projection?: Record<string, unknown>): Promise<T | null> {
+	async findById(
+		id: mongoose.Types.ObjectId | string,
+		projection?: Record<string, unknown>,
+	): Promise<T | null> {
 		if (!mongoose.Types.ObjectId.isValid(id)) {
 			return null;
 		}
@@ -50,7 +53,10 @@ export abstract class EntityRepository<T extends Document> {
 		return this.entityModel.findOneAndUpdate(entityFilterQuery, updateEntityData, { new: true });
 	}
 
-	async findOneByIdAndUpdate(id: string, updateEntityData: UpdateQuery<T>): Promise<T | null> {
+	async findOneByIdAndUpdate(
+		id: mongoose.Types.ObjectId | string,
+		updateEntityData: UpdateQuery<T>,
+	): Promise<T | null> {
 		return this.findOneAndUpdate({ _id: id }, updateEntityData);
 	}
 
@@ -59,7 +65,7 @@ export abstract class EntityRepository<T extends Document> {
 		return deleteResult.deletedCount >= 1;
 	}
 
-	async deleteOneById(id: string): Promise<T | null> {
+	async deleteOneById(id: mongoose.Types.ObjectId | string): Promise<T | null> {
 		return this.entityModel.findOneAndDelete({ _id: id });
 	}
 }

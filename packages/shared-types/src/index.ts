@@ -4,6 +4,8 @@ import { UserDto } from './UserDto'
 import { SimpleResponseDto } from './SimpleResponseDto'
 import { UserLoginDto } from './auth/UserLoginDto'
 import { UserRegisterDto } from './auth/UserRegisterDto'
+import { CreateOrganizationDto } from './organizations/CreateOrganizationDto'
+import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto'
 
 export {
     ProductDto,
@@ -11,5 +13,7 @@ export {
     UserDto,
     SimpleResponseDto,
     UserLoginDto,
-    UserRegisterDto
+    UserRegisterDto,
+    CreateOrganizationDto,
+    CreateWarehouseDto
 }

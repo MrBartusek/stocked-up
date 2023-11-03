@@ -3,8 +3,10 @@ import { UsersService } from './users.service';
 import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Request } from 'express';
 import { UserDto } from 'shared-types';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
