@@ -1,11 +1,11 @@
 import Hero from '../Hero';
-import Layout from '../Layout';
+import BasicLayout from '../Layout/BasicLayout';
 
 function HomePage() {
 	return (
-		<Layout>
+		<BasicLayout>
 			<Hero />
-		</Layout>
+		</BasicLayout>
 	);
 }
 
