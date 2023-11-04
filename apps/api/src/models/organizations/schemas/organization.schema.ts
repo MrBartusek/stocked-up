@@ -4,6 +4,7 @@ import {
 	OrgWarehouseReference,
 	OrgWarehouseReferenceSchema,
 } from './org-warehouse-reference.schema';
+import { OrgAcl, OrgAclSchema } from './org-acl';
 
 export type OrganizationDocument = HydratedDocument<Organization>;
 
@@ -17,6 +18,9 @@ export class Organization {
 
 	@Prop({ default: 0 })
 	totalValue: number;
+
+	@Prop({ type: [OrgAclSchema], default: [] })
+	acls: OrgAcl[];
 
 	@Prop({ type: [OrgWarehouseReferenceSchema], default: [] })
 	warehouses: OrgWarehouseReference[];

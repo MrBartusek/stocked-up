@@ -4,6 +4,7 @@ import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { Warehouse } from '../warehouses/schemas/warehouse.schema';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class OrganizationsService {
@@ -38,5 +39,9 @@ export class OrganizationsService {
 		});
 
 		return warehouse;
+	}
+
+	async findAllForUser(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.find({ 'acls.id': id });
 	}
 }
