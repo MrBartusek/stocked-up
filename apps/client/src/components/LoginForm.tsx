@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserLoginDto } from 'shared-types';
 import { Utils } from '../utils';
 import Button from './Button';
-import TextInput from './Form/TextInput';
+import TextInput from './Form/FancyInput';
 import { useState } from 'react';
 
 type Inputs = {

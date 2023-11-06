@@ -1,21 +1,22 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import DashboardHomePage from './Pages/DashboardHomePage';
-import DashboardPage from './Pages/DashboardPage';
-import ProductViewPage from './Pages/ProductViewPage';
-import ProductsPage from './Pages/ProductsPage';
-import WarehousesPage from './Pages/WarehousesPage';
-import HomePage from './Pages/HomePage';
-import LoginPage from './Pages/LoginPage';
-import RegisterPage from './Pages/RegisterPage';
-import RegisterSelect from './RegisterSelect';
-import RegisterForm from './RegisterForm';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
-import InventoryManagementPage from './Pages/InventoryManagementPage';
-import InventoryListPage from './Pages/InventoryListPage';
+import DashboardHomePage from './Pages/DashboardHomePage';
+import DashboardPage from './Pages/DashboardPage';
+import HomePage from './Pages/HomePage';
 import InventoryAddPage from './Pages/InventoryAddPage';
+import InventoryListPage from './Pages/InventoryListPage';
+import InventoryManagementPage from './Pages/InventoryManagementPage';
 import InventoryRemovePage from './Pages/InventoryRemovePage';
+import LoginPage from './Pages/LoginPage';
+import OrganizationCreatePage from './Pages/OrganizationCreatePage';
 import OrganizationSelectPage from './Pages/OrganizationSelectPage';
+import ProductViewPage from './Pages/ProductViewPage';
+import ProductsPage from './Pages/ProductsPage';
+import RegisterPage from './Pages/RegisterPage';
+import WarehousesPage from './Pages/WarehousesPage';
+import RegisterForm from './RegisterForm';
+import RegisterSelect from './RegisterSelect';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -50,7 +51,15 @@ function Router() {
 		},
 		{
 			path: '/dashboard',
+			element: <Navigate to="/dashboard/select" />,
+		},
+		{
+			path: '/dashboard/select',
 			element: <OrganizationSelectPage />,
+		},
+		{
+			path: '/dashboard/create',
+			element: <OrganizationCreatePage />,
 		},
 		{
 			path: '/dashboard/:org',

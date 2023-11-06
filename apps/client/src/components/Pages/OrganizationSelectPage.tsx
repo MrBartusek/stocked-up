@@ -6,6 +6,7 @@ import Button from '../Button';
 import useOrganizationsList from '../../hooks/useOrganizationsList';
 import OrganizationCard from '../OrganizationCard';
 import Loader from '../Loader';
+import { Link } from 'react-router-dom';
 
 function OrganizationSelectPage() {
 	const { organizations, isLoading, error } = useOrganizationsList();
@@ -16,10 +17,12 @@ function OrganizationSelectPage() {
 				icon={BsBuilding}
 				title="Your organizations"
 				actions={
-					<Button className="flex items-center gap-3">
-						<BsPlusCircle size={20} />
-						New
-					</Button>
+					<Link to="/dashboard/create">
+						<Button className="flex items-center gap-3">
+							<BsPlusCircle size={20} />
+							New
+						</Button>
+					</Link>
 				}
 			/>
 			<Container className="flex flex-col">

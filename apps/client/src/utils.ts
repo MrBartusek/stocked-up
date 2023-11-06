@@ -1,7 +1,10 @@
 import humanFormat from 'human-format';
 
 export class Utils {
-	public static async getFetcher(input: RequestInfo | URL, init?: RequestInit | undefined) {
+	public static async getFetcher<T>(
+		input: RequestInfo | URL,
+		init?: RequestInit | undefined,
+	): Promise<T> {
 		return await fetch(input, init).then((res) => {
 			if (res.ok) {
 				return res.json();
@@ -10,9 +13,9 @@ export class Utils {
 		});
 	}
 
-	public static async postFetcher(input: RequestInfo | URL, dto: object) {
+	public static async postFetcher<T>(input: RequestInfo | URL, dto: object): Promise<T> {
 		const body = JSON.stringify(dto);
-		return this.getFetcher(input, {
+		return this.getFetcher<T>(input, {
 			method: 'post',
 			headers: {
 				Accept: 'application/json',

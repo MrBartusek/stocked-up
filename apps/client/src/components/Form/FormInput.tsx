@@ -7,21 +7,12 @@ type InputProps = React.DetailedHTMLProps<
 	HTMLInputElement
 >;
 
-export interface TextInputProps extends InputProps {
+export interface FaFormInputProps extends InputProps {
 	label?: string;
-	icon: IconType;
 }
 
-const TextInput = forwardRef(function TextInput(
-	{ label, icon, ...props }: TextInputProps,
-	ref: any,
-) {
+const FormInput = forwardRef(function TextInput({ label, ...props }: FaFormInputProps, ref: any) {
 	const [focused, setFocused] = useState(false);
-
-	const iconElement = React.createElement(icon, {
-		size: 24,
-		className: classNames('transition-colors', focused ? 'text-primary' : 'text-gray-400'),
-	});
 
 	useEffect(() => {
 		if (props.disabled) {
@@ -31,25 +22,27 @@ const TextInput = forwardRef(function TextInput(
 
 	return (
 		<div className="relative my-6">
-			<label className="ms-1 block">{label}</label>
+			<div className="mb-2 ms-1">
+				<label className="me-1">{label}</label>
+				{props.required ? <span>*</span> : ''}
+			</div>
+
 			<div
 				className={classNames(
-					'border-b-2 transition-colors',
-					'flex flex-row items-center gap-1',
+					'rounded-md border transition-colors',
 					focused ? 'border-primary' : 'border-gray-300',
 				)}
 			>
-				{iconElement}
 				<input
 					{...props}
 					ref={ref}
 					onFocus={() => setFocused(true)}
 					onBlur={() => setFocused(false)}
-					className={classNames('block flex-1 bg-inherit px-2 py-2 text-lg outline-none')}
+					className={classNames('block flex-1 bg-inherit px-4 py-2 outline-none')}
 				></input>
 			</div>
 		</div>
 	);
 });
 
-export default TextInput;
+export default FormInput;

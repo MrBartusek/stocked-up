@@ -10,7 +10,7 @@ function WarehouseInfoRow({ warehouse }: WarehouseInfoRowProps) {
 	return (
 		<Link
 			className="mb-3 flex items-center justify-between rounded-md bg-gray-200 px-8 py-6"
-			to=""
+			to={`/dashboard/${warehouse.id}`}
 		>
 			<div className="flex items-center gap-5">
 				<div className="text-xl text-primary">

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { BsArrowLeft, BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
 import Button from './Button';
-import TextInput from './Form/TextInput';
+import FancyInput from './Form/FancyInput';
 import { Link, useNavigate } from 'react-router-dom';
 import RegisterGoBack from './RegisterGoBack';
 import { UserLoginDto, UserRegisterDto } from 'shared-types';
@@ -42,21 +42,21 @@ function RegisterForm() {
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<RegisterGoBack />
-			<TextInput
+			<FancyInput
 				label="E-Mail"
 				placeholder="Type your e-mail address"
 				{...register('email', { required: true })}
 				icon={BsEnvelopeAt}
 				disabled={loading}
 			/>
-			<TextInput
+			<FancyInput
 				label="Username"
 				placeholder="Select new username"
 				{...register('username', { required: true })}
 				icon={BsPerson}
 				disabled={loading}
 			/>
-			<TextInput
+			<FancyInput
 				label="Password"
 				type="password"
 				placeholder="Type your password"
@@ -64,7 +64,7 @@ function RegisterForm() {
 				icon={BsShieldLock}
 				disabled={loading}
 			/>
-			<TextInput
+			<FancyInput
 				label="Confirm password"
 				type="password"
 				placeholder="Re-type your password"
