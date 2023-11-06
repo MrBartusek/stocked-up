@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { OrganizationsService } from './organizations.service';
-import { CreateOrganizationDto } from 'shared-types';
-import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Request } from 'express';
+import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
+import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
+import { OrganizationsService } from './organizations.service';
+import { OrganizationDocument } from './schemas/organization.schema';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -10,13 +11,29 @@ export class OrganizationsController {
 	constructor(private readonly organizationsService: OrganizationsService) {}
 
 	@Post()
-	create(@Body() createOrganizationDto: CreateOrganizationDto) {
-		return this.organizationsService.create(createOrganizationDto);
+	async create(
+		@Body() createOrganizationDto: CreateOrganizationDto,
+		@Req() request: Request,
+	): Promise<OrganizationDto> {
+		const org = await this.organizationsService.create(createOrganizationDto);
+		await this.organizationsService.updateAcl(org.id, request.user.id, 'owner');
+		return this.castOrganizationToDto(org);
 	}
 
 	@Get()
-	findAll(@Req() request: Request) {
+	async findAll(@Req() request: Request): Promise<OrganizationDto[]> {
 		const userId = request.user.id;
-		return this.organizationsService.findAllForUser(userId);
+		const orgs = await this.organizationsService.findAllForUser(userId);
+		return orgs.map((org) => this.castOrganizationToDto(org));
+	}
+
+	private castOrganizationToDto(org: OrganizationDocument): OrganizationDto {
+		return {
+			id: org._id,
+			name: org.name,
+			currency: org.currency,
+			totalValue: org.totalValue,
+			warehouses: org.warehouses,
+		};
 	}
 }

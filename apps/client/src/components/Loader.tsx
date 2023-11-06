@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { BsBoxSeam } from 'react-icons/bs';
 
 export interface LoaderProps {
@@ -8,15 +9,19 @@ export interface LoaderProps {
 }
 
 function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProps) {
-	if (isError) {
-		return <div>failed</div>;
-	} else if (isLoading) {
+	if (isLoading || isError) {
 		return (
 			<div
 				style={{ height }}
-				className="flex w-full items-center justify-center"
+				className="my-16 flex w-full flex-col items-center justify-center gap-3"
 			>
-				<BsBoxSeam className="animate-pulse text-5xl text-gray-600" />
+				<BsBoxSeam
+					className={classNames(
+						'text-5xl',
+						isError ? 'text-red-600' : 'animate-pulse text-gray-600 ',
+					)}
+				/>
+				{isError ? <span>Loading of this resource failed</span> : null}
 			</div>
 		);
 	}

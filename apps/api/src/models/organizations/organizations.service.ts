@@ -41,6 +41,24 @@ export class OrganizationsService {
 		return warehouse;
 	}
 
+	async updateAcl(
+		organizationId: mongoose.Types.ObjectId | string,
+		userId: mongoose.Types.ObjectId | string,
+		role: string | null,
+	): Promise<OrganizationDocument> {
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: organizationId },
+			{
+				$push: {
+					acls: {
+						id: userId,
+						role,
+					},
+				},
+			},
+		);
+	}
+
 	async findAllForUser(id: mongoose.Types.ObjectId | string) {
 		return this.organizationRepository.find({ 'acls.id': id });
 	}
