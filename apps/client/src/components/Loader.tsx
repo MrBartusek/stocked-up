@@ -13,7 +13,7 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 		return (
 			<div
 				style={{ height }}
-				className="my-16 flex w-full flex-col items-center justify-center gap-3"
+				className="flex w-full flex-col items-center justify-center gap-3 py-16"
 			>
 				<BsBoxSeam
 					className={classNames(
@@ -21,7 +21,7 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 						isError ? 'text-red-600' : 'animate-pulse text-gray-600 ',
 					)}
 				/>
-				{isError ? <span>Loading of this resource failed</span> : null}
+				{isError ? <span className="font-bold text-red-600">Loading Failed</span> : null}
 			</div>
 		);
 	}

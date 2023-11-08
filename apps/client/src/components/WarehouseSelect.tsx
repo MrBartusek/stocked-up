@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import { BasicWarehouseDto } from 'shared-types/dist/BasicWarehouseDto.js';
 import tailwindConfig from '../../tailwind.config.js';
-import { WarehouseContext } from '../context/WarehouseContext';
+import { CurrentAppContext } from './Context/CurrentAppContext.js';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
@@ -12,17 +14,18 @@ type FieldSetProps = React.DetailedHTMLProps<
 export interface WarehouseSelectProps extends FieldSetProps {}
 
 function WarehouseSelect(props: WarehouseSelectProps) {
-	const { warehouses, currentWarehouse, setCurrentWarehouse } = useContext(WarehouseContext);
+	const appContext = useContext(CurrentAppContext);
+	const location = useLocation();
+	const navigate = useNavigate();
 
 	function onChange(newValue: any) {
-		const warehouse = warehouses.find((w) => w._id == newValue.value);
-		if (!warehouse) return;
-		setCurrentWarehouse(warehouse);
+		const newUrl = location.pathname.replace(appContext.currentWarehouse.id, newValue.value);
+		navigate(newUrl);
 	}
 
-	function generateOption(warehouse: BaseWarehouse) {
+	function generateOption(warehouse: BasicWarehouseDto) {
 		return {
-			value: warehouse._id,
+			value: warehouse.id,
 			label: warehouse.name,
 		};
 	}
@@ -36,7 +39,7 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 			<Select
 				className="mt-1"
 				onChange={onChange}
-				value={currentWarehouse ? generateOption(currentWarehouse) : null}
+				value={generateOption(appContext.currentWarehouse)}
 				theme={(theme) => ({
 					...theme,
 					colors: {
@@ -45,7 +48,7 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 						primary25: tailwindConfig.theme.extend.colors.secondary,
 					},
 				})}
-				options={warehouses.map(generateOption)}
+				options={appContext.organization.warehouses.map(generateOption)}
 			/>
 		</fieldset>
 	);
