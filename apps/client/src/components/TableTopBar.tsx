@@ -1,5 +1,3 @@
-import Button from './Button';
-
 export interface TableTopBarProps {
 	header: string;
 	children?: React.ReactNode;
