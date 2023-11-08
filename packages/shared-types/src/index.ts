@@ -1,21 +1,23 @@
 import { ProductDto } from './ProductDto'
-import { WarehouseDto } from './BasicWarehouseDto'
+import { BasicWarehouseDto } from './warehouse/BasicWarehouseDto'
 import { UserDto } from './UserDto'
 import { SimpleResponseDto } from './SimpleResponseDto'
 import { UserLoginDto } from './auth/UserLoginDto'
 import { UserRegisterDto } from './auth/UserRegisterDto'
 import { CreateOrganizationDto } from './organizations/CreateOrganizationDto'
 import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto'
-import { OrganizationDto } from './OrganisationDto'
+import { WarehouseDto } from './warehouse/WarehouseDto'
+import { OrganizationDto } from './organizations/OrganizationDto'
 
 export {
     ProductDto,
-    WarehouseDto,
+    BasicWarehouseDto,
     UserDto,
     SimpleResponseDto,
     UserLoginDto,
     UserRegisterDto,
     CreateOrganizationDto,
     CreateWarehouseDto,
-    OrganizationDto
+    OrganizationDto,
+    WarehouseDto
 }

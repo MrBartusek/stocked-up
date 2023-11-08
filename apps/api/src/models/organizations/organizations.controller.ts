@@ -49,7 +49,6 @@ export class OrganizationsController {
 	@Get(':id/warehouses')
 	async findWarehouses(@Param('id') id: string): Promise<any> {
 		const warehouses = await this.organizationsService.findAllWarehouses(id);
-		console.log(warehouses);
 		return warehouses.map((w) => Warehouse.toDto(w));
 	}
 }

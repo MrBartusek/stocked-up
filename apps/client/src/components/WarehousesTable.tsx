@@ -3,6 +3,10 @@ import humanFormat from 'human-format';
 import { useNavigate } from 'react-router-dom';
 import ProductActions from './ProductActions';
 import Table from './Table';
+import { WarehouseDto } from 'shared-types';
+import { Utils } from '../utils';
+import { useContext } from 'react';
+import { CurrentAppContext } from './Context/CurrentAppContext';
 
 const columnHelper = createColumnHelper<BaseWarehouse>();
 
@@ -33,10 +37,11 @@ const columns = [
 ];
 
 export interface WarehousesTableProps {
-	warehouses: BaseWarehouse[];
+	warehouses: WarehouseDto[];
 }
 
 function WarehousesTable({ warehouses }: WarehousesTableProps) {
+	const appContext = useContext(CurrentAppContext);
 	const navigate = useNavigate();
 
 	const table = useReactTable({
@@ -45,8 +50,8 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	function onClickRow(warehouse: BaseWarehouse) {
-		navigate(`/dashboard/warehouses/${warehouse._id}`);
+	function onClickRow(warehouse: WarehouseDto) {
+		navigate(Utils.dashboardUrl(appContext.organization.id, warehouse.id));
 	}
 
 	return (
