@@ -62,7 +62,7 @@ function Router() {
 			element: <OrganizationCreatePage />,
 		},
 		{
-			path: '/dashboard/:org',
+			path: '/dashboard/:organization/:warehouse',
 			element: <DashboardPage />,
 			children: [
 				{

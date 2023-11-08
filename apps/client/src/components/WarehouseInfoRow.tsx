@@ -1,20 +1,26 @@
-import { BsChevronRight, BsGeoAltFill } from 'react-icons/bs';
+import classNames from 'classnames';
+import { BsBoxSeamFill, BsChevronRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
+import { Utils } from '../utils';
 
 export interface WarehouseInfoRowProps {
+	organizationId: string;
 	warehouse: WarehouseDto;
 }
 
-function WarehouseInfoRow({ warehouse }: WarehouseInfoRowProps) {
+function WarehouseInfoRow({ warehouse, organizationId }: WarehouseInfoRowProps) {
 	return (
 		<Link
-			className="mb-3 flex items-center justify-between rounded-md bg-gray-200 px-8 py-6"
-			to={`/dashboard/${warehouse.id}`}
+			className={classNames(
+				'flex items-center justify-between border-b border-gray-200',
+				'p-4 ps-6 hover:bg-gray-150',
+			)}
+			to={Utils.dashboardUrl(organizationId, warehouse.id)}
 		>
-			<div className="flex items-center gap-5">
+			<div className="flex items-center gap-6">
 				<div className="text-xl text-primary">
-					<BsGeoAltFill />
+					<BsBoxSeamFill />
 				</div>
 				<div>
 					<h4>{warehouse.name}</h4>

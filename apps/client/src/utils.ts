@@ -28,4 +28,8 @@ export class Utils {
 	public static humanizeCurrency(input?: number) {
 		return '$' + humanFormat(input || 0, { separator: '' });
 	}
+
+	public static dashboardUrl(organizationId: string, warehouseId: string) {
+		return `/dashboard/${organizationId}/${warehouseId}`;
+	}
 }

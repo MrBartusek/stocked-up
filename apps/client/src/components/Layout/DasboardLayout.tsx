@@ -1,3 +1,4 @@
+import DashboardFooter from './DashboardFooter';
 import DashboardNavbar from './DashboardNavbar';
 
 export interface LayoutProps {
@@ -6,10 +7,11 @@ export interface LayoutProps {
 
 function DashboardLayout({ children }: LayoutProps) {
 	return (
-		<>
+		<div className="flex h-full flex-col">
 			<DashboardNavbar />
-			<main>{children}</main>
-		</>
+			<main className="flex-1">{children}</main>
+			<DashboardFooter />
+		</div>
 	);
 }
 

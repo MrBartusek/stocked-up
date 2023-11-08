@@ -1,6 +1,6 @@
 import { BsBuilding } from 'react-icons/bs';
-import WarehouseInfoRow from './WarehouseInfoRow';
 import { OrganizationDto } from 'shared-types';
+import WarehouseInfoRow from './WarehouseInfoRow';
 
 export interface OrganizationCardProps {
 	organization: OrganizationDto;
@@ -8,16 +8,15 @@ export interface OrganizationCardProps {
 
 function OrganizationCard({ organization }: OrganizationCardProps) {
 	return (
-		<div className="mt-12 rounded-xl border border-gray-200 bg-gray-150 p-6">
-			<div className="mb-8 flex items-center gap-4 text-xl">
-				<div className="rounded-full bg-gray-300 p-4">
-					<BsBuilding />
-				</div>
+		<div className="mt-12">
+			<div className="flex items-center gap-4 border-b border-gray-300 px-8 py-4 text-xl">
+				<BsBuilding />
 				<h3>{organization.name}</h3>
 			</div>
-			<div>
+			<div className="my-4">
 				{organization.warehouses.map((warehouse, i) => (
 					<WarehouseInfoRow
+						organizationId={organization.id}
 						warehouse={warehouse}
 						key={i}
 					/>
