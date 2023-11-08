@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+	Req,
+	UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
 import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { OrganizationsService } from './organizations.service';
 import { OrganizationDocument } from './schemas/organization.schema';
+import { NotFoundError } from 'rxjs';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -25,6 +35,15 @@ export class OrganizationsController {
 		const userId = request.user.id;
 		const orgs = await this.organizationsService.findAllForUser(userId);
 		return orgs.map((org) => this.castOrganizationToDto(org));
+	}
+
+	@Get(':id')
+	async findByID(@Param('id') id: string): Promise<OrganizationDto> {
+		const org = await this.organizationsService.findById(id);
+		if (!org) {
+			throw new NotFoundException();
+		}
+		return this.castOrganizationToDto(org);
 	}
 
 	private castOrganizationToDto(org: OrganizationDocument): OrganizationDto {

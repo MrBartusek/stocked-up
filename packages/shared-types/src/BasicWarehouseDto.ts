@@ -1,5 +1,5 @@
 import { BaseDto } from "./BaseDto";
 
-export class WarehouseDto extends BaseDto {
+export class BasicWarehouseDto extends BaseDto {
     name: string;
 }

@@ -62,4 +62,8 @@ export class OrganizationsService {
 	async findAllForUser(id: mongoose.Types.ObjectId | string) {
 		return this.organizationRepository.find({ 'acls.id': id });
 	}
+
+	async findById(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.findById(id);
+	}
 }
