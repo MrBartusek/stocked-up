@@ -68,4 +68,8 @@ export abstract class EntityRepository<T extends Document> {
 	async deleteOneById(id: mongoose.Types.ObjectId | string): Promise<T | null> {
 		return this.entityModel.findOneAndDelete({ _id: id });
 	}
+
+	async aggregate(pipeline: mongoose.PipelineStage[]): Promise<any[]> {
+		return this.entityModel.aggregate(pipeline).exec();
+	}
 }

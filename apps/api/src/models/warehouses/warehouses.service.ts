@@ -10,6 +10,11 @@ export class WarehousesService {
 	create(createWarehouseDto: CreateWarehouseDto): Promise<WarehouseDocument> {
 		return this.warehouseRepository.create({
 			name: createWarehouseDto.name,
+			address: createWarehouseDto.address,
 		});
+	}
+
+	findById(id: string): Promise<WarehouseDocument | undefined> {
+		return this.warehouseRepository.findById(id);
 	}
 }

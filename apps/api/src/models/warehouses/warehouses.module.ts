@@ -4,6 +4,7 @@ import { WarehousesController } from './warehouses.controller';
 import { WarehouseRepository } from './warehouse.repository';
 import { Warehouse, WarehouseSchema } from './schemas/warehouse.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { OrganizationsModule } from '../organizations/organizations.module';
 
 @Module({
 	imports: [MongooseModule.forFeature([{ name: Warehouse.name, schema: WarehouseSchema }])],

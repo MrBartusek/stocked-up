@@ -5,6 +5,7 @@ import {
 	OrgWarehouseReferenceSchema,
 } from './org-warehouse-reference.schema';
 import { OrgAcl, OrgAclSchema } from './org-acl';
+import { OrganizationDto } from 'shared-types';
 
 export type OrganizationDocument = HydratedDocument<Organization>;
 
@@ -24,6 +25,16 @@ export class Organization {
 
 	@Prop({ type: [OrgWarehouseReferenceSchema], default: [] })
 	warehouses: OrgWarehouseReference[];
+
+	public static toDto(document: OrganizationDocument): OrganizationDto {
+		return {
+			id: document._id,
+			name: document.name,
+			currency: document.currency,
+			totalValue: document.totalValue,
+			warehouses: document.warehouses,
+		};
+	}
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);
