@@ -6,6 +6,7 @@ import {
 } from './org-warehouse-reference.schema';
 import { OrgAcl, OrgAclSchema } from './org-acl';
 import { OrganizationDto } from 'shared-types';
+import { OrgStats, OrgStatsSchema } from './org-stats';
 
 export type OrganizationDocument = HydratedDocument<Organization>;
 
@@ -17,8 +18,8 @@ export class Organization {
 	@Prop({ default: 'USD' })
 	currency: string;
 
-	@Prop({ default: 0 })
-	totalValue: number;
+	@Prop({ type: OrgStatsSchema, default: {} })
+	stats: OrgStats;
 
 	@Prop({ type: [OrgAclSchema], default: [] })
 	acls: OrgAcl[];
@@ -31,7 +32,7 @@ export class Organization {
 			id: document._id,
 			name: document.name,
 			currency: document.currency,
-			totalValue: document.totalValue,
+			stats: document.stats,
 			warehouses: document.warehouses,
 		};
 	}
