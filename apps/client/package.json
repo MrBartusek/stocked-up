@@ -9,6 +9,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@floating-ui/react": "^0.26.2",
         "@nestjs/mongoose": "^10.0.1",
         "@tanstack/react-table": "^8.9.8",
         "autoprefixer": "^10.4.15",
