@@ -13,8 +13,9 @@ function DashboardContainer() {
 			navigate('/');
 		}
 	}, [isAuthenticated, isLoading, navigate]);
+
 	return (
-		<Loader isLoading={isLoading}>
+		<Loader isLoading={isLoading || !isAuthenticated}>
 			<Outlet />
 		</Loader>
 	);

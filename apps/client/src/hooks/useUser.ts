@@ -6,6 +6,7 @@ export interface UseUserType {
 	isLoading: boolean;
 	isAuthenticated: boolean;
 	invalidateUser: () => Promise<void>;
+	logout: () => Promise<void>;
 	user: PrivateUserDto;
 }
 
@@ -27,10 +28,15 @@ function useUser(): UseUserType {
 		return queryClient.invalidateQueries(['users', 'me']);
 	}
 
+	async function logout(): Promise<void> {
+		await Utils.postFetcher('/api/auth/logout');
+	}
+
 	return {
 		isLoading: isLoading,
 		isAuthenticated: !error && !isLoading,
 		invalidateUser,
+		logout,
 		user: data as PrivateUserDto,
 	};
 }

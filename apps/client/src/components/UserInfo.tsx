@@ -12,10 +12,16 @@ import Dropdown from './Dropdown/Dropdown';
 import DropdownItem from './Dropdown/DropdownItem';
 import DropdownMenu from './Dropdown/DropdownMenu';
 import DropdownToggle from './Dropdown/DropdownToggle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function UserInfo() {
-	const { user } = useContext(UserContext);
+	const { user, logout } = useContext(UserContext);
+	const navigate = useNavigate();
+
+	function logoutUser() {
+		logout();
+		navigate('/');
+	}
 
 	return (
 		<Dropdown>
@@ -35,7 +41,12 @@ function UserInfo() {
 				>
 					<DropdownItem icon={BsExclamationOctagon}>Report issue</DropdownItem>
 				</Link>
-				<DropdownItem icon={BsBoxArrowLeft}>Logout</DropdownItem>
+				<DropdownItem
+					icon={BsBoxArrowLeft}
+					onClick={logoutUser}
+				>
+					Logout
+				</DropdownItem>
 			</DropdownMenu>
 		</Dropdown>
 	);

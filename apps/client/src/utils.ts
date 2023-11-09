@@ -13,7 +13,7 @@ export class Utils {
 		});
 	}
 
-	public static async postFetcher<T>(input: RequestInfo | URL, dto: object): Promise<T> {
+	public static async postFetcher<T>(input: RequestInfo | URL, dto?: object): Promise<T> {
 		const body = JSON.stringify(dto);
 		return this.getFetcher<T>(input, {
 			method: 'post',
