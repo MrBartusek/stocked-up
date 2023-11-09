@@ -17,6 +17,7 @@ import RegisterPage from './Pages/RegisterPage';
 import WarehousesPage from './Pages/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
+import DashboardContainer from './DashboardContainer';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -26,12 +27,12 @@ function Router() {
 			errorElement: <ApplicationError />,
 		},
 		{
-			path: '/login',
+			path: 'login',
 			element: <LoginPage />,
 			errorElement: <ApplicationError />,
 		},
 		{
-			path: '/register',
+			path: 'register',
 			element: <RegisterPage />,
 			errorElement: <ApplicationError />,
 			children: [
@@ -50,52 +51,58 @@ function Router() {
 			],
 		},
 		{
-			path: '/dashboard',
-			element: <Navigate to="/dashboard/select" />,
-		},
-		{
-			path: '/dashboard/select',
-			element: <OrganizationSelectPage />,
-		},
-		{
-			path: '/dashboard/create',
-			element: <OrganizationCreatePage />,
-		},
-		{
-			path: '/dashboard/:organization/:warehouse',
-			element: <DashboardPage />,
+			path: 'dashboard',
+			element: <DashboardContainer />,
 			children: [
 				{
 					path: '',
-					element: <DashboardHomePage />,
+					element: <Navigate to="/dashboard/select" />,
 				},
 				{
-					path: 'products',
-					element: <ProductsPage />,
+					path: 'select',
+					element: <OrganizationSelectPage />,
 				},
 				{
-					path: 'products/:id',
-					element: <ProductViewPage />,
+					path: 'create',
+					element: <OrganizationCreatePage />,
 				},
 				{
-					path: 'warehouses',
-					element: <WarehousesPage />,
-				},
-				{
-					path: 'inventory',
-					element: <InventoryManagementPage />,
+					path: ':organization/:warehouse',
+					element: <DashboardPage />,
 					children: [
 						{
 							path: '',
-							element: <InventoryListPage />,
+							element: <DashboardHomePage />,
 						},
 						{
-							path: 'add',
-							element: <InventoryAddPage />,
+							path: 'products',
+							element: <ProductsPage />,
 						},
 						{
-							path: 'remove',
-							element: <InventoryRemovePage />,
+							path: 'products/:id',
+							element: <ProductViewPage />,
+						},
+						{
+							path: 'warehouses',
+							element: <WarehousesPage />,
+						},
+						{
+							path: 'inventory',
+							element: <InventoryManagementPage />,
+							children: [
+								{
+									path: '',
+									element: <InventoryListPage />,
+								},
+								{
+									path: 'add',
+									element: <InventoryAddPage />,
+								},
+								{
+									path: 'remove',
+									element: <InventoryRemovePage />,
+								},
+							],
 						},
 					],
 				},

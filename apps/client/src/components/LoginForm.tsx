@@ -5,7 +5,8 @@ import { UserLoginDto } from 'shared-types';
 import { Utils } from '../utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from './Context/UserContext';
 
 type Inputs = {
 	username: string;
@@ -15,6 +16,7 @@ type Inputs = {
 function LoginForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const navigate = useNavigate();
+	const { invalidateUser } = useContext(UserContext);
 
 	const [loading, setLoading] = useState(false);
 
@@ -22,7 +24,9 @@ function LoginForm() {
 		setLoading(true);
 		const dto: UserLoginDto = inputs;
 		Utils.postFetcher(`/api/auth/login`, dto)
+			.then(invalidateUser)
 			.then(() => navigate('/dashboard'))
+			.then(() => navigate(0))
 			.catch((err) => {
 				console.error(err);
 				setLoading(false);

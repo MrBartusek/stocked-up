@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { UserRegisterDto } from 'shared-types';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { UserRegisterDto } from 'shared-types';
-import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 @ApiTags('auth')

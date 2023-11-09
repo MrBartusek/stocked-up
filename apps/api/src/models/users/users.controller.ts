@@ -2,8 +2,9 @@ import { Controller, Get, NotFoundException, Param, UseGuards, Req } from '@nest
 import { UsersService } from './users.service';
 import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Request } from 'express';
-import { UserDto } from 'shared-types';
+import { PrivateUserDto, UserDto } from 'shared-types';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from './schemas/user.schema';
 
 @Controller('users')
 @ApiTags('users')
@@ -12,13 +13,10 @@ export class UsersController {
 
 	@UseGuards(AuthenticatedGuard)
 	@Get('me')
-	async findAuthenticated(@Req() request: Request): Promise<UserDto> {
+	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
 		const user = await this.usersService.findById(request.user.id);
 
-		return {
-			id: user._id,
-			username: user.profile.username,
-		};
+		return User.toPrivateDto(user);
 	}
 
 	@Get(':id')
@@ -29,9 +27,6 @@ export class UsersController {
 			throw new NotFoundException();
 		}
 
-		return {
-			id: user._id,
-			username: user.profile.username,
-		};
+		return User.toPrivateDto(user);
 	}
 }
