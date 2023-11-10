@@ -7,6 +7,7 @@ import { WarehouseDto } from 'shared-types';
 import { Utils } from '../utils';
 import { useContext } from 'react';
 import { CurrentAppContext } from './Context/CurrentAppContext';
+import toast from 'react-hot-toast';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -51,6 +52,7 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 	});
 
 	function onClickRow(warehouse: WarehouseDto) {
+		toast(`You are now using "${warehouse.name}" warehouse`);
 		navigate(Utils.dashboardUrl(appContext.organization.id, warehouse.id));
 	}
 

@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { BasicWarehouseDto } from 'shared-types/dist/BasicWarehouseDto.js';
 import tailwindConfig from '../../tailwind.config.js';
 import { CurrentAppContext } from './Context/CurrentAppContext.js';
+import toast from 'react-hot-toast';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
@@ -21,6 +22,7 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 	function onChange(newValue: any) {
 		const newUrl = location.pathname.replace(appContext.currentWarehouse.id, newValue.value);
 		navigate(newUrl);
+		toast(`You are now using "${newValue.label}" warehouse`);
 	}
 
 	function generateOption(warehouse: BasicWarehouseDto) {
