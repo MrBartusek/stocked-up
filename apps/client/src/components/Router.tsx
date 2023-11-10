@@ -20,6 +20,7 @@ import RegisterSelect from './RegisterSelect';
 import DashboardContainer from './DashboardContainer';
 import WarehousesListPage from './Pages/WarehousesListPage';
 import WarehousesCreatePage from './Pages/WarehousesCreatePage';
+import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -30,12 +31,20 @@ function Router() {
 		},
 		{
 			path: 'login',
-			element: <LoginPage />,
+			element: (
+				<PublicRoute>
+					<LoginPage />
+				</PublicRoute>
+			),
 			errorElement: <ApplicationError />,
 		},
 		{
 			path: 'register',
-			element: <RegisterPage />,
+			element: (
+				<PublicRoute>
+					<RegisterPage />
+				</PublicRoute>
+			),
 			errorElement: <ApplicationError />,
 			children: [
 				{
@@ -54,11 +63,20 @@ function Router() {
 		},
 		{
 			path: 'dashboard',
-			element: <DashboardContainer />,
+			element: (
+				<ProtectedRoute>
+					<DashboardContainer />
+				</ProtectedRoute>
+			),
 			children: [
 				{
 					path: '',
-					element: <Navigate to="/dashboard/select" />,
+					element: (
+						<Navigate
+							to="/dashboard/select"
+							replace
+						/>
+					),
 				},
 				{
 					path: 'select',

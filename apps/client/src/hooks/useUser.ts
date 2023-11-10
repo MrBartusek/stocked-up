@@ -30,6 +30,7 @@ function useUser(): UseUserType {
 
 	async function logout(): Promise<void> {
 		await Utils.postFetcher('/api/auth/logout');
+		return invalidateUser();
 	}
 
 	return {

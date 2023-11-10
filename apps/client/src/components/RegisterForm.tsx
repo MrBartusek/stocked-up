@@ -5,8 +5,10 @@ import FancyInput from './Form/FancyInput';
 import { Link, useNavigate } from 'react-router-dom';
 import RegisterGoBack from './RegisterGoBack';
 import { UserLoginDto, UserRegisterDto } from 'shared-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Utils } from '../utils';
+import { UserContext } from './Context/UserContext';
+import toast from 'react-hot-toast';
 
 type Inputs = {
 	email: string;
@@ -19,6 +21,7 @@ function RegisterForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const { invalidateUser } = useContext(UserContext);
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
@@ -29,7 +32,9 @@ function RegisterForm() {
 				const loginDto: UserLoginDto = { username: inputs.username, password: inputs.password };
 				return Utils.postFetcher(`/api/auth/login`, loginDto);
 			})
+			.then(invalidateUser)
 			.then(() => navigate('/dashboard'))
+			.then(() => toast.success('Your registration was successful. Welcome to StockedUp!'))
 			.catch((err) => {
 				console.error(err);
 				setLoading(false);
