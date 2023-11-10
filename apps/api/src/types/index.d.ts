@@ -1,4 +1,4 @@
-import UserSessionData from 'src/auth/types/userSessionData';
+import UserSessionData from '../auth/types/userSessionData';
 
 export {};
 

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Warehouse } from 'src/models/warehouses/schemas/warehouse.schema';
 import * as mongoose from 'mongoose';
+import { Warehouse } from '../../warehouses/schemas/warehouse.schema';
 
 export type OrgWarehouseReferenceDocument = HydratedDocument<OrgWarehouseReference>;
 

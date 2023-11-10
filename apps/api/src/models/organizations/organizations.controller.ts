@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
-import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
+import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { OrganizationsService } from './organizations.service';
 import { Organization } from './schemas/organization.schema';
-import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)

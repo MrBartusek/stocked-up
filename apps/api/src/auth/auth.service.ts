@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UserDocument } from 'src/models/users/schemas/user.schema';
-import { UsersService } from 'src/models/users/users.service';
+import { UserDocument } from '../models/users/schemas/user.schema';
+import { UsersService } from '../models/users/users.service';
 
 export interface UserRegisterData {
 	username: string;

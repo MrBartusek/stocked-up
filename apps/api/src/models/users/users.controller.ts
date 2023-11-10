@@ -1,10 +1,10 @@
 import { Controller, Get, NotFoundException, Param, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Request } from 'express';
 import { PrivateUserDto, UserDto } from 'shared-types';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from './schemas/user.schema';
+import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 
 @Controller('users')
 @ApiTags('users')
