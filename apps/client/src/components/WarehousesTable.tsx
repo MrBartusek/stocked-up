@@ -8,7 +8,7 @@ import { Utils } from '../utils';
 import { useContext } from 'react';
 import { CurrentAppContext } from './Context/CurrentAppContext';
 
-const columnHelper = createColumnHelper<BaseWarehouse>();
+const columnHelper = createColumnHelper<WarehouseDto>();
 
 const columns = [
 	columnHelper.display({
