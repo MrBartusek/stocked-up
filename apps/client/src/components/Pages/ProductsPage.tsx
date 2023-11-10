@@ -1,22 +1,22 @@
 import useProductsList from '../../hooks/useProductsList';
-import Card from '../Card';
+import DashboardContainerCard from '../DashboardContainerCard';
 import DashboardContent from '../DashboardContent';
-import ProductsTable from '../ProductsTable';
 import Loader from '../Loader';
+import ProductsTable from '../ProductsTable';
 
 function ProductsPage() {
 	const { products, isLoading } = useProductsList();
 
 	return (
 		<DashboardContent header={'Products'}>
-			<Card>
+			<DashboardContainerCard>
 				<Loader
 					height="70vh"
 					isLoading={isLoading}
 				>
 					<ProductsTable products={products} />
 				</Loader>
-			</Card>
+			</DashboardContainerCard>
 		</DashboardContent>
 	);
 }

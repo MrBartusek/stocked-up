@@ -18,6 +18,8 @@ import WarehousesPage from './Pages/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import DashboardContainer from './DashboardContainer';
+import WarehousesListPage from './Pages/WarehousesListPage';
+import WarehousesCreatePage from './Pages/WarehousesCreatePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -85,6 +87,16 @@ function Router() {
 						{
 							path: 'warehouses',
 							element: <WarehousesPage />,
+							children: [
+								{
+									path: '',
+									element: <WarehousesListPage />,
+								},
+								{
+									path: 'add',
+									element: <WarehousesCreatePage />,
+								},
+							],
 						},
 						{
 							path: 'inventory',

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import Card from '../Card';
+import DashboardContainerCard from '../DashboardContainerCard';
 import DashboardContent from '../DashboardContent';
 
 function ProductViewPage() {
@@ -7,7 +7,7 @@ function ProductViewPage() {
 
 	return (
 		<DashboardContent header={`Product no. ${id}`}>
-			<Card>sss</Card>
+			<DashboardContainerCard>sss</DashboardContainerCard>
 		</DashboardContent>
 	);
 }

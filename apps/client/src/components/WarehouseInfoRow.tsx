@@ -14,7 +14,7 @@ function WarehouseInfoRow({ warehouse, organizationId }: WarehouseInfoRowProps) 
 		<Link
 			className={classNames(
 				'flex items-center justify-between border-b border-gray-200',
-				'p-4 ps-6 hover:bg-gray-150',
+				'p-5 ps-6 hover:bg-gray-150',
 			)}
 			to={Utils.dashboardUrl(organizationId, warehouse.id)}
 		>
@@ -22,10 +22,7 @@ function WarehouseInfoRow({ warehouse, organizationId }: WarehouseInfoRowProps) 
 				<div className="text-xl text-primary">
 					<BsBoxSeamFill />
 				</div>
-				<div>
-					<h4>{warehouse.name}</h4>
-					<span className="text-sm text-muted">Łódź, ul. Zgierska</span>
-				</div>
+				<h4>{warehouse.name}</h4>
 			</div>
 			<BsChevronRight />
 		</Link>

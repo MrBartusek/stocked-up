@@ -14,6 +14,10 @@ export interface FaFormInputProps extends InputProps {
 const FormInput = forwardRef(function TextInput({ label, ...props }: FaFormInputProps, ref: any) {
 	const [focused, setFocused] = useState(false);
 
+	if (props.readOnly) {
+		props.disabled = true;
+	}
+
 	useEffect(() => {
 		if (props.disabled) {
 			setFocused(false);
@@ -29,7 +33,7 @@ const FormInput = forwardRef(function TextInput({ label, ...props }: FaFormInput
 
 			<div
 				className={classNames(
-					'rounded-md border transition-colors',
+					'flex rounded-md border transition-colors ',
 					focused ? 'border-primary' : 'border-gray-300',
 				)}
 			>
@@ -38,7 +42,10 @@ const FormInput = forwardRef(function TextInput({ label, ...props }: FaFormInput
 					ref={ref}
 					onFocus={() => setFocused(true)}
 					onBlur={() => setFocused(false)}
-					className={classNames('block flex-1 bg-inherit px-4 py-2 outline-none')}
+					className={classNames(
+						'flex flex-1 bg-inherit px-4 py-2 outline-none disabled:bg-gray-100 ',
+						'rounded-md text-muted',
+					)}
 				></input>
 			</div>
 		</div>
