@@ -9,6 +9,7 @@ import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto'
 import { WarehouseDto } from './warehouse/WarehouseDto'
 import { OrganizationDto } from './organizations/OrganizationDto'
 import { PrivateUserDto } from './PrivateUserDto'
+import { CreateWarehouseInOrgDto } from './warehouse/CreateWarehouseInOrgDto'
 
 export {
     ProductDto,
@@ -21,5 +22,6 @@ export {
     CreateWarehouseDto,
     OrganizationDto,
     WarehouseDto,
-    PrivateUserDto
+    PrivateUserDto,
+    CreateWarehouseInOrgDto
 }

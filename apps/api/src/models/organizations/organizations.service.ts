@@ -18,18 +18,18 @@ export class OrganizationsService {
 			name: createOrganizationDto.name,
 		});
 
-		await this.addWarehouse(organization, createOrganizationDto.warehouse);
+		await this.addWarehouse(organization._id, createOrganizationDto.warehouse);
 
 		return this.organizationRepository.findById(organization._id);
 	}
 
 	async addWarehouse(
-		organization: OrganizationDocument,
+		organizationId: mongoose.Types.ObjectId | string,
 		createWarehouseDto: CreateWarehouseDto,
-	): Promise<Warehouse> {
+	): Promise<WarehouseDocument> {
 		const warehouse = await this.warehouseService.create(createWarehouseDto);
 
-		await this.organizationRepository.findOneByIdAndUpdate(organization._id, {
+		await this.organizationRepository.findOneByIdAndUpdate(organizationId, {
 			$push: {
 				warehouses: {
 					name: warehouse.name,
@@ -88,5 +88,9 @@ export class OrganizationsService {
 
 	async findById(id: mongoose.Types.ObjectId | string) {
 		return this.organizationRepository.findById(id);
+	}
+
+	async exist(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.exist({ _id: id });
 	}
 }

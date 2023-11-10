@@ -9,7 +9,12 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
+import {
+	CreateOrganizationDto,
+	CreateWarehouseInOrgDto,
+	OrganizationDto,
+	WarehouseDto,
+} from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { OrganizationsService } from './organizations.service';
@@ -28,6 +33,20 @@ export class OrganizationsController {
 		const org = await this.organizationsService.create(createOrganizationDto);
 		await this.organizationsService.updateAcl(org.id, request.user.id, 'owner');
 		return Organization.toDto(org);
+	}
+
+	@Post('warehouses')
+	async createWarehouse(@Body() dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
+		const exist = await this.organizationsService.exist(dto.organizationId);
+		if (!exist) {
+			throw new NotFoundException('Organization with provided id was not found');
+		}
+
+		const warehouse = await this.organizationsService.addWarehouse(
+			dto.organizationId,
+			dto.warehouse,
+		);
+		return Warehouse.toDto(warehouse);
 	}
 
 	@Get()
