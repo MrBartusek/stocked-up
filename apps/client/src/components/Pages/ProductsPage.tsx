@@ -1,22 +1,12 @@
-import useProductsList from '../../hooks/useProductsList';
+import { Outlet } from 'react-router-dom';
 import DashboardContainerCard from '../DashboardContainerCard';
 import DashboardContent from '../DashboardContent';
-import Loader from '../Loader';
-import ProductsTable from '../ProductsTable';
 
 function ProductsPage() {
-	const { products, isLoading, error } = useProductsList();
-
 	return (
 		<DashboardContent header={'Products'}>
 			<DashboardContainerCard>
-				<Loader
-					height="70vh"
-					isLoading={isLoading}
-					isError={error != undefined}
-				>
-					<ProductsTable products={products} />
-				</Loader>
+				<Outlet />
 			</DashboardContainerCard>
 		</DashboardContent>
 	);

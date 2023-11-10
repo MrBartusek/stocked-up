@@ -7,44 +7,53 @@ export interface TableProps {
 }
 
 function Table({ table, onClickRow }: TableProps) {
+	const data = table.getRowModel().rows;
+
 	return (
-		<table className="w-full table-fixed">
-			<thead className="bg-gray-700">
-				{table.getHeaderGroups().map((headerGroup, i) => (
-					<tr key={i}>
-						{headerGroup.headers.map((header, i) => (
-							<th
+		<>
+			<table className="w-full table-fixed">
+				<thead className="bg-gray-700">
+					{table.getHeaderGroups().map((headerGroup, i) => (
+						<tr key={i}>
+							{headerGroup.headers.map((header, i) => (
+								<th
+									key={i}
+									className="p-3 text-left font-semibold text-white first:text-center"
+									style={{ width: header.getSize() }}
+								>
+									{flexRender(header.column.columnDef.header, header.getContext())}
+								</th>
+							))}
+						</tr>
+					))}
+				</thead>
+				{data.length > 0 ? (
+					<tbody className="border-b border-l border-r border-gray-200">
+						{data.map((row, i) => (
+							<tr
 								key={i}
-								className="p-3 text-left font-semibold text-white first:text-center"
-								style={{ width: header.getSize() }}
+								className={classNames('border-b border-gray-200 last:border-b even:bg-gray-150', {
+									'cursor-pointer hover:bg-gray-200': onClickRow,
+								})}
+								onClick={() => (onClickRow ? onClickRow(row.original) : null)}
 							>
-								{flexRender(header.column.columnDef.header, header.getContext())}
-							</th>
+								{row.getVisibleCells().map((cell, i) => (
+									<td
+										key={i}
+										className="p-3"
+									>
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									</td>
+								))}
+							</tr>
 						))}
-					</tr>
-				))}
-			</thead>
-			<tbody className="border-b border-l border-r border-gray-200">
-				{table.getRowModel().rows.map((row, i) => (
-					<tr
-						key={i}
-						className={classNames('border-b border-gray-200 last:border-b even:bg-gray-150', {
-							'cursor-pointer hover:bg-gray-200': onClickRow,
-						})}
-						onClick={() => (onClickRow ? onClickRow(row.original) : null)}
-					>
-						{row.getVisibleCells().map((cell, i) => (
-							<td
-								key={i}
-								className="p-3"
-							>
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
-							</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
+					</tbody>
+				) : null}
+			</table>
+			{data.length == 0 ? (
+				<div className="p-4 text-center text-muted">This table is empty</div>
+			) : null}
+		</>
 	);
 }
 export default Table;

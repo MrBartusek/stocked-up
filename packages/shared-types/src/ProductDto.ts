@@ -1,11 +1,5 @@
-import { BaseDto } from "./BaseDto";
+import { BasicProductDto } from "./BasicProductDto";
 
-export class ProductDto extends BaseDto {
-    _id: any;
-    name: string;
-    description?: string;
-    imageUrl?: string;
-    buyPrice: number;
-    sellPrice: number;
-    unit?: string;
+export class ProductDto extends BasicProductDto {
+    description: string;
 }

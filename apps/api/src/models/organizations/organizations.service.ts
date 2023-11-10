@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import * as mongoose from 'mongoose';
 import { CreateOrganizationDto, CreateWarehouseDto } from 'shared-types';
+import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { WarehousesService } from '../warehouses/warehouses.service';
-import { Warehouse, WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
-import * as mongoose from 'mongoose';
 
 @Injectable()
 export class OrganizationsService {

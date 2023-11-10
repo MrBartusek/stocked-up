@@ -12,7 +12,7 @@ import LoginPage from './Pages/LoginPage';
 import OrganizationCreatePage from './Pages/OrganizationCreatePage';
 import OrganizationSelectPage from './Pages/OrganizationSelectPage';
 import ProductViewPage from './Pages/ProductViewPage';
-import ProductsPage from './Pages/ProductsPage';
+import ProductsListPage from './Pages/ProductsListPage';
 import RegisterPage from './Pages/RegisterPage';
 import WarehousesPage from './Pages/WarehousesPage';
 import RegisterForm from './RegisterForm';
@@ -21,6 +21,8 @@ import DashboardContainer from './DashboardContainer';
 import WarehousesListPage from './Pages/WarehousesListPage';
 import WarehousesCreatePage from './Pages/WarehousesCreatePage';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import ProductsPage from './Pages/ProductsPage';
+import ProductsAddPage from './Pages/ProductsAddPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -97,10 +99,20 @@ function Router() {
 						{
 							path: 'products',
 							element: <ProductsPage />,
-						},
-						{
-							path: 'products/:id',
-							element: <ProductViewPage />,
+							children: [
+								{
+									path: '',
+									element: <ProductsListPage />,
+								},
+								{
+									path: 'add',
+									element: <ProductsAddPage />,
+								},
+								{
+									path: 'view/:id',
+									element: <ProductViewPage />,
+								},
+							],
 						},
 						{
 							path: 'warehouses',

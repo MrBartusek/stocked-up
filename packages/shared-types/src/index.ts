@@ -1,4 +1,4 @@
-import { ProductDto } from './ProductDto'
+import { BasicProductDto } from './BasicProductDto'
 import { BasicWarehouseDto } from './warehouse/BasicWarehouseDto'
 import { UserDto } from './UserDto'
 import { SimpleResponseDto } from './SimpleResponseDto'
@@ -10,9 +10,10 @@ import { WarehouseDto } from './warehouse/WarehouseDto'
 import { OrganizationDto } from './organizations/OrganizationDto'
 import { PrivateUserDto } from './PrivateUserDto'
 import { CreateWarehouseInOrgDto } from './warehouse/CreateWarehouseInOrgDto'
+import { ProductDto } from './ProductDto'
 
 export {
-    ProductDto,
+    BasicProductDto,
     BasicWarehouseDto,
     UserDto,
     SimpleResponseDto,
@@ -23,5 +24,6 @@ export {
     OrganizationDto,
     WarehouseDto,
     PrivateUserDto,
-    CreateWarehouseInOrgDto
+    CreateWarehouseInOrgDto,
+    ProductDto
 }

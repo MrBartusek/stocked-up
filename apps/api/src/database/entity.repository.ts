@@ -30,10 +30,12 @@ export abstract class EntityRepository<T extends Document> {
 		id: mongoose.Types.ObjectId | string,
 		projection?: Record<string, unknown>,
 	): Promise<T | null> {
-		if (!mongoose.Types.ObjectId.isValid(id)) {
+		if (!mongoose.isValidObjectId(id)) {
 			return null;
 		}
-		return this.entityModel.findById(id, { ...DEFAULT_PROJECTIONS, ...projection }).exec();
+
+		const objectId = new mongoose.Types.ObjectId(id);
+		return this.entityModel.findById(objectId, { ...DEFAULT_PROJECTIONS, ...projection }).exec();
 	}
 
 	async create(createEntityData: Partial<T>): Promise<T> {
@@ -57,7 +59,12 @@ export abstract class EntityRepository<T extends Document> {
 		id: mongoose.Types.ObjectId | string,
 		updateEntityData: UpdateQuery<T>,
 	): Promise<T | null> {
-		return this.findOneAndUpdate({ _id: id }, updateEntityData);
+		if (!mongoose.isValidObjectId(id)) {
+			return null;
+		}
+
+		const objectId = new mongoose.Types.ObjectId(id);
+		return this.findOneAndUpdate({ _id: objectId }, updateEntityData);
 	}
 
 	async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
@@ -66,7 +73,11 @@ export abstract class EntityRepository<T extends Document> {
 	}
 
 	async deleteOneById(id: mongoose.Types.ObjectId | string): Promise<T | null> {
-		return this.entityModel.findOneAndDelete({ _id: id });
+		if (!mongoose.isValidObjectId(id)) {
+			return null;
+		}
+		const objectId = new mongoose.Types.ObjectId(id);
+		return this.entityModel.findOneAndDelete({ _id: objectId });
 	}
 
 	async aggregate(pipeline: mongoose.PipelineStage[]): Promise<any[]> {

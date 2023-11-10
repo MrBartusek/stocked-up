@@ -1,12 +1,12 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import Table from './Table';
 import humanFormat from 'human-format';
-import ProductActions from './ProductActions';
 import { useNavigate } from 'react-router-dom';
+import { BasicProductDto, ProductDto } from 'shared-types';
 import placeholderImage from '../assets/placeholder.png';
-import { ProductDto } from 'shared-types';
+import ProductActions from './ProductActions';
+import Table from './Table';
 
-const columnHelper = createColumnHelper<ProductDto>();
+const columnHelper = createColumnHelper<BasicProductDto>();
 
 const columns = [
 	columnHelper.accessor('imageUrl', {
@@ -52,7 +52,7 @@ const columns = [
 ];
 
 export interface ProductsTableProps {
-	products: ProductDto[];
+	products: BasicProductDto[];
 }
 
 function ProductsTable({ products }: ProductsTableProps) {
@@ -65,7 +65,7 @@ function ProductsTable({ products }: ProductsTableProps) {
 	});
 
 	function onClickRow(product: ProductDto) {
-		navigate(`/dashboard/products/${product._id}`);
+		navigate(product.id);
 	}
 
 	return (
