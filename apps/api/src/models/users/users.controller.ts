@@ -19,6 +19,7 @@ export class UsersController {
 		return User.toPrivateDto(user);
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Get(':id')
 	async findOne(@Param('id') id: string): Promise<UserDto> {
 		const user = await this.usersService.findById(id);

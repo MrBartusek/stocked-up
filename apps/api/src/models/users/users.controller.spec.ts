@@ -1,20 +1,57 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { Request } from 'express';
 
 describe('UsersController', () => {
-  let controller: UsersController;
+	let controller: UsersController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [UsersController],
-      providers: [UsersService],
-    }).compile();
+	const mockUserService = {
+		findById: jest.fn((id) => {
+			return {
+				_id: id,
+				profile: {
+					username: 'test-user',
+					email: 'test@dokurno.dev',
+				},
+				auth: {
+					password: 'test',
+				},
+			};
+		}),
+	};
 
-    controller = module.get<UsersController>(UsersController);
-  });
+	beforeEach(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			controllers: [UsersController],
+			providers: [UsersService],
+		})
+			.overrideProvider(UsersService)
+			.useValue(mockUserService)
+			.compile();
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+		controller = module.get<UsersController>(UsersController);
+	});
+
+	it('should be defined', () => {
+		expect(controller).toBeDefined();
+	});
+
+	it('should get user by id', () => {
+		expect(controller.findOne('123')).resolves.toEqual({
+			id: expect.any(String),
+			username: expect.any(String),
+			email: expect.any(String),
+		});
+	});
+
+	it('should get authenticated user', () => {
+		const mockRequest = { user: { id: '123' } } as Request;
+
+		expect(controller.findAuthenticated(mockRequest)).resolves.toEqual({
+			id: expect.any(String),
+			username: expect.any(String),
+			email: expect.any(String),
+		});
+	});
 });
