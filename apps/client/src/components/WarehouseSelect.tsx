@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { BasicWarehouseDto } from 'shared-types/dist/BasicWarehouseDto.js';
 import tailwindConfig from '../../tailwind.config.js';
 import { CurrentAppContext } from './Context/CurrentAppContext.js';
 import toast from 'react-hot-toast';
+import { BasicWarehouseDto } from 'shared-types';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,

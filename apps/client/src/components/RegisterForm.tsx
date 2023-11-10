@@ -1,14 +1,14 @@
-import { useForm } from 'react-hook-form';
-import { BsArrowLeft, BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
-import Button from './Button';
-import FancyInput from './Form/FancyInput';
-import { Link, useNavigate } from 'react-router-dom';
-import RegisterGoBack from './RegisterGoBack';
-import { UserLoginDto, UserRegisterDto } from 'shared-types';
 import { useContext, useState } from 'react';
-import { Utils } from '../utils';
-import { UserContext } from './Context/UserContext';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { UserLoginDto, UserRegisterDto } from 'shared-types';
+import { Utils } from '../utils';
+import Button from './Button';
+import { UserContext } from './Context/UserContext';
+import FancyInput from './Form/FancyInput';
+import RegisterGoBack from './RegisterGoBack';
 
 type Inputs = {
 	email: string;
