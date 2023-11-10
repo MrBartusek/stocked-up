@@ -5,7 +5,7 @@ import Loader from '../Loader';
 import ProductsTable from '../ProductsTable';
 
 function ProductsPage() {
-	const { products, isLoading } = useProductsList();
+	const { products, isLoading, error } = useProductsList();
 
 	return (
 		<DashboardContent header={'Products'}>
@@ -13,6 +13,7 @@ function ProductsPage() {
 				<Loader
 					height="70vh"
 					isLoading={isLoading}
+					isError={error != undefined}
 				>
 					<ProductsTable products={products} />
 				</Loader>
