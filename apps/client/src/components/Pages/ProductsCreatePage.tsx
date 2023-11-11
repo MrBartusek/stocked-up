@@ -1,12 +1,12 @@
 import { useContext } from 'react';
+import { BsChevronLeft } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import IconButton from '../IconButton';
+import ProductCreateForm from '../ProductCreateForm';
 import TableTopBar from '../TableTopBar';
-import WarehouseCreateForm from '../WarehouseCreateForm';
-import { BsChevronLeft } from 'react-icons/bs';
 
-function ProductsAddPage() {
+function ProductsCreatePage() {
 	const appContext = useContext(CurrentAppContext);
 
 	return (
@@ -18,9 +18,9 @@ function ProductsAddPage() {
 					<IconButton icon={BsChevronLeft}>Go back</IconButton>
 				</Link>
 			</TableTopBar>
-			<WarehouseCreateForm />
+			<ProductCreateForm />
 		</div>
 	);
 }
 
-export default ProductsAddPage;
+export default ProductsCreatePage;

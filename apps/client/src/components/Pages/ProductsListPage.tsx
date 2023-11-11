@@ -19,8 +19,8 @@ function ProductsListPage() {
 			isError={error != undefined}
 		>
 			<TableTopBar header={`List of the products used in ${appContext.organization.name}`}>
-				<Link to="add">
-					<IconButton icon={BsPlusCircle}>Add new product</IconButton>
+				<Link to="create">
+					<IconButton icon={BsPlusCircle}>Create new product</IconButton>
 				</Link>
 			</TableTopBar>
 			<ProductsTable products={products} />

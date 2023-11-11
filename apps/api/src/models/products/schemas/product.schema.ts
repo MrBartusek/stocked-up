@@ -22,7 +22,7 @@ export class Product {
 	@Prop({ default: 0 })
 	sellPrice: number;
 
-	@Prop()
+	@Prop({ default: 'box' })
 	unit: string;
 
 	public static toBasicDto(document: ProductDocument): BasicProductDto {

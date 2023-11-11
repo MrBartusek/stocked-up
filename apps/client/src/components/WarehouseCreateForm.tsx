@@ -46,7 +46,7 @@ function WarehouseCreateForm() {
 
 			<FormInput
 				label="Warehouse Name"
-				placeholder="US West Main"
+				placeholder="Car parts store"
 				disabled={loading}
 				required
 				{...register('name', { required: true })}

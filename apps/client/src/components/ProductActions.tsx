@@ -2,10 +2,10 @@ import { Row } from '@tanstack/react-table';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import ActionButton from './ActionButton';
 import TableActionsWrapper from './TableActionsWrapper';
-import { ProductDto } from 'shared-types';
+import { BasicProductDto, ProductDto } from 'shared-types';
 
 export interface ProductActionsProps {
-	row: Row<ProductDto>;
+	row: Row<BasicProductDto>;
 }
 
 function ProductActions({ row }: ProductActionsProps) {

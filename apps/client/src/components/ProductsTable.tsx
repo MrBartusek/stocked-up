@@ -12,7 +12,7 @@ const columns = [
 	columnHelper.accessor('imageUrl', {
 		header: '#',
 		cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
-		size: 25,
+		size: 30,
 	}),
 	columnHelper.accessor('imageUrl', {
 		header: 'Image',
@@ -20,12 +20,12 @@ const columns = [
 			<img
 				src={info.getValue<string>() || placeholderImage}
 				alt="product image"
-				className="w-full rounded-md"
+				className="m-auto h-12 rounded-md"
 				width={50}
 				height={50}
 			/>
 		),
-		size: 40,
+		size: 70,
 	}),
 	columnHelper.accessor('name', {
 		header: 'Product Name',
@@ -33,11 +33,11 @@ const columns = [
 	}),
 	columnHelper.accessor('buyPrice', {
 		header: 'Buy Price',
-		cell: (info) => '$' + humanFormat(info.getValue(), { separator: '' }),
+		cell: (info) => humanFormat(info.getValue(), { separator: '', decimals: 2 }),
 	}),
 	columnHelper.accessor('sellPrice', {
 		header: 'Sell Price',
-		cell: (info) => '$' + humanFormat(info.getValue(), { separator: '' }),
+		cell: (info) => humanFormat(info.getValue(), { separator: '', decimals: 2 }),
 	}),
 	columnHelper.accessor('unit', {
 		header: 'Unit',
@@ -47,7 +47,7 @@ const columns = [
 		header: 'Actions',
 		id: 'actions',
 		cell: (props) => <ProductActions row={props.row} />,
-		size: 85,
+		size: 100,
 	}),
 ];
 
@@ -64,8 +64,8 @@ function ProductsTable({ products }: ProductsTableProps) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	function onClickRow(product: ProductDto) {
-		navigate(product.id);
+	function onClickRow(product: BasicProductDto) {
+		navigate(`view/${product.id}`);
 	}
 
 	return (

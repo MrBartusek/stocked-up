@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from './products.repository';
 import mongoose from 'mongoose';
-import { ProductDocument } from './schemas/product';
+import { ProductDocument } from './schemas/product.schema';
+import { CreateProductDto } from 'shared-types';
 
 @Injectable()
 export class ProductsService {
 	constructor(private readonly productsRepository: ProductsRepository) {}
+
+	create(dto: CreateProductDto): Promise<ProductDocument> {
+		return this.productsRepository.create({
+			organization: dto.organizationId as any,
+			...dto,
+		});
+	}
 
 	findOne(id: mongoose.Types.ObjectId | string): Promise<ProductDocument> {
 		return this.productsRepository.findById(id);

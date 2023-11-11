@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { BsBoxSeam } from 'react-icons/bs';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export interface LoaderProps {
 	height?: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	isLoading: boolean;
 	isError?: boolean;
 }
@@ -25,6 +26,17 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 			</div>
 		);
 	}
-	return children;
+	return (
+		<ErrorBoundary
+			fallback={
+				<Loader
+					isError
+					isLoading={false}
+				/>
+			}
+		>
+			{children}
+		</ErrorBoundary>
+	);
 }
 export default Loader;

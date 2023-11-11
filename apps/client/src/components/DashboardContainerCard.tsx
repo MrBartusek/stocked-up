@@ -9,7 +9,7 @@ function DashboardContainerCard({ ...props }: DashboardContainerCard) {
 			{...props}
 			className={classNames(props.className, 'flex justify-center')}
 		>
-			<div className="w-[100rem]">{props.children}</div>
+			<div className="w-full max-w-[100rem]">{props.children}</div>
 		</Card>
 	);
 }

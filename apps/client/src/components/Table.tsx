@@ -10,16 +10,16 @@ function Table({ table, onClickRow }: TableProps) {
 	const data = table.getRowModel().rows;
 
 	return (
-		<>
-			<table className="w-full table-fixed">
+		<div className=" overflow-x-auto">
+			<table className="min-w-full table-fixed">
 				<thead className="bg-gray-700">
 					{table.getHeaderGroups().map((headerGroup, i) => (
 						<tr key={i}>
 							{headerGroup.headers.map((header, i) => (
 								<th
 									key={i}
-									className="p-3 text-left font-semibold text-white first:text-center"
-									style={{ width: header.getSize() }}
+									className="p-3 text-left text-center font-semibold text-white"
+									style={{ width: header.getSize() + 'px' }}
 								>
 									{flexRender(header.column.columnDef.header, header.getContext())}
 								</th>
@@ -53,7 +53,7 @@ function Table({ table, onClickRow }: TableProps) {
 			{data.length == 0 ? (
 				<div className="p-4 text-center text-muted">This table is empty</div>
 			) : null}
-		</>
+		</div>
 	);
 }
 export default Table;

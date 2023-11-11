@@ -22,7 +22,7 @@ import WarehousesListPage from './Pages/WarehousesListPage';
 import WarehousesCreatePage from './Pages/WarehousesCreatePage';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import ProductsPage from './Pages/ProductsPage';
-import ProductsAddPage from './Pages/ProductsAddPage';
+import ProductsCreatePage from './Pages/ProductsCreatePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -105,8 +105,8 @@ function Router() {
 									element: <ProductsListPage />,
 								},
 								{
-									path: 'add',
-									element: <ProductsAddPage />,
+									path: 'create',
+									element: <ProductsCreatePage />,
 								},
 								{
 									path: 'view/:id',
