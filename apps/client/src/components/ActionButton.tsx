@@ -16,7 +16,7 @@ function ActionButton({ icon, className, ...props }: ActionButtonProps) {
 	return (
 		<button
 			{...props}
-			className="rounded-md p-2 hover:bg-gray-300"
+			className="rounded-md p-2 hover:bg-gray-300 disabled:pointer-events-none"
 		>
 			{iconElement}
 		</button>

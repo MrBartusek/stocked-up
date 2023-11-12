@@ -1,10 +1,20 @@
-export interface EntityInfoTableProps {
+import classNames from 'classnames';
+
+type TableProps = React.DetailedHTMLProps<
+	React.TableHTMLAttributes<HTMLTableElement>,
+	HTMLTableElement
+>;
+
+export interface EntityInfoTableProps extends TableProps {
 	properties?: { [key: string]: any };
 }
 
-function EntityInfoTable({ properties }: EntityInfoTableProps) {
+function EntityInfoTable({ properties, ...props }: EntityInfoTableProps) {
 	return (
-		<table className="w-full table-fixed border border-gray-200">
+		<table
+			{...props}
+			className={classNames(props.className, 'w-full table-fixed border border-gray-200')}
+		>
 			<tbody>
 				{properties
 					? Object.entries(properties).map(([key, value], i) => (

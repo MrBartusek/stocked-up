@@ -21,7 +21,7 @@ function Button({ loading, ...props }: ButtonProps) {
 			className={classNames(
 				'rounded-md bg-primary px-3.5 py-2.5 text-light',
 				'transition-opacity',
-				loading ? 'pointer-events-none opacity-75' : 'cursor-pointer hover:bg-primary-hover',
+				props.disabled ? 'pointer-events-none opacity-75' : 'cursor-pointer hover:bg-primary-hover',
 				props.className,
 			)}
 		>

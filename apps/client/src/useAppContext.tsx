@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import useOrganizationData from './hooks/useOrganisationData';
-import { OrganizationDto } from 'shared-types';
-import { BasicWarehouseDto } from 'shared-types/dist/BasicWarehouseDto';
+import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
+import toast from 'react-hot-toast';
 
 export interface CurrentAppContextType {
 	isLoading: boolean;
@@ -11,17 +11,23 @@ export interface CurrentAppContextType {
 }
 
 function useCurrentAppContext(organizationId: string, warehouseId: string): CurrentAppContextType {
-	const { organization, isLoading, error } = useOrganizationData(organizationId);
-	const currentWarehouse = useMemo<BasicWarehouseDto>(
+	const { organization, isLoading: isLoadingOrgData, error } = useOrganizationData(organizationId);
+	const currentWarehouse = useMemo<BasicWarehouseDto | undefined>(
 		() => organization?.warehouses?.find((w) => w.id == warehouseId),
 		[organization?.warehouses, warehouseId],
 	);
 
+	useEffect(() => {
+		if (currentWarehouse) {
+			toast(`You are now using "${currentWarehouse.name}" warehouse`);
+		}
+	}, [currentWarehouse]);
+
 	return {
-		isLoading,
+		isLoading: isLoadingOrgData || !currentWarehouse,
 		error: error != undefined,
 		organization,
-		currentWarehouse,
+		currentWarehouse: currentWarehouse!,
 	};
 }
 

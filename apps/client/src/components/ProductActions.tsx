@@ -1,9 +1,9 @@
 import { Row } from '@tanstack/react-table';
+import React from 'react';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
+import { BasicProductDto } from 'shared-types';
 import ActionButton from './ActionButton';
 import TableActionsWrapper from './TableActionsWrapper';
-import { BasicProductDto, ProductDto } from 'shared-types';
-import React from 'react';
 
 export interface ProductActionsProps {
 	row: Row<BasicProductDto>;

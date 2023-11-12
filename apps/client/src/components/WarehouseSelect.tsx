@@ -22,7 +22,6 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 	function onChange(newValue: any) {
 		const newUrl = location.pathname.replace(appContext.currentWarehouse.id, newValue.value);
 		navigate(newUrl);
-		toast(`You are now using "${newValue.label}" warehouse`);
 	}
 
 	function generateOption(warehouse: BasicWarehouseDto) {

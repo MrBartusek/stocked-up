@@ -1,13 +1,9 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import humanFormat from 'human-format';
 import { useNavigate } from 'react-router-dom';
-import ProductActions from './ProductActions';
-import Table from './Table';
 import { WarehouseDto } from 'shared-types';
-import { Utils } from '../utils';
-import { useContext } from 'react';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import toast from 'react-hot-toast';
+import Table from './Table';
+import WarehouseActions from './WarehouseActions';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -32,7 +28,7 @@ const columns = [
 	columnHelper.display({
 		header: 'Actions',
 		id: 'actions',
-		cell: (props) => <ProductActions row={props.row} />,
+		cell: (props) => <WarehouseActions warehouse={props.row.original} />,
 		size: 85,
 	}),
 ];
@@ -42,7 +38,6 @@ export interface WarehousesTableProps {
 }
 
 function WarehousesTable({ warehouses }: WarehousesTableProps) {
-	const appContext = useContext(CurrentAppContext);
 	const navigate = useNavigate();
 
 	const table = useReactTable({
@@ -52,8 +47,7 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 	});
 
 	function onClickRow(warehouse: WarehouseDto) {
-		toast(`You are now using "${warehouse.name}" warehouse`);
-		navigate(Utils.dashboardUrl(appContext.organization.id, warehouse.id));
+		navigate(`view/${warehouse.id}`);
 	}
 
 	return (
