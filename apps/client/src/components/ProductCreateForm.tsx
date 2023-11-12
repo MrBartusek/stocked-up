@@ -61,6 +61,8 @@ function ProductCreateForm() {
 			/>
 			<FormInput
 				label="Product description"
+				as="textarea"
+				rows={3}
 				{...register('description')}
 			/>
 			<FormInput

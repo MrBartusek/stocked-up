@@ -1,20 +1,31 @@
 import classNames from 'classnames';
-import React, { useState, forwardRef, useEffect } from 'react';
-import { IconType } from 'react-icons';
+import React, {
+	InputHTMLAttributes,
+	TextareaHTMLAttributes,
+	forwardRef,
+	useEffect,
+	useState,
+} from 'react';
 
-type InputProps = React.DetailedHTMLProps<
-	React.InputHTMLAttributes<HTMLInputElement>,
-	HTMLInputElement
->;
+type FormControlProps<T extends 'input' | 'textarea'> = T extends 'input'
+	? InputHTMLAttributes<HTMLInputElement>
+	: T extends 'textarea'
+	? TextareaHTMLAttributes<HTMLTextAreaElement>
+	: never;
 
-export interface FormInputProps extends InputProps {
+interface FormInputBaseProps<T extends 'input' | 'textarea'> {
 	label?: string;
 	hint?: string;
 	suffixText?: string;
+	as?: T;
 }
 
+type InputProps = FormInputBaseProps<'input'> & FormControlProps<'input'>;
+type TextareaProps = FormInputBaseProps<'textarea'> & FormControlProps<'textarea'>;
+type FormInputProps = InputProps | TextareaProps;
+
 const FormInput = forwardRef(function TextInput(
-	{ label, hint, suffixText, ...props }: FormInputProps,
+	{ label, hint, suffixText, as, ...props }: FormInputProps,
 	ref: any,
 ) {
 	const [focused, setFocused] = useState(false);
@@ -28,6 +39,17 @@ const FormInput = forwardRef(function TextInput(
 			setFocused(false);
 		}
 	}, [props.disabled]);
+
+	const element = React.createElement(as || 'input', {
+		...props,
+		ref,
+		onFocus: () => setFocused(true),
+		onBlur: () => setFocused(false),
+		className: classNames(
+			'flex flex-1 bg-inherit px-4 py-2 outline-none disabled:bg-gray-100 ',
+			'rounded-md text-muted',
+		),
+	});
 
 	return (
 		<div className="relative my-6">
@@ -46,16 +68,7 @@ const FormInput = forwardRef(function TextInput(
 						focused ? 'border-primary' : 'border-gray-300',
 					)}
 				>
-					<input
-						{...props}
-						ref={ref}
-						onFocus={() => setFocused(true)}
-						onBlur={() => setFocused(false)}
-						className={classNames(
-							'flex flex-1 bg-inherit px-4 py-2 outline-none disabled:bg-gray-100 ',
-							'rounded-md text-muted',
-						)}
-					></input>
+					{element}
 				</div>
 				{suffixText ? <span>{suffixText}</span> : null}
 			</div>
