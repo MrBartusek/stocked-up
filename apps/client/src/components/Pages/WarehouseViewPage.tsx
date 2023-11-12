@@ -38,7 +38,9 @@ function WarehouseViewPage() {
 				icon={BsCheckCircle}
 				disabled={isCurrentWarehouse}
 				onClick={() =>
-					navigate(`${Utils.dashboardUrl(appContext.organization.id, id)}/warehouses/view/${id}`)
+					navigate(`${Utils.dashboardUrl(appContext.organization.id, id!)}/warehouses/`, {
+						replace: true,
+					})
 				}
 			>
 				{isCurrentWarehouse ? 'This warehouse is already selected' : 'Switch to this warehouse'}
