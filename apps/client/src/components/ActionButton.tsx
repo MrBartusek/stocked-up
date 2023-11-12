@@ -1,14 +1,25 @@
 import React from 'react';
 import { IconType } from 'react-icons';
 
-export interface ActionButtonProps {
+type ButtonProps = React.DetailedHTMLProps<
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
+	HTMLButtonElement
+>;
+
+export interface ActionButtonProps extends Omit<ButtonProps, 'children'> {
 	icon: IconType;
-	className?: string;
 }
 
-function ActionButton({ icon, className }: ActionButtonProps) {
+function ActionButton({ icon, className, ...props }: ActionButtonProps) {
 	const iconElement = React.createElement(icon, { className });
 
-	return <button className="rounded-md p-2 hover:bg-gray-300">{iconElement}</button>;
+	return (
+		<button
+			{...props}
+			className="rounded-md p-2 hover:bg-gray-300"
+		>
+			{iconElement}
+		</button>
+	);
 }
 export default ActionButton;

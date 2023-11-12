@@ -22,4 +22,8 @@ export class ProductsService {
 	findAll(organizationId: mongoose.Types.ObjectId | string): Promise<ProductDocument[]> {
 		return this.productsRepository.find({ organization: organizationId });
 	}
+
+	countAll(organizationId: mongoose.Types.ObjectId | string): Promise<number> {
+		return this.productsRepository.countDocuments({ organization: organizationId });
+	}
 }

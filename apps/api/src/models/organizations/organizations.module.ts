@@ -13,5 +13,6 @@ import { WarehousesModule } from '../warehouses/warehouses.module';
 	],
 	controllers: [OrganizationsController],
 	providers: [OrganizationsService, OrganizationRepository],
+	exports: [OrganizationsService],
 })
 export class OrganizationsModule {}

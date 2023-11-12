@@ -43,8 +43,13 @@ export abstract class EntityRepository<T extends Document> {
 		return entity.save() as Promise<T>;
 	}
 
-	async exist(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+	async countDocuments(entityFilterQuery: FilterQuery<T>): Promise<number> {
 		const count = await this.entityModel.countDocuments(entityFilterQuery).exec();
+		return count;
+	}
+
+	async exist(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+		const count = await this.countDocuments(entityFilterQuery);
 		return count > 0;
 	}
 

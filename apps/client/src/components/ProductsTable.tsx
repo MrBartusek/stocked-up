@@ -47,7 +47,7 @@ const columns = [
 		header: 'Actions',
 		id: 'actions',
 		cell: (props) => <ProductActions row={props.row} />,
-		size: 100,
+		size: 80,
 	}),
 ];
 

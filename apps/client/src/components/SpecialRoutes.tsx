@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import { Navigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export interface SpecialRouteProps {
 	children: React.ReactNode;
@@ -10,6 +11,10 @@ export function ProtectedRoute({ children }: SpecialRouteProps) {
 	const { isAuthenticated, isLoading } = useContext(UserContext);
 
 	if (!isLoading && !isAuthenticated) {
+		toast.error('You have been logged out', {
+			position: 'top-center',
+			id: 'logged-out',
+		});
 		return (
 			<Navigate
 				to="/login"

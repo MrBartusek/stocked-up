@@ -5,6 +5,6 @@ export interface TableActionsWrapperProps {
 }
 
 function TableActionsWrapper({ children }: TableActionsWrapperProps) {
-	return <div className="flex flex-row items-center">{children}</div>;
+	return <div className="flex flex-row items-center justify-center">{children}</div>;
 }
 export default TableActionsWrapper;

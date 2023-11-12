@@ -93,4 +93,25 @@ export class OrganizationsService {
 	async exist(id: mongoose.Types.ObjectId | string) {
 		return this.organizationRepository.exist({ _id: id });
 	}
+
+	async updateProductsCount(id: mongoose.Types.ObjectId | string, count: number) {
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: id },
+			{ stats: { totalProducts: count } },
+		);
+	}
+
+	async updateTotalValue(id: mongoose.Types.ObjectId | string, count: number) {
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: id },
+			{ stats: { totalValue: count } },
+		);
+	}
+
+	async updatePendingOrders(id: mongoose.Types.ObjectId | string, count: number) {
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: id },
+			{ stats: { totalPendingOrders: count } },
+		);
+	}
 }
