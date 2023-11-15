@@ -18,8 +18,10 @@ function Table({ table, onClickRow }: TableProps) {
 							{headerGroup.headers.map((header, i) => (
 								<th
 									key={i}
-									className="p-3 text-center font-semibold text-white"
-									style={{ width: header.getSize() + 'px' }}
+									className="p-3 font-semibold text-white"
+									style={{
+										widows: header.getSize(),
+									}}
 								>
 									{flexRender(header.column.columnDef.header, header.getContext())}
 								</th>

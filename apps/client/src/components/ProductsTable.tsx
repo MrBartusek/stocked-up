@@ -5,6 +5,7 @@ import { BasicProductDto, ProductDto } from 'shared-types';
 import placeholderImage from '../assets/placeholder.png';
 import ProductActions from './ProductActions';
 import Table from './Table';
+import TableImage from './TableImage';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
@@ -12,20 +13,12 @@ const columns = [
 	columnHelper.accessor('imageUrl', {
 		header: '#',
 		cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
-		size: 30,
+		size: 0,
 	}),
 	columnHelper.accessor('imageUrl', {
 		header: 'Image',
-		cell: (info) => (
-			<img
-				src={info.getValue<string>() || placeholderImage}
-				alt="product image"
-				className="m-auto h-12 rounded-md"
-				width={50}
-				height={50}
-			/>
-		),
-		size: 70,
+		cell: (info) => <TableImage src={info.getValue<string>() || placeholderImage} />,
+		size: 0,
 	}),
 	columnHelper.accessor('name', {
 		header: 'Product Name',
@@ -47,7 +40,7 @@ const columns = [
 		header: 'Actions',
 		id: 'actions',
 		cell: (props) => <ProductActions product={props.row.original} />,
-		size: 80,
+		size: 0,
 	}),
 ];
 

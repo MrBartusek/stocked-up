@@ -11,7 +11,7 @@ const columns = [
 	columnHelper.display({
 		header: '#',
 		cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
-		size: 25,
+		size: 0,
 	}),
 	columnHelper.accessor('name', {
 		header: 'Warehouse Name',
@@ -29,7 +29,7 @@ const columns = [
 		header: 'Actions',
 		id: 'actions',
 		cell: (props) => <WarehouseActions warehouse={props.row.original} />,
-		size: 85,
+		size: 0,
 	}),
 ];
 
