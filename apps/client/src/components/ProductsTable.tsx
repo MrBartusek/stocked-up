@@ -46,7 +46,7 @@ const columns = [
 	columnHelper.display({
 		header: 'Actions',
 		id: 'actions',
-		cell: (props) => <ProductActions row={props.row} />,
+		cell: (props) => <ProductActions product={props.row.original} />,
 		size: 80,
 	}),
 ];

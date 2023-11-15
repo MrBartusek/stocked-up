@@ -32,12 +32,12 @@ function WarehouseActions({ warehouse }: WarehouseActionsProps) {
 
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		console.log(event);
+		navigate(`${appContext.baseUrl}/warehouses/edit/${warehouse.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		console.log(event);
+		navigate(`${appContext.baseUrl}/warehouses/delete/${warehouse.id}`);
 	}
 
 	return (

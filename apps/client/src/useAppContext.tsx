@@ -2,12 +2,14 @@ import { useEffect, useMemo } from 'react';
 import useOrganizationData from './hooks/useOrganisationData';
 import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
 import toast from 'react-hot-toast';
+import { Utils } from './utils';
 
 export interface CurrentAppContextType {
 	isLoading: boolean;
 	error: boolean;
 	organization: OrganizationDto;
 	currentWarehouse: BasicWarehouseDto;
+	baseUrl: string;
 }
 
 function useCurrentAppContext(organizationId: string, warehouseId: string): CurrentAppContextType {
@@ -28,6 +30,7 @@ function useCurrentAppContext(organizationId: string, warehouseId: string): Curr
 		error: error != undefined,
 		organization,
 		currentWarehouse: currentWarehouse!,
+		baseUrl: Utils.dashboardUrl(organization?.id, currentWarehouse?.id),
 	};
 }
 

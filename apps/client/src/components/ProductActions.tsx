@@ -1,23 +1,27 @@
-import { Row } from '@tanstack/react-table';
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
 import ActionButton from './ActionButton';
+import { CurrentAppContext } from './Context/CurrentAppContext';
 import TableActionsWrapper from './TableActionsWrapper';
 
 export interface ProductActionsProps {
-	row: Row<BasicProductDto>;
+	product: BasicProductDto;
 }
 
-function ProductActions({ row }: ProductActionsProps) {
+function ProductActions({ product }: ProductActionsProps) {
+	const appContext = useContext(CurrentAppContext);
+	const navigate = useNavigate();
+
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		console.log(event);
+		navigate(`${appContext.baseUrl}/products/edit/${product.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		console.log(event);
+		navigate(`${appContext.baseUrl}/products/delete/${product.id}`);
 	}
 
 	return (

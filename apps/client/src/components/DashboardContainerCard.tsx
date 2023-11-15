@@ -1,7 +1,6 @@
 import classNames from 'classnames';
-import Card, { CardProps } from './Card';
 import { ErrorBoundary } from 'react-error-boundary';
-import Loader from './Loader';
+import Card, { CardProps } from './Card';
 
 export interface DashboardContainerCard extends CardProps {}
 
@@ -13,10 +12,9 @@ function DashboardContainerCard({ ...props }: DashboardContainerCard) {
 		>
 			<ErrorBoundary
 				fallback={
-					<Loader
-						isLoading={false}
-						isError
-					/>
+					<span className="font-bold text-red-600">
+						StockedUp encountered and error when loading this element
+					</span>
 				}
 			>
 				<div className="w-full max-w-[100rem]">{props.children}</div>

@@ -29,10 +29,9 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 	return (
 		<ErrorBoundary
 			fallback={
-				<Loader
-					isError
-					isLoading={false}
-				/>
+				<span className="font-bold text-red-600">
+					StockedUp encountered and error when loading this element
+				</span>
 			}
 		>
 			{children}

@@ -4,10 +4,13 @@ import Loader from '../Loader';
 import placeholderImage from '../../assets/placeholder.png';
 import EntityInfoTable from '../EntityInfoTable';
 import Blockquote from '../Blockquote';
+import { useContext } from 'react';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
 
 function ProductViewPage() {
 	const { id } = useParams();
 	const { product, isLoading, error } = useProductsDetails(id);
+	const appContext = useContext(CurrentAppContext);
 
 	return (
 		<Loader
@@ -34,8 +37,8 @@ function ProductViewPage() {
 						properties={{
 							'internal ID': product?.id,
 							name: product?.name,
-							'buy price': product?.buyPrice,
-							'sell price': product?.sellPrice,
+							'buy price': product?.buyPrice.toFixed(2),
+							'sell price': product?.sellPrice.toFixed(2) + appContext.organization.currency,
 							unit: product?.unit,
 						}}
 					/>

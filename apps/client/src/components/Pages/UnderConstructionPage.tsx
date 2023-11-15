@@ -1,8 +1,11 @@
+import { useMatches } from 'react-router-dom';
 import UnderConstructionImage from '../../assets/undraw_under_construction.svg';
 
 function UnderConstructionPage() {
+	const matches = useMatches();
+
 	return (
-		<div className="flex flex-col items-center justify-center gap-20 py-20">
+		<div className="flex flex-col items-center justify-center gap-20 py-8">
 			<img
 				src={UnderConstructionImage}
 				className="w-96"
@@ -15,6 +18,16 @@ function UnderConstructionPage() {
 					your patience and stay tuned for updates!
 				</p>
 			</div>
+
+			<pre>
+				Matches stack:
+				{matches.map((m) => (
+					<div key={m.id}>
+						[{m.id}] {m.pathname}
+					</div>
+				))}
+				[{'->'}] Encountered UnderConstructionPage element
+			</pre>
 		</div>
 	);
 }
