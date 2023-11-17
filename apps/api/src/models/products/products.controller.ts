@@ -7,6 +7,7 @@ import {
 	Param,
 	Post,
 	UseGuards,
+	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
@@ -27,7 +28,7 @@ export class ProductsController {
 	) {}
 
 	@Post()
-	async create(@Body() dto: CreateProductDto): Promise<ProductDto> {
+	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 		const newCount = await this.productsService.countAll(dto.organizationId);
 		await this.organizationService.updateProductsCount(dto.organizationId, newCount);

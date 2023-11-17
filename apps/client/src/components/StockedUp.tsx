@@ -4,7 +4,6 @@ import Router from './Router';
 
 function StockedUp() {
 	const userData = useUser();
-
 	return (
 		<UserContext.Provider value={userData}>
 			<Router />

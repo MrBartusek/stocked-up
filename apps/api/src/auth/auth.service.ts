@@ -18,12 +18,12 @@ export class AuthService {
 
 		const isEmailTaken = await this.usersService.isEmailTaken(data.email);
 		if (isEmailTaken) {
-			throw new BadRequestException({ description: 'This email is already taken' });
+			throw new BadRequestException({ message: 'This email is already taken' });
 		}
 
 		const isUsernameTaken = await this.usersService.isUsernameTaken(data.email);
 		if (isUsernameTaken) {
-			throw new BadRequestException({ description: 'This username is already taken' });
+			throw new BadRequestException({ message: 'This username is already taken' });
 		}
 
 		return this.usersService.create({

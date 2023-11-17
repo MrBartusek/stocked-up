@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { PrivateUserDto } from 'shared-types';
 import { Utils } from '../utils';
@@ -11,21 +12,28 @@ export interface UseUserType {
 }
 
 function useUser(): UseUserType {
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const queryClient = useQueryClient();
+
 	const { data, error, isLoading } = useQuery(
 		['users', 'me'],
 		() => Utils.getFetcher(`/api/users/me`),
 		{
 			retry(failureCount: number, error: any) {
 				if (error?.status == 403) return false;
-				return failureCount < 3;
+				return failureCount < 2;
 			},
 			refetchInterval: 60 * 1000,
 		},
 	);
-	const queryClient = useQueryClient();
+
+	useEffect(() => {
+		setIsAuthenticated(data != undefined && !error);
+	}, [data, error]);
 
 	async function invalidateUser() {
-		return queryClient.invalidateQueries(['users', 'me']);
+		queryClient.clear();
+		setIsAuthenticated(false);
 	}
 
 	async function logout(): Promise<void> {
@@ -35,7 +43,7 @@ function useUser(): UseUserType {
 
 	return {
 		isLoading: isLoading,
-		isAuthenticated: !error && !isLoading,
+		isAuthenticated: !isLoading && isAuthenticated,
 		invalidateUser,
 		logout,
 		user: data as PrivateUserDto,

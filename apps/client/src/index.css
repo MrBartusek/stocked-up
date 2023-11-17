@@ -29,7 +29,7 @@ html,body,#root {
 }
 
 .link-primary {
-  @apply text-blue-600 hover:underline
+  @apply text-primary hover:underline
 }
 
 .link-muted {

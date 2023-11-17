@@ -11,10 +11,6 @@ export function ProtectedRoute({ children }: SpecialRouteProps) {
 	const { isAuthenticated, isLoading } = useContext(UserContext);
 
 	if (!isLoading && !isAuthenticated) {
-		toast.error('You have been logged out', {
-			position: 'top-center',
-			id: 'logged-out',
-		});
 		return (
 			<Navigate
 				to="/login"

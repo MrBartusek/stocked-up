@@ -1,6 +1,7 @@
 import SidebarNavigation from './SidebarNavigation';
 import StockedUpLogo from '../StockedUpLogo';
 import WarehouseSelect from '../WarehouseSelect';
+import OrganizationSelect from '../OrganizationSelect';
 
 function Sidebar() {
 	const Separator = <div className="mb-3 border-b border-gray-300 pb-4"></div>;
@@ -13,6 +14,7 @@ function Sidebar() {
 				/>
 			</div>
 			<WarehouseSelect />
+			<OrganizationSelect />
 			{Separator}
 			<SidebarNavigation />
 		</div>

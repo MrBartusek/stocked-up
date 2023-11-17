@@ -8,5 +8,9 @@
     },
     "devDependencies": {
         "typescript": "^4.8.4"
+    },
+    "dependencies": {
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0"
     }
 }

@@ -9,6 +9,8 @@ import Button from './Button';
 import { UserContext } from './Context/UserContext';
 import FancyInput from './Form/FancyInput';
 import RegisterGoBack from './RegisterGoBack';
+import FormError from './Form/FormError';
+import Alert from './Alert';
 
 type Inputs = {
 	email: string;
@@ -20,11 +22,13 @@ type Inputs = {
 function RegisterForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
 	const { invalidateUser } = useContext(UserContext);
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
+		setError(null);
 
 		const registerDto: UserRegisterDto = inputs;
 		Utils.postFetcher(`/api/auth/register`, registerDto)
@@ -35,10 +39,8 @@ function RegisterForm() {
 			.then(invalidateUser)
 			.then(() => navigate('/dashboard'))
 			.then(() => toast.success('Your registration was successful. Welcome to StockedUp!'))
-			.catch((err) => {
-				console.error(err);
-				setLoading(false);
-			});
+			.catch((err) => setError(Utils.requestErrorToString(err)))
+			.finally(() => setLoading(false));
 	}
 
 	return (
@@ -47,16 +49,23 @@ function RegisterForm() {
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<RegisterGoBack />
+
+			{error && <Alert>{error}</Alert>}
+
 			<FancyInput
 				label="E-Mail"
 				placeholder="Type your e-mail address"
+				type="email"
 				{...register('email', { required: true })}
 				icon={BsEnvelopeAt}
 				disabled={loading}
+				autoFocus
 			/>
 			<FancyInput
 				label="Username"
 				placeholder="Select new username"
+				minLength={4}
+				maxLength={16}
 				{...register('username', { required: true })}
 				icon={BsPerson}
 				disabled={loading}
@@ -64,6 +73,8 @@ function RegisterForm() {
 			<FancyInput
 				label="Password"
 				type="password"
+				minLength={4}
+				maxLength={32}
 				placeholder="Type your password"
 				{...register('password', { required: true })}
 				icon={BsShieldLock}
@@ -77,6 +88,7 @@ function RegisterForm() {
 				icon={BsShieldLock}
 				disabled={loading}
 			/>
+
 			<Button
 				className="mt-8 w-full text-lg"
 				type="submit"

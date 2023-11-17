@@ -7,6 +7,7 @@ import {
 	Post,
 	Req,
 	UseGuards,
+	ValidationPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 import {
@@ -27,7 +28,7 @@ export class OrganizationsController {
 
 	@Post()
 	async create(
-		@Body() createOrganizationDto: CreateOrganizationDto,
+		@Body(new ValidationPipe()) createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.create(createOrganizationDto);
@@ -36,7 +37,9 @@ export class OrganizationsController {
 	}
 
 	@Post('warehouses')
-	async createWarehouse(@Body() dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
+	async createWarehouse(
+		@Body(new ValidationPipe()) dto: CreateWarehouseInOrgDto,
+	): Promise<WarehouseDto> {
 		const exist = await this.organizationsService.exist(dto.organizationId);
 		if (!exist) {
 			throw new NotFoundException('Organization with provided id was not found');

@@ -1,4 +1,12 @@
-import { BadRequestException, Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	Post,
+	Req,
+	UseGuards,
+	ValidationPipe,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserRegisterDto } from 'shared-types';
 import { AuthService } from './auth.service';
@@ -31,7 +39,7 @@ export class AuthController {
 	}
 
 	@Post('register')
-	async register(@Body() body: UserRegisterDto): Promise<any> {
+	async register(@Body(new ValidationPipe()) body: UserRegisterDto): Promise<any> {
 		const user = await this.authService.registerUser(body);
 		return { message: `Created user with id: ${user._id}`, statusCode: 200 };
 	}

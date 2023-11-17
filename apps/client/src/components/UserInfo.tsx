@@ -1,25 +1,18 @@
 import { useContext } from 'react';
-import {
-	BsBoxArrowLeft,
-	BsChevronDown,
-	BsCode,
-	BsCodeSlash,
-	BsExclamationOctagon,
-	BsSliders,
-} from 'react-icons/bs';
+import { BsBoxArrowLeft, BsChevronDown, BsExclamationOctagon, BsSliders } from 'react-icons/bs';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from './Context/UserContext';
 import Dropdown from './Dropdown/Dropdown';
 import DropdownItem from './Dropdown/DropdownItem';
 import DropdownMenu from './Dropdown/DropdownMenu';
 import DropdownToggle from './Dropdown/DropdownToggle';
-import { Link, useNavigate } from 'react-router-dom';
 
 function UserInfo() {
 	const { user, logout } = useContext(UserContext);
 	const navigate = useNavigate();
 
-	function logoutUser() {
-		logout();
+	async function logoutUser() {
+		await logout();
 		navigate('/');
 	}
 

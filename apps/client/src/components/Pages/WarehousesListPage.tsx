@@ -18,7 +18,7 @@ function WarehousesListPage() {
 			isError={error != undefined}
 		>
 			<TableTopBar header={`List of the warehouses under ${appContext.organization.name}`}>
-				<Link to="add">
+				<Link to="create">
 					<IconButton icon={BsPlusCircle}>Create new warehouse</IconButton>
 				</Link>
 			</TableTopBar>
