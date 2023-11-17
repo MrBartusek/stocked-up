@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import { BsBoxSeamFill, BsChevronRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { WarehouseDto } from 'shared-types';
+import { BasicWarehouseDto } from 'shared-types';
 import { Utils } from '../utils';
 
 export interface WarehouseInfoRowProps {
 	organizationId: string;
-	warehouse: WarehouseDto;
+	warehouse: BasicWarehouseDto;
 }
 
 function WarehouseInfoRow({ warehouse, organizationId }: WarehouseInfoRowProps) {
