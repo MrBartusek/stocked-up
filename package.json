@@ -5,9 +5,9 @@
     "author": "MrBartusek",
     "license": "MIT",
     "scripts": {
-        "dev": "turbo run dev",
-        "build": "turbo run build",
-        "start": "node apps/api/dist/main",
+        "dev": "dotenv -- turbo run dev",
+        "build": "dotenv -- turbo run build",
+        "start": "dotenv -- node apps/api/dist/main",
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
         "clean": "turbo daemon clean"
@@ -21,6 +21,7 @@
         "turbo": "^1.10.13"
     },
     "dependencies": {
+        "dotenv-cli": "^7.3.0",
         "express-session": "^1.17.3"
     }
 }

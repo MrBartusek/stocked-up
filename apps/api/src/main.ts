@@ -4,6 +4,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import Utils from './utils';
+import RedisStore from 'connect-redis';
+import redisClient from './redis';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -12,12 +15,18 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe());
 	setupSwagger(app);
 
+	const redisStore = new RedisStore({
+		client: redisClient,
+		prefix: 'myapp:',
+	});
+
 	app.use(
 		session({
-			secret: 'keyboard cat',
+			store: redisStore,
+			secret: process.env.SESSION_SECRET,
 			resave: false,
 			saveUninitialized: false,
-			cookie: { maxAge: 360000, httpOnly: true, sameSite: 'strict' },
+			cookie: { maxAge: 360000, httpOnly: true, sameSite: 'strict', secure: Utils.isProduction() },
 		}),
 	);
 
