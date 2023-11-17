@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import { UserContext } from './Context/UserContext';
 import { Navigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { UserContext } from './Context/UserContext';
 
 export interface SpecialRouteProps {
 	children: React.ReactNode;
