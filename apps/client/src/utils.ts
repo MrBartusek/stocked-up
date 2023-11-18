@@ -37,8 +37,8 @@ export class Utils {
 		});
 	}
 
-	public static humanizeCurrency(input?: number) {
-		return '$' + humanFormat(input || 0, { separator: '' });
+	public static humanizeCurrency(input?: number, currency?: string) {
+		return humanFormat(input || 0, { separator: '', decimals: 2 }) + ' ' + currency;
 	}
 
 	public static dashboardUrl(organizationId: string, warehouseId: string) {

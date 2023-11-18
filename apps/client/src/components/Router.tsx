@@ -1,4 +1,5 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import DashboardContainer from './DashboardContainer';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
 import DashboardHomePage from './Pages/DashboardHomePage';
@@ -7,24 +8,22 @@ import HomePage from './Pages/HomePage';
 import InventoryAddPage from './Pages/InventoryAddPage';
 import InventoryListPage from './Pages/InventoryListPage';
 import InventoryManagementPage from './Pages/InventoryManagementPage';
-import InventoryRemovePage from './Pages/InventoryRemovePage';
 import LoginPage from './Pages/LoginPage';
 import OrganizationCreatePage from './Pages/OrganizationCreatePage';
 import OrganizationSelectPage from './Pages/OrganizationSelectPage';
 import ProductViewPage from './Pages/ProductViewPage';
+import ProductsCreatePage from './Pages/ProductsCreatePage';
 import ProductsListPage from './Pages/ProductsListPage';
+import ProductsPage from './Pages/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
+import UnderConstructionPage from './Pages/UnderConstructionPage';
+import WarehouseViewPage from './Pages/WarehouseViewPage';
+import WarehousesCreatePage from './Pages/WarehousesCreatePage';
+import WarehousesListPage from './Pages/WarehousesListPage';
 import WarehousesPage from './Pages/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
-import DashboardContainer from './DashboardContainer';
-import WarehousesListPage from './Pages/WarehousesListPage';
-import WarehousesCreatePage from './Pages/WarehousesCreatePage';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import ProductsPage from './Pages/ProductsPage';
-import ProductsCreatePage from './Pages/ProductsCreatePage';
-import WarehouseViewPage from './Pages/WarehouseViewPage';
-import UnderConstructionPage from './Pages/UnderConstructionPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -161,10 +160,6 @@ function Router() {
 								{
 									path: 'add',
 									element: <InventoryAddPage />,
-								},
-								{
-									path: 'remove',
-									element: <InventoryRemovePage />,
 								},
 							],
 						},

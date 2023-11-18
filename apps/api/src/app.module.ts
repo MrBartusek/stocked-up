@@ -9,6 +9,7 @@ import { UsersModule } from './models/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './models/organizations/organizations.module';
 import { WarehousesModule } from './models/warehouses/warehouses.module';
+import { InventoryModule } from './models/inventory/inventory.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../..', 'client', 'dist'),
@@ -23,6 +24,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 		UsersModule,
 		AuthModule,
 		OrganizationsModule,
+		InventoryModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

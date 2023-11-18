@@ -50,19 +50,9 @@ function SidebarNavigation() {
 					text="Add inventory"
 				/>
 				<SidebarLink
-					to={`${baseUrl}/inventory/remove`}
-					icon={BsDashSquareFill}
-					text="Remove inventory"
-				/>
-				<SidebarLink
 					to={`${baseUrl}/inventory/move`}
 					icon={BsArrowLeftRight}
 					text="Move inventory"
-				/>
-				<SidebarLink
-					to={`${baseUrl}/inventory/adjust`}
-					icon={BsPencilSquare}
-					text="Adjust inventory"
 				/>
 			</SidebarSection>
 			<SidebarSection name="Orders">

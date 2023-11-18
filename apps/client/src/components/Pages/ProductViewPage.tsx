@@ -6,6 +6,7 @@ import EntityInfoTable from '../EntityInfoTable';
 import Blockquote from '../Blockquote';
 import { useContext } from 'react';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { Utils } from '../../utils';
 
 function ProductViewPage() {
 	const { id } = useParams();
@@ -37,8 +38,14 @@ function ProductViewPage() {
 						properties={{
 							'internal ID': product?.id,
 							name: product?.name,
-							'buy price': product?.buyPrice.toFixed(2),
-							'sell price': product?.sellPrice.toFixed(2) + appContext.organization.currency,
+							'buy price': Utils.humanizeCurrency(
+								product?.buyPrice,
+								appContext.organization.currency,
+							),
+							'sell price': Utils.humanizeCurrency(
+								product?.sellPrice,
+								appContext.organization.currency,
+							),
 							unit: product?.unit,
 						}}
 					/>

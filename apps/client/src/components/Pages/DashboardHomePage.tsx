@@ -5,6 +5,7 @@ import humanFormat from 'human-format';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import Card from '../Card';
 import TotalSoldChart from '../TotalSoldChart';
+import { Utils } from '../../utils';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);
@@ -17,7 +18,7 @@ function DashboardHomePage() {
 						{organization.stats.totalProducts}
 					</BigNumberCard>
 					<BigNumberCard title="Total organization value">
-						{humanFormat(organization.stats.totalValue, { separator: '' })} {organization.currency}
+						{Utils.humanizeCurrency(organization.stats.totalValue, organization.currency)}
 					</BigNumberCard>
 					<BigNumberCard title="Count of all pending orders">
 						{organization.stats.totalPendingOrders}

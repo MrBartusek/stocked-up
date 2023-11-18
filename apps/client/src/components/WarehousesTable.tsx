@@ -4,34 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import Table from './Table';
 import WarehouseActions from './WarehouseActions';
+import { Utils } from '../utils';
+import { useContext } from 'react';
+import { CurrentAppContext } from './Context/CurrentAppContext';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
-
-const columns = [
-	columnHelper.display({
-		header: '#',
-		cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
-		size: 0,
-	}),
-	columnHelper.accessor('name', {
-		header: 'Warehouse Name',
-		cell: (info) => info.getValue(),
-	}),
-	columnHelper.accessor('address', {
-		header: 'Address',
-		cell: (info) => info.getValue(),
-	}),
-	columnHelper.accessor('totalValue', {
-		header: 'Total Stock Value',
-		cell: (info) => '$' + humanFormat(info.getValue() || 0, { separator: '' }),
-	}),
-	columnHelper.display({
-		header: 'Actions',
-		id: 'actions',
-		cell: (props) => <WarehouseActions warehouse={props.row.original} />,
-		size: 0,
-	}),
-];
 
 export interface WarehousesTableProps {
 	warehouses: WarehouseDto[];
@@ -39,6 +16,33 @@ export interface WarehousesTableProps {
 
 function WarehousesTable({ warehouses }: WarehousesTableProps) {
 	const navigate = useNavigate();
+	const appContext = useContext(CurrentAppContext);
+
+	const columns = [
+		columnHelper.display({
+			header: '#',
+			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
+			size: 0,
+		}),
+		columnHelper.accessor('name', {
+			header: 'Warehouse Name',
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor('address', {
+			header: 'Address',
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor('totalValue', {
+			header: 'Total Stock Value',
+			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+		}),
+		columnHelper.display({
+			header: 'Actions',
+			id: 'actions',
+			cell: (props) => <WarehouseActions warehouse={props.row.original} />,
+			size: 0,
+		}),
+	];
 
 	const table = useReactTable({
 		data: warehouses,

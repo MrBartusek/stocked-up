@@ -1,4 +1,4 @@
-import { BaseDto } from "./BaseDto";
+import { BaseDto } from "../BaseDto";
 
 export class BasicProductDto extends BaseDto {
     name: string;
