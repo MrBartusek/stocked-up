@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AddInventoryItemDto, CreateWarehouseInOrgDto, OrganizationDto } from 'shared-types';
 import { Utils } from '../utils';
 import Button from './Button';
@@ -36,7 +36,6 @@ function InventoryAddForm() {
 	}, [productFetchError, productId, setSearchParams]);
 
 	function onSubmit(inputs: Inputs) {
-		if (loading) return;
 		setLoading(true);
 		setError(null);
 
@@ -64,20 +63,23 @@ function InventoryAddForm() {
 
 			<FormInput
 				label="Product"
-				hint="Name of product from organization registry"
-				disabled={loading || productId != undefined}
+				hint="Reference to product from organization registry"
+				disabled
 				value={product?.name}
 				noEndMargin
 				minLength={2}
 				maxLength={32}
 				required
 			/>
-			<button
+			<Link
 				className="link-primary mb-1 ms-1 mt-2 flex items-center gap-2"
-				onClick={(e) => e.preventDefault()}
+				to={
+					Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
+					`/products`
+				}
 			>
-				<BsArrowLeftRight /> Change product
-			</button>
+				<BsArrowLeftRight /> {product ? 'Change' : 'Select'} product
+			</Link>
 
 			<FormInput
 				label="Quantity"
@@ -92,6 +94,7 @@ function InventoryAddForm() {
 				role="submit"
 				className="mt-4"
 				loading={loading}
+				disabled={product == undefined}
 			>
 				Add product to inventory
 			</Button>
