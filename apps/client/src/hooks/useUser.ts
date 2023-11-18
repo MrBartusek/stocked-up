@@ -12,7 +12,8 @@ export interface UseUserType {
 }
 
 function useUser(): UseUserType {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [stale, setStale] = useState(false);
+
 	const queryClient = useQueryClient();
 
 	const { data, error, isLoading } = useQuery(
@@ -21,19 +22,19 @@ function useUser(): UseUserType {
 		{
 			retry(failureCount: number, error: any) {
 				if (error?.status == 403) return false;
-				return failureCount < 2;
+				return failureCount < 1;
+			},
+			onSuccess() {
+				setStale(false);
 			},
 			refetchInterval: 60 * 1000,
+			refetchOnWindowFocus: false,
 		},
 	);
 
-	useEffect(() => {
-		setIsAuthenticated(data != undefined && !error);
-	}, [data, error]);
-
 	async function invalidateUser() {
 		queryClient.clear();
-		setIsAuthenticated(false);
+		setStale(true);
 	}
 
 	async function logout(): Promise<void> {
@@ -43,7 +44,7 @@ function useUser(): UseUserType {
 
 	return {
 		isLoading: isLoading,
-		isAuthenticated: !isLoading && isAuthenticated,
+		isAuthenticated: data != undefined && !error && !stale,
 		invalidateUser,
 		logout,
 		user: data as PrivateUserDto,
