@@ -1,17 +1,21 @@
-import { useParams } from 'react-router-dom';
-import useProductsDetails from '../../hooks/useProductsDetails';
-import Loader from '../Loader';
-import placeholderImage from '../../assets/placeholder.png';
-import EntityInfoTable from '../EntityInfoTable';
-import Blockquote from '../Blockquote';
 import { useContext } from 'react';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { BsPencil, BsTrash } from 'react-icons/bs';
+import { useNavigate, useParams } from 'react-router-dom';
+import placeholderImage from '../../assets/placeholder.png';
+import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
+import Blockquote from '../Blockquote';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import EntityActionsRow from '../EntityActionsRow';
+import EntityInfoTable from '../EntityInfoTable';
+import IconButton from '../IconButton';
+import Loader from '../Loader';
 
 function ProductViewPage() {
 	const { id } = useParams();
 	const { product, isLoading, error } = useProductsDetails(id);
 	const appContext = useContext(CurrentAppContext);
+	const navigate = useNavigate();
 
 	return (
 		<Loader
@@ -49,6 +53,20 @@ function ProductViewPage() {
 							unit: product?.unit,
 						}}
 					/>
+					<EntityActionsRow>
+						<IconButton
+							icon={BsPencil}
+							onClick={() => navigate(`../edit/${product.id}`)}
+						>
+							Edit
+						</IconButton>
+						<IconButton
+							icon={BsTrash}
+							onClick={() => navigate(`../delete/${product.id}`)}
+						>
+							Delete
+						</IconButton>
+					</EntityActionsRow>
 				</div>
 			</div>
 		</Loader>

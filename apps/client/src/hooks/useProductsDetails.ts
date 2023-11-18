@@ -12,7 +12,7 @@ function useProductsDetails(productId?: string) {
 	);
 
 	return {
-		product: data as ProductDto | undefined,
+		product: data as ProductDto,
 		isLoading,
 		error: error,
 	};

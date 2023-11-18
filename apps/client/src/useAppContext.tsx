@@ -3,6 +3,7 @@ import useOrganizationData from './hooks/useOrganisationData';
 import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
 import toast from 'react-hot-toast';
 import { Utils } from './utils';
+import { useNavigate } from 'react-router-dom';
 
 export interface CurrentAppContextType {
 	isLoading: boolean;
@@ -14,6 +15,7 @@ export interface CurrentAppContextType {
 
 function useCurrentAppContext(organizationId: string, warehouseId: string): CurrentAppContextType {
 	const { organization, isLoading: isLoadingOrgData, error } = useOrganizationData(organizationId);
+	const navigate = useNavigate();
 	const currentWarehouse = useMemo<BasicWarehouseDto | undefined>(
 		() => organization?.warehouses?.find((w) => w.id == warehouseId),
 		[organization?.warehouses, warehouseId],
@@ -24,6 +26,14 @@ function useCurrentAppContext(organizationId: string, warehouseId: string): Curr
 			toast(`You are now using "${currentWarehouse.name}" warehouse`);
 		}
 	}, [currentWarehouse]);
+
+	useEffect(() => {
+		if (isLoadingOrgData) return;
+		if (!organization || !currentWarehouse) {
+			toast.error('This organization or warehouse does not exist anymore');
+			navigate('/dashboard/select');
+		}
+	}, [currentWarehouse, isLoadingOrgData, navigate, organization]);
 
 	return {
 		isLoading: isLoadingOrgData || !currentWarehouse,
