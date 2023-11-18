@@ -7,15 +7,11 @@ import { InventoryItemDocument } from './schemas/inventory-item.schema';
 export class InventoryService {
 	constructor(private readonly inventoryRepository: InventoryRepository) {}
 
-	async findOne(
-		warehouseId: Types.ObjectId,
-		productId: Types.ObjectId,
-	): Promise<InventoryItemDocument | null> {
+	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
 		const result = await this.inventoryRepository.aggregate([
 			{
 				$match: {
-					warehouse: warehouseId,
-					product: productId,
+					_id: id,
 				},
 			},
 			{
