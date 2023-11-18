@@ -17,6 +17,7 @@ interface FormInputBaseProps<T extends 'input' | 'textarea'> {
 	label?: string;
 	hint?: string;
 	suffixText?: string;
+	noEndMargin?: boolean;
 	as?: T;
 }
 
@@ -25,7 +26,7 @@ type TextareaProps = FormInputBaseProps<'textarea'> & FormControlProps<'textarea
 type FormInputProps = InputProps | TextareaProps;
 
 const FormInput = forwardRef(function TextInput(
-	{ label, hint, suffixText, as, ...props }: FormInputProps,
+	{ label, hint, suffixText, as, noEndMargin, ...props }: FormInputProps,
 	ref: any,
 ) {
 	const [focused, setFocused] = useState(false);
@@ -52,7 +53,7 @@ const FormInput = forwardRef(function TextInput(
 	});
 
 	return (
-		<div className="relative my-6">
+		<div className={classNames('relative', !noEndMargin && 'my-6')}>
 			<div className="mb-2 ms-1">
 				<label className="flex gap-1">
 					{label}

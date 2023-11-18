@@ -4,6 +4,7 @@ import IconButton from '../IconButton';
 import { BsChevronLeft } from 'react-icons/bs';
 import { useContext } from 'react';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import InventoryAddForm from '../InventoryAddForm';
 
 function InventoryAddPage() {
 	const appContext = useContext(CurrentAppContext);
@@ -17,7 +18,7 @@ function InventoryAddPage() {
 					<IconButton icon={BsChevronLeft}>Go back</IconButton>
 				</Link>
 			</TableTopBar>
-			<span>this page is not completed yet, please use product-based adding</span>
+			<InventoryAddForm />
 		</>
 	);
 }

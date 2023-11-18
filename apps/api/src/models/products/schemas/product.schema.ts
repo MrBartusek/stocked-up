@@ -10,7 +10,7 @@ export class Product {
 	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' })
 	organization: Organization;
 
-	@Prop({ required: true })
+	@Prop({ required: true, index: 'text' })
 	name: string;
 
 	@Prop()

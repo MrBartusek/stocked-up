@@ -14,6 +14,7 @@ import { ProductDto } from './product/ProductDto'
 import { CreateProductDto } from './product/CreateProductDto'
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto'
 import { InventoryItemDto } from './inventory/InventoryItemDto'
+import { AddInventoryItemDto } from './inventory/AddInventoryItemDto'
 
 export {
     BasicProductDto,
@@ -31,5 +32,6 @@ export {
     ProductDto,
     CreateProductDto,
     BasicInventoryItemDto,
-    InventoryItemDto
+    InventoryItemDto,
+    AddInventoryItemDto
 }

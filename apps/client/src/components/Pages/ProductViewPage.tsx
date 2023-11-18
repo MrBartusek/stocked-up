@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsPencil, BsTrash } from 'react-icons/bs';
+import { BsBox, BsPencil, BsTrash } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
 import placeholderImage from '../../assets/placeholder.png';
 import useProductsDetails from '../../hooks/useProductsDetails';
@@ -54,6 +54,17 @@ function ProductViewPage() {
 						}}
 					/>
 					<EntityActionsRow>
+						<IconButton
+							icon={BsBox}
+							onClick={() =>
+								navigate(
+									Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
+										`/inventory/add?productId=${product.id}`,
+								)
+							}
+						>
+							Add to inventory
+						</IconButton>
 						<IconButton
 							icon={BsPencil}
 							onClick={() => navigate(`../edit/${product.id}`)}
