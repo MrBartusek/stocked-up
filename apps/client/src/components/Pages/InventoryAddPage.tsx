@@ -12,7 +12,7 @@ function InventoryAddPage() {
 	return (
 		<>
 			<TableTopBar
-				header={`You are creating new inventory item definition in ${appContext.currentWarehouse.name}`}
+				header={`You are creating new item inventory in ${appContext.currentWarehouse.name}`}
 			>
 				<Link to="..">
 					<IconButton icon={BsChevronLeft}>Go back</IconButton>
