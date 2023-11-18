@@ -10,58 +10,58 @@ import IconButton from '../IconButton';
 import Loader from '../Loader';
 
 function WarehouseViewPage() {
-    const { id } = useParams();
-    const { warehouse, isLoading, error } = useWarehouseDetails(id);
-    const appContext = useContext(CurrentAppContext);
-    const navigate = useNavigate();
+	const { id } = useParams();
+	const { warehouse, isLoading, error } = useWarehouseDetails(id);
+	const appContext = useContext(CurrentAppContext);
+	const navigate = useNavigate();
 
-    const isCurrentWarehouse = id == appContext.currentWarehouse.id;
+	const isCurrentWarehouse = id == appContext.currentWarehouse.id;
 
-    return (
-        <Loader
-            isLoading={isLoading}
-            isError={error != undefined}
-        >
-            <div className="mb-12 flex items-center gap-2">
-                <h2 className="text-3xl">{warehouse?.name}</h2>
-                <span className="text-muted">(warehouse)</span>
-            </div>
-            <EntityInfoTable
-                properties={{
-                    'internal ID': warehouse.id,
-                    name: warehouse.name,
-                    organization: appContext.organization.name,
-                    address: warehouse.address,
-                }}
-                className="mb-8"
-            />
-            <EntityActionsRow>
-                <IconButton
-                    icon={BsCheckCircle}
-                    disabled={isCurrentWarehouse}
-                    onClick={() =>
-                        navigate(`${Utils.dashboardUrl(appContext.organization.id, id!)}/warehouses/`, {
-                            replace: true,
-                        })
-                    }
-                >
-                    {isCurrentWarehouse ? 'This warehouse is already selected' : 'Switch to this warehouse'}
-                </IconButton>
-                <IconButton
-                    icon={BsPencil}
-                    onClick={() => navigate(`../edit/${warehouse.id}`)}
-                >
-                    Edit
-                </IconButton>
-                <IconButton
-                    icon={BsTrash}
-                    onClick={() => navigate(`../delete/${warehouse.id}`)}
-                >
-                    Delete
-                </IconButton>
-            </EntityActionsRow>
-        </Loader>
-    );
+	return (
+		<Loader
+			isLoading={isLoading}
+			isError={error != undefined}
+		>
+			<div className="mb-12 flex items-center gap-2">
+				<h2 className="text-3xl">{warehouse?.name}</h2>
+				<span className="text-muted">(warehouse)</span>
+			</div>
+			<EntityInfoTable
+				properties={{
+					'internal ID': warehouse.id,
+					name: warehouse.name,
+					organization: appContext.organization.name,
+					address: warehouse.address,
+				}}
+				className="mb-8"
+			/>
+			<EntityActionsRow>
+				<IconButton
+					icon={BsCheckCircle}
+					disabled={isCurrentWarehouse}
+					onClick={() =>
+						navigate(`${Utils.dashboardUrl(appContext.organization.id, id!)}/warehouses/`, {
+							replace: true,
+						})
+					}
+				>
+					{isCurrentWarehouse ? 'This warehouse is already selected' : 'Switch to this warehouse'}
+				</IconButton>
+				<IconButton
+					icon={BsPencil}
+					onClick={() => navigate(`../edit/${warehouse.id}`)}
+				>
+					Edit
+				</IconButton>
+				<IconButton
+					icon={BsTrash}
+					onClick={() => navigate(`../delete/${warehouse.id}`)}
+				>
+					Delete
+				</IconButton>
+			</EntityActionsRow>
+		</Loader>
+	);
 }
 
 export default WarehouseViewPage;
