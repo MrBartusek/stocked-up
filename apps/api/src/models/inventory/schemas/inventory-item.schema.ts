@@ -22,7 +22,6 @@ export class InventoryItem {
 
 	public static toBasicDto(document: InventoryItemDocument): BasicInventoryItemDto {
 		const isProductMongoId = mongoose.isValidObjectId(document.product);
-		console.log(document);
 
 		return {
 			id: document._id,
