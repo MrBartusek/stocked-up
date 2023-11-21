@@ -35,6 +35,18 @@ export class InventoryService {
 		}
 	}
 
+	async findByProduct(
+		warehouseId: Types.ObjectId,
+		productId: Types.ObjectId,
+	): Promise<InventoryItemDocument> {
+		const i = await this.inventoryRepository.findOne();
+		console.log(i, productId, warehouseId);
+		return this.inventoryRepository.findOne({
+			warehouse: warehouseId,
+			product: productId,
+		});
+	}
+
 	findAll(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
 		return this.inventoryRepository.aggregate([
 			{

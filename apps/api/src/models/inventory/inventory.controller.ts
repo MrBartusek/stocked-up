@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
@@ -13,9 +13,12 @@ import { InventoryItem } from './schemas/inventory-item.schema';
 export class InventoryController {
 	constructor(private readonly inventoryService: InventoryService) {}
 
-	@Get(':id')
-	async findOne(@Param(':id', ParseObjectIdPipe) id: Types.ObjectId): Promise<InventoryItemDto> {
-		const item = await this.inventoryService.findOne(id);
+	@Get('by-product')
+	async findByProduct(
+		@Query('warehouseId', ParseObjectIdPipe) warehouseId: Types.ObjectId,
+		@Query('productId', ParseObjectIdPipe) productId: Types.ObjectId,
+	): Promise<InventoryItemDto> {
+		const item = await this.inventoryService.findByProduct(warehouseId, productId);
 
 		if (!item) {
 			throw new NotFoundException();
@@ -31,5 +34,16 @@ export class InventoryController {
 		const items = await this.inventoryService.findAll(warehouseId);
 
 		return items.map((i) => InventoryItem.toBasicDto(i));
+	}
+
+	@Get(':id')
+	async findOne(@Param(':id', ParseObjectIdPipe) id: Types.ObjectId): Promise<InventoryItemDto> {
+		const item = await this.inventoryService.findOne(id);
+
+		if (!item) {
+			throw new NotFoundException();
+		}
+
+		return InventoryItem.toDto(item);
 	}
 }

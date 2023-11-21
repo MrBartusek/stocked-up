@@ -14,7 +14,7 @@ function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProp
 		return (
 			<div
 				style={{ height }}
-				className="flex w-full flex-col items-center justify-center gap-3 py-16"
+				className="flex w-full flex-col items-center justify-center gap-3 py-4"
 			>
 				<BsBoxSeam
 					className={classNames(

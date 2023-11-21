@@ -10,12 +10,15 @@ import EntityActionsRow from '../EntityActionsRow';
 import EntityInfoTable from '../EntityInfoTable';
 import IconButton from '../IconButton';
 import Loader from '../Loader';
+import ProductInventoryPeek from '../ProductInventoryPeek';
+import ProductAddToInventoryButton from '../ProductAddToInventoryButton';
 
 function ProductViewPage() {
-	const { id } = useParams();
-	const { product, isLoading, error } = useProductsDetails(id);
 	const appContext = useContext(CurrentAppContext);
+	const { id } = useParams();
 	const navigate = useNavigate();
+
+	const { product, isLoading, error } = useProductsDetails(id);
 
 	return (
 		<Loader
@@ -53,18 +56,14 @@ function ProductViewPage() {
 							unit: product?.unit,
 						}}
 					/>
+
+					<ProductInventoryPeek
+						warehouse={appContext.currentWarehouse}
+						product={product}
+					/>
+
 					<EntityActionsRow>
-						<IconButton
-							icon={BsBox}
-							onClick={() =>
-								navigate(
-									Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
-										`/inventory/add?productId=${product.id}`,
-								)
-							}
-						>
-							Add to inventory
-						</IconButton>
+						<ProductAddToInventoryButton product={product} />
 						<IconButton
 							icon={BsPencil}
 							onClick={() => navigate(`../edit/${product.id}`)}

@@ -4,7 +4,7 @@ import { Utils } from '../utils';
 
 function useInventoryList(warehouseId: string) {
 	const { data, error, isLoading } = useQuery(
-		['inventory', warehouseId],
+		['inventory', 'by-warehouse', warehouseId],
 		() => Utils.getFetcher(`/api/inventory/by-warehouse/${warehouseId}`),
 		{
 			enabled: warehouseId != undefined,
