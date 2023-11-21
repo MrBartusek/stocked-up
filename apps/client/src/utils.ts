@@ -46,7 +46,6 @@ export class Utils {
 	}
 
 	public static requestErrorToString(error: HTTPResponseError | any): string {
-		console.log(error.body);
 		if (error?.body?.message && error?.body?.message?.length > 0) {
 			if (Array.isArray(error.body.message)) {
 				return error.body.message[0];

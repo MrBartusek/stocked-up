@@ -39,8 +39,6 @@ export class InventoryService {
 		warehouseId: Types.ObjectId,
 		productId: Types.ObjectId,
 	): Promise<InventoryItemDocument> {
-		const i = await this.inventoryRepository.findOne();
-		console.log(i, productId, warehouseId);
 		return this.inventoryRepository.findOne({
 			warehouse: warehouseId,
 			product: productId,
