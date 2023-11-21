@@ -1,14 +1,5 @@
 import { useContext } from 'react';
-import {
-	BsBox,
-	BsBoxSeam,
-	BsBoxes,
-	BsEye,
-	BsPencil,
-	BsTag,
-	BsTagFill,
-	BsTrash,
-} from 'react-icons/bs';
+import { BsEye, BsPencil, BsTagFill, BsTrash } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
 import useInventoryItemDetails from '../../hooks/useInventoryItemDetails';
 import { Utils } from '../../utils';
@@ -54,15 +45,8 @@ function InventoryViewPage() {
 						properties={{
 							'internal ID': inventoryItem?.id,
 							name: inventoryItem?.name,
-							'buy price': Utils.humanizeCurrency(
-								inventoryItem?.buyPrice,
-								appContext.organization.currency,
-							),
-							'sell price': Utils.humanizeCurrency(
-								inventoryItem?.sellPrice,
-								appContext.organization.currency,
-							),
 							quantity: `${inventoryItem?.quantity} ${inventoryItem?.unit}`,
+							location: inventoryItem?.location,
 						}}
 					/>
 

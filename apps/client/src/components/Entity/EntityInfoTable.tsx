@@ -24,7 +24,7 @@ function EntityInfoTable({ properties, ...props }: EntityInfoTableProps) {
 							>
 								<td className="border border-gray-200 p-3 font-semibold">{key}</td>
 								<td className="w-[75%] flex-1 border border-gray-200 p-3">
-									{value !== null && value !== '' ? (
+									{value !== null && value !== undefined && value !== '' ? (
 										value
 									) : (
 										<span className="italic text-muted">not provided</span>

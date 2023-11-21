@@ -17,6 +17,9 @@ export class InventoryItem {
 	@Prop({ default: 0 })
 	quantity: number;
 
+	@Prop({ required: false })
+	location: string;
+
 	public static toBasicDto(document: InventoryItemDocument): BasicInventoryItemDto {
 		return {
 			id: document._id,
@@ -33,6 +36,7 @@ export class InventoryItem {
 			description: document.product.description,
 			buyPrice: document.product.buyPrice,
 			sellPrice: document.product.sellPrice,
+			location: document.location,
 		};
 	}
 }
