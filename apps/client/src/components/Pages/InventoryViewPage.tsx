@@ -43,7 +43,7 @@ function InventoryViewPage() {
 
 					<EntityInfoTable
 						properties={{
-							'internal ID': inventoryItem?.id,
+							'internal ID': <code>{inventoryItem?.id}</code>,
 							name: inventoryItem?.name,
 							quantity: `${inventoryItem?.quantity} ${inventoryItem?.unit}`,
 							location: inventoryItem?.location,

@@ -35,3 +35,7 @@ html,body,#root {
 .link-muted {
   @apply text-muted hover:underline
 }
+
+code {
+    @apply bg-gray-150 px-1.5 py-1 rounded-md text-pink-600
+}
