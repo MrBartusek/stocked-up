@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { BsChevronBarDown, BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 export interface ExpandableListProps {
 	children?: React.ReactNode;

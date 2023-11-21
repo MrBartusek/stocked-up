@@ -3,7 +3,7 @@ import { BsPencil, BsTrash } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
 import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
-import Blockquote from '../Blockquote';
+import Blockquote from '../Helpers/Blockquote';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import EntityActionsRow from '../Entity/EntityActionsRow';
 import EntityContainer from '../Entity/EntityContainer';

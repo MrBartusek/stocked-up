@@ -6,7 +6,7 @@ import placeholderImage from '../assets/placeholder.png';
 import { Utils } from '../utils';
 import { CurrentAppContext } from './Context/CurrentAppContext';
 import ProductActions from './ProductActions';
-import Table from './Table';
+import Table from './Helpers/Table';
 import TableImage from './TableImage';
 import InventoryItemActions from './InventoryItemActions';
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BasicProductDto, ProductDto } from 'shared-types';
 import placeholderImage from '../assets/placeholder.png';
 import ProductActions from './ProductActions';
-import Table from './Table';
+import Table from './Helpers/Table';
 import TableImage from './TableImage';
 import { Utils } from '../utils';
 import { useContext } from 'react';

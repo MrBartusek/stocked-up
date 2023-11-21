@@ -2,7 +2,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import humanFormat from 'human-format';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
-import Table from './Table';
+import Table from './Helpers/Table';
 import WarehouseActions from './WarehouseActions';
 import { Utils } from '../utils';
 import { useContext } from 'react';
