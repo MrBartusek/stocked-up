@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateWarehouseDto } from 'shared-types';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class WarehousesService {
@@ -12,6 +13,10 @@ export class WarehousesService {
 			name: createWarehouseDto.name,
 			address: createWarehouseDto.address,
 		});
+	}
+
+	exist(id: Types.ObjectId) {
+		return this.warehouseRepository.exist({ _id: id });
 	}
 
 	findById(id: string): Promise<WarehouseDocument | undefined> {

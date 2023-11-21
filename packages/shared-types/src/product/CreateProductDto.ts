@@ -1,6 +1,7 @@
-import { IsNumber, Length, MaxLength } from "class-validator";
+import { IsMongoId, IsNumber, Length, MaxLength } from "class-validator";
 
 export class CreateProductDto {
+    @IsMongoId()
     organizationId: string;
 
     @Length(2, 32)

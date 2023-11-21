@@ -13,5 +13,6 @@ import { OrganizationsModule } from '../organizations/organizations.module';
 	],
 	controllers: [ProductsController],
 	providers: [ProductsService, ProductsRepository],
+	exports: [ProductsService],
 })
 export class ProductsModule {}

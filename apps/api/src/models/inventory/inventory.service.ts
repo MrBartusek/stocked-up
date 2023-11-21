@@ -2,33 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
+import { FilterQuery } from 'mongoose';
+import { AddInventoryItemDto } from 'shared-types';
 
 @Injectable()
 export class InventoryService {
 	constructor(private readonly inventoryRepository: InventoryRepository) {}
 
+	create(addInventoryItemDto: AddInventoryItemDto) {
+		const { warehouseId, productId, ...rest } = addInventoryItemDto;
+		return this.inventoryRepository.create({
+			warehouse: warehouseId as any,
+			product: productId as any,
+			...rest,
+		});
+	}
+
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
-		const result = await this.inventoryRepository.aggregate([
-			{
-				$match: {
-					_id: id,
-				},
-			},
-			{
-				$limit: 1,
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-		]);
+		const result = await this.aggregateWithProduct({ _id: id });
 
 		if (result.length > 0) {
 			return result[0];
@@ -39,25 +30,10 @@ export class InventoryService {
 		warehouseId: Types.ObjectId,
 		productId: Types.ObjectId,
 	): Promise<InventoryItemDocument | null> {
-		const result = await this.inventoryRepository.aggregate([
-			{
-				$match: {
-					warehouse: warehouseId,
-					product: productId,
-				},
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-		]);
+		const result = await this.aggregateWithProduct({
+			warehouse: warehouseId,
+			product: productId,
+		});
 
 		if (result.length > 0) {
 			return result[0];
@@ -65,11 +41,13 @@ export class InventoryService {
 	}
 
 	findAll(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
+		return this.aggregateWithProduct({ warehouse: warehouseId });
+	}
+
+	aggregateWithProduct(match: FilterQuery<any>) {
 		return this.inventoryRepository.aggregate([
 			{
-				$match: {
-					warehouse: warehouseId,
-				},
+				$match: match,
 			},
 			{
 				$lookup: {

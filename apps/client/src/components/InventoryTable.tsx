@@ -1,13 +1,7 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
-import placeholderImage from '../assets/placeholder.png';
-import { Utils } from '../utils';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import ProductActions from './ProductActions';
 import Table from './Helpers/Table';
-import TableImage from './TableImage';
 import InventoryItemActions from './InventoryItemActions';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();
@@ -31,7 +25,7 @@ function InventoryTable({ items }: InventoryTableProps) {
 		}),
 		columnHelper.accessor('quantity', {
 			header: 'Quantity',
-			cell: (info) => info.getValue() + info.row.original.quantity,
+			cell: (info) => `${info.getValue()} ${info.row.original.unit || ''}`,
 		}),
 		columnHelper.display({
 			header: 'Actions',

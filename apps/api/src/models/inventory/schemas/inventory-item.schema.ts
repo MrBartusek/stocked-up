@@ -21,9 +21,12 @@ export class InventoryItem {
 	location: string;
 
 	public static toBasicDto(document: InventoryItemDocument): BasicInventoryItemDto {
+		const isProductMongoId = mongoose.isValidObjectId(document.product);
+		console.log(document);
+
 		return {
 			id: document._id,
-			productId: document.product._id.toString(),
+			productId: isProductMongoId ? (document.product as any) : document.product._id.toString(),
 			name: document.product.name,
 			quantity: document.quantity,
 			unit: document.product.unit,
