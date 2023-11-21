@@ -1,20 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { AddInventoryItemDto, CreateWarehouseInOrgDto, OrganizationDto } from 'shared-types';
+import toast from 'react-hot-toast';
+import { BsArrowLeftRight } from 'react-icons/bs';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { AddInventoryItemDto, OrganizationDto } from 'shared-types';
+import useProductsDetails from '../hooks/useProductsDetails';
 import { Utils } from '../utils';
 import Button from './Button';
 import { CurrentAppContext } from './Context/CurrentAppContext';
-import FormInput from './Form/FormInput';
-import toast from 'react-hot-toast';
 import FormError from './Form/FormError';
-import Select from 'react-select';
-import PlaceholderImage from '../assets/placeholder.png';
-import useProductsDetails from '../hooks/useProductsDetails';
-import { BsArrowLeftRight } from 'react-icons/bs';
+import FormInput from './Form/FormInput';
+import classNames from 'classnames';
 
 type Inputs = {
 	quantity: number;
+	location: string;
 };
 
 function InventoryAddForm() {
@@ -42,7 +42,7 @@ function InventoryAddForm() {
 		const dto: AddInventoryItemDto = {
 			warehouseId: appContext.currentWarehouse.id,
 			productId: product.id,
-			quantity: inputs.quantity,
+			...inputs,
 		};
 
 		Utils.postFetcher<OrganizationDto>(`/api/inventory/`, dto)
@@ -63,7 +63,6 @@ function InventoryAddForm() {
 
 			<FormInput
 				label="Product"
-				hint="Reference to product from organization registry"
 				disabled
 				value={product?.name}
 				noEndMargin
@@ -72,7 +71,9 @@ function InventoryAddForm() {
 				required
 			/>
 			<Link
-				className="link-primary mb-1 ms-1 mt-2 flex items-center gap-2"
+				className={classNames('link-primary mb-1 ms-1 mt-3 flex items-center gap-2', {
+					'animate-bounce': product == undefined,
+				})}
 				to={
 					Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
 					`/products`
@@ -84,8 +85,16 @@ function InventoryAddForm() {
 			<FormInput
 				label="Quantity"
 				hint="If you know current item quantity you can add it here"
-				value={0}
-				{...register('quantity')}
+				placeholder="0"
+				type="number"
+				{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
+			/>
+
+			<FormInput
+				label="Location"
+				hint="Where is this item located in warehouse"
+				placeholder="shelf / aisle / bin number"
+				{...register('location')}
 			/>
 
 			<FormError>{error}</FormError>
