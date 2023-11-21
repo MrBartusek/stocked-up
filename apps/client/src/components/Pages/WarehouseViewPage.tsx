@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useWarehouseDetails from '../../hooks/useWarehouseDetails';
 import { Utils } from '../../utils';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
-import EntityActionsRow from '../EntityActionsRow';
-import EntityInfoTable from '../EntityInfoTable';
+import EntityActionsRow from '../Entity/EntityActionsRow';
+import EntityInfoTable from '../Entity/EntityInfoTable';
 import IconButton from '../IconButton';
 import Loader from '../Loader';
 
