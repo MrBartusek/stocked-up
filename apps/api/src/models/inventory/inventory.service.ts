@@ -38,11 +38,30 @@ export class InventoryService {
 	async findByProduct(
 		warehouseId: Types.ObjectId,
 		productId: Types.ObjectId,
-	): Promise<InventoryItemDocument> {
-		return this.inventoryRepository.findOne({
-			warehouse: warehouseId,
-			product: productId,
-		});
+	): Promise<InventoryItemDocument | null> {
+		const result = await this.inventoryRepository.aggregate([
+			{
+				$match: {
+					warehouse: warehouseId,
+					product: productId,
+				},
+			},
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'product',
+					foreignField: '_id',
+					as: 'product',
+				},
+			},
+			{
+				$unwind: '$product',
+			},
+		]);
+
+		if (result.length > 0) {
+			return result[0];
+		}
 	}
 
 	findAll(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {

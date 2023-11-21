@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import placeholderImage from '../assets/placeholder.png';
+import placeholderImage from '../../assets/placeholder.png';
 
 type ImgProps = React.DetailedHTMLProps<
 	React.ImgHTMLAttributes<HTMLImageElement>,

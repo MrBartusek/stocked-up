@@ -37,7 +37,7 @@ export class InventoryController {
 	}
 
 	@Get(':id')
-	async findOne(@Param(':id', ParseObjectIdPipe) id: Types.ObjectId): Promise<InventoryItemDto> {
+	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<InventoryItemDto> {
 		const item = await this.inventoryService.findOne(id);
 
 		if (!item) {

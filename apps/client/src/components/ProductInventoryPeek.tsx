@@ -32,7 +32,7 @@ function ProductInventoryPeek({ warehouse, product }: ProductInventoryPeek) {
 					{inventoryItem ? (
 						<EntityInfoTable
 							properties={{
-								quantity: inventoryItem.quantity,
+								quantity: `${inventoryItem.quantity} ${inventoryItem.unit || ''}`,
 							}}
 						/>
 					) : (

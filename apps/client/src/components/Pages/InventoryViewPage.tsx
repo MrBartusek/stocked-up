@@ -1,0 +1,99 @@
+import { useContext } from 'react';
+import {
+	BsBox,
+	BsBoxSeam,
+	BsBoxes,
+	BsEye,
+	BsPencil,
+	BsTag,
+	BsTagFill,
+	BsTrash,
+} from 'react-icons/bs';
+import { useNavigate, useParams } from 'react-router-dom';
+import useInventoryItemDetails from '../../hooks/useInventoryItemDetails';
+import { Utils } from '../../utils';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import EntityActionsRow from '../Entity/EntityActionsRow';
+import EntityContainer from '../Entity/EntityContainer';
+import EntityImageColumn from '../Entity/EntityImageColumn';
+import EntityInfoTable from '../Entity/EntityInfoTable';
+import HeaderWithHint from '../HeaderWithHint';
+import Blockquote from '../Helpers/Blockquote';
+import IconButton from '../IconButton';
+import Loader from '../Loader';
+
+function InventoryViewPage() {
+	const appContext = useContext(CurrentAppContext);
+	const { id } = useParams();
+	const navigate = useNavigate();
+
+	const { inventoryItem, isLoading, error } = useInventoryItemDetails(id!);
+
+	return (
+		<Loader
+			isLoading={isLoading}
+			isError={error != undefined}
+		>
+			<EntityContainer>
+				<EntityImageColumn />
+				<div>
+					<HeaderWithHint
+						hint="inventory item"
+						className="mb-2"
+					>
+						{inventoryItem?.name}
+					</HeaderWithHint>
+
+					<div className="mb-8 flex items-center gap-2 text-primary">
+						<BsTagFill /> in warehouse: {appContext.currentWarehouse.name}
+					</div>
+
+					<Blockquote>{inventoryItem?.description || 'No description provided'}</Blockquote>
+
+					<EntityInfoTable
+						properties={{
+							'internal ID': inventoryItem?.id,
+							name: inventoryItem?.name,
+							'buy price': Utils.humanizeCurrency(
+								inventoryItem?.buyPrice,
+								appContext.organization.currency,
+							),
+							'sell price': Utils.humanizeCurrency(
+								inventoryItem?.sellPrice,
+								appContext.organization.currency,
+							),
+							quantity: `${inventoryItem?.quantity} ${inventoryItem?.unit}`,
+						}}
+					/>
+
+					<EntityActionsRow>
+						<IconButton
+							icon={BsEye}
+							onClick={() =>
+								navigate(
+									Utils.dashboardUrl(appContext) + `/products/view/${inventoryItem?.productId}`,
+								)
+							}
+						>
+							See product
+						</IconButton>
+						<IconButton
+							icon={BsPencil}
+							onClick={() => navigate(`../edit/${inventoryItem?.id}`)}
+						>
+							Edit
+						</IconButton>
+						<IconButton
+							icon={BsTrash}
+							onClick={() => navigate(`../remove/${inventoryItem.id}`)}
+						>
+							Remove
+						</IconButton>
+					</EntityActionsRow>
+				</div>
+			</EntityContainer>
+		</Loader>
+	);
+}
+
+export default InventoryViewPage;

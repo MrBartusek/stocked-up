@@ -1,4 +1,5 @@
 import humanFormat from 'human-format';
+import { CurrentAppContextType } from './useAppContext';
 
 export class HTTPResponseError extends Error {
 	public response: Response;
@@ -41,8 +42,20 @@ export class Utils {
 		return humanFormat(input || 0, { separator: '', decimals: 2 }) + ' ' + currency;
 	}
 
-	public static dashboardUrl(organizationId: string, warehouseId: string) {
-		return `/dashboard/${organizationId}/${warehouseId}`;
+	public static dashboardUrl(
+		organizationIdOrContext: string | CurrentAppContextType,
+		warehouseId?: string,
+	): string {
+		if (organizationIdOrContext == undefined) {
+			return '';
+		} else if (typeof organizationIdOrContext == 'string') {
+			return `/dashboard/${organizationIdOrContext}/${warehouseId}`;
+		} else {
+			return this.dashboardUrl(
+				organizationIdOrContext.organization.id,
+				organizationIdOrContext.currentWarehouse.id,
+			);
+		}
 	}
 
 	public static requestErrorToString(error: HTTPResponseError | any): string {

@@ -24,6 +24,7 @@ import WarehousesPage from './Pages/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import InventoryViewPage from './Pages/InventoryViewPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -160,6 +161,10 @@ function Router() {
 								{
 									path: 'add',
 									element: <InventoryAddPage />,
+								},
+								{
+									path: 'view/:id',
+									element: <InventoryViewPage />,
 								},
 							],
 						},
