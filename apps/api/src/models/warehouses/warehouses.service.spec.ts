@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
-import { Type } from 'class-transformer';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
