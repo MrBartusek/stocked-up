@@ -1,7 +1,7 @@
-import SideBySideImage from '../SideBySideImage';
-import UndrawNotFound from '../../assets/undraw_not_found.svg';
 import { useNavigate } from 'react-router-dom';
+import UndrawNotFound from '../../assets/undraw_not_found.svg';
 import Button from '../Button';
+import SideBySideImage from '../SideBySideImage';
 
 function NotFound() {
 	const navigate = useNavigate();

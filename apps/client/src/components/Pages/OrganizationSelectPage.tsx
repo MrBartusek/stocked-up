@@ -1,12 +1,12 @@
-import { SecondaryNavbar } from '../SecondaryNavbar';
+import { BsBuilding, BsPlusCircle } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import useOrganizationsList from '../../hooks/useOrganizationsList';
+import Button from '../Button';
 import Container from '../Container';
 import DashboardLayout from '../Layout/DasboardLayout';
-import { BsBuilding, BsPlusCircle } from 'react-icons/bs';
-import Button from '../Button';
-import useOrganizationsList from '../../hooks/useOrganizationsList';
-import OrganizationCard from '../OrganizationCard';
 import Loader from '../Loader';
-import { Link } from 'react-router-dom';
+import OrganizationCard from '../OrganizationCard';
+import { SecondaryNavbar } from '../SecondaryNavbar';
 
 function OrganizationSelectPage() {
 	const { organizations, isLoading, error } = useOrganizationsList();

@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { OrganizationDto } from 'shared-types';
+import { OrgAcl, OrgAclSchema } from './org-acl';
+import { OrgStats, OrgStatsSchema } from './org-stats';
 import {
 	OrgWarehouseReference,
 	OrgWarehouseReferenceSchema,
 } from './org-warehouse-reference.schema';
-import { OrgAcl, OrgAclSchema } from './org-acl';
-import { OrganizationDto } from 'shared-types';
-import { OrgStats, OrgStatsSchema } from './org-stats';
 
 export type OrganizationDocument = HydratedDocument<Organization>;
 

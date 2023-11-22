@@ -1,8 +1,8 @@
-import { IconType } from 'react-icons';
-import Button, { ButtonProps } from './Button';
 import classNames from 'classnames';
 import React from 'react';
+import { IconType } from 'react-icons';
 import { BsPlusCircle } from 'react-icons/bs';
+import Button, { ButtonProps } from './Button';
 
 export interface IconButtonProps extends ButtonProps {
 	icon?: IconType;

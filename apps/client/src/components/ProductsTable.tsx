@@ -1,14 +1,13 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import humanFormat from 'human-format';
-import { useNavigate } from 'react-router-dom';
-import { BasicProductDto, ProductDto } from 'shared-types';
-import placeholderImage from '../assets/placeholder.png';
-import ProductActions from './ProductActions';
-import Table from './Helpers/Table';
-import TableImage from './TableImage';
-import { Utils } from '../utils';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BasicProductDto } from 'shared-types';
+import placeholderImage from '../assets/placeholder.png';
+import { Utils } from '../utils';
 import { CurrentAppContext } from './Context/CurrentAppContext';
+import Table from './Helpers/Table';
+import ProductActions from './ProductActions';
+import TableImage from './TableImage';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
@@ -21,12 +20,12 @@ function ProductsTable({ products }: ProductsTableProps) {
 	const navigate = useNavigate();
 
 	const columns = [
-		columnHelper.accessor('imageUrl', {
+		columnHelper.display({
 			header: '#',
 			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
 			size: 0,
 		}),
-		columnHelper.accessor('imageUrl', {
+		columnHelper.display({
 			header: 'Image',
 			cell: (info) => <TableImage src={info.getValue<string>() || placeholderImage} />,
 			size: 0,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { PrivateUserDto } from 'shared-types';
 import { Utils } from '../utils';

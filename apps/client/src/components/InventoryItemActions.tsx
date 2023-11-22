@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
+import { BasicInventoryItemDto } from 'shared-types';
 import ActionButton from './ActionButton';
 import { CurrentAppContext } from './Context/CurrentAppContext';
 import TableActionsWrapper from './TableActionsWrapper';

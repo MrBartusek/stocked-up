@@ -1,12 +1,8 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import humanFormat from 'human-format';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import Table from './Helpers/Table';
 import WarehouseActions from './WarehouseActions';
-import { Utils } from '../utils';
-import { useContext } from 'react';
-import { CurrentAppContext } from './Context/CurrentAppContext';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -16,7 +12,6 @@ export interface WarehousesTableProps {
 
 function WarehousesTable({ warehouses }: WarehousesTableProps) {
 	const navigate = useNavigate();
-	const appContext = useContext(CurrentAppContext);
 
 	const columns = [
 		columnHelper.display({
@@ -32,10 +27,10 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 			header: 'Address',
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor('totalValue', {
-			header: 'Total Stock Value',
-			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
-		}),
+		// columnHelper.accessor('totalValue', {
+		// 	header: 'Total Stock Value',
+		// 	cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+		// }),
 		columnHelper.display({
 			header: 'Actions',
 			id: 'actions',

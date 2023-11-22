@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React from 'react';
-import { IconType } from 'react-icons';
 
 type HTMLButtonProps = React.DetailedHTMLProps<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,

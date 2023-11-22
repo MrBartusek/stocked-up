@@ -10,12 +10,12 @@ import {
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ProductsService } from './products.service';
-import { Product } from './schemas/product.schema';
+import mongoose from 'mongoose';
 import { BasicProductDto, CreateProductDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
-import mongoose from 'mongoose';
 import { OrganizationsService } from '../organizations/organizations.service';
+import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 @ApiTags('products')
 @Controller('products')

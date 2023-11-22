@@ -1,7 +1,7 @@
 import { useRouteError } from 'react-router-dom';
 import FullFocusContainer from '../FullFocusContainer';
-import NotFound from './NotFound';
 import Default from './Default';
+import NotFound from './NotFound';
 
 function ApplicationError() {
 	const error = useRouteError() as any;

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 
 type InputProps = React.DetailedHTMLProps<

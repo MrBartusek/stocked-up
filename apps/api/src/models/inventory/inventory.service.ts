@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Types } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
+import { AddInventoryItemDto } from 'shared-types';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
-import { FilterQuery } from 'mongoose';
-import { AddInventoryItemDto } from 'shared-types';
 
 @Injectable()
 export class InventoryService {

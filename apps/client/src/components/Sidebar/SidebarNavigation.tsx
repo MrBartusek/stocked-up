@@ -3,17 +3,15 @@ import {
 	BsBoxFill,
 	BsBoxSeamFill,
 	BsClipboard2DataFill,
-	BsDashSquareFill,
 	BsGeoAltFill,
-	BsPencilSquare,
 	BsPersonFill,
 	BsPlusSquareFill,
 	BsTagFill,
 } from 'react-icons/bs';
-import SidebarLink from './SidebarLink';
-import SidebarSection from './SidebarSection';
 import usePageInfo from '../../hooks/usePageInfo';
 import { Utils } from '../../utils';
+import SidebarLink from './SidebarLink';
+import SidebarSection from './SidebarSection';
 
 function SidebarNavigation() {
 	const { organizationId, warehouseId } = usePageInfo();

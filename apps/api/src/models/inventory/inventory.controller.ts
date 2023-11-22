@@ -15,10 +15,10 @@ import { Types } from 'mongoose';
 import { AddInventoryItemDto, BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
+import { ProductsService } from '../products/products.service';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import { WarehousesService } from '../warehouses/warehouses.service';
-import { ProductsService } from '../products/products.service';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)

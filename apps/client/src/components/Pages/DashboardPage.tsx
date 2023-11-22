@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../Sidebar/Sidebar';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import useCurrentAppContext from '../../useAppContext';
 import usePageInfo from '../../hooks/usePageInfo';
+import useCurrentAppContext from '../../useAppContext';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
 import Loader from '../Loader';
+import Sidebar from '../Sidebar/Sidebar';
 
 function DashboardPage() {
 	const { warehouseId, organizationId } = usePageInfo();

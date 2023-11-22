@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { ProductsModule } from './models/products/products.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './models/users/users.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { OrganizationsModule } from './models/organizations/organizations.module';
-import { WarehousesModule } from './models/warehouses/warehouses.module';
 import { InventoryModule } from './models/inventory/inventory.module';
+import { OrganizationsModule } from './models/organizations/organizations.module';
+import { ProductsModule } from './models/products/products.module';
+import { UsersModule } from './models/users/users.module';
+import { WarehousesModule } from './models/warehouses/warehouses.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../..', 'client', 'dist'),

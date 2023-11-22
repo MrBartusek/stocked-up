@@ -1,7 +1,7 @@
-import SidebarNavigation from './SidebarNavigation';
+import OrganizationSelect from '../OrganizationSelect';
 import StockedUpLogo from '../StockedUpLogo';
 import WarehouseSelect from '../WarehouseSelect';
-import OrganizationSelect from '../OrganizationSelect';
+import SidebarNavigation from './SidebarNavigation';
 
 function Sidebar() {
 	const Separator = <div className="mb-3 border-b border-gray-300 pb-4"></div>;

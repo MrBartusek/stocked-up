@@ -1,5 +1,5 @@
-import { Document, Model, FilterQuery, UpdateQuery } from 'mongoose';
 import * as mongoose from 'mongoose';
+import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 const DEFAULT_PROJECTIONS = {
 	__v: 0,

@@ -3,8 +3,8 @@ import { BsChevronLeft } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import IconButton from '../IconButton';
-import TableTopBar from '../TableTopBar';
 import WarehouseCreateForm from '../InventoryAddForm';
+import TableTopBar from '../TableTopBar';
 
 function WarehousesCreatePage() {
 	const appContext = useContext(CurrentAppContext);

@@ -1,14 +1,12 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsPerson, BsShieldLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserLoginDto } from 'shared-types';
 import { HTTPResponseError, Utils } from '../utils';
+import Alert from './Alert';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
-import { useContext, useState } from 'react';
-import { UserContext } from './Context/UserContext';
-import FormError from './Form/FormError';
-import Alert from './Alert';
 
 type Inputs = {
 	username: string;

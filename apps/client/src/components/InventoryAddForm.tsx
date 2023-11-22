@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -10,7 +11,6 @@ import Button from './Button';
 import { CurrentAppContext } from './Context/CurrentAppContext';
 import FormError from './Form/FormError';
 import FormInput from './Form/FormInput';
-import classNames from 'classnames';
 
 type Inputs = {
 	quantity: number;

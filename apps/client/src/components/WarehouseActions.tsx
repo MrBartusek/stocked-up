@@ -1,19 +1,11 @@
-import { Row } from '@tanstack/react-table';
 import React, { useContext } from 'react';
-import {
-	BsCheck,
-	BsCheckCircle,
-	BsFillCheckCircleFill,
-	BsInfoCircleFill,
-	BsPencilFill,
-	BsTrashFill,
-} from 'react-icons/bs';
-import { WarehouseDto } from 'shared-types';
-import ActionButton from './ActionButton';
-import TableActionsWrapper from './TableActionsWrapper';
-import { CurrentAppContext } from './Context/CurrentAppContext';
+import { BsFillCheckCircleFill, BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { WarehouseDto } from 'shared-types';
 import { Utils } from '../utils';
+import ActionButton from './ActionButton';
+import { CurrentAppContext } from './Context/CurrentAppContext';
+import TableActionsWrapper from './TableActionsWrapper';
 
 export interface WarehouseActionsProps {
 	warehouse: WarehouseDto;

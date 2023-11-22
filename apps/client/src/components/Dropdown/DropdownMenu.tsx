@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { useContext } from 'react';
 import { DropdownContext } from './Dropdown';
-import classNames from 'classnames';
 
 type DivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 

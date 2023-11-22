@@ -1,11 +1,9 @@
 import { useContext } from 'react';
-import BigNumberCard from '../BigNumberCard';
-import DashboardContent from '../DashboardContent';
-import humanFormat from 'human-format';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import Card from '../Card';
-import TotalSoldChart from '../TotalSoldChart';
 import { Utils } from '../../utils';
+import BigNumberCard from '../BigNumberCard';
+import Card from '../Card';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import DashboardContent from '../DashboardContent';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);
