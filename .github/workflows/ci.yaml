@@ -81,7 +81,7 @@ jobs:
     name: Unit Test API
     runs-on: ubuntu-latest
     needs:
-      - setup
+      - build
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
