@@ -19,7 +19,7 @@ export class WarehousesService {
 		return this.warehouseRepository.exist({ _id: id });
 	}
 
-	findById(id: string): Promise<WarehouseDocument | undefined> {
+	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
 		return this.warehouseRepository.findById(id);
 	}
 }
