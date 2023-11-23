@@ -4,6 +4,7 @@ import {
 	Get,
 	NotFoundException,
 	Param,
+	Patch,
 	Post,
 	Req,
 	UseGuards,
@@ -14,12 +15,15 @@ import {
 	CreateOrganizationDto,
 	CreateWarehouseInOrgDto,
 	OrganizationDto,
+	PatchOrganizationSettingsDto,
 	WarehouseDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { OrganizationsService } from './organizations.service';
 import { Organization } from './schemas/organization.schema';
+import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
+import { Types } from 'mongoose';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -60,7 +64,7 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
-	async findByID(@Param('id') id: string): Promise<OrganizationDto> {
+	async findByID(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
 		const org = await this.organizationsService.findById(id);
 		if (!org) {
 			throw new NotFoundException();
@@ -69,8 +73,17 @@ export class OrganizationsController {
 	}
 
 	@Get(':id/warehouses')
-	async findWarehouses(@Param('id') id: string): Promise<any> {
+	async findWarehouses(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<any> {
 		const warehouses = await this.organizationsService.findAllWarehouses(id);
 		return warehouses.map((w) => Warehouse.toDto(w));
+	}
+
+	@Patch('settings')
+	async updateSettings(
+		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Body(new ValidationPipe()) patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
+	): Promise<OrganizationDto> {
+		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
+		return Organization.toDto(org);
 	}
 }

@@ -9,5 +9,8 @@ export class OrganizationDto extends BaseDto {
         totalValue: number,
         totalPendingOrders: number,
     }
+    settings: {
+        valueCalculationStrategy: 'buyPrice' | 'sellPrice'
+    }
     warehouses: BasicWarehouseDto[];
 }

@@ -7,6 +7,7 @@ import {
 	OrgWarehouseReference,
 	OrgWarehouseReferenceSchema,
 } from './org-warehouse-reference.schema';
+import { OrgSettings, OrgSettingsSchema } from './org-settings';
 
 export type OrganizationDocument = HydratedDocument<Organization>;
 
@@ -21,6 +22,9 @@ export class Organization {
 	@Prop({ type: OrgStatsSchema, default: {} })
 	stats: OrgStats;
 
+	@Prop({ type: OrgSettingsSchema, default: {} })
+	settings: OrgSettings;
+
 	@Prop({ type: [OrgAclSchema], default: [] })
 	acls: OrgAcl[];
 
@@ -33,6 +37,7 @@ export class Organization {
 			name: document.name,
 			currency: document.currency,
 			stats: document.stats,
+			settings: document.settings,
 			warehouses: document.warehouses,
 		};
 	}
