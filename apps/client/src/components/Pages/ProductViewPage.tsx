@@ -36,8 +36,8 @@ function ProductViewPage() {
 
 					<EntityInfoTable
 						properties={{
-							'internal ID': <code>{product?.id}</code>,
 							name: product?.name,
+							'internal ID': <code>{product?.id}</code>,
 							'buy price': Utils.humanizeCurrency(
 								product?.buyPrice,
 								appContext.organization.currency,

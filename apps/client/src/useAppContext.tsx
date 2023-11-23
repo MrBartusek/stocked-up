@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import useOrganizationData from './hooks/useOrganisationData';
-import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
 import toast from 'react-hot-toast';
-import { Utils } from './utils';
 import { useNavigate } from 'react-router-dom';
+import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
+import useOrganizationDetails from './hooks/useOrganisationDetails';
+import { Utils } from './utils';
 
 export interface CurrentAppContextType {
 	isLoading: boolean;
@@ -14,7 +14,11 @@ export interface CurrentAppContextType {
 }
 
 function useCurrentAppContext(organizationId: string, warehouseId: string): CurrentAppContextType {
-	const { organization, isLoading: isLoadingOrgData, error } = useOrganizationData(organizationId);
+	const {
+		organization,
+		isLoading: isLoadingOrgData,
+		error,
+	} = useOrganizationDetails(organizationId);
 	const navigate = useNavigate();
 	const currentWarehouse = useMemo<BasicWarehouseDto | undefined>(
 		() => organization?.warehouses?.find((w) => w.id == warehouseId),

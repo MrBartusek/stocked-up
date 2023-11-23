@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { OrganizationDto } from 'shared-types';
 import { Utils } from '../utils';
 
-function useOrganizationData(organizationId?: string) {
+function useOrganizationDetails(organizationId?: string) {
 	const { data, error, isLoading } = useQuery<any>(
 		['organizations', organizationId],
 		() => Utils.getFetcher(`/api/organizations/${organizationId}`),
@@ -16,4 +16,4 @@ function useOrganizationData(organizationId?: string) {
 	};
 }
 
-export default useOrganizationData;
+export default useOrganizationDetails;

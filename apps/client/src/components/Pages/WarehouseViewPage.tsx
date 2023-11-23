@@ -28,8 +28,8 @@ function WarehouseViewPage() {
 			</div>
 			<EntityInfoTable
 				properties={{
-					'internal ID': <code>{warehouse.id}</code>,
 					name: warehouse.name,
+					'internal ID': <code>{warehouse.id}</code>,
 					organization: appContext.organization.name,
 					address: warehouse.address,
 				}}

@@ -25,6 +25,7 @@ import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import InventoryViewPage from './Pages/InventoryViewPage';
+import OrganizationViewPage from './Pages/OrganizationViewPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -89,6 +90,10 @@ function Router() {
 				{
 					path: 'create',
 					element: <OrganizationCreatePage />,
+				},
+				{
+					path: 'view/:id',
+					element: <OrganizationViewPage />,
 				},
 				{
 					path: ':organization/:warehouse',
