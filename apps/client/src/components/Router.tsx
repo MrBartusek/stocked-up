@@ -26,6 +26,7 @@ import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import InventoryViewPage from './Pages/InventoryViewPage';
 import OrganizationViewPage from './Pages/OrganizationViewPage';
+import OrganizationSettingsPage from './Pages/OrganizationSettingsPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -94,6 +95,10 @@ function Router() {
 				{
 					path: 'view/:id',
 					element: <OrganizationViewPage />,
+				},
+				{
+					path: 'settings/:id',
+					element: <OrganizationSettingsPage />,
 				},
 				{
 					path: ':organization/:warehouse',
