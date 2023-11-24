@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Select from 'react-select';
+import Select from './Helpers/Select';
 import { BasicWarehouseDto } from 'shared-types';
 import { CurrentAppContext } from './Context/CurrentAppContext.js';
-
-//@ts-ignore
-import tailwindConfig from '../../tailwind.config.js';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
@@ -42,14 +39,6 @@ function WarehouseSelect(props: WarehouseSelectProps) {
 				className="mt-1"
 				onChange={onChange}
 				value={generateOption(appContext.currentWarehouse)}
-				theme={(theme) => ({
-					...theme,
-					colors: {
-						...theme.colors,
-						primary: tailwindConfig.theme.extend.colors.primary,
-						primary25: tailwindConfig.theme.extend.colors.secondary,
-					},
-				})}
 				options={appContext.organization.warehouses.map(generateOption)}
 			/>
 		</fieldset>
