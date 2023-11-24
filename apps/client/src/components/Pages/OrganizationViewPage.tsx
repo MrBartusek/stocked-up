@@ -44,15 +44,10 @@ function OrganizationViewPage() {
 						<div>
 							<HeaderWithHint
 								hint="organization"
-								className="mb-4 mt-8"
+								className="mt-8"
 							>
 								{organization?.name}
 							</HeaderWithHint>
-							<p className="mb-8 text-muted">
-								This page offers insights into the specified StockedUp organization, representing
-								the highest organizational units within the StockedUp system. Think of organizations
-								as a centralized hub for managing all company resources.
-							</p>
 
 							<EntityInfoTable
 								properties={{
