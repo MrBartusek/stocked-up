@@ -4,13 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsArrowLeftRight } from 'react-icons/bs';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import {
-	AddInventoryItemDto,
-	CreateWarehouseDto,
-	CreateWarehouseInOrgDto,
-	OrganizationDto,
-	WarehouseDto,
-} from 'shared-types';
+import { AddInventoryItemDto, OrganizationDto } from 'shared-types';
 import useProductsDetails from '../hooks/useProductsDetails';
 import { Utils } from '../utils';
 import Button from './Button';
@@ -19,8 +13,8 @@ import FormError from './Form/FormError';
 import FormInput from './Form/FormInput';
 
 type Inputs = {
-	name: string;
-	address: string;
+	quantity: number;
+	location: string;
 };
 
 function InventoryAddForm() {
@@ -29,19 +23,31 @@ function InventoryAddForm() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const productId = searchParams.get('productId')!;
+	const { product, error: productFetchError } = useProductsDetails(productId);
+
+	useEffect(() => {
+		if (productId && productFetchError != undefined) {
+			toast.error('Provided product ID is invalid, please input product manual');
+			setSearchParams(undefined);
+		}
+	}, [productFetchError, productId, setSearchParams]);
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 		setError(null);
 
-		const dto: CreateWarehouseInOrgDto = {
-			organizationId: appContext.organization.id,
-			warehouse: inputs,
+		const dto: AddInventoryItemDto = {
+			warehouseId: appContext.currentWarehouse.id,
+			productId: product.id,
+			...inputs,
 		};
 
-		Utils.postFetcher<WarehouseDto>(`/api/organizations/warehouses/`, dto)
+		Utils.postFetcher<OrganizationDto>(`/api/inventory/`, dto)
 			.then(() => navigate('..'))
-			.then(() => toast.success('Successfully created warehouse'))
+			.then(() => toast.success('Successfully created item'))
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}
@@ -49,27 +55,46 @@ function InventoryAddForm() {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<FormInput
-				label="Organization"
+				label="Warehouse"
 				readOnly
 				required
-				value={appContext.organization.name}
+				value={appContext.currentWarehouse.name}
 			/>
 
 			<FormInput
-				label="Name"
-				placeholder="US West Main"
+				label="Product"
+				disabled
+				value={product?.name}
+				noEndMargin
+				minLength={2}
+				maxLength={32}
+				required
+			/>
+			<Link
+				className={classNames('link-primary mb-1 ms-1 mt-3 flex items-center gap-2', {
+					'animate-bounce': product == undefined,
+				})}
+				to={
+					Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
+					`/products`
+				}
+			>
+				<BsArrowLeftRight /> {product ? 'Change' : 'Select'} product
+			</Link>
+
+			<FormInput
+				label="Quantity"
+				hint="If you know current item quantity you can add it here"
+				placeholder="0"
 				type="number"
-				minLength={2}
-				maxLength={32}
-				{...register('name')}
+				{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
 			/>
 
 			<FormInput
-				label="Address"
-				placeholder="18 Milton Street"
-				minLength={2}
-				maxLength={32}
-				{...register('address')}
+				label="Location"
+				hint="Where is this item located in warehouse"
+				placeholder="shelf / aisle / bin number"
+				{...register('location')}
 			/>
 
 			<FormError>{error}</FormError>
@@ -78,8 +103,9 @@ function InventoryAddForm() {
 				role="submit"
 				className="mt-4"
 				loading={loading}
+				disabled={product == undefined}
 			>
-				Create warehouse
+				Add product to inventory
 			</Button>
 		</form>
 	);

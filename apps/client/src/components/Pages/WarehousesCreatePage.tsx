@@ -3,7 +3,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import IconButton from '../IconButton';
-import WarehouseCreateForm from '../InventoryAddForm';
+import WarehouseCreateForm from '../WarehouseCreateForm';
 import TableTopBar from '../TableTopBar';
 
 function WarehousesCreatePage() {
