@@ -12,7 +12,7 @@ function useInventoryItemByProduct(warehouseId: string, productId: string) {
 		{
 			enabled: warehouseId != undefined && productId != undefined,
 			retry(failureCount: number, error: any) {
-				if (error?.response.status == 404) return false;
+				if (error?.response?.status == 404) return false;
 				return failureCount < 2;
 			},
 		},

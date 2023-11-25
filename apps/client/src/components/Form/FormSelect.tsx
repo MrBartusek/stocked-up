@@ -6,7 +6,7 @@ interface FormSelectProps extends SelectProps {
 
 function FormSelect({ label, ...props }: FormSelectProps) {
 	return (
-		<div className="my-6">
+		<div>
 			{label && <label className="mb-2 ms-1 flex gap-1">{label}</label>}
 			<Select {...props} />
 		</div>

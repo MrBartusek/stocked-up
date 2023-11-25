@@ -21,7 +21,7 @@ function useUser(): UseUserType {
 		() => Utils.getFetcher(`/api/users/me`),
 		{
 			retry(failureCount: number, error: any) {
-				if (error?.response.status == 403) return false;
+				if (error?.response?.status == 403) return false;
 				return failureCount < 1;
 			},
 			onSuccess() {

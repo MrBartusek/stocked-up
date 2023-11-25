@@ -1,16 +1,16 @@
 import { BsBuildingGear, BsChevronLeft } from 'react-icons/bs';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useOrganizationDetails from '../../hooks/useOrganisationDetails';
 import Button from '../Button';
 import Container from '../Container';
 import DashboardLayout from '../Layout/DasboardLayout';
 import Loader from '../Loader';
 import { SecondaryNavbar } from '../SecondaryNavbar';
+import OrganizationSettings from '../OrganizationSettings';
 
 function OrganizationSettingsPage() {
 	const { id } = useParams();
 	const { organization, isLoading, error } = useOrganizationDetails(id);
-	const navigate = useNavigate();
 
 	return (
 		<DashboardLayout>
@@ -18,7 +18,7 @@ function OrganizationSettingsPage() {
 				icon={BsBuildingGear}
 				title={`${organization?.name} - settings`}
 				actions={
-					<Link to="..">
+					<Link to={`../view/${organization.id}`}>
 						<Button className="flex items-center gap-3">
 							<BsChevronLeft size={20} />
 							Go back
@@ -31,7 +31,7 @@ function OrganizationSettingsPage() {
 				isError={error != undefined}
 			>
 				<Container>
-					<div>form</div>
+					<OrganizationSettings organization={organization} />
 				</Container>
 			</Loader>
 		</DashboardLayout>

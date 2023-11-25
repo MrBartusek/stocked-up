@@ -78,12 +78,17 @@ export class OrganizationsController {
 		return warehouses.map((w) => Warehouse.toDto(w));
 	}
 
-	@Patch('settings')
+	@Patch(':id/settings')
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(new ValidationPipe()) patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
-	): Promise<OrganizationDto> {
-		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
-		return Organization.toDto(org);
+	): Promise<any> {
+		const orgExist = await this.organizationsService.exist(id);
+		if (!orgExist) {
+			throw new NotFoundException();
+		}
+
+		await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
+		return { message: 'ok', statusCode: 200 };
 	}
 }
