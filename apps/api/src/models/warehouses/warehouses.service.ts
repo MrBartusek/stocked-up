@@ -22,4 +22,8 @@ export class WarehousesService {
 	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
 		return this.warehouseRepository.findById(id);
 	}
+
+	updateTotalValue(id: Types.ObjectId, totalValue: number): Promise<WarehouseDocument | undefined> {
+		return this.warehouseRepository.findOneAndUpdate({ _id: id }, { totalValue });
+	}
 }

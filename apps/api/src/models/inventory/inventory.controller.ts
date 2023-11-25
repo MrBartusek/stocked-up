@@ -19,6 +19,9 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { OrganizationDocument } from '../organizations/schemas/organization.schema';
+import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -28,21 +31,27 @@ export class InventoryController {
 		private readonly inventoryService: InventoryService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productService: ProductsService,
+		private readonly organizationService: OrganizationsService,
 	) {}
 
 	@Post()
 	async create(@Body(ValidationPipe) addInventoryItemDto: AddInventoryItemDto) {
-		const warehouseExist = this.warehousesService.exist(addInventoryItemDto.warehouseId as any);
-		if (!warehouseExist) {
+		const warehouse = await this.warehousesService.findById(addInventoryItemDto.warehouseId as any);
+		if (!warehouse) {
 			throw new BadRequestException("This warehouse doesn't exist");
 		}
 
-		const productExist = this.productService.exist(addInventoryItemDto.productId as any);
+		const productExist = await this.productService.exist(addInventoryItemDto.productId as any);
 		if (!productExist) {
 			throw new BadRequestException("This product doesn't exist");
 		}
 
 		const item = await this.inventoryService.create(addInventoryItemDto);
+
+		const organization = await this.organizationService.findByWarehouse(warehouse._id);
+
+		await this.updateWarehouseValue(organization, warehouse);
+
 		return InventoryItem.toBasicDto(item);
 	}
 
@@ -64,7 +73,7 @@ export class InventoryController {
 	async findAll(
 		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
 	): Promise<BasicInventoryItemDto[]> {
-		const items = await this.inventoryService.findAll(warehouseId);
+		const items = await this.inventoryService.findAllInWarehouse(warehouseId);
 
 		return items.map((i) => InventoryItem.toBasicDto(i));
 	}
@@ -78,5 +87,16 @@ export class InventoryController {
 		}
 
 		return InventoryItem.toDto(item);
+	}
+
+	async updateWarehouseValue(organization: OrganizationDocument, warehouse: WarehouseDocument) {
+		const items = await this.inventoryService.find({ warehouse: warehouse._id });
+		const strategy = organization.settings.valueCalculationStrategy;
+
+		const totalValue = items
+			.map((i) => i.product[strategy] * i.quantity)
+			.reduce((a, b) => a + b, 0);
+		console.log(items.map((i) => i.product[strategy] * i.quantity));
+		await this.warehousesService.updateTotalValue(warehouse.id, totalValue);
 	}
 }

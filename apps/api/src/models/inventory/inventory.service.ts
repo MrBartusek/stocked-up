@@ -39,7 +39,11 @@ export class InventoryService {
 		}
 	}
 
-	findAll(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
+	find(query: FilterQuery<any>): Promise<InventoryItemDocument[]> {
+		return this.aggregateWithProduct(query);
+	}
+
+	findAllInWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
 		return this.aggregateWithProduct({ warehouse: warehouseId });
 	}
 

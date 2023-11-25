@@ -12,11 +12,15 @@ export class Warehouse {
 	@Prop()
 	address: string;
 
+	@Prop({ default: 0 })
+	totalValue: number;
+
 	public static toDto(entity: WarehouseDocument): WarehouseDto {
 		return {
 			id: entity._id,
 			name: entity.name,
 			address: entity.address,
+			totalValue: entity.totalValue,
 		};
 	}
 }

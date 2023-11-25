@@ -44,7 +44,12 @@ export class Utils {
 	}
 
 	public static humanizeCurrency(input?: number, currency?: string) {
-		return humanFormat(input || 0, { separator: '', decimals: 2 }) + ' ' + currency;
+		const value = humanFormat(input || 0, { separator: '', decimals: 2 });
+		return (
+			<div className="flex items-baseline gap-1">
+				{value} <div className="text-muted">{currency}</div>
+			</div>
+		);
 	}
 
 	public static dashboardUrl(

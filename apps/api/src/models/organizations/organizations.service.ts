@@ -66,6 +66,14 @@ export class OrganizationsService {
 		return result.map((r) => r.warehouseDetails[0]);
 	}
 
+	async findByWarehouse(
+		warehouseId: mongoose.Types.ObjectId,
+	): Promise<OrganizationDocument | null> {
+		return this.organizationRepository.findOne({
+			'warehouses.id': warehouseId,
+		});
+	}
+
 	async updateAcl(
 		organizationId: mongoose.Types.ObjectId | string,
 		userId: mongoose.Types.ObjectId | string,
