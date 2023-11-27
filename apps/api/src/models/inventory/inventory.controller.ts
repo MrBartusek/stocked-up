@@ -22,6 +22,7 @@ import { InventoryItem } from './schemas/inventory-item.schema';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { OrganizationDocument } from '../organizations/schemas/organization.schema';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -47,10 +48,8 @@ export class InventoryController {
 		}
 
 		const item = await this.inventoryService.create(addInventoryItemDto);
-
 		const organization = await this.organizationService.findByWarehouse(warehouse._id);
-
-		await this.updateWarehouseValue(organization, warehouse);
+		await this.updateWarehouseValue(warehouse, organization.settings.valueCalculationStrategy);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -89,14 +88,13 @@ export class InventoryController {
 		return InventoryItem.toDto(item);
 	}
 
-	async updateWarehouseValue(organization: OrganizationDocument, warehouse: WarehouseDocument) {
+	async updateWarehouseValue(warehouse: WarehouseDocument, strategy: OrgValueCalculationStrategy) {
 		const items = await this.inventoryService.find({ warehouse: warehouse._id });
-		const strategy = organization.settings.valueCalculationStrategy;
 
 		const totalValue = items
 			.map((i) => i.product[strategy] * i.quantity)
 			.reduce((a, b) => a + b, 0);
-		console.log(items.map((i) => i.product[strategy] * i.quantity));
+
 		await this.warehousesService.updateTotalValue(warehouse.id, totalValue);
 	}
 }
