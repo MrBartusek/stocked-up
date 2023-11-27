@@ -23,6 +23,7 @@ import { OrganizationsService } from '../organizations/organizations.service';
 import { OrganizationDocument } from '../organizations/schemas/organization.schema';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -33,6 +34,7 @@ export class InventoryController {
 		private readonly warehousesService: WarehousesService,
 		private readonly productService: ProductsService,
 		private readonly organizationService: OrganizationsService,
+		private readonly organizationStatsService: OrganizationsStatsService,
 	) {}
 
 	@Post()
@@ -49,7 +51,7 @@ export class InventoryController {
 
 		const item = await this.inventoryService.create(addInventoryItemDto);
 		const organization = await this.organizationService.findByWarehouse(warehouse._id);
-		await this.updateWarehouseValue(warehouse, organization.settings.valueCalculationStrategy);
+		await this.updateWarehouseValue(organization, warehouse);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -88,13 +90,11 @@ export class InventoryController {
 		return InventoryItem.toDto(item);
 	}
 
-	async updateWarehouseValue(warehouse: WarehouseDocument, strategy: OrgValueCalculationStrategy) {
-		const items = await this.inventoryService.find({ warehouse: warehouse._id });
-
-		const totalValue = items
-			.map((i) => i.product[strategy] * i.quantity)
-			.reduce((a, b) => a + b, 0);
-
+	async updateWarehouseValue(organization: OrganizationDocument, warehouse: WarehouseDocument) {
+		const strategy = organization.settings.valueCalculationStrategy;
+		const totalValue = await this.inventoryService.calculateTotalValue(warehouse._id, strategy);
 		await this.warehousesService.updateTotalValue(warehouse.id, totalValue);
+		const orgValue = await this.organizationService.calculateTotalValue(organization._id);
+		await this.organizationStatsService.updateTotalValue(organization._id, orgValue);
 	}
 }

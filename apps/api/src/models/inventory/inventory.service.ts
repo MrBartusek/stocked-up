@@ -3,6 +3,7 @@ import { FilterQuery, Types } from 'mongoose';
 import { AddInventoryItemDto } from 'shared-types';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 
 @Injectable()
 export class InventoryService {
@@ -64,5 +65,34 @@ export class InventoryService {
 				$unwind: '$product',
 			},
 		]);
+	}
+
+	async calculateTotalValue(
+		warehouseId: Types.ObjectId,
+		strategy: OrgValueCalculationStrategy,
+	): Promise<number> {
+		const result = await this.inventoryRepository.aggregate([
+			{
+				$match: { warehouse: warehouseId },
+			},
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'product',
+					foreignField: '_id',
+					as: 'product',
+				},
+			},
+			{
+				$unwind: '$product',
+			},
+			{
+				$group: {
+					_id: null,
+					totalValue: { $sum: { $multiply: [`$product.${strategy}`, '$quantity'] } },
+				},
+			},
+		]);
+		return result[0].totalValue;
 	}
 }

@@ -10,10 +10,10 @@ import {
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { BasicProductDto, CreateProductDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
-import { OrganizationsService } from '../organizations/organizations.service';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
 
@@ -24,14 +24,13 @@ import { Product } from './schemas/product.schema';
 export class ProductsController {
 	constructor(
 		private readonly productsService: ProductsService,
-		private readonly organizationService: OrganizationsService,
+		private readonly organizationStatsService: OrganizationsStatsService,
 	) {}
 
 	@Post()
 	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
-		const newCount = await this.productsService.countAll(dto.organizationId);
-		await this.organizationService.updateProductsCount(dto.organizationId, newCount);
+
 		return Product.toDto(product);
 	}
 
@@ -49,5 +48,10 @@ export class ProductsController {
 		const objectId = new mongoose.Types.ObjectId(id);
 		const products = await this.productsService.findAll(objectId);
 		return products.map((product) => Product.toBasicDto(product));
+	}
+
+	async updateTotalProductsCount(organizationId: Types.ObjectId) {
+		const newCount = await this.productsService.countAll(organizationId);
+		await this.organizationStatsService.updateProductsCount(organizationId, newCount);
 	}
 }

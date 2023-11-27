@@ -5,6 +5,7 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
+import { OrganizationsStatsService } from './organizations-stats.service';
 
 @Module({
 	imports: [
@@ -12,7 +13,7 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 		WarehousesModule,
 	],
 	controllers: [OrganizationsController],
-	providers: [OrganizationsService, OrganizationRepository],
-	exports: [OrganizationsService],
+	providers: [OrganizationsService, OrganizationRepository, OrganizationsStatsService],
+	exports: [OrganizationsService, OrganizationsStatsService],
 })
 export class OrganizationsModule {}
