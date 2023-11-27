@@ -53,23 +53,25 @@ function SidebarNavigation() {
 					text="Move inventory"
 				/>
 			</SidebarSection>
-			<SidebarSection name="Orders">
-				<SidebarLink
-					to={`${baseUrl}/orders`}
-					icon={BsBoxSeamFill}
-					text="Orders"
-				/>
-				<SidebarLink
-					to={`${baseUrl}/orders/add`}
-					icon={BsPlusSquareFill}
-					text="Create order"
-				/>
-				<SidebarLink
-					to={`${baseUrl}/orders/customers`}
-					icon={BsPersonFill}
-					text="Customers"
-				/>
-			</SidebarSection>
+			<div className="opacity-50">
+				<SidebarSection name="Orders">
+					<SidebarLink
+						to={`${baseUrl}/orders`}
+						icon={BsBoxSeamFill}
+						text="Orders"
+					/>
+					<SidebarLink
+						to={`${baseUrl}/orders/add`}
+						icon={BsPlusSquareFill}
+						text="Create order"
+					/>
+					<SidebarLink
+						to={`${baseUrl}/orders/customers`}
+						icon={BsPersonFill}
+						text="Customers"
+					/>
+				</SidebarSection>
+			</div>
 		</nav>
 	);
 }
