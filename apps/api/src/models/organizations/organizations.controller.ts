@@ -24,11 +24,15 @@ import { OrganizationsService } from './organizations.service';
 import { Organization } from './schemas/organization.schema';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { Types } from 'mongoose';
+import { OrganizationsStatsService } from './organizations-stats.service';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
 export class OrganizationsController {
-	constructor(private readonly organizationsService: OrganizationsService) {}
+	constructor(
+		private readonly organizationsService: OrganizationsService,
+		private readonly organizationsStatsService: OrganizationsStatsService,
+	) {}
 
 	@Post()
 	async create(
@@ -86,6 +90,11 @@ export class OrganizationsController {
 		const orgExist = await this.organizationsService.exist(id);
 		if (!orgExist) {
 			throw new NotFoundException();
+		}
+
+		if (patchOrganizationSettingsDto != undefined) {
+			const orgValue = await this.organizationsService.calculateTotalValue(id);
+			await this.organizationsStatsService.updateTotalValue(id, orgValue);
 		}
 
 		await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);

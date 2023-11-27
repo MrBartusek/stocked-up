@@ -6,8 +6,8 @@ import { Utils } from '../utils';
 import FormSelect from './Form/FormSelect';
 
 export interface RealtimeOrgSettingSelectProps {
-	name: string;
-	description: string;
+	name: React.ReactNode;
+	description: React.ReactNode;
 	organization: OrganizationDto;
 	property: keyof OrganizationDto['settings'];
 	options: { value: string; label: string }[];

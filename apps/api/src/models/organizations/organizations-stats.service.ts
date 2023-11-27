@@ -9,21 +9,21 @@ export class OrganizationsStatsService {
 	async updateProductsCount(id: mongoose.Types.ObjectId | string, count: number) {
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: id },
-			{ stats: { totalProducts: count } },
+			{ $set: { 'stats.totalProducts': count } },
 		);
 	}
 
 	async updateTotalValue(id: mongoose.Types.ObjectId | string, count: number) {
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: id },
-			{ stats: { totalValue: count } },
+			{ $set: { 'stats.totalValue': count } },
 		);
 	}
 
 	async updatePendingOrders(id: mongoose.Types.ObjectId | string, count: number) {
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: id },
-			{ stats: { totalPendingOrders: count } },
+			{ $set: { 'stats.totalPendingOrders': count } },
 		);
 	}
 }

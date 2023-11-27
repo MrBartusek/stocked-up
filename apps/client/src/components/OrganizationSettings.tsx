@@ -1,6 +1,4 @@
 import { OrganizationDto } from 'shared-types';
-import Select from './Helpers/Select';
-import FormSelect from './Form/FormSelect';
 import RealtimeOrgSettingSelect from './RealtimeOrgSettingSelect';
 
 export interface OrganizationSettingsProps {
