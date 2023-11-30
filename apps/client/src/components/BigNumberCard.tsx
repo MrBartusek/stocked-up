@@ -1,17 +1,15 @@
 import React from 'react';
-import Card from './Card';
+import CardWithTitle, { CardWithTitleProps } from './CardWithTitle';
 
-export interface BigNumberCardProps {
-	title: string;
+export interface BigNumberCardProps extends CardWithTitleProps {
 	children: React.ReactNode;
 }
 
 function BigNumberCard({ title, children }: BigNumberCardProps) {
 	return (
-		<Card className="flex flex-col items-center justify-center gap-5 text-center">
-			<h2 className="text-xl text-muted">{title}</h2>
-			<p className="text-3xl font-bold">{children}</p>
-		</Card>
+		<CardWithTitle title={title}>
+			<p className="text-center text-3xl font-bold">{children}</p>
+		</CardWithTitle>
 	);
 }
 export default BigNumberCard;

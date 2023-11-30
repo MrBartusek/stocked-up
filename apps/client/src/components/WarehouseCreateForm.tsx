@@ -49,7 +49,6 @@ function WarehouseCreateForm() {
 			<FormInput
 				label="Name"
 				placeholder="US West Main"
-				type="number"
 				minLength={2}
 				maxLength={32}
 				{...register('name')}
