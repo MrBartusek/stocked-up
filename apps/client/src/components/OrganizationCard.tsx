@@ -1,10 +1,7 @@
 import { BsBoxes, BsBuilding, BsTag } from 'react-icons/bs';
 import { OrganizationDto } from 'shared-types';
 import OrganizationSettingsButton from './OrganizationActions';
-import WarehouseInfoRow from './WarehouseInfoRow';
-import ExpandableList from './Helpers/ExpandableList';
 import WarehousesList from './WarehousesList';
-import { Utils } from '../utils';
 
 export interface OrganizationCardProps {
 	organization: OrganizationDto;

@@ -1,22 +1,15 @@
-import { OrganizationDto } from 'shared-types';
 import {
 	CartesianGrid,
-	Cell,
-	Label,
-	Legend,
 	Line,
 	LineChart,
-	Pie,
-	PieChart,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
 	YAxis,
 } from 'recharts';
-import { useMemo } from 'react';
-import Loader from './Loader';
-import useWarehousesList from '../hooks/useWarehouseList';
+import { OrganizationDto } from 'shared-types';
 import { Utils } from '../utils';
+import Loader from './Loader';
 
 export interface TotalSalesChartProps {
 	organization: OrganizationDto;

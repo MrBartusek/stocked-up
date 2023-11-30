@@ -29,6 +29,7 @@ module.exports = {
 		'@typescript-eslint/no-this-alias': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-empty-interface': 'off',
+		'@typescript-eslint/no-unused-vars': 'warn',
 		'react-refresh/only-export-components': 'warn',
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
