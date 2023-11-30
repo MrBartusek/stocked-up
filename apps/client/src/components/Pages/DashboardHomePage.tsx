@@ -6,6 +6,7 @@ import { CurrentAppContext } from '../Context/CurrentAppContext';
 import DashboardContent from '../DashboardContent';
 import WarehousesValueChart from '../WarehousesValueChart';
 import ChartCard from '../ChartCard';
+import TotalSalesChart from '../TotalSalesChart';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);
@@ -25,7 +26,9 @@ function DashboardHomePage() {
 					</BigNumberCard>
 				</div>
 				<div className="flex gap-8">
-					<Card>chart</Card>
+					<ChartCard title="Total sales (last 7 days)">
+						<TotalSalesChart organization={organization} />
+					</ChartCard>
 					<ChartCard title="Warehouses value">
 						<WarehousesValueChart organization={organization} />
 					</ChartCard>

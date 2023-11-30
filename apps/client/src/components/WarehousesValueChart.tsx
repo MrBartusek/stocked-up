@@ -9,20 +9,6 @@ export interface WarehousesValueChartProps {
 	organization: OrganizationDto;
 }
 
-const COLORS = [
-	'#22c55e',
-	'#10b981',
-	'#14b8a6',
-	'#06b6d4',
-	'#0ea5e9',
-	'#3b82f6',
-	'#6366f1',
-	'#8b5cf6',
-	'#a855f7',
-	'#d946ef',
-	'#ec4899',
-];
-
 function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 	const { warehouses, isLoading, error } = useWarehousesList(organization.id);
 
@@ -43,7 +29,11 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 		return mappedValues;
 	}
 
-	const data = useMemo(prepareChartData, [organization.currency, warehouses]);
+	const data = useMemo(prepareChartData, [
+		organization.currency,
+		organization.stats.totalValue,
+		warehouses,
+	]);
 
 	return (
 		<Loader
@@ -68,7 +58,7 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 						{data?.map((entry, i) => (
 							<Cell
 								key={i}
-								fill={COLORS[i % COLORS.length]}
+								fill={Utils.CHART_COLORS[i % Utils.CHART_COLORS.length]}
 							/>
 						))}
 						<Label
