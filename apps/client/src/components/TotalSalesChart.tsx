@@ -68,6 +68,7 @@ function TotalSalesChart({ organization }: TotalSalesChartProps) {
 						type="monotone"
 						dataKey="value"
 						stroke={Utils.CHART_COLORS[0]}
+						strokeWidth={2}
 					/>
 				</LineChart>
 			</ResponsiveContainer>
