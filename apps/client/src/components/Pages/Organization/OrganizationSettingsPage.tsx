@@ -1,12 +1,12 @@
 import { BsBuildingGear, BsChevronLeft } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
-import useOrganizationDetails from '../../hooks/useOrganisationDetails';
-import Button from '../Button';
-import Container from '../Container';
-import DashboardLayout from '../Layout/DasboardLayout';
-import Loader from '../Loader';
-import { SecondaryNavbar } from '../SecondaryNavbar';
-import OrganizationSettings from '../OrganizationSettings';
+import useOrganizationDetails from '../../../hooks/useOrganisationDetails';
+import Button from '../../Button';
+import Container from '../../Container';
+import DashboardLayout from '../../Layout/DasboardLayout';
+import Loader from '../../Loader';
+import { SecondaryNavbar } from '../../SecondaryNavbar';
+import OrganizationSettings from '../../OrganizationSettings';
 
 function OrganizationSettingsPage() {
 	const { id } = useParams();

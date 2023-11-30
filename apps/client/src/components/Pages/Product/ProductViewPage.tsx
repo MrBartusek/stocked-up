@@ -1,19 +1,19 @@
 import { useContext } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
-import useProductsDetails from '../../hooks/useProductsDetails';
-import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import EntityActionsRow from '../Entity/EntityActionsRow';
-import EntityContainer from '../Entity/EntityContainer';
-import EntityImageColumn from '../Entity/EntityImageColumn';
-import EntityInfoTable from '../Entity/EntityInfoTable';
-import HeaderWithHint from '../HeaderWithHint';
-import Blockquote from '../Helpers/Blockquote';
-import IconButton from '../IconButton';
-import Loader from '../Loader';
-import ProductAddToInventoryButton from '../ProductAddToInventoryButton';
-import ProductInventoryPeek from '../ProductInventoryPeek';
+import useProductsDetails from '../../../hooks/useProductsDetails';
+import { Utils } from '../../../utils';
+import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import EntityActionsRow from '../../Entity/EntityActionsRow';
+import EntityContainer from '../../Entity/EntityContainer';
+import EntityImageColumn from '../../Entity/EntityImageColumn';
+import EntityInfoTable from '../../Entity/EntityInfoTable';
+import HeaderWithHint from '../../HeaderWithHint';
+import Blockquote from '../../Helpers/Blockquote';
+import IconButton from '../../IconButton';
+import Loader from '../../Loader';
+import ProductAddToInventoryButton from '../../ProductAddToInventoryButton';
+import ProductInventoryPeek from '../../ProductInventoryPeek';
 
 function ProductViewPage() {
 	const appContext = useContext(CurrentAppContext);

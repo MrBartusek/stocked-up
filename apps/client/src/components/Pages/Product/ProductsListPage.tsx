@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { BsPlusCircle } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import useProductsList from '../../hooks/useProductsList';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import IconButton from '../IconButton';
-import Loader from '../Loader';
-import ProductsTable from '../ProductsTable';
-import TableTopBar from '../TableTopBar';
+import useProductsList from '../../../hooks/useProductsList';
+import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import IconButton from '../../IconButton';
+import Loader from '../../Loader';
+import ProductsTable from '../../ProductsTable';
+import TableTopBar from '../../TableTopBar';
 
 function ProductsListPage() {
 	const appContext = useContext(CurrentAppContext);

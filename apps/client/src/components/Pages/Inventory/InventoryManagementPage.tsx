@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Card from '../Card';
-import DashboardContent from '../DashboardContent';
+import Card from '../../Card';
+import DashboardContent from '../../DashboardContent';
 
 function InventoryManagementPage() {
 	return (

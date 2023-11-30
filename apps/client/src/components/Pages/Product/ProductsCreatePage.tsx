@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { BsChevronLeft } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import IconButton from '../IconButton';
-import ProductCreateForm from '../ProductCreateForm';
-import TableTopBar from '../TableTopBar';
+import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import IconButton from '../../IconButton';
+import ProductCreateForm from '../../ProductCreateForm';
+import TableTopBar from '../../TableTopBar';
 
 function ProductsCreatePage() {
 	const appContext = useContext(CurrentAppContext);

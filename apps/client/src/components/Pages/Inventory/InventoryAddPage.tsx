@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { BsChevronLeft } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import IconButton from '../IconButton';
-import TableTopBar from '../TableTopBar';
-import InventoryAddForm from '../InventoryAddForm';
+import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import IconButton from '../../IconButton';
+import TableTopBar from '../../TableTopBar';
+import InventoryAddForm from '../../InventoryAddForm';
 
 function InventoryAddPage() {
 	const appContext = useContext(CurrentAppContext);
