@@ -45,7 +45,9 @@ const FancyInput = forwardRef(function TextInput(
 					ref={ref}
 					onFocus={() => setFocused(true)}
 					onBlur={() => setFocused(false)}
-					className={classNames('block flex-1 bg-inherit px-2 py-2 text-lg outline-none')}
+					className={classNames('block flex-1 bg-inherit px-2 py-2 text-lg outline-none', {
+						'opacity-75': props.disabled,
+					})}
 				></input>
 			</div>
 		</div>
