@@ -8,7 +8,7 @@ export interface BigNumberCardProps extends CardWithTitleProps {
 function BigNumberCard({ title, children }: BigNumberCardProps) {
 	return (
 		<CardWithTitle title={title}>
-			<p className="flex justify-center text-center text-3xl font-bold">{children}</p>
+			<span className="flex justify-center text-center text-3xl font-bold">{children}</span>
 		</CardWithTitle>
 	);
 }

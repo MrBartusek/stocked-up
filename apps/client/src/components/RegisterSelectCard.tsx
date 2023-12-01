@@ -24,7 +24,7 @@ function RegisterSelectCard({ children, icon, title }: RegisterSelectCardProps) 
 			{iconElement}
 			<div className="flex-1">
 				<h2 className="mb-1 text-xl">{title}</h2>
-				<p className="text-sm text-muted">{children}</p>
+				<span className="text-sm text-muted">{children}</span>
 			</div>
 		</div>
 	);

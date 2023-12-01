@@ -25,7 +25,7 @@ function DashboardHomePage() {
 						{organization.stats.totalPendingOrders}
 					</BigNumberCard>
 				</div>
-				<div className="flex gap-8">
+				<div className="flex flex-col gap-8 xl:flex-row">
 					<ChartCard title="Total sales (last 7 days)">
 						<TotalSalesChart organization={organization} />
 					</ChartCard>
