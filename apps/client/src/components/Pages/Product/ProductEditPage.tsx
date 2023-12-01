@@ -1,11 +1,9 @@
-import { BsChevronLeft } from 'react-icons/bs';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useProductsDetails from '../../../hooks/useProductsDetails';
-import IconButton from '../../IconButton';
+import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
 import ProductEditForm from '../../ProductUpdateForm';
 import TableTopBar from '../../TableTopBar';
-import GoBackButton from '../../GoBackButton';
 
 function ProductEditPage() {
 	const { id } = useParams();

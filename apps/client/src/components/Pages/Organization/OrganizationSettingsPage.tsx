@@ -5,8 +5,8 @@ import Button from '../../Button';
 import Container from '../../Container';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
-import { SecondaryNavbar } from '../../SecondaryNavbar';
 import OrganizationSettings from '../../OrganizationSettings';
+import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationSettingsPage() {
 	const { id } = useParams();

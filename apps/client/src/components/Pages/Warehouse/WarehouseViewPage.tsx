@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import WarehouseEntityInfo from '../../../WarehouseEntityInfo';
 import useWarehouseDetails from '../../../hooks/useWarehouseDetails';
+import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
 import TableTopBar from '../../TableTopBar';
-import GoBackButton from '../../GoBackButton';
 
 function WarehouseViewPage() {
 	const { id } = useParams();

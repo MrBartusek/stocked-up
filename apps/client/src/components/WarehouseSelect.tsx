@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Select from './Helpers/Select';
 import { BasicWarehouseDto } from 'shared-types';
 import { CurrentAppContext } from './Context/CurrentAppContext.js';
+import Select from './Helpers/Select';
 
 type FieldSetProps = React.DetailedHTMLProps<
 	React.FieldsetHTMLAttributes<HTMLFieldSetElement>,

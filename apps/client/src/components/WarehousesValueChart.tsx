@@ -1,9 +1,9 @@
-import { OrganizationDto } from 'shared-types';
-import { Cell, Label, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { useMemo } from 'react';
-import Loader from './Loader';
+import { Cell, Label, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { OrganizationDto } from 'shared-types';
 import useWarehousesList from '../hooks/useWarehouseList';
 import { Utils } from '../utils';
+import Loader from './Loader';
 
 export interface WarehousesValueChartProps {
 	organization: OrganizationDto;

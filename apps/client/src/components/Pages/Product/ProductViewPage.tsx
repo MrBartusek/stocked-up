@@ -1,11 +1,9 @@
-import { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useProductsDetails from '../../../hooks/useProductsDetails';
-import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
 import ProductEntityInfo from '../../ProductEntityInfo';
 import TableTopBar from '../../TableTopBar';
-import GoBackButton from '../../GoBackButton';
 
 function ProductViewPage() {
 	const { id } = useParams();

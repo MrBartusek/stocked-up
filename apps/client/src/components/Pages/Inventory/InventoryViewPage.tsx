@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useInventoryItemDetails from '../../../hooks/useInventoryItemDetails';
-import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
 import InventoryEntityInfo from '../../InventoryEntityInfo';
 import Loader from '../../Loader';

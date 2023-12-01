@@ -1,5 +1,4 @@
-import ReactSelect from 'react-select';
-import { Props } from 'react-select';
+import ReactSelect, { Props } from 'react-select';
 
 //@ts-ignore
 import tailwindConfig from '../../../tailwind.config.js';
