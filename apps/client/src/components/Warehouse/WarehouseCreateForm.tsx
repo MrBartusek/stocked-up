@@ -51,7 +51,8 @@ function WarehouseCreateForm() {
 				placeholder="US West Main"
 				minLength={2}
 				maxLength={32}
-				{...register('name')}
+				required
+				{...register('name', { required: true })}
 			/>
 
 			<FormInput
@@ -59,7 +60,8 @@ function WarehouseCreateForm() {
 				placeholder="18 Milton Street"
 				minLength={2}
 				maxLength={32}
-				{...register('address')}
+				required
+				{...register('address', { required: true })}
 			/>
 
 			<FormError>{error}</FormError>
