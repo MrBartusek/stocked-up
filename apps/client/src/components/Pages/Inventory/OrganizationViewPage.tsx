@@ -12,7 +12,7 @@ import IconButton from '../../IconButton';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
-import WarehousesList from '../../WarehousesList';
+import WarehousesList from '../../Warehouse/WarehousesList';
 
 function OrganizationViewPage() {
 	const { id } = useParams();

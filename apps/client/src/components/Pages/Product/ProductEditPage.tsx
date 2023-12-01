@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import useProductsDetails from '../../../hooks/useProductsDetails';
 import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
-import ProductEditForm from '../../ProductUpdateForm';
+import ProductEditForm from '../../Product/ProductUpdateForm';
 import TableTopBar from '../../TableTopBar';
 
 function ProductEditPage() {

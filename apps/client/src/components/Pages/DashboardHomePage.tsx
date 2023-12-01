@@ -4,7 +4,7 @@ import BigNumberCard from '../BigNumberCard';
 import Card from '../Card';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import DashboardContent from '../DashboardContent';
-import WarehousesValueChart from '../WarehousesValueChart';
+import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
 import ChartCard from '../ChartCard';
 import TotalSalesChart from '../TotalSalesChart';
 

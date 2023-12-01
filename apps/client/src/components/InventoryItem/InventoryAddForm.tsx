@@ -5,12 +5,12 @@ import toast from 'react-hot-toast';
 import { BsArrowLeftRight } from 'react-icons/bs';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { AddInventoryItemDto, OrganizationDto } from 'shared-types';
-import useProductsDetails from '../hooks/useProductsDetails';
-import { Utils } from '../utils';
-import Button from './Button';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import FormError from './Form/FormError';
-import FormInput from './Form/FormInput';
+import useProductsDetails from '../../hooks/useProductsDetails';
+import { Utils } from '../../utils';
+import Button from '../Button';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import FormError from '../Form/FormError';
+import FormInput from '../Form/FormInput';
 
 type Inputs = {
 	quantity: number;

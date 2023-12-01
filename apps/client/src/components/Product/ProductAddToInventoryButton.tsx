@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { BsBox, BsEye } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
-import { HTTPResponseError, Utils } from '../utils';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import IconButton from './IconButton';
-import useInventoryItemByProduct from '../hooks/useInventoryItemByProduct';
+import { HTTPResponseError, Utils } from '../../utils';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import IconButton from '../IconButton';
+import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 
 export interface ProductAddToInventoryButtonProps {
 	product: ProductDto;

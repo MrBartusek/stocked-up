@@ -1,8 +1,8 @@
 import { BasicWarehouseDto, ProductDto } from 'shared-types';
-import useInventoryItemByProduct from '../hooks/useInventoryItemByProduct';
-import { HTTPResponseError } from '../utils';
-import EntityInfoTable from './Entity/EntityInfoTable';
-import Loader from './Loader';
+import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
+import { HTTPResponseError } from '../../utils';
+import EntityInfoTable from '../Entity/EntityInfoTable';
+import Loader from '../Loader';
 
 export interface ProductInventoryPeek {
 	warehouse: BasicWarehouseDto;

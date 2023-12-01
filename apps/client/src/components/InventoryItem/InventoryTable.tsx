@@ -1,7 +1,7 @@
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
-import Table from './Helpers/Table';
+import Table from '../Helpers/Table';
 import InventoryItemActions from './InventoryItemActions';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();

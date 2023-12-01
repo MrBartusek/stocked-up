@@ -1,5 +1,5 @@
 import { OrganizationDto } from 'shared-types';
-import RealtimeOrgSettingSelect from './RealtimeOrgSettingSelect';
+import RealtimeOrgSettingSelect from '../RealtimeOrgSettingSelect';
 
 export interface OrganizationSettingsProps {
 	organization: OrganizationDto;

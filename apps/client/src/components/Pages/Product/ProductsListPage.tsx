@@ -5,7 +5,7 @@ import useProductsList from '../../../hooks/useProductsList';
 import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import IconButton from '../../IconButton';
 import Loader from '../../Loader';
-import ProductsTable from '../../ProductsTable';
+import ProductsTable from '../../Product/ProductsTable';
 import TableTopBar from '../../TableTopBar';
 
 function ProductsListPage() {

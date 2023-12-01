@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import useInventoryItemDetails from '../../../hooks/useInventoryItemDetails';
 import GoBackButton from '../../GoBackButton';
-import InventoryEntityInfo from '../../InventoryEntityInfo';
+import InventoryEntityInfo from '../../InventoryItem/InventoryEntityInfo';
 import Loader from '../../Loader';
 import TableTopBar from '../../TableTopBar';
 

@@ -2,12 +2,12 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
-import placeholderImage from '../assets/placeholder.png';
-import { Utils } from '../utils';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import Table from './Helpers/Table';
+import placeholderImage from '../../assets/placeholder.png';
+import { Utils } from '../../utils';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Table from '../Helpers/Table';
 import ProductActions from './ProductActions';
-import TableImage from './TableImage';
+import TableImage from '../TableImage';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { BsBoxSeamFill, BsChevronRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { BasicWarehouseDto } from 'shared-types';
-import { Utils } from '../utils';
+import { Utils } from '../../utils';
 
 export interface WarehouseInfoRowProps {
 	organizationId: string;

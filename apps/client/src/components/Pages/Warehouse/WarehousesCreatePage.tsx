@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
 import TableTopBar from '../../TableTopBar';
-import WarehouseCreateForm from '../../WarehouseCreateForm';
+import WarehouseCreateForm from '../../Warehouse/WarehouseCreateForm';
 
 function WarehousesCreatePage() {
 	const appContext = useContext(CurrentAppContext);

@@ -2,17 +2,12 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { CreateProductDto, ProductDto, UpdateProductDto } from 'shared-types';
-import { Utils } from '../utils';
-import Button from './Button';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import FormError from './Form/FormError';
-import FormInput from './Form/FormInput';
-import { useQueryClient } from 'react-query';
-
-export interface ProductCreateFormProps {
-	product: ProductDto;
-}
+import { CreateProductDto, ProductDto } from 'shared-types';
+import { Utils } from '../../utils';
+import Button from '../Button';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import FormError from '../Form/FormError';
+import FormInput from '../Form/FormInput';
 
 type Inputs = {
 	name: string;
@@ -22,29 +17,24 @@ type Inputs = {
 	unit?: string;
 };
 
-function ProductEditForm({ product }: ProductCreateFormProps) {
+function ProductCreateForm() {
 	const appContext = useContext(CurrentAppContext);
-	const { register, handleSubmit } = useForm<Inputs>({ defaultValues: product });
-
+	const { register, handleSubmit } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
-		const dto: UpdateProductDto = {
+		const dto: CreateProductDto = {
 			organizationId: appContext.organization.id,
-			...product,
 			...inputs,
 		};
 
-		Utils.postFetcher<ProductDto>(`/api/products/${product.id}`, dto, { method: 'PUT' })
-			.then(() => queryClient.invalidateQueries(['products', product.id]))
-			.then(() => navigate(`../view/${product.id}`))
-			.then(() => toast.success('Successfully updated product'))
+		Utils.postFetcher<ProductDto>(`/api/products`, dto)
+			.then(() => navigate('..'))
+			.then(() => toast.success('Successfully created product'))
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}
@@ -111,9 +101,9 @@ function ProductEditForm({ product }: ProductCreateFormProps) {
 				className="mt-4"
 				loading={loading}
 			>
-				Update product
+				Create product
 			</Button>
 		</form>
 	);
 }
-export default ProductEditForm;
+export default ProductCreateForm;

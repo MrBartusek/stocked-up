@@ -5,7 +5,7 @@ import Button from '../../Button';
 import Container from '../../Container';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
-import OrganizationCard from '../../OrganizationCard';
+import OrganizationCard from '../../Organization/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationSelectPage() {

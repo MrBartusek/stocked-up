@@ -5,7 +5,7 @@ import Button from '../../Button';
 import Container from '../../Container';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
-import OrganizationSettings from '../../OrganizationSettings';
+import OrganizationSettings from '../../Organization/OrganizationSettings';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationSettingsPage() {

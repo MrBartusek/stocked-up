@@ -6,7 +6,7 @@ import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import IconButton from '../../IconButton';
 import Loader from '../../Loader';
 import TableTopBar from '../../TableTopBar';
-import WarehousesTable from '../../WarehousesTable';
+import WarehousesTable from '../../Warehouse/WarehousesTable';
 
 function WarehousesListPage() {
 	const appContext = useContext(CurrentAppContext);

@@ -2,15 +2,15 @@ import { useContext } from 'react';
 import { BsEye, BsPencil, BsTagFill, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { InventoryItemDto } from 'shared-types';
-import { Utils } from '../utils';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import EntityActionsRow from './Entity/EntityActionsRow';
-import EntityContainer from './Entity/EntityContainer';
-import EntityImageColumn from './Entity/EntityImageColumn';
-import EntityInfoTable from './Entity/EntityInfoTable';
-import HeaderWithHint from './HeaderWithHint';
-import Blockquote from './Helpers/Blockquote';
-import IconButton from './IconButton';
+import { Utils } from '../../utils';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import EntityActionsRow from '../Entity/EntityActionsRow';
+import EntityContainer from '../Entity/EntityContainer';
+import EntityImageColumn from '../Entity/EntityImageColumn';
+import EntityInfoTable from '../Entity/EntityInfoTable';
+import HeaderWithHint from '../HeaderWithHint';
+import Blockquote from '../Helpers/Blockquote';
+import IconButton from '../IconButton';
 
 export interface InventoryEntityInfoProps {
 	inventoryItem: InventoryItemDto;

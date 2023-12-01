@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../Button';
 import Container from '../../Container';
 import DashboardLayout from '../../Layout/DasboardLayout';
-import OrganizationCreateForm from '../../OrganizationCreateForm';
+import OrganizationCreateForm from '../../Organization/OrganizationCreateForm';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationCreatePage() {

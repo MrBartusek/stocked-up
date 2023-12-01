@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
-import ProductCreateForm from '../../ProductCreateForm';
+import ProductCreateForm from '../../Product/ProductCreateForm';
 import TableTopBar from '../../TableTopBar';
 
 function ProductsCreatePage() {

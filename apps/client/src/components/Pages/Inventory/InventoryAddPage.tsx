@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
-import InventoryAddForm from '../../InventoryAddForm';
+import InventoryAddForm from '../../InventoryItem/InventoryAddForm';
 import TableTopBar from '../../TableTopBar';
 
 function InventoryAddPage() {

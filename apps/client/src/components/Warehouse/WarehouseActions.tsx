@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { BsFillCheckCircleFill, BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
-import { Utils } from '../utils';
-import ActionButton from './ActionButton';
-import { CurrentAppContext } from './Context/CurrentAppContext';
-import TableActionsWrapper from './TableActionsWrapper';
+import { Utils } from '../../utils';
+import ActionButton from '../ActionButton';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import TableActionsWrapper from '../TableActionsWrapper';
 
 export interface WarehouseActionsProps {
 	warehouse: WarehouseDto;

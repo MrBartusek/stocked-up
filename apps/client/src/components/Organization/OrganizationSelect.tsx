@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CurrentAppContext } from './Context/CurrentAppContext.js';
+import { CurrentAppContext } from '../Context/CurrentAppContext.js';
 
 function OrganizationSelect() {
 	const appContext = useContext(CurrentAppContext);

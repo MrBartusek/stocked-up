@@ -1,6 +1,6 @@
-import OrganizationSelect from '../OrganizationSelect';
+import OrganizationSelect from '../Organization/OrganizationSelect';
 import StockedUpLogo from '../StockedUpLogo';
-import WarehouseSelect from '../WarehouseSelect';
+import WarehouseSelect from '../Warehouse/WarehouseSelect';
 import SidebarNavigation from './SidebarNavigation';
 
 function Sidebar() {

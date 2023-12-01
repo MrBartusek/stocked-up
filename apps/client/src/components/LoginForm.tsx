@@ -4,7 +4,7 @@ import { BsPerson, BsShieldLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserLoginDto } from 'shared-types';
 import { HTTPResponseError, Utils } from '../utils';
-import Alert from './Alert';
+import Alert from './Helpers/Alert';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 

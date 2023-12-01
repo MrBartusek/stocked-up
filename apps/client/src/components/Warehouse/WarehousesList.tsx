@@ -1,5 +1,5 @@
 import { OrganizationDto } from 'shared-types';
-import ExpandableList from './Helpers/ExpandableList';
+import ExpandableList from '../Helpers/ExpandableList';
 import WarehouseInfoRow from './WarehouseInfoRow';
 
 export interface WarehousesListProps {
