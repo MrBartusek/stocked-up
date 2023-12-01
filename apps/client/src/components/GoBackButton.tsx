@@ -4,11 +4,15 @@ import IconButton from './IconButton';
 
 export interface GoBackButtonProps {
 	to?: string;
+	replace?: boolean;
 }
 
-function GoBackButton({ to = '..' }: GoBackButtonProps) {
+function GoBackButton({ to = '..', replace = false }: GoBackButtonProps) {
 	return (
-		<Link to={to}>
+		<Link
+			to={to}
+			replace
+		>
 			<IconButton icon={BsChevronLeft}>Go back</IconButton>
 		</Link>
 	);
