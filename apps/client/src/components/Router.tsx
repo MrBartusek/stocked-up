@@ -177,6 +177,14 @@ function Router() {
 									path: 'view/:id',
 									element: <InventoryViewPage />,
 								},
+								{
+									path: 'update/:id',
+									element: <UnderConstructionPage />,
+								},
+								{
+									path: 'delete/:id',
+									element: <UnderConstructionPage />,
+								},
 							],
 						},
 					],

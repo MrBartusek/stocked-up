@@ -17,7 +17,7 @@ function ProductEditPage() {
 			isError={error != undefined}
 		>
 			<TableTopBar header={`You are editing product: ${product?.name}`}>
-				<GoBackButton />
+				<GoBackButton to={`../view/${product.id}`} />
 			</TableTopBar>
 			<ProductEditForm product={product} />
 		</Loader>
