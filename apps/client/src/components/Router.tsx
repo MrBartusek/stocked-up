@@ -174,6 +174,10 @@ function Router() {
 									element: <InventoryAddPage />,
 								},
 								{
+									path: 'move',
+									element: <UnderConstructionPage />,
+								},
+								{
 									path: 'view/:id',
 									element: <InventoryViewPage />,
 								},
