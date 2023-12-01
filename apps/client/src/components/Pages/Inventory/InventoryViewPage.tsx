@@ -63,7 +63,7 @@ function InventoryViewPage() {
 						</IconButton>
 						<IconButton
 							icon={BsPencil}
-							onClick={() => navigate(`../edit/${inventoryItem?.id}`)}
+							onClick={() => navigate(`../update/${inventoryItem?.id}`)}
 						>
 							Edit
 						</IconButton>

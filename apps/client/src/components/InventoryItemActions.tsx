@@ -16,7 +16,7 @@ function InventoryItemActions({ item }: ProductActionsProps) {
 
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		navigate(`${appContext.baseUrl}/products/edit/${item.id}`);
+		navigate(`${appContext.baseUrl}/products/update/${item.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {

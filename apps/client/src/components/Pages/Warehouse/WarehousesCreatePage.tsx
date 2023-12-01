@@ -5,6 +5,7 @@ import { CurrentAppContext } from '../../Context/CurrentAppContext';
 import IconButton from '../../IconButton';
 import WarehouseCreateForm from '../../WarehouseCreateForm';
 import TableTopBar from '../../TableTopBar';
+import GoBackButton from '../../GoBackButton';
 
 function WarehousesCreatePage() {
 	const appContext = useContext(CurrentAppContext);
@@ -13,7 +14,7 @@ function WarehousesCreatePage() {
 		<div>
 			<TableTopBar header={`You are creating warehouse in ${appContext.organization.name}`}>
 				<Link to="..">
-					<IconButton icon={BsChevronLeft}>Go back</IconButton>
+					<GoBackButton />
 				</Link>
 			</TableTopBar>
 			<WarehouseCreateForm />

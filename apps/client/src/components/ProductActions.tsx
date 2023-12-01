@@ -16,7 +16,7 @@ function ProductActions({ product }: ProductActionsProps) {
 
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		navigate(`${appContext.baseUrl}/products/edit/${product.id}`);
+		navigate(`${appContext.baseUrl}/products/update/${product.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {

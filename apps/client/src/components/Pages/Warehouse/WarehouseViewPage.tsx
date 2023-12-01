@@ -49,7 +49,7 @@ function WarehouseViewPage() {
 				</IconButton>
 				<IconButton
 					icon={BsPencil}
-					onClick={() => navigate(`../edit/${warehouse.id}`)}
+					onClick={() => navigate(`../update/${warehouse.id}`)}
 				>
 					Edit
 				</IconButton>

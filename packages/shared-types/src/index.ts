@@ -16,6 +16,7 @@ import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto'
 import { InventoryItemDto } from './inventory/InventoryItemDto'
 import { AddInventoryItemDto } from './inventory/AddInventoryItemDto'
 import { PatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto'
+import { UpdateProductDto } from './product/UpdateProductDto'
 
 export {
     BasicProductDto,
@@ -35,5 +36,6 @@ export {
     BasicInventoryItemDto,
     InventoryItemDto,
     AddInventoryItemDto,
-    PatchOrganizationSettingsDto
+    PatchOrganizationSettingsDto,
+    UpdateProductDto
 }

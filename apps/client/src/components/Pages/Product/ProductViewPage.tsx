@@ -59,7 +59,7 @@ function ProductViewPage() {
 						<ProductAddToInventoryButton product={product} />
 						<IconButton
 							icon={BsPencil}
-							onClick={() => navigate(`../edit/${product.id}`)}
+							onClick={() => navigate(`../update/${product.id}`)}
 						>
 							Edit
 						</IconButton>

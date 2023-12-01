@@ -27,6 +27,7 @@ import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
 import OrganizationViewPage from './Pages/Inventory/OrganizationViewPage';
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
+import ProductEditPage from './Pages/Product/ProductEditPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -125,8 +126,8 @@ function Router() {
 									element: <ProductViewPage />,
 								},
 								{
-									path: 'edit/:id',
-									element: <UnderConstructionPage />,
+									path: 'update/:id',
+									element: <ProductEditPage />,
 								},
 								{
 									path: 'delete/:id',
@@ -151,7 +152,7 @@ function Router() {
 									element: <WarehouseViewPage />,
 								},
 								{
-									path: 'edit/:id',
+									path: 'update/:id',
 									element: <UnderConstructionPage />,
 								},
 								{

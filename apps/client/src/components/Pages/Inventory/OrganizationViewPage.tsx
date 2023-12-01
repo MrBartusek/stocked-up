@@ -88,7 +88,7 @@ function OrganizationViewPage() {
 					<EntityActionsRow>
 						<IconButton
 							icon={BsPencil}
-							onClick={() => navigate(`../edit/${organization.id}`)}
+							onClick={() => navigate(`../update/${organization.id}`)}
 						>
 							Edit
 						</IconButton>

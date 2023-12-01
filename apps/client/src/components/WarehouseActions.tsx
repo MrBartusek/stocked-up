@@ -24,7 +24,7 @@ function WarehouseActions({ warehouse }: WarehouseActionsProps) {
 
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		navigate(`${appContext.baseUrl}/warehouses/edit/${warehouse.id}`);
+		navigate(`${appContext.baseUrl}/warehouses/update/${warehouse.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {

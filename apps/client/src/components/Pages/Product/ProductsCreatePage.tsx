@@ -1,10 +1,8 @@
 import { useContext } from 'react';
-import { BsChevronLeft } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import { CurrentAppContext } from '../../Context/CurrentAppContext';
-import IconButton from '../../IconButton';
 import ProductCreateForm from '../../ProductCreateForm';
 import TableTopBar from '../../TableTopBar';
+import GoBackButton from '../../GoBackButton';
 
 function ProductsCreatePage() {
 	const appContext = useContext(CurrentAppContext);
@@ -14,9 +12,7 @@ function ProductsCreatePage() {
 			<TableTopBar
 				header={`You are creating new product definition in ${appContext.organization.name}`}
 			>
-				<Link to="..">
-					<IconButton icon={BsChevronLeft}>Go back</IconButton>
-				</Link>
+				<GoBackButton />
 			</TableTopBar>
 			<ProductCreateForm />
 		</div>

@@ -50,7 +50,7 @@ export class Utils {
 	public static humanizeCurrency(input?: number, currency?: string) {
 		const value = this.humanizeNumber(input);
 		return (
-			<div className="flex items-baseline justify-center gap-1">
+			<div className="flex items-baseline gap-1">
 				{value} <div className="text-muted">{currency}</div>
 			</div>
 		);
