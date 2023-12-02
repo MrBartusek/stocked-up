@@ -6,6 +6,7 @@ import {
 	NotFoundException,
 	Param,
 	Post,
+	Put,
 	ValidationPipe,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
@@ -27,7 +28,7 @@ export class WarehousesController {
 		return Warehouse.toDto(warehouse);
 	}
 
-	@Post(':id')
+	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(ValidationPipe) dto: UpdateWarehouseDto,

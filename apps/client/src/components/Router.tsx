@@ -28,6 +28,8 @@ import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
 import OrganizationViewPage from './Pages/Inventory/OrganizationViewPage';
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
+import WarehouseUpdateForm from './Warehouse/WarehouseUpdateForm';
+import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -153,7 +155,7 @@ function Router() {
 								},
 								{
 									path: 'update/:id',
-									element: <UnderConstructionPage />,
+									element: <WarehouseUpdatePage />,
 								},
 								{
 									path: 'delete/:id',
