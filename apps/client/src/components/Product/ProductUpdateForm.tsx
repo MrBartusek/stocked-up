@@ -22,7 +22,7 @@ type Inputs = {
 	unit?: string;
 };
 
-function ProductEditForm({ product }: ProductCreateFormProps) {
+function ProductUpdateForm({ product }: ProductCreateFormProps) {
 	const appContext = useContext(CurrentAppContext);
 	const { register, handleSubmit } = useForm<Inputs>({ defaultValues: product });
 
@@ -116,4 +116,4 @@ function ProductEditForm({ product }: ProductCreateFormProps) {
 		</form>
 	);
 }
-export default ProductEditForm;
+export default ProductUpdateForm;
