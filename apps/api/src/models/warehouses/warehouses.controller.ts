@@ -1,9 +1,18 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
-import { WarehouseDto } from 'shared-types';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+	ValidationPipe,
+} from '@nestjs/common';
+import { Types } from 'mongoose';
+import { UpdateWarehouseDto, WarehouseDto } from 'shared-types';
+import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
-import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
-import { Types } from 'mongoose';
 
 @Controller('warehouses')
 export class WarehousesController {
@@ -12,6 +21,27 @@ export class WarehousesController {
 	@Get(':id')
 	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.findById(id);
+		if (!warehouse) {
+			throw new NotFoundException();
+		}
+		return Warehouse.toDto(warehouse);
+	}
+
+	@Post(':id')
+	async update(
+		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Body(ValidationPipe) dto: UpdateWarehouseDto,
+	): Promise<WarehouseDto> {
+		const warehouse = await this.warehousesService.update(id, dto);
+		if (!warehouse) {
+			throw new NotFoundException();
+		}
+		return Warehouse.toDto(warehouse);
+	}
+
+	@Delete(':id')
+	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<WarehouseDto> {
+		const warehouse = await this.warehousesService.delete(id);
 		if (!warehouse) {
 			throw new NotFoundException();
 		}

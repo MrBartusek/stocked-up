@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateWarehouseDto } from 'shared-types';
+import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
 import { Types } from 'mongoose';
@@ -13,6 +13,14 @@ export class WarehousesService {
 			name: createWarehouseDto.name,
 			address: createWarehouseDto.address,
 		});
+	}
+
+	update(id: Types.ObjectId, dto: UpdateWarehouseDto): Promise<WarehouseDocument | undefined> {
+		return this.warehouseRepository.findOneByIdAndUpdate(id, dto);
+	}
+
+	delete(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
+		return this.warehouseRepository.deleteOneById(id);
 	}
 
 	exist(id: Types.ObjectId) {
