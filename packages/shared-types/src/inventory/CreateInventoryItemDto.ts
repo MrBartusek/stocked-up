@@ -1,6 +1,6 @@
 import { IsMongoId, IsNumber, IsOptional } from "class-validator";
 
-export class AddInventoryItemDto {
+export class CreateInventoryItemDto {
     @IsMongoId()
     warehouseId: string;
 

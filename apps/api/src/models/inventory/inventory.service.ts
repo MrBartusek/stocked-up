@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
-import { AddInventoryItemDto } from 'shared-types';
+import { CreateInventoryItemDto } from 'shared-types';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
@@ -9,8 +9,8 @@ import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settin
 export class InventoryService {
 	constructor(private readonly inventoryRepository: InventoryRepository) {}
 
-	create(addInventoryItemDto: AddInventoryItemDto) {
-		const { warehouseId, productId, ...rest } = addInventoryItemDto;
+	create(dto: CreateInventoryItemDto) {
+		const { warehouseId, productId, ...rest } = dto;
 		return this.inventoryRepository.create({
 			warehouse: warehouseId as any,
 			product: productId as any,

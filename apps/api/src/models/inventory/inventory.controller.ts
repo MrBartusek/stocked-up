@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { AddInventoryItemDto, BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
+import { CreateInventoryItemDto, BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
@@ -37,18 +37,18 @@ export class InventoryController {
 	) {}
 
 	@Post()
-	async create(@Body(ValidationPipe) addInventoryItemDto: AddInventoryItemDto) {
-		const warehouse = await this.warehousesService.findById(addInventoryItemDto.warehouseId as any);
+	async create(@Body(ValidationPipe) dto: CreateInventoryItemDto) {
+		const warehouse = await this.warehousesService.findById(dto.warehouseId as any);
 		if (!warehouse) {
 			throw new BadRequestException("This warehouse doesn't exist");
 		}
 
-		const productExist = await this.productService.exist(addInventoryItemDto.productId as any);
+		const productExist = await this.productService.exist(dto.productId as any);
 		if (!productExist) {
 			throw new BadRequestException("This product doesn't exist");
 		}
 
-		const item = await this.inventoryService.create(addInventoryItemDto);
+		const item = await this.inventoryService.create(dto);
 		const organization = await this.organizationService.findByWarehouse(warehouse._id);
 		await this.updateWarehouseValue(organization, warehouse);
 
