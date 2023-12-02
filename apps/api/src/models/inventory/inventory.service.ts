@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
-import { CreateInventoryItemDto } from 'shared-types';
+import { CreateInventoryItemDto, UpdateInventoryItemDto } from 'shared-types';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
-import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 
 @Injectable()
 export class InventoryService {
@@ -16,6 +16,14 @@ export class InventoryService {
 			product: productId as any,
 			...rest,
 		});
+	}
+
+	update(id: Types.ObjectId, dto: UpdateInventoryItemDto) {
+		return this.inventoryRepository.findOneAndUpdate(id, { $set: dto });
+	}
+
+	delete(id: Types.ObjectId) {
+		return this.inventoryRepository.deleteOneById(id);
 	}
 
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {

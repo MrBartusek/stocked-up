@@ -6,20 +6,25 @@ import {
 	NotFoundException,
 	Param,
 	Post,
+	Put,
 	Query,
 	UseGuards,
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { CreateInventoryItemDto, BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
+import {
+	BasicInventoryItemDto,
+	CreateInventoryItemDto,
+	InventoryItemDto,
+	UpdateInventoryItemDto,
+} from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { OrganizationDocument } from '../organizations/schemas/organization.schema';
 import { ProductsService } from '../products/products.service';
-import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
@@ -38,8 +43,10 @@ export class InventoryController {
 
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateInventoryItemDto) {
-		const warehouse = await this.warehousesService.findById(dto.warehouseId as any);
-		if (!warehouse) {
+		const warehouseId = dto.warehouseId as unknown as Types.ObjectId;
+
+		const warehouseExist = await this.warehousesService.exist(warehouseId);
+		if (!warehouseExist) {
 			throw new BadRequestException("This warehouse doesn't exist");
 		}
 
@@ -49,8 +56,33 @@ export class InventoryController {
 		}
 
 		const item = await this.inventoryService.create(dto);
-		const organization = await this.organizationService.findByWarehouse(warehouse._id);
-		await this.updateWarehouseValue(organization, warehouse);
+		const organization = await this.organizationService.findByWarehouse(warehouseId);
+		await this.updateWarehouseValue(organization, warehouseId);
+
+		return InventoryItem.toBasicDto(item);
+	}
+
+	@Put(':id')
+	async update(
+		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Body(ValidationPipe) dto: UpdateInventoryItemDto,
+	) {
+		const item = await this.inventoryService.update(id, dto);
+		const warehouseId = item.warehouse as unknown as Types.ObjectId;
+
+		const organization = await this.organizationService.findByWarehouse(warehouseId);
+		await this.updateWarehouseValue(organization, warehouseId);
+
+		return InventoryItem.toBasicDto(item);
+	}
+
+	@Put(':id')
+	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
+		const item = await this.inventoryService.delete(id);
+		const warehouseId = item.warehouse as unknown as Types.ObjectId;
+
+		const organization = await this.organizationService.findByWarehouse(warehouseId);
+		await this.updateWarehouseValue(organization, warehouseId);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -89,10 +121,10 @@ export class InventoryController {
 		return InventoryItem.toDto(item);
 	}
 
-	async updateWarehouseValue(organization: OrganizationDocument, warehouse: WarehouseDocument) {
+	async updateWarehouseValue(organization: OrganizationDocument, warehouseId: Types.ObjectId) {
 		const strategy = organization.settings.valueCalculationStrategy;
-		const totalValue = await this.inventoryService.calculateTotalValue(warehouse._id, strategy);
-		await this.warehousesService.updateTotalValue(warehouse.id, totalValue);
+		const totalValue = await this.inventoryService.calculateTotalValue(warehouseId, strategy);
+		await this.warehousesService.updateTotalValue(warehouseId, totalValue);
 		const orgValue = await this.organizationService.calculateTotalValue(organization._id);
 		await this.organizationStatsService.updateTotalValue(organization._id, orgValue);
 	}
