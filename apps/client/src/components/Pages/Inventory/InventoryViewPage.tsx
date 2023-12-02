@@ -15,7 +15,9 @@ function InventoryViewPage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<TableTopBar header={`You are viewing inventory item for product: ${inventoryItem?.name}`}>
+			<TableTopBar
+				header={`You are viewing inventory item details for product: ${inventoryItem?.name}`}
+			>
 				<GoBackButton />
 			</TableTopBar>
 			<InventoryEntityInfo inventoryItem={inventoryItem} />
