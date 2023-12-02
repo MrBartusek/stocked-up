@@ -16,12 +16,12 @@ function InventoryItemActions({ item }: ProductActionsProps) {
 
 	function onClickEdit(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		navigate(`${appContext.baseUrl}/products/update/${item.id}`);
+		navigate(`${appContext.baseUrl}/inventory/update/${item.id}`);
 	}
 
 	function onClickDelete(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
-		navigate(`${appContext.baseUrl}/products/delete/${item.id}`);
+		navigate(`${appContext.baseUrl}/inventory/delete/${item.id}`);
 	}
 
 	return (

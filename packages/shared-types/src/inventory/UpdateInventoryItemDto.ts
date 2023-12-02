@@ -4,8 +4,8 @@ export class UpdateInventoryItemDto {
     @IsNumber()
     quantity: number;
 
-    @Length(1, 32)
     @IsString()
+    @Length(1, 32)
     @IsOptional()
     location?: string;
 }

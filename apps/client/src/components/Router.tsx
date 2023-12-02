@@ -30,6 +30,7 @@ import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsP
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
 import WarehouseUpdateForm from './Warehouse/WarehouseUpdateForm';
 import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
+import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -185,7 +186,7 @@ function Router() {
 								},
 								{
 									path: 'update/:id',
-									element: <UnderConstructionPage />,
+									element: <InventoryUpdatePage />,
 								},
 								{
 									path: 'delete/:id',
