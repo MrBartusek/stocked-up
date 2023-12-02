@@ -19,6 +19,10 @@ export class ProductsService {
 		return this.productsRepository.findOneByIdAndUpdate(id, dto);
 	}
 
+	delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {
+		return this.productsRepository.deleteOneById(id);
+	}
+
 	exist(id: Types.ObjectId) {
 		return this.productsRepository.exist({ _id: id });
 	}

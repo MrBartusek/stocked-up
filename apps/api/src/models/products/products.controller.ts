@@ -6,18 +6,19 @@ import {
 	NotFoundException,
 	Param,
 	Post,
+	Put,
 	UseGuards,
 	ValidationPipe,
-	Put,
+	Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import mongoose, { Types } from 'mongoose';
+import { Types } from 'mongoose';
 import { BasicProductDto, CreateProductDto, ProductDto, UpdateProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
-import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 
 @ApiTags('products')
 @Controller('products')
@@ -45,12 +46,6 @@ export class ProductsController {
 		return Product.toDto(product);
 	}
 
-	@Get('by-org/:id')
-	async findAll(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<BasicProductDto[]> {
-		const products = await this.productsService.findAll(id);
-		return products.map((product) => Product.toBasicDto(product));
-	}
-
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
@@ -61,6 +56,21 @@ export class ProductsController {
 			throw new NotFoundException();
 		}
 		return Product.toDto(product);
+	}
+
+	@Delete(':id')
+	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<ProductDto> {
+		const product = await this.productsService.delete(id);
+		if (!product) {
+			throw new NotFoundException();
+		}
+		return Product.toDto(product);
+	}
+
+	@Get('by-org/:id')
+	async findAll(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<BasicProductDto[]> {
+		const products = await this.productsService.findAll(id);
+		return products.map((product) => Product.toBasicDto(product));
 	}
 
 	async updateTotalProductsCount(organizationId: Types.ObjectId) {
