@@ -79,6 +79,7 @@ export class InventoryService {
 		warehouseId: Types.ObjectId,
 		strategy: OrgValueCalculationStrategy,
 	): Promise<number> {
+		console.log(warehouseId);
 		const result = await this.inventoryRepository.aggregate([
 			{
 				$match: { warehouse: warehouseId },

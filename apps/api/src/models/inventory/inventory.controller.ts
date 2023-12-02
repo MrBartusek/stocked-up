@@ -43,7 +43,7 @@ export class InventoryController {
 
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateInventoryItemDto) {
-		const warehouseId = dto.warehouseId as unknown as Types.ObjectId;
+		const warehouseId = new Types.ObjectId(dto.warehouseId);
 
 		const warehouseExist = await this.warehousesService.exist(warehouseId);
 		if (!warehouseExist) {
@@ -68,7 +68,7 @@ export class InventoryController {
 		@Body(ValidationPipe) dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
-		const warehouseId = item.warehouse as unknown as Types.ObjectId;
+		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
 		await this.updateWarehouseValue(organization, warehouseId);
@@ -79,7 +79,7 @@ export class InventoryController {
 	@Put(':id')
 	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
 		const item = await this.inventoryService.delete(id);
-		const warehouseId = item.warehouse as unknown as Types.ObjectId;
+		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
 		await this.updateWarehouseValue(organization, warehouseId);
