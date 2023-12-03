@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsBox, BsEye } from 'react-icons/bs';
+import { BsBox, BsBoxFill, BsEye } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
 import { HTTPResponseError, Utils } from '../../utils';
@@ -37,7 +37,7 @@ function ProductAddToInventoryButton({ product }: ProductAddToInventoryButtonPro
 	return (
 		<Link to={inventoryItem ? viewItemUrl : addItemUrl}>
 			<IconButton
-				icon={isLoading || error ? BsBox : BsEye}
+				icon={isLoading || error ? BsBox : BsBoxFill}
 				disabled={isLoading}
 			>
 				{isLoading ? 'Loading...' : error ? 'Add to inventory' : 'See in inventory'}

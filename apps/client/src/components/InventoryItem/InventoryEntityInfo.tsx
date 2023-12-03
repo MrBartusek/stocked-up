@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsEye, BsPencil, BsTagFill, BsTrash } from 'react-icons/bs';
+import { BsEye, BsPencil, BsTag, BsTagFill, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { InventoryItemDto } from 'shared-types';
 import { Utils } from '../../utils';
@@ -47,7 +47,7 @@ function InventoryEntityInfo({ inventoryItem }: InventoryEntityInfoProps) {
 
 				<EntityActionsRow>
 					<Link to={Utils.dashboardUrl(appContext) + `/products/view/${inventoryItem?.productId}`}>
-						<IconButton icon={BsEye}>See product</IconButton>
+						<IconButton icon={BsTagFill}>See product</IconButton>
 					</Link>
 					<Link to={`../update/${inventoryItem?.id}`}>
 						<IconButton icon={BsPencil}>Update</IconButton>
