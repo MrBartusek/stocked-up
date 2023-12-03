@@ -1,9 +1,7 @@
 import { useParams } from 'react-router-dom';
 import useInventoryItemDetails from '../../../hooks/useInventoryItemDetails';
-import GoBackButton from '../../GoBackButton';
 import InventoryEntityInfo from '../../InventoryItem/InventoryEntityInfo';
 import Loader from '../../Loader';
-import TableTopBar from '../../TableTopBar';
 
 function InventoryViewPage() {
 	const { id } = useParams();
@@ -15,11 +13,6 @@ function InventoryViewPage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<TableTopBar
-				header={`You are viewing inventory item details for product: ${inventoryItem?.name}`}
-			>
-				<GoBackButton />
-			</TableTopBar>
 			<InventoryEntityInfo inventoryItem={inventoryItem} />
 		</Loader>
 	);

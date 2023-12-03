@@ -1,9 +1,7 @@
 import { useParams } from 'react-router-dom';
 import useProductsDetails from '../../../hooks/useProductsDetails';
-import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
 import ProductEntityInfo from '../../Product/ProductEntityInfo';
-import TableTopBar from '../../TableTopBar';
 
 function ProductViewPage() {
 	const { id } = useParams();
@@ -15,9 +13,6 @@ function ProductViewPage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<TableTopBar header={`You are viewing product: ${product?.name}`}>
-				<GoBackButton />
-			</TableTopBar>
 			<ProductEntityInfo product={product} />
 		</Loader>
 	);
