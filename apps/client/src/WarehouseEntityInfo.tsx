@@ -1,12 +1,11 @@
-import { WarehouseDto } from 'shared-types';
-import EntityContainer from './components/Entity/EntityContainer';
-import EntityInfoTable from './components/Entity/EntityInfoTable';
 import { useContext } from 'react';
-import { CurrentAppContext } from './components/Context/CurrentAppContext';
-import IconButton from './components/IconButton';
-import EntityActionsRow from './components/Entity/EntityActionsRow';
 import { BsCheckCircle, BsPencil, BsTrash } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
+import { WarehouseDto } from 'shared-types';
+import { CurrentAppContext } from './components/Context/CurrentAppContext';
+import EntityActionsRow from './components/Entity/EntityActionsRow';
+import EntityInfoTable from './components/Entity/EntityInfoTable';
+import IconButton from './components/IconButton';
 import { Utils } from './utils';
 
 export interface WarehouseEntityInfoProps {

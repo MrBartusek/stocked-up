@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsArrowLeftRight } from 'react-icons/bs';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { AddInventoryItemDto, OrganizationDto } from 'shared-types';
+import { CreateInventoryItemDto, OrganizationDto } from 'shared-types';
 import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
 import Button from '../Button';
@@ -39,7 +39,7 @@ function InventoryAddForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: AddInventoryItemDto = {
+		const dto: CreateInventoryItemDto = {
 			warehouseId: appContext.currentWarehouse.id,
 			productId: product.id,
 			...inputs,

@@ -8,15 +8,21 @@ import HomePage from './Pages/HomePage';
 import InventoryAddPage from './Pages/Inventory/InventoryAddPage';
 import InventoryListPage from './Pages/Inventory/InventoryListPage';
 import InventoryManagementPage from './Pages/Inventory/InventoryManagementPage';
+import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
+import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
+import OrganizationViewPage from './Pages/Inventory/OrganizationViewPage';
 import LoginPage from './Pages/LoginPage';
 import OrganizationCreatePage from './Pages/Organization/OrganizationCreatePage';
 import OrganizationSelectPage from './Pages/Organization/OrganizationSelectPage';
+import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
+import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
 import ProductViewPage from './Pages/Product/ProductViewPage';
 import ProductsCreatePage from './Pages/Product/ProductsCreatePage';
 import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
 import UnderConstructionPage from './Pages/UnderConstructionPage';
+import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
 import WarehouseViewPage from './Pages/Warehouse/WarehouseViewPage';
 import WarehousesCreatePage from './Pages/Warehouse/WarehousesCreatePage';
 import WarehousesListPage from './Pages/Warehouse/WarehousesListPage';
@@ -24,13 +30,6 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
-import OrganizationViewPage from './Pages/Inventory/OrganizationViewPage';
-import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
-import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
-import WarehouseUpdateForm from './Warehouse/WarehouseUpdateForm';
-import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
-import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
 
 function Router() {
 	const router = createBrowserRouter([

@@ -11,7 +11,7 @@ function GoBackButton({ to = '..', replace = false }: GoBackButtonProps) {
 	return (
 		<Link
 			to={to}
-			replace
+			replace={replace}
 		>
 			<IconButton icon={BsChevronLeft}>Go back</IconButton>
 		</Link>
