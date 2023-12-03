@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
-import { CreateOrganizationDto, CreateWarehouseDto, UpdateOrganizationDto } from 'shared-types';
+import { CreateOrganizationDto, UpdateOrganizationDto } from 'shared-types';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
-import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';

@@ -36,13 +36,15 @@ export class WarehousesController {
 
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
-		const orgExist = this.organizationsService.exist(dto.organizationId);
+		const orgId = new Types.ObjectId(dto.organizationId);
+
+		const orgExist = this.organizationsService.exist(orgId);
 		if (!orgExist) {
 			throw new NotFoundException("Organization with provided id doesn't exist");
 		}
 
 		const warehouse = await this.warehousesService.create(dto.warehouse);
-		await this.organizationsService.addWarehouseReference(dto.organizationId, warehouse);
+		await this.organizationsService.addWarehouseReference(orgId, warehouse);
 
 		return Warehouse.toDto(warehouse);
 	}

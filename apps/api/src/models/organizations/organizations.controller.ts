@@ -6,12 +6,10 @@ import {
 	Param,
 	Patch,
 	Post,
+	Put,
 	Req,
 	UseGuards,
 	ValidationPipe,
-	forwardRef,
-	Inject,
-	Put,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Types } from 'mongoose';
@@ -28,8 +26,8 @@ import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
-import { Organization } from './schemas/organization.schema';
 import { OrgSettings } from './schemas/org-settings';
+import { Organization } from './schemas/organization.schema';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -56,7 +54,7 @@ export class OrganizationsController {
 
 	@Get()
 	async findAll(@Req() request: Request): Promise<OrganizationDto[]> {
-		const userId = request.user.id;
+		const userId = new Types.ObjectId(request.user.id);
 		const orgs = await this.organizationsService.findAllForUser(userId);
 		return orgs.map((org) => Organization.toDto(org));
 	}
