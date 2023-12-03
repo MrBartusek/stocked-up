@@ -50,6 +50,7 @@ function LoginForm() {
 				{...register('username', { required: true })}
 				disabled={loading}
 				icon={BsPerson}
+				autoComplete="on"
 				autoFocus
 			/>
 			<TextInput
@@ -59,6 +60,7 @@ function LoginForm() {
 				{...register('password', { required: true })}
 				disabled={loading}
 				icon={BsShieldLock}
+				autoComplete="on"
 			/>
 			<Link
 				to="password-reset"
