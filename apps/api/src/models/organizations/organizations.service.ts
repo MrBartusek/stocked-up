@@ -20,8 +20,6 @@ export class OrganizationsService {
 			name: createOrganizationDto.name,
 		});
 
-		await this.addWarehouse(organization._id, createOrganizationDto.warehouse);
-
 		return this.organizationRepository.findById(organization._id);
 	}
 
@@ -45,22 +43,44 @@ export class OrganizationsService {
 		});
 	}
 
-	async addWarehouse(
+	async addWarehouseReference(
 		organizationId: mongoose.Types.ObjectId | string,
-		createWarehouseDto: CreateWarehouseDto,
-	): Promise<WarehouseDocument> {
-		const warehouse = await this.warehouseService.create(createWarehouseDto);
-
-		await this.organizationRepository.findOneByIdAndUpdate(organizationId, {
+		warehouse: WarehouseDocument,
+	): Promise<OrganizationDocument | undefined> {
+		return this.organizationRepository.findOneByIdAndUpdate(organizationId, {
 			$push: {
 				warehouses: {
-					name: warehouse.name,
 					id: warehouse._id,
+					name: warehouse.name,
 				},
 			},
 		});
+	}
 
-		return warehouse;
+	async updateWarehouseReference(
+		warehouse: WarehouseDocument,
+	): Promise<OrganizationDocument | undefined> {
+		return this.organizationRepository.findOneAndUpdate(
+			{ 'warehouses.id': warehouse._id },
+			{
+				$set: {
+					'warehouses.$.name': warehouse.name,
+				},
+			},
+		);
+	}
+
+	async deleteWarehouseReference(
+		warehouse: WarehouseDocument,
+	): Promise<OrganizationDocument | undefined> {
+		return this.organizationRepository.findOneAndUpdate(
+			{ 'warehouses.id': warehouse._id },
+			{
+				$pull: {
+					warehouses: warehouse._id,
+				},
+			},
+		);
 	}
 
 	async findAllWarehouses(orgId: mongoose.Types.ObjectId | string): Promise<WarehouseDocument[]> {

@@ -9,12 +9,13 @@ import {
 	Req,
 	UseGuards,
 	ValidationPipe,
+	forwardRef,
+	Inject,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import {
 	CreateOrganizationDto,
-	CreateWarehouseInOrgDto,
 	OrganizationDto,
 	PatchOrganizationSettingsDto,
 	WarehouseDto,
@@ -22,6 +23,7 @@ import {
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { Warehouse } from '../warehouses/schemas/warehouse.schema';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { Organization } from './schemas/organization.schema';
@@ -32,6 +34,7 @@ export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
 		private readonly organizationsStatsService: OrganizationsStatsService,
+		private readonly warehousesService: WarehousesService,
 	) {}
 
 	@Post()
@@ -40,24 +43,12 @@ export class OrganizationsController {
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.create(createOrganizationDto);
+		const warehouse = await this.warehousesService.create(createOrganizationDto.warehouse);
+
 		await this.organizationsService.updateAcl(org.id, request.user.id, 'owner');
-		return Organization.toDto(org);
-	}
+		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 
-	@Post('warehouses')
-	async createWarehouse(
-		@Body(new ValidationPipe()) dto: CreateWarehouseInOrgDto,
-	): Promise<WarehouseDto> {
-		const exist = await this.organizationsService.exist(dto.organizationId);
-		if (!exist) {
-			throw new NotFoundException('Organization with provided id was not found');
-		}
-
-		const warehouse = await this.organizationsService.addWarehouse(
-			dto.organizationId,
-			dto.warehouse,
-		);
-		return Warehouse.toDto(warehouse);
+		return Organization.toDto(updatedOrg);
 	}
 
 	@Get()
@@ -77,7 +68,9 @@ export class OrganizationsController {
 	}
 
 	@Get(':id/warehouses')
-	async findWarehouses(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<any> {
+	async findWarehouses(
+		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+	): Promise<WarehouseDto[]> {
 		const warehouses = await this.organizationsService.findAllWarehouses(id);
 		return warehouses.map((w) => Warehouse.toDto(w));
 	}

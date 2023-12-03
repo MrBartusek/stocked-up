@@ -8,6 +8,7 @@ import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import FormError from '../Form/FormError';
 import FormInput from '../Form/FormInput';
+import { useQueryClient } from 'react-query';
 
 type Inputs = {
 	name: string;
@@ -19,7 +20,9 @@ function WarehouseCreateForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
@@ -30,7 +33,8 @@ function WarehouseCreateForm() {
 			warehouse: inputs,
 		};
 
-		Utils.postFetcher<WarehouseDto>(`/api/organizations/warehouses/`, dto)
+		Utils.postFetcher<WarehouseDto>(`/api/warehouses`, dto)
+			.then(() => queryClient.invalidateQueries(['organizations', appContext.organization.id]))
 			.then(() => navigate('..'))
 			.then(() => toast.success('Successfully created warehouse'))
 			.catch((err) => setError(Utils.requestErrorToString(err)))

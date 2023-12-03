@@ -36,6 +36,7 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 
 		Utils.postFetcher<ProductDto>(`/api/warehouses/${warehouse.id}`, dto, { method: 'PUT' })
 			.then(() => queryClient.invalidateQueries(['warehouses', warehouse.id]))
+			.then(() => queryClient.invalidateQueries(['organizations', appContext.organization.id]))
 			.then(() => navigate(`../view/${warehouse.id}`))
 			.then(() => toast.success('Successfully updated warehouse'))
 			.catch((err) => setError(Utils.requestErrorToString(err)))
