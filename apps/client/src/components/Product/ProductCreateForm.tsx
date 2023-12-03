@@ -15,6 +15,7 @@ type Inputs = {
 	buyPrice?: number;
 	sellPrice?: number;
 	unit?: string;
+	sku?: string;
 };
 
 function ProductCreateForm() {
@@ -56,13 +57,24 @@ function ProductCreateForm() {
 				required
 				{...register('name', { required: true })}
 			/>
+
 			<FormInput
 				label="Product description"
 				as="textarea"
+				disabled={loading}
 				maxLength={1024}
 				rows={3}
 				{...register('description')}
 			/>
+
+			<FormInput
+				label="SKU"
+				placeholder="ICWP-PL-WSSV"
+				hint="Product stock-keeping unit"
+				disabled={loading}
+				{...register('sku')}
+			/>
+
 			<FormInput
 				label="Buy price"
 				placeholder="8.00"

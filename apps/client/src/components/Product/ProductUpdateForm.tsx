@@ -20,6 +20,7 @@ type Inputs = {
 	buyPrice?: number;
 	sellPrice?: number;
 	unit?: string;
+	sku?: string;
 };
 
 function ProductUpdateForm({ product }: ProductCreateFormProps) {
@@ -66,6 +67,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				required
 				{...register('name', { required: true })}
 			/>
+
 			<FormInput
 				label="Product description"
 				as="textarea"
@@ -73,6 +75,15 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				rows={3}
 				{...register('description')}
 			/>
+
+			<FormInput
+				label="SKU"
+				placeholder="ICWP-PL-WSSV"
+				hint="Product stock-keeping unit"
+				disabled={loading}
+				{...register('sku')}
+			/>
+
 			<FormInput
 				label="Buy price"
 				placeholder="8.00"
@@ -84,6 +95,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				hint="price that your company pays for this product"
 				{...register('buyPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
 			/>
+
 			<FormInput
 				label="Sell price"
 				placeholder="12.00"

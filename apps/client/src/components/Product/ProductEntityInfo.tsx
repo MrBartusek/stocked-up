@@ -33,6 +33,7 @@ function ProductEntityInfo({ product }: ProductEntityInfoProps) {
 					properties={{
 						name: product?.name,
 						'internal ID': <code>{product?.id}</code>,
+						SKU: product?.sku,
 						'buy price': Utils.humanizeCurrency(
 							product?.buyPrice,
 							appContext.organization.currency,

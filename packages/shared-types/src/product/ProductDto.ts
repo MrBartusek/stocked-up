@@ -1,5 +1,6 @@
 import { BasicProductDto } from "./BasicProductDto";
 
 export class ProductDto extends BasicProductDto {
-    description: string;
+    description?: string;
+    sku?: string;
 }

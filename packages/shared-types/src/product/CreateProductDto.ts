@@ -18,4 +18,7 @@ export class CreateProductDto {
 
     @MaxLength(32)
     unit?: string;
+
+    @MaxLength(64)
+    sku?: string;
 }

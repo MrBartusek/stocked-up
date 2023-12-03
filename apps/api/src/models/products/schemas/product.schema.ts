@@ -16,6 +16,9 @@ export class Product {
 	@Prop()
 	description: string;
 
+	@Prop()
+	sku: string;
+
 	@Prop({ default: 0 })
 	buyPrice: number;
 
@@ -39,6 +42,7 @@ export class Product {
 		return {
 			...Product.toBasicDto(document),
 			description: document.description,
+			sku: document.sku,
 		};
 	}
 }
