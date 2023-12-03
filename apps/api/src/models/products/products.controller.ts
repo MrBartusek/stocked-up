@@ -19,6 +19,7 @@ import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
+import { InventoryService } from '../inventory/inventory.service';
 
 @ApiTags('products')
 @Controller('products')
@@ -28,6 +29,7 @@ export class ProductsController {
 	constructor(
 		private readonly productsService: ProductsService,
 		private readonly organizationStatsService: OrganizationsStatsService,
+		private readonly inventoryService: InventoryService,
 	) {}
 
 	@Post()
@@ -64,6 +66,9 @@ export class ProductsController {
 		if (!product) {
 			throw new NotFoundException();
 		}
+
+		await this.inventoryService.deleteMany({ product: product._id });
+
 		return Product.toDto(product);
 	}
 
