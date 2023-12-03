@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { ProductsModule } from '../products/products.module';
@@ -11,8 +11,8 @@ import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.sch
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: InventoryItem.name, schema: InventoryItemSchema }]),
-		ProductsModule,
-		WarehousesModule,
+		forwardRef(() => ProductsModule),
+		forwardRef(() => WarehousesModule),
 		OrganizationsModule,
 	],
 	controllers: [InventoryController],
