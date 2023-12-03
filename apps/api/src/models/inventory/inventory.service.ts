@@ -26,8 +26,12 @@ export class InventoryService {
 		return this.inventoryRepository.deleteOneById(id);
 	}
 
-	deleteMany(entityFilterQuery: FilterQuery<InventoryItemDocument>) {
-		return this.inventoryRepository.deleteMany(entityFilterQuery);
+	deleteManyByProduct(productId: Types.ObjectId) {
+		return this.inventoryRepository.deleteMany({ product: productId });
+	}
+
+	deleteManyByWarehouse(warehouseId: Types.ObjectId) {
+		return this.inventoryRepository.deleteMany({ warehouse: warehouseId });
 	}
 
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {

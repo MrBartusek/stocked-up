@@ -67,7 +67,7 @@ export class ProductsController {
 			throw new NotFoundException();
 		}
 
-		await this.inventoryService.deleteMany({ product: product._id });
+		await this.inventoryService.deleteManyByProduct(id);
 
 		return Product.toDto(product);
 	}
