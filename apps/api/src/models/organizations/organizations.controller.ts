@@ -27,6 +27,7 @@ import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { Organization } from './schemas/organization.schema';
+import { OrgSettings } from './schemas/org-settings';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -79,18 +80,17 @@ export class OrganizationsController {
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(new ValidationPipe()) patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
-	): Promise<any> {
+	): Promise<OrgSettings> {
 		const orgExist = await this.organizationsService.exist(id);
 		if (!orgExist) {
 			throw new NotFoundException();
 		}
 
-		if (patchOrganizationSettingsDto != undefined) {
-			const orgValue = await this.organizationsService.calculateTotalValue(id);
-			await this.organizationsStatsService.updateTotalValue(id, orgValue);
-		}
+		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
 
-		await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
-		return { message: 'ok', statusCode: 200 };
+		const orgValue = await this.organizationsService.calculateTotalValue(id);
+		await this.organizationsStatsService.updateTotalValue(id, orgValue);
+
+		return org.settings;
 	}
 }
