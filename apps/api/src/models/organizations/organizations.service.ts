@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
-import { CreateOrganizationDto, CreateWarehouseDto } from 'shared-types';
+import { CreateOrganizationDto, CreateWarehouseDto, UpdateOrganizationDto } from 'shared-types';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
@@ -10,28 +10,34 @@ import { OrganizationDocument } from './schemas/organization.schema';
 
 @Injectable()
 export class OrganizationsService {
-	constructor(
-		private readonly organizationRepository: OrganizationRepository,
-		private readonly warehouseService: WarehousesService,
-	) {}
+	constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-	async create(createOrganizationDto: CreateOrganizationDto): Promise<OrganizationDocument> {
-		const organization = await this.organizationRepository.create({
-			name: createOrganizationDto.name,
+	async create(dto: CreateOrganizationDto): Promise<OrganizationDocument> {
+		return this.organizationRepository.create({
+			name: dto.name,
 		});
-
-		return this.organizationRepository.findById(organization._id);
 	}
 
-	async findAllForUser(id: mongoose.Types.ObjectId | string) {
+	async update(
+		id: mongoose.Types.ObjectId,
+		dto: UpdateOrganizationDto,
+	): Promise<OrganizationDocument> {
+		return this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
+	}
+
+	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
+		return this.organizationRepository.deleteOneById(id);
+	}
+
+	async findAllForUser(id: mongoose.Types.ObjectId) {
 		return this.organizationRepository.find({ 'acls.id': id });
 	}
 
-	async findById(id: mongoose.Types.ObjectId | string) {
+	async findById(id: mongoose.Types.ObjectId) {
 		return this.organizationRepository.findById(id);
 	}
 
-	async exist(id: mongoose.Types.ObjectId | string) {
+	async exist(id: mongoose.Types.ObjectId) {
 		return this.organizationRepository.exist({ _id: id });
 	}
 
@@ -44,7 +50,7 @@ export class OrganizationsService {
 	}
 
 	async addWarehouseReference(
-		organizationId: mongoose.Types.ObjectId | string,
+		organizationId: mongoose.Types.ObjectId,
 		warehouse: WarehouseDocument,
 	): Promise<OrganizationDocument | undefined> {
 		return this.organizationRepository.findOneByIdAndUpdate(organizationId, {
@@ -159,6 +165,9 @@ export class OrganizationsService {
 		id: mongoose.Types.ObjectId | string,
 		settings: FilterQuery<OrgSettingsDocument>,
 	) {
-		return this.organizationRepository.findOneAndUpdate({ _id: id }, { settings: settings });
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: id },
+			{ $set: { settings: settings } },
+		);
 	}
 }

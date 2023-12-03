@@ -11,6 +11,7 @@ import {
 	ValidationPipe,
 	forwardRef,
 	Inject,
+	Put,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Types } from 'mongoose';
@@ -18,6 +19,7 @@ import {
 	CreateOrganizationDto,
 	OrganizationDto,
 	PatchOrganizationSettingsDto,
+	UpdateOrganizationDto,
 	WarehouseDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
@@ -57,6 +59,21 @@ export class OrganizationsController {
 		const userId = request.user.id;
 		const orgs = await this.organizationsService.findAllForUser(userId);
 		return orgs.map((org) => Organization.toDto(org));
+	}
+
+	@Put(':id')
+	async update(
+		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Body(new ValidationPipe()) dto: UpdateOrganizationDto,
+	): Promise<OrganizationDto> {
+		const org = await this.organizationsService.update(id, dto);
+		return Organization.toDto(org);
+	}
+
+	@Put(':id')
+	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
+		const org = await this.organizationsService.delete(id);
+		return Organization.toDto(org);
 	}
 
 	@Get(':id')

@@ -19,6 +19,7 @@ import { PatchOrganizationSettingsDto } from './organizations/PatchOrganizationS
 import { UpdateProductDto } from './product/UpdateProductDto'
 import { UpdateWarehouseDto } from './warehouse/UpdateWarehouseDto'
 import { UpdateInventoryItemDto } from './inventory/UpdateInventoryItemDto'
+import { UpdateOrganizationDto } from './organizations/UpdateOrganizationDto'
 
 export {
     BasicProductDto,
@@ -41,5 +42,6 @@ export {
     PatchOrganizationSettingsDto,
     UpdateProductDto,
     UpdateWarehouseDto,
-    UpdateInventoryItemDto
+    UpdateInventoryItemDto,
+    UpdateOrganizationDto
 }
