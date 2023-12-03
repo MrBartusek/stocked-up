@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { Utils } from '../../utils';
 import BigNumberCard from '../BigNumberCard';
 import Card from '../Card';
+import ChartCard from '../ChartCard';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import DashboardContent from '../DashboardContent';
-import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
-import ChartCard from '../ChartCard';
 import TotalSalesChart from '../TotalSalesChart';
+import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);

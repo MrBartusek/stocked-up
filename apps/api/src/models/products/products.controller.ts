@@ -1,6 +1,7 @@
 import {
 	Body,
 	Controller,
+	Delete,
 	Get,
 	Injectable,
 	NotFoundException,
@@ -9,7 +10,6 @@ import {
 	Put,
 	UseGuards,
 	ValidationPipe,
-	Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';

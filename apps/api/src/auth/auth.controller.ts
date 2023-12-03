@@ -8,11 +8,11 @@ import {
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { UserRegisterDto } from 'shared-types';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { Request } from 'express';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 @ApiTags('auth')

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { BsBoxSeam } from 'react-icons/bs';
 import { ErrorBoundary } from 'react-error-boundary';
+import { BsBoxSeam } from 'react-icons/bs';
 
 export interface LoaderProps {
 	height?: string;

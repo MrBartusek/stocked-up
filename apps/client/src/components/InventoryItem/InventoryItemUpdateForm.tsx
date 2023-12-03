@@ -3,12 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import {
-	InventoryItemDto,
-	ProductDto,
-	UpdateInventoryItemDto,
-	UpdateWarehouseDto,
-} from 'shared-types';
+import { InventoryItemDto, ProductDto, UpdateInventoryItemDto } from 'shared-types';
 import { Utils } from '../../utils';
 import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';

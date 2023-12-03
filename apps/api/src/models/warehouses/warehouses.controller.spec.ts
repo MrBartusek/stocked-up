@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-import { Types } from 'mongoose';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;

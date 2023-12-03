@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './strategies/local.strategy';
-import { SessionSerializer } from './session.serializer';
 import { UsersModule } from '../models/users/users.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { SessionSerializer } from './session.serializer';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
 	imports: [UsersModule, PassportModule.register({ session: true })],

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class WarehousesService {

@@ -1,5 +1,5 @@
-import Redis from 'ioredis';
 import { Logger } from '@nestjs/common';
+import Redis from 'ioredis';
 
 const host = process.env.REDIS_HOST;
 const password = process.env.REDIS_PASS;
