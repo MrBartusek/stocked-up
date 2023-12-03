@@ -25,6 +25,26 @@ export class OrganizationsService {
 		return this.organizationRepository.findById(organization._id);
 	}
 
+	async findAllForUser(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.find({ 'acls.id': id });
+	}
+
+	async findById(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.findById(id);
+	}
+
+	async exist(id: mongoose.Types.ObjectId | string) {
+		return this.organizationRepository.exist({ _id: id });
+	}
+
+	async findByWarehouse(
+		warehouseId: mongoose.Types.ObjectId,
+	): Promise<OrganizationDocument | null> {
+		return this.organizationRepository.findOne({
+			'warehouses.id': warehouseId,
+		});
+	}
+
 	async addWarehouse(
 		organizationId: mongoose.Types.ObjectId | string,
 		createWarehouseDto: CreateWarehouseDto,
@@ -97,14 +117,6 @@ export class OrganizationsService {
 		return result[0].totalValue;
 	}
 
-	async findByWarehouse(
-		warehouseId: mongoose.Types.ObjectId,
-	): Promise<OrganizationDocument | null> {
-		return this.organizationRepository.findOne({
-			'warehouses.id': warehouseId,
-		});
-	}
-
 	async updateAcl(
 		organizationId: mongoose.Types.ObjectId | string,
 		userId: mongoose.Types.ObjectId | string,
@@ -121,18 +133,6 @@ export class OrganizationsService {
 				},
 			},
 		);
-	}
-
-	async findAllForUser(id: mongoose.Types.ObjectId | string) {
-		return this.organizationRepository.find({ 'acls.id': id });
-	}
-
-	async findById(id: mongoose.Types.ObjectId | string) {
-		return this.organizationRepository.findById(id);
-	}
-
-	async exist(id: mongoose.Types.ObjectId | string) {
-		return this.organizationRepository.exist({ _id: id });
 	}
 
 	async updateSettings(
