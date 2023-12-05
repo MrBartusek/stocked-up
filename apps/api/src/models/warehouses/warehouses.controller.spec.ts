@@ -19,15 +19,11 @@ describe('WarehousesController', () => {
 	};
 
 	const mockOrganizationsService = {
-		deleteWarehouseReference: jest.fn((id) => {
-			return id;
-		}),
+		deleteWarehouseReference: jest.fn(),
 	};
 
 	const mockInventoryService = {
-		deleteManyByWarehouse: jest.fn((id) => {
-			return id;
-		}),
+		deleteManyByWarehouse: jest.fn(),
 	};
 
 	beforeEach(async () => {
