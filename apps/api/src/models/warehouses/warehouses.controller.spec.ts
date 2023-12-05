@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { InventoryService } from '../inventory/inventory.service';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
@@ -16,13 +18,29 @@ describe('WarehousesController', () => {
 		}),
 	};
 
+	const mockOrganizationsService = {
+		deleteWarehouseReference: jest.fn((id) => {
+			return id;
+		}),
+	};
+
+	const mockInventoryService = {
+		deleteManyByWarehouse: jest.fn((id) => {
+			return id;
+		}),
+	};
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [WarehousesController],
-			providers: [WarehousesService],
+			providers: [WarehousesService, OrganizationsService, InventoryService],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehouseService)
+			.overrideProvider(OrganizationsService)
+			.useValue(mockOrganizationsService)
+			.overrideProvider(InventoryService)
+			.useValue(mockInventoryService)
 			.compile();
 
 		controller = module.get<WarehousesController>(WarehousesController);
