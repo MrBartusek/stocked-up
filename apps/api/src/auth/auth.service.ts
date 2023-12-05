@@ -21,7 +21,7 @@ export class AuthService {
 			throw new BadRequestException({ message: 'This email is already taken' });
 		}
 
-		const isUsernameTaken = await this.usersService.isUsernameTaken(data.email);
+		const isUsernameTaken = await this.usersService.isUsernameTaken(data.username);
 		if (isUsernameTaken) {
 			throw new BadRequestException({ message: 'This username is already taken' });
 		}
