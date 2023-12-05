@@ -104,6 +104,14 @@ function Router() {
 					element: <OrganizationSettingsPage />,
 				},
 				{
+					path: 'update/:id',
+					element: <UnderConstructionPage />,
+				},
+				{
+					path: 'delete/:id',
+					element: <UnderConstructionPage />,
+				},
+				{
 					path: ':organization/:warehouse',
 					element: <DashboardPage />,
 					children: [
