@@ -76,13 +76,13 @@ export class OrganizationsService {
 	}
 
 	async deleteWarehouseReference(
-		warehouse: WarehouseDocument,
+		warehouseId: mongoose.Types.ObjectId,
 	): Promise<OrganizationDocument | undefined> {
 		return this.organizationRepository.findOneAndUpdate(
-			{ 'warehouses.id': warehouse._id },
+			{ 'warehouses.id': warehouseId },
 			{
 				$pull: {
-					warehouses: warehouse._id,
+					warehouses: warehouseId,
 				},
 			},
 		);

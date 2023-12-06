@@ -25,15 +25,6 @@ export class WarehousesController {
 		private readonly inventoryService: InventoryService,
 	) {}
 
-	@Get(':id')
-	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<WarehouseDto> {
-		const warehouse = await this.warehousesService.findById(id);
-		if (!warehouse) {
-			throw new NotFoundException();
-		}
-		return Warehouse.toDto(warehouse);
-	}
-
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
 		const orgId = new Types.ObjectId(dto.organizationId);
@@ -45,6 +36,17 @@ export class WarehousesController {
 
 		const warehouse = await this.warehousesService.create(dto.warehouse);
 		await this.organizationsService.addWarehouseReference(orgId, warehouse);
+
+		return Warehouse.toDto(warehouse);
+	}
+
+	@Get(':id')
+	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<WarehouseDto> {
+		const warehouse = await this.warehousesService.findById(id);
+		if (!warehouse) {
+			throw new NotFoundException();
+		}
+		await this.organizationsService.updateWarehouseReference(warehouse);
 
 		return Warehouse.toDto(warehouse);
 	}
@@ -71,7 +73,7 @@ export class WarehousesController {
 			throw new NotFoundException();
 		}
 
-		await this.organizationsService.deleteWarehouseReference(warehouse);
+		await this.organizationsService.deleteWarehouseReference(warehouse._id);
 		await this.inventoryService.deleteManyByWarehouse(warehouse._id);
 
 		return Warehouse.toDto(warehouse);
