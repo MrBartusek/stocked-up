@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { BsBox, BsBoxFill, BsEye } from 'react-icons/bs';
+import { BsBox, BsBoxFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
+import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 import { HTTPResponseError, Utils } from '../../utils';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import IconButton from '../IconButton';
-import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 
 export interface ProductAddToInventoryButtonProps {
 	product: ProductDto;

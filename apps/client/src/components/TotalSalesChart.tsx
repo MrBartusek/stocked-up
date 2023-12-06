@@ -46,7 +46,7 @@ const data = [
 	},
 ];
 
-function TotalSalesChart({ organization }: TotalSalesChartProps) {
+function TotalSalesChart() {
 	return (
 		<Loader isLoading={false}>
 			<ResponsiveContainer

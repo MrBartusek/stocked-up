@@ -55,7 +55,7 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 						paddingAngle={2}
 						label={(e) => e.name}
 					>
-						{data?.map((entry, i) => (
+						{data?.map((_, i) => (
 							<Cell
 								key={i}
 								fill={Utils.CHART_COLORS[i % Utils.CHART_COLORS.length]}

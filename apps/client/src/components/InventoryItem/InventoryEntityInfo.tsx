@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsEye, BsPencil, BsTag, BsTagFill, BsTrash } from 'react-icons/bs';
+import { BsPencil, BsTagFill, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { InventoryItemDto } from 'shared-types';
 import { Utils } from '../../utils';

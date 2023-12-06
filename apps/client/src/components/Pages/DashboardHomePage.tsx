@@ -27,7 +27,7 @@ function DashboardHomePage() {
 				</div>
 				<div className="flex flex-col gap-8 xl:flex-row">
 					<ChartCard title="Total sales (last 7 days)">
-						<TotalSalesChart organization={organization} />
+						<TotalSalesChart />
 					</ChartCard>
 					<ChartCard title="Warehouses value">
 						<WarehousesValueChart organization={organization} />
