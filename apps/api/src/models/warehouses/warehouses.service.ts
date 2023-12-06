@@ -19,16 +19,16 @@ export class WarehousesService {
 		return this.warehouseRepository.findOneByIdAndUpdate(id, dto);
 	}
 
+	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
+		return this.warehouseRepository.findById(id);
+	}
+
 	delete(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
 		return this.warehouseRepository.deleteOneById(id);
 	}
 
 	exist(id: Types.ObjectId) {
 		return this.warehouseRepository.exist({ _id: id });
-	}
-
-	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
-		return this.warehouseRepository.findById(id);
 	}
 
 	updateTotalValue(id: Types.ObjectId, totalValue: number): Promise<WarehouseDocument | undefined> {

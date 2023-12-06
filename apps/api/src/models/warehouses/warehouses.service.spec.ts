@@ -2,20 +2,36 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
+import { CreateWarehouseDto } from 'shared-types';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
 
 	const mockWarehousesRepository = {
-		create: jest.fn((dto) => {
+		create: jest.fn((dto: CreateWarehouseDto) => {
 			return dto;
 		}),
-		exist: jest.fn((id) => {
+		exist: jest.fn((id: Types.ObjectId) => {
 			return true;
 		}),
-		findById: jest.fn((id) => {
+		findById: jest.fn((id: Types.ObjectId) => {
 			return {
-				id,
+				_id: id,
+				name: 'test-name',
+				address: 'test-address',
+			};
+		}),
+		deleteOneById: jest.fn((id: Types.ObjectId) => {
+			return {
+				_id: id,
+				name: 'test-name',
+				address: 'test-address',
+			};
+		}),
+		findOneAndUpdate: jest.fn((id: Types.ObjectId, filter: any) => {
+			return {
+				...{ ...filter },
+				_id: id,
 				name: 'test-name',
 				address: 'test-address',
 			};
@@ -41,10 +57,30 @@ describe('WarehousesService', () => {
 	});
 
 	it('should create warehouse', () => {
-		expect(service.create({ name: 'test-name', address: 'test-address' })).toEqual({
-			name: expect.any(String),
-			address: expect.any(String),
-		});
+		expect(service.create({ name: 'test-name', address: 'test-address' })).toEqual(
+			expect.objectContaining({
+				name: 'test-name',
+				address: 'test-address',
+			}),
+		);
+	});
+
+	it('should update warehouse', () => {
+		expect(service.create({ name: 'updated-name', address: 'updated-address' })).toEqual(
+			expect.objectContaining({
+				name: 'updated-name',
+				address: 'updated-address',
+			}),
+		);
+	});
+
+	it('should delete warehouse', () => {
+		expect(service.delete(new Types.ObjectId())).toEqual(
+			expect.objectContaining({
+				name: 'test-name',
+				address: 'test-address',
+			}),
+		);
 	});
 
 	it('should check if warehouse exist', () => {
@@ -52,10 +88,20 @@ describe('WarehousesService', () => {
 	});
 
 	it('should find warehouse by id', () => {
-		expect(service.findById(new Types.ObjectId())).toEqual({
-			id: expect.any(Types.ObjectId),
-			name: expect.any(String),
-			address: expect.any(String),
-		});
+		expect(service.findById(new Types.ObjectId())).toEqual(
+			expect.objectContaining({
+				_id: expect.any(Types.ObjectId),
+				name: expect.any(String),
+				address: expect.any(String),
+			}),
+		);
+	});
+
+	it('should update total warehouse value', () => {
+		expect(service.updateTotalValue(new Types.ObjectId(), 500)).toEqual(
+			expect.objectContaining({
+				totalValue: 500,
+			}),
+		);
 	});
 });
