@@ -90,56 +90,11 @@ export class OrganizationsService {
 
 	async findAllWarehouses(orgId: mongoose.Types.ObjectId | string): Promise<WarehouseDocument[]> {
 		const id = new mongoose.Types.ObjectId(orgId);
-		const result = await this.organizationRepository.aggregate([
-			{
-				$match: {
-					_id: id,
-				},
-			},
-			{
-				$unwind: '$warehouses',
-			},
-			{
-				$lookup: {
-					from: 'warehouses',
-					localField: 'warehouses.id',
-					foreignField: '_id',
-					as: 'warehouseDetails',
-				},
-			},
-		]);
-		return result.map((r) => r.warehouseDetails[0]);
+		return this.findAllWarehouses(id);
 	}
 
 	async calculateTotalValue(orgId: mongoose.Types.ObjectId): Promise<number> {
-		const result = await this.organizationRepository.aggregate([
-			{
-				$match: {
-					_id: orgId,
-				},
-			},
-			{
-				$unwind: '$warehouses',
-			},
-			{
-				$lookup: {
-					from: 'warehouses',
-					localField: 'warehouses.id',
-					foreignField: '_id',
-					as: 'warehouseDetails',
-				},
-			},
-			{
-				$unwind: '$warehouseDetails',
-			},
-			{
-				$group: {
-					_id: null,
-					totalValue: { $sum: '$warehouseDetails.totalValue' },
-				},
-			},
-		]);
-		return result[0].totalValue;
+		return this.calculateTotalValue(orgId);
 	}
 
 	async updateAcl(
