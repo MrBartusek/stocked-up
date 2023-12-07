@@ -90,11 +90,11 @@ export class OrganizationsService {
 
 	async findAllWarehouses(orgId: mongoose.Types.ObjectId | string): Promise<WarehouseDocument[]> {
 		const id = new mongoose.Types.ObjectId(orgId);
-		return this.findAllWarehouses(id);
+		return this.organizationRepository.findAllWarehouses(id);
 	}
 
 	async calculateTotalValue(orgId: mongoose.Types.ObjectId): Promise<number> {
-		return this.calculateTotalValue(orgId);
+		return this.organizationRepository.calculateTotalValue(orgId);
 	}
 
 	async updateAcl(
