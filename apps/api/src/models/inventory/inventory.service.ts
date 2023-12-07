@@ -35,7 +35,7 @@ export class InventoryService {
 	}
 
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
-		const result = await this.aggregateWithProduct({ _id: id });
+		const result = await this.inventoryRepository.findAndAggregateWithProduct({ _id: id });
 
 		if (result.length > 0) {
 			return result[0];
@@ -46,7 +46,7 @@ export class InventoryService {
 		warehouseId: Types.ObjectId,
 		productId: Types.ObjectId,
 	): Promise<InventoryItemDocument | null> {
-		const result = await this.aggregateWithProduct({
+		const result = await this.inventoryRepository.findAndAggregateWithProduct({
 			warehouse: warehouseId,
 			product: productId,
 		});
@@ -57,59 +57,17 @@ export class InventoryService {
 	}
 
 	find(query: FilterQuery<any>): Promise<InventoryItemDocument[]> {
-		return this.aggregateWithProduct(query);
+		return this.inventoryRepository.findAndAggregateWithProduct(query);
 	}
 
 	findAllInWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
-		return this.aggregateWithProduct({ warehouse: warehouseId });
+		return this.inventoryRepository.findAndAggregateWithProduct({ warehouse: warehouseId });
 	}
 
-	aggregateWithProduct(match: FilterQuery<any>) {
-		return this.inventoryRepository.aggregate([
-			{
-				$match: match,
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-		]);
-	}
-
-	async calculateTotalValue(
+	async calculateTotalWarehouseValue(
 		warehouseId: Types.ObjectId,
 		strategy: OrgValueCalculationStrategy,
 	): Promise<number> {
-		console.log(warehouseId);
-		const result = await this.inventoryRepository.aggregate([
-			{
-				$match: { warehouse: warehouseId },
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-			{
-				$group: {
-					_id: null,
-					totalValue: { $sum: { $multiply: [`$product.${strategy}`, '$quantity'] } },
-				},
-			},
-		]);
-		return result[0].totalValue;
+		return this.inventoryRepository.calculateTotalWarehouseValue(warehouseId, strategy);
 	}
 }

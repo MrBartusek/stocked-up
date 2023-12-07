@@ -123,7 +123,10 @@ export class InventoryController {
 
 	async updateWarehouseValue(organization: OrganizationDocument, warehouseId: Types.ObjectId) {
 		const strategy = organization.settings.valueCalculationStrategy;
-		const totalValue = await this.inventoryService.calculateTotalValue(warehouseId, strategy);
+		const totalValue = await this.inventoryService.calculateTotalWarehouseValue(
+			warehouseId,
+			strategy,
+		);
 		await this.warehousesService.updateTotalValue(warehouseId, totalValue);
 		const orgValue = await this.organizationService.calculateTotalValue(organization._id);
 		await this.organizationStatsService.updateTotalValue(organization._id, orgValue);
