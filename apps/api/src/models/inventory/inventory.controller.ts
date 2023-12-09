@@ -44,13 +44,14 @@ export class InventoryController {
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateInventoryItemDto) {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
+		const productId = new Types.ObjectId(dto.productId);
 
 		const warehouseExist = await this.warehousesService.exist(warehouseId);
 		if (!warehouseExist) {
 			throw new BadRequestException("This warehouse doesn't exist");
 		}
 
-		const productExist = await this.productService.exist(dto.productId as any);
+		const productExist = await this.productService.exist(productId);
 		if (!productExist) {
 			throw new BadRequestException("This product doesn't exist");
 		}
