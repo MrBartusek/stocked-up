@@ -16,10 +16,10 @@ import { Types } from 'mongoose';
 import { BasicProductDto, CreateProductDto, ProductDto, UpdateProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
+import { InventoryService } from '../inventory/inventory.service';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
-import { InventoryService } from '../inventory/inventory.service';
 
 @ApiTags('products')
 @Controller('products')

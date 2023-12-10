@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { CreateWarehouseDto } from 'shared-types';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
-import { CreateWarehouseDto } from 'shared-types';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;

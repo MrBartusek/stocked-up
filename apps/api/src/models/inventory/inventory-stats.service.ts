@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
-import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
 import { InventoryRepository } from './inventory.repository';
 
 @Injectable()

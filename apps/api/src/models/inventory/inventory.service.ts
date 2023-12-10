@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
 import { CreateInventoryItemDto, UpdateInventoryItemDto } from 'shared-types';
-import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
 

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrganizationsStatsService } from './organizations-stats.service';
-import { OrganizationRepository } from './organizations.repository';
 import { Types } from 'mongoose';
 import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
+import { OrganizationsStatsService } from './organizations-stats.service';
+import { OrganizationRepository } from './organizations.repository';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
 
 describe('OrganizationsStatsService', () => {

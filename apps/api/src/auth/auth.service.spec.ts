@@ -1,9 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService, UserRegisterData } from './auth.service';
-import { UsersService } from '../models/users/users.service';
-import * as bcrypt from 'bcrypt';
-import exp from 'constants';
 import { BadRequestException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as bcrypt from 'bcrypt';
+import { UsersService } from '../models/users/users.service';
+import { AuthService, UserRegisterData } from './auth.service';
 
 const MOCK_PASSWORD = 'test-password';
 

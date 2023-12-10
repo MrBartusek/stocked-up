@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
+import { ProductsService } from '../products/products.service';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
-import { WarehousesService } from '../warehouses/warehouses.service';
-import { ProductsService } from '../products/products.service';
-import { OrganizationsService } from '../organizations/organizations.service';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { Types } from 'mongoose';
-import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 
 const MOCK_IDS = {
 	inventory: {

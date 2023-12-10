@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, Types } from 'mongoose';
 import { EntityRepository } from '../../database/entity.repository';
-import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.schema';
-import { Types } from 'mongoose';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
+import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.schema';
 
 @Injectable()
 export class InventoryRepository extends EntityRepository<InventoryItemDocument> {
