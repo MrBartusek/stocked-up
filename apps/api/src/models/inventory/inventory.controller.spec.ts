@@ -49,12 +49,10 @@ describe('InventoryController', () => {
 
 	const mockInventoryService = {
 		create: jest.fn((id: Types.ObjectId) => getMockProduct(id, false)),
-		calculateTotalWarehouseValue: jest.fn(() => 100),
 	};
 
 	const mockWarehousesService = {
 		exist: jest.fn((id: Types.ObjectId) => id.toString() == MOCK_IDS.warehouse.taken.toString()),
-		updateTotalValue: jest.fn(),
 	};
 
 	const mockProductsService = {
@@ -67,11 +65,10 @@ describe('InventoryController', () => {
 				valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
 			},
 		})),
-		calculateTotalValue: jest.fn(() => 100),
 	};
 
 	const mockOrganizationsStatsService = {
-		updateTotalValue: jest.fn(() => 100),
+		recalculateTotalValue: jest.fn(),
 	};
 
 	beforeEach(async () => {

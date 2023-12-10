@@ -23,12 +23,10 @@ import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
-import { OrganizationDocument } from '../organizations/schemas/organization.schema';
 import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)

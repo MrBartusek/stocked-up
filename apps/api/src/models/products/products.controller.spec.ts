@@ -17,6 +17,7 @@ describe('ProductsController', () => {
 		return {
 			_id: id,
 			name: 'test-product',
+			organization: new Types.ObjectId(),
 			buyPrice: 10,
 			sellPrice: 10,
 		};
@@ -28,9 +29,11 @@ describe('ProductsController', () => {
 		}),
 		update: jest.fn((id: Types.ObjectId, query: any) => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
+			const { organizationId, ...rest } = query;
 			return {
 				...regularMockFindFunction(id),
-				...query,
+				organization: organizationId,
+				...rest,
 			};
 		}),
 		findOne: jest.fn((id: Types.ObjectId) => {
@@ -49,6 +52,7 @@ describe('ProductsController', () => {
 
 	const mockOrganizationsStatsService = {
 		updateProductsCount: jest.fn(),
+		recalculateTotalValue: jest.fn(),
 	};
 
 	const mockInventoryService = {
@@ -57,6 +61,10 @@ describe('ProductsController', () => {
 
 	const updateProductsCountSpy = jest.spyOn(mockOrganizationsStatsService, 'updateProductsCount');
 	const deleteManyByProductSpy = jest.spyOn(mockInventoryService, 'deleteManyByProduct');
+	const recalculateTotalValueSpy = jest.spyOn(
+		mockOrganizationsStatsService,
+		'recalculateTotalValue',
+	);
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -81,7 +89,7 @@ describe('ProductsController', () => {
 	describe('Create product', () => {
 		it('should create product', async () => {
 			const product = await controller.create({
-				organizationId: '123',
+				organizationId: new Types.ObjectId().toString(),
 				name: 'created-product',
 			});
 
@@ -90,14 +98,15 @@ describe('ProductsController', () => {
 					name: 'created-product',
 				}),
 			);
-			expect(updateProductsCountSpy).toHaveBeenCalledWith('123', 1);
+			expect(updateProductsCountSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId), 1);
 		});
 	});
 
 	describe('Update product', () => {
 		it('should update product', async () => {
+			const orgId = new Types.ObjectId().toString();
 			const product = await controller.update(MOCK_TAKEN_PRODUCT_ID, {
-				organizationId: '123',
+				organizationId: orgId,
 				name: 'updated-product',
 			});
 
@@ -106,11 +115,12 @@ describe('ProductsController', () => {
 					name: 'updated-product',
 				}),
 			);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(orgId);
 		});
 
 		it('should not update product that does not exist', async () => {
 			const product = controller.update(MOCK_FREE_PRODUCT_ID, {
-				organizationId: '123',
+				organizationId: new Types.ObjectId().toString(),
 				name: 'updated-product',
 			});
 
@@ -145,8 +155,9 @@ describe('ProductsController', () => {
 					name: expect.any(String),
 				}),
 			);
-			expect(updateProductsCountSpy).toHaveBeenCalledWith('123', 1);
+			expect(updateProductsCountSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId), 1);
 			expect(deleteManyByProductSpy).toHaveBeenCalledWith(MOCK_TAKEN_PRODUCT_ID);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
 		});
 
 		it('should not delete product that does not exist', async () => {

@@ -96,12 +96,4 @@ describe('WarehousesService', () => {
 			}),
 		);
 	});
-
-	it('should update total warehouse value', () => {
-		expect(service.updateTotalValue(new Types.ObjectId(), 500)).toEqual(
-			expect.objectContaining({
-				totalValue: 500,
-			}),
-		);
-	});
 });
