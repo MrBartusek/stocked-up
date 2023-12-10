@@ -68,6 +68,10 @@ export class InventoryController {
 		@Body(ValidationPipe) dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
+		if (!item) {
+			throw new NotFoundException();
+		}
+
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
@@ -79,6 +83,10 @@ export class InventoryController {
 	@Put(':id')
 	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
 		const item = await this.inventoryService.delete(id);
+		if (!item) {
+			throw new NotFoundException();
+		}
+
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);

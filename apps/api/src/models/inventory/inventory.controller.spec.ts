@@ -7,6 +7,7 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 const MOCK_IDS = {
 	inventory: {
@@ -30,25 +31,42 @@ const MOCK_IDS = {
 describe('InventoryController', () => {
 	let controller: InventoryController;
 
-	const getMockProduct = (id: Types.ObjectId, aggregate = false) => {
+	const getMockInventoryItem = (id: Types.ObjectId) => {
 		return {
 			_id: id,
 			warehouse: MOCK_IDS.warehouse.taken,
 			quantity: 0,
 			location: 'test-location',
-			product: aggregate
-				? {
-						_id: MOCK_IDS.product.taken,
-						name: 'test-product',
-						buyPrice: 10,
-						sellPrice: 10,
-				  }
-				: MOCK_IDS.product.taken,
+			product: {
+				_id: MOCK_IDS.product.taken,
+				name: 'test-product',
+				buyPrice: 10,
+				sellPrice: 10,
+			},
 		};
 	};
 
 	const mockInventoryService = {
-		create: jest.fn((id: Types.ObjectId) => getMockProduct(id, false)),
+		create: jest.fn((id: Types.ObjectId) => getMockInventoryItem(id)),
+		findOne: jest.fn((id) => {
+			if (id.toString() != MOCK_IDS.inventory.taken.toString()) return;
+			return getMockInventoryItem(id);
+		}),
+		update: jest.fn((id, dto) => {
+			if (id.toString() != MOCK_IDS.inventory.taken.toString()) return;
+			return {
+				...getMockInventoryItem(id),
+				...dto,
+			};
+		}),
+		delete: jest.fn((id) => {
+			if (id.toString() != MOCK_IDS.inventory.taken.toString()) return;
+			return getMockInventoryItem(id);
+		}),
+		findAllInWarehouse: jest.fn((id) => {
+			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return [];
+			return Array(10).fill(getMockInventoryItem(new Types.ObjectId()));
+		}),
 	};
 
 	const mockWarehousesService = {
@@ -61,15 +79,23 @@ describe('InventoryController', () => {
 
 	const mockOrganizationsService = {
 		findByWarehouse: jest.fn(() => ({
+			_id: new Types.ObjectId(),
+			name: 'test-org',
 			settings: {
 				valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
 			},
 		})),
+		recalculateTotalValue: jest.fn(),
 	};
 
 	const mockOrganizationsStatsService = {
 		recalculateTotalValue: jest.fn(),
 	};
+
+	const recalculateTotalValueSpy = jest.spyOn(
+		mockOrganizationsStatsService,
+		'recalculateTotalValue',
+	);
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -97,50 +123,125 @@ describe('InventoryController', () => {
 		controller = module.get<InventoryController>(InventoryController);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(controller).toBeDefined();
 	});
 
 	describe('Create inventory', () => {
 		it('should create inventory item', async () => {
-			const product = await controller.create({
+			const item = await controller.create({
 				warehouseId: MOCK_IDS.warehouse.taken.toString(),
 				productId: MOCK_IDS.product.taken.toString(),
 			});
 
-			expect(product).toEqual(
+			expect(item).toEqual(
 				expect.objectContaining({
-					productId: expect.any(Types.ObjectId),
+					quantity: 0,
+				}),
+			);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
+		});
+
+		it('should not create inventory item when warehouse does not exist', async () => {
+			const item = controller.create({
+				warehouseId: MOCK_IDS.warehouse.free.toString(),
+				productId: MOCK_IDS.product.taken.toString(),
+			});
+
+			expect(item).rejects.toThrow(BadRequestException);
+		});
+
+		it('should not create inventory item when product does not exist', async () => {
+			const item = controller.create({
+				warehouseId: MOCK_IDS.warehouse.taken.toString(),
+				productId: MOCK_IDS.product.free.toString(),
+			});
+
+			expect(item).rejects.toThrow(BadRequestException);
+		});
+	});
+
+	describe('Update inventory', () => {
+		it('should update inventory item', async () => {
+			const item = await controller.update(MOCK_IDS.inventory.taken, {
+				quantity: 100,
+			});
+
+			expect(item).toEqual(
+				expect.objectContaining({
+					quantity: 100,
+				}),
+			);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
+		});
+
+		it('should not update inventory item that does not exist', async () => {
+			const item = controller.update(MOCK_IDS.inventory.free, {
+				quantity: 100,
+			});
+
+			expect(item).rejects.toThrow(NotFoundException);
+		});
+	});
+
+	describe('Delete inventory', () => {
+		it('should delete inventory item', async () => {
+			const item = await controller.delete(MOCK_IDS.inventory.taken);
+
+			expect(item).toEqual(
+				expect.objectContaining({
+					quantity: 0,
+				}),
+			);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
+		});
+
+		it('should not delete inventory item that does not exist', async () => {
+			const item = controller.delete(MOCK_IDS.inventory.free);
+
+			expect(item).rejects.toThrow(NotFoundException);
+		});
+	});
+
+	describe('Find all inventory items', () => {
+		it('should find all inventory item in warehouse', async () => {
+			const items = await controller.findAll(MOCK_IDS.warehouse.taken);
+
+			expect(items).toHaveLength(10);
+			expect(items[0]).toEqual(
+				expect.objectContaining({
+					quantity: 0,
 				}),
 			);
 		});
 
-		test.todo('should not create inventory item when warehouse does not exist');
+		it('should return an empty list if warehouse does not exist', async () => {
+			const items = await controller.findAll(MOCK_IDS.warehouse.free);
 
-		test.todo('should not create inventory item when product does not exist');
-	});
-
-	describe('Update inventory', () => {
-		test.todo('should update inventory item');
-
-		test.todo('should not update inventory item that does not exist');
-	});
-
-	describe('Delete inventory', () => {
-		test.todo('should delete inventory item');
-
-		test.todo('should not delete inventory item that does not exist');
-	});
-
-	describe('Find all inventory items', () => {
-		test.todo('should find all inventory item in warehouse');
-
-		test.todo('should return empty list if warehouse does not exist');
+			expect(items).toEqual([]);
+		});
 	});
 
 	describe('Find one inventory items', () => {
-		test.todo('should find one inventory item');
+		it('should find one inventory item', async () => {
+			const item = await controller.findOne(MOCK_IDS.inventory.taken);
 
-		test.todo('should not find item that does not exist');
+			expect(item).toEqual(
+				expect.objectContaining({
+					quantity: 0,
+					name: 'test-product',
+				}),
+			);
+		});
+
+		it('should not find item that does not exist', async () => {
+			const item = controller.findOne(MOCK_IDS.inventory.free);
+
+			expect(item).rejects.toThrow(NotFoundException);
+		});
 	});
 });
