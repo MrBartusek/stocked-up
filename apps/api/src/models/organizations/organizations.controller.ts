@@ -102,10 +102,7 @@ export class OrganizationsController {
 		}
 
 		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
-
-		const orgValue = await this.organizationsService.calculateTotalValue(id);
-		await this.organizationsStatsService.updateTotalValue(id, orgValue);
-
+		await this.organizationsStatsService.recalculateTotalValue(id);
 		return org.settings;
 	}
 }

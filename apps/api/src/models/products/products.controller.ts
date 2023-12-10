@@ -34,8 +34,11 @@ export class ProductsController {
 
 	@Post()
 	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
+		const orgId = new Types.ObjectId(dto.organizationId);
 		const product = await this.productsService.create(dto);
-		await this.updateTotalProductsCount(dto.organizationId as any);
+
+		await this.updateTotalProductsCount(orgId);
+
 		return Product.toDto(product);
 	}
 
@@ -57,6 +60,9 @@ export class ProductsController {
 		if (!product) {
 			throw new NotFoundException();
 		}
+
+		await this.organizationStatsService.recalculateTotalValue(product.organization as any);
+
 		return Product.toDto(product);
 	}
 
@@ -68,6 +74,7 @@ export class ProductsController {
 		}
 
 		await this.inventoryService.deleteManyByProduct(id);
+		await this.organizationStatsService.recalculateTotalValue(product.organization as any);
 
 		return Product.toDto(product);
 	}

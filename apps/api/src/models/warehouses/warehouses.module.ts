@@ -6,6 +6,7 @@ import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { InventoryModule } from '../inventory/inventory.module';
+import { WarehouseStatsService } from './warehouses-stats.service';
 
 @Module({
 	imports: [
@@ -14,7 +15,7 @@ import { InventoryModule } from '../inventory/inventory.module';
 		forwardRef(() => InventoryModule),
 	],
 	controllers: [WarehousesController],
-	providers: [WarehousesService, WarehouseRepository],
-	exports: [WarehousesService],
+	providers: [WarehousesService, WarehouseRepository, WarehouseStatsService],
+	exports: [WarehousesService, WarehouseStatsService],
 })
 export class WarehousesModule {}

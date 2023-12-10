@@ -63,11 +63,4 @@ export class InventoryService {
 	findAllInWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
 		return this.inventoryRepository.findAndAggregateWithProduct({ warehouse: warehouseId });
 	}
-
-	async calculateTotalWarehouseValue(
-		warehouseId: Types.ObjectId,
-		strategy: OrgValueCalculationStrategy,
-	): Promise<number> {
-		return this.inventoryRepository.calculateTotalWarehouseValue(warehouseId, strategy);
-	}
 }

@@ -93,10 +93,6 @@ export class OrganizationsService {
 		return this.organizationRepository.findAllWarehouses(id);
 	}
 
-	async calculateTotalValue(orgId: mongoose.Types.ObjectId): Promise<number> {
-		return this.organizationRepository.calculateTotalValue(orgId);
-	}
-
 	async updateAcl(
 		organizationId: mongoose.Types.ObjectId | string,
 		userId: mongoose.Types.ObjectId | string,

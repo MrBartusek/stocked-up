@@ -35,7 +35,6 @@ export class InventoryRepository extends EntityRepository<InventoryItemDocument>
 		warehouseId: Types.ObjectId,
 		strategy: OrgValueCalculationStrategy,
 	): Promise<number> {
-		console.log(warehouseId);
 		const result = await this.aggregate([
 			{
 				$match: { warehouse: warehouseId },
@@ -58,6 +57,11 @@ export class InventoryRepository extends EntityRepository<InventoryItemDocument>
 				},
 			},
 		]);
+
+		if (result.length == 0) {
+			return 0;
+		}
+
 		return result[0].totalValue;
 	}
 }

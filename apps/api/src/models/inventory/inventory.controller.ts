@@ -28,6 +28,7 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
+import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -58,7 +59,7 @@ export class InventoryController {
 
 		const item = await this.inventoryService.create(dto);
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.updateWarehouseValue(organization, warehouseId);
+		await this.organizationStatsService.recalculateTotalValue(organization._id);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -72,7 +73,7 @@ export class InventoryController {
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.updateWarehouseValue(organization, warehouseId);
+		await this.organizationStatsService.recalculateTotalValue(organization._id);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -83,7 +84,7 @@ export class InventoryController {
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
 
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.updateWarehouseValue(organization, warehouseId);
+		await this.organizationStatsService.recalculateTotalValue(organization._id);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -120,16 +121,5 @@ export class InventoryController {
 		}
 
 		return InventoryItem.toDto(item);
-	}
-
-	async updateWarehouseValue(organization: OrganizationDocument, warehouseId: Types.ObjectId) {
-		const strategy = organization.settings.valueCalculationStrategy;
-		const totalValue = await this.inventoryService.calculateTotalWarehouseValue(
-			warehouseId,
-			strategy,
-		);
-		await this.warehousesService.updateTotalValue(warehouseId, totalValue);
-		const orgValue = await this.organizationService.calculateTotalValue(organization._id);
-		await this.organizationStatsService.updateTotalValue(organization._id, orgValue);
 	}
 }

@@ -33,35 +33,4 @@ export class OrganizationRepository extends EntityRepository<OrganizationDocumen
 		]);
 		return result.map((r) => r.warehouseDetails[0]);
 	}
-
-	async calculateTotalValue(orgId: Types.ObjectId): Promise<number> {
-		const result = await this.aggregate([
-			{
-				$match: {
-					_id: orgId,
-				},
-			},
-			{
-				$unwind: '$warehouses',
-			},
-			{
-				$lookup: {
-					from: 'warehouses',
-					localField: 'warehouses.id',
-					foreignField: '_id',
-					as: 'warehouseDetails',
-				},
-			},
-			{
-				$unwind: '$warehouseDetails',
-			},
-			{
-				$group: {
-					_id: null,
-					totalValue: { $sum: '$warehouseDetails.totalValue' },
-				},
-			},
-		]);
-		return result[0].totalValue;
-	}
 }

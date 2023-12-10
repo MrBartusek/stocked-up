@@ -30,8 +30,4 @@ export class WarehousesService {
 	exist(id: Types.ObjectId) {
 		return this.warehouseRepository.exist({ _id: id });
 	}
-
-	updateTotalValue(id: Types.ObjectId, totalValue: number): Promise<WarehouseDocument | undefined> {
-		return this.warehouseRepository.findOneAndUpdate({ _id: id }, { totalValue });
-	}
 }
