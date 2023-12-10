@@ -76,18 +76,20 @@ describe('OrganizationsService', () => {
 		expect(exist).toBe(true);
 	});
 
-	it('should add warehouse reference', async () => {
-		const org = await service.addWarehouseReference(new Types.ObjectId(), {} as any);
-		expect(org.name).toBe('test-name');
-	});
+	describe('Warehouse references', () => {
+		it('should add warehouse reference', async () => {
+			const org = await service.addWarehouseReference(new Types.ObjectId(), {} as any);
+			expect(org.name).toBe('test-name');
+		});
 
-	it('should update warehouse reference', async () => {
-		const org = await service.updateWarehouseReference({} as any);
-		expect(org.name).toBe('test-name');
-	});
+		it('should update warehouse reference', async () => {
+			const org = await service.updateWarehouseReference({} as any);
+			expect(org.name).toBe('test-name');
+		});
 
-	it('should remove warehouse reference', async () => {
-		const org = await service.deleteWarehouseReference(new Types.ObjectId());
-		expect(org.name).toBe('test-name');
+		it('should remove warehouse reference', async () => {
+			const org = await service.deleteWarehouseReference(new Types.ObjectId());
+			expect(org.name).toBe('test-name');
+		});
 	});
 });
