@@ -60,8 +60,10 @@ export class ProductsController {
 		if (!product) {
 			throw new NotFoundException();
 		}
+		const organizationId = new Types.ObjectId(product.organization as any);
 
-		await this.organizationStatsService.recalculateTotalValue(product.organization as any);
+		await this.updateTotalProductsCount(organizationId);
+		await this.organizationStatsService.recalculateTotalValue(organizationId);
 
 		return Product.toDto(product);
 	}
@@ -72,9 +74,11 @@ export class ProductsController {
 		if (!product) {
 			throw new NotFoundException();
 		}
+		const organizationId = new Types.ObjectId(product.organization as any);
 
+		await this.updateTotalProductsCount(organizationId);
 		await this.inventoryService.deleteManyByProduct(id);
-		await this.organizationStatsService.recalculateTotalValue(product.organization as any);
+		await this.organizationStatsService.recalculateTotalValue(organizationId);
 
 		return Product.toDto(product);
 	}

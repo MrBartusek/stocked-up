@@ -59,6 +59,10 @@ describe('OrganizationsStatsService', () => {
 		service = module.get<OrganizationsStatsService>(OrganizationsStatsService);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});

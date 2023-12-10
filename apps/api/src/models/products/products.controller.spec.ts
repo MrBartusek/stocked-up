@@ -32,8 +32,8 @@ describe('ProductsController', () => {
 			const { organizationId, ...rest } = query;
 			return {
 				...regularMockFindFunction(id),
-				organization: organizationId,
 				...rest,
+				organization: organizationId,
 			};
 		}),
 		findOne: jest.fn((id: Types.ObjectId) => {
@@ -82,6 +82,10 @@ describe('ProductsController', () => {
 		controller = module.get<ProductsController>(ProductsController);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(controller).toBeDefined();
 	});
@@ -104,9 +108,9 @@ describe('ProductsController', () => {
 
 	describe('Update product', () => {
 		it('should update product', async () => {
-			const orgId = new Types.ObjectId().toString();
+			const orgId = new Types.ObjectId();
 			const product = await controller.update(MOCK_TAKEN_PRODUCT_ID, {
-				organizationId: orgId,
+				organizationId: orgId.toString(),
 				name: 'updated-product',
 			});
 

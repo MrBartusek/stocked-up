@@ -35,6 +35,10 @@ describe('WarehouseStatsService', () => {
 		service = module.get<WarehouseStatsService>(WarehouseStatsService);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});

@@ -88,6 +88,10 @@ describe('WarehousesController', () => {
 		controller = module.get<WarehousesController>(WarehousesController);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(controller).toBeDefined();
 	});
