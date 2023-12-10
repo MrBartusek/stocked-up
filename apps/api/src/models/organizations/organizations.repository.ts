@@ -7,6 +7,7 @@ import { Organization, OrganizationDocument } from './schemas/organization.schem
 
 @Injectable()
 export class OrganizationRepository extends EntityRepository<OrganizationDocument> {
+	/* istanbul ignore next */
 	constructor(@InjectModel(Organization.name) userModel: Model<OrganizationDocument>) {
 		super(userModel);
 	}

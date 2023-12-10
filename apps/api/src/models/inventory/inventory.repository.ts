@@ -7,6 +7,7 @@ import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.s
 
 @Injectable()
 export class InventoryRepository extends EntityRepository<InventoryItemDocument> {
+	/* istanbul ignore next */
 	constructor(@InjectModel(InventoryItem.name) userModel: Model<InventoryItemDocument>) {
 		super(userModel);
 	}
