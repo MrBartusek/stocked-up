@@ -6,7 +6,6 @@ import { Warehouse, WarehouseDocument } from './schemas/warehouse.schema';
 
 @Injectable()
 export class WarehouseRepository extends EntityRepository<WarehouseDocument> {
-	/* istanbul ignore next */
 	constructor(@InjectModel(Warehouse.name) userModel: Model<WarehouseDocument>) {
 		super(userModel);
 	}

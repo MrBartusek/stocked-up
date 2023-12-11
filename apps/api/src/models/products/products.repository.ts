@@ -6,7 +6,6 @@ import { Product, ProductDocument } from './schemas/product.schema';
 
 @Injectable()
 export class ProductsRepository extends EntityRepository<ProductDocument> {
-	/* istanbul ignore next */
 	constructor(@InjectModel(Product.name) productModel: Model<ProductDocument>) {
 		super(productModel);
 	}
