@@ -67,6 +67,7 @@ describe('InventoryController', () => {
 			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return [];
 			return Array(10).fill(getMockInventoryItem(new Types.ObjectId()));
 		}),
+		findByProduct: jest.fn(() => null),
 	};
 
 	const mockWarehousesService = {

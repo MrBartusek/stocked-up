@@ -55,6 +55,13 @@ export class InventoryController {
 			throw new BadRequestException("This product doesn't exist");
 		}
 
+		const itemExist = await this.inventoryService.findByProduct(warehouseId, productId);
+		if (itemExist) {
+			throw new BadRequestException(
+				'The inventory item of this product in this warehouse already exist',
+			);
+		}
+
 		const item = await this.inventoryService.create(dto);
 		const organization = await this.organizationService.findByWarehouse(warehouseId);
 		await this.organizationStatsService.recalculateTotalValue(organization._id);
