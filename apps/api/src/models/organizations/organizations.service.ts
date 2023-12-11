@@ -40,6 +40,10 @@ export class OrganizationsService {
 		return this.organizationRepository.exist({ _id: id });
 	}
 
+	async nameTaken(name: string) {
+		return this.organizationRepository.exist({ name });
+	}
+
 	async findByWarehouse(
 		warehouseId: mongoose.Types.ObjectId,
 	): Promise<OrganizationDocument | null> {

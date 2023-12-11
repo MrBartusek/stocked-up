@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	Get,
@@ -43,6 +44,11 @@ export class OrganizationsController {
 		@Body(new ValidationPipe()) createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
+		const nameTaken = this.organizationsService.nameTaken(createOrganizationDto.name);
+		if (nameTaken) {
+			throw new BadRequestException('This organization name is already taken');
+		}
+
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(createOrganizationDto.warehouse);
 
@@ -65,17 +71,23 @@ export class OrganizationsController {
 		@Body(new ValidationPipe()) dto: UpdateOrganizationDto,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.update(id, dto);
+		if (!org) {
+			throw new NotFoundException();
+		}
 		return Organization.toDto(org);
 	}
 
 	@Put(':id')
 	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
 		const org = await this.organizationsService.delete(id);
+		if (!org) {
+			throw new NotFoundException();
+		}
 		return Organization.toDto(org);
 	}
 
 	@Get(':id')
-	async findByID(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
+	async findById(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
 		const org = await this.organizationsService.findById(id);
 		if (!org) {
 			throw new NotFoundException();
@@ -96,12 +108,11 @@ export class OrganizationsController {
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(new ValidationPipe()) patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
 	): Promise<OrgSettings> {
-		const orgExist = await this.organizationsService.exist(id);
-		if (!orgExist) {
+		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
+		if (!org) {
 			throw new NotFoundException();
 		}
 
-		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
 		await this.organizationsStatsService.recalculateTotalValue(id);
 		return org.settings;
 	}

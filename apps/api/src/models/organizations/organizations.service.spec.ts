@@ -76,6 +76,11 @@ describe('OrganizationsService', () => {
 		expect(exist).toBe(true);
 	});
 
+	it('should check if name is taken', async () => {
+		const taken = await service.nameTaken('taken');
+		expect(taken).toBe(true);
+	});
+
 	describe('Warehouse references', () => {
 		it('should add warehouse reference', async () => {
 			const org = await service.addWarehouseReference(new Types.ObjectId(), {} as any);
