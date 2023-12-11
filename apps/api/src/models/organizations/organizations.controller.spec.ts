@@ -92,6 +92,10 @@ describe('OrganizationsController', () => {
 	};
 
 	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
+	const recalculateTotalValueSpy = jest.spyOn(
+		mockOrganizationsStatsService,
+		'recalculateTotalValue',
+	);
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -268,6 +272,7 @@ describe('OrganizationsController', () => {
 			});
 
 			expect(updatedSettings.valueCalculationStrategy).toBe(OrgValueCalculationStrategy.BuyPrice);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(MOCK_TAKEN_ORGANIZATION_ID);
 		});
 
 		it('should not update organization settings of org that does not exist', async () => {
