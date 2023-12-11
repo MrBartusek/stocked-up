@@ -5,27 +5,7 @@ import { InventoryService } from './inventory.service';
 describe('InventoryService', () => {
 	let service: InventoryService;
 
-	const mockInventoryService = {
-		create: jest.fn((dto) => {
-			return {
-				id: '123',
-				...dto,
-			};
-		}),
-		findOne: jest.fn((query) => {
-			return {
-				id: '123',
-				profile: {
-					username: query['profile.username'],
-				},
-			};
-		}),
-		findById: jest.fn((id) => {
-			return {
-				id,
-			};
-		}),
-	};
+	const mockInventoryService = {};
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
