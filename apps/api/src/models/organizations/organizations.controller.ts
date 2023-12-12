@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	Delete,
 	Get,
 	NotFoundException,
 	Param,
@@ -77,7 +78,7 @@ export class OrganizationsController {
 		return Organization.toDto(org);
 	}
 
-	@Put(':id')
+	@Delete(':id')
 	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
 		const org = await this.organizationsService.delete(id);
 		if (!org) {

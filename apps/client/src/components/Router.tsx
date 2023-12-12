@@ -34,6 +34,7 @@ import OrganizationUpdatePage from './Pages/Organization/OrganizationUpdatePage'
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
 import WarehouseDeletePage from './Pages/Warehouse/WarehouseDeletePage';
 import InventoryDeletePage from './Pages/Inventory/InventoryDeletePage';
+import OrganizationDeletePage from './Pages/Organization/OrganizationDeletePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -113,7 +114,7 @@ function Router() {
 				},
 				{
 					path: 'delete/:id',
-					element: <UnderConstructionPage />,
+					element: <OrganizationDeletePage />,
 				},
 				{
 					path: ':organization/:warehouse',
