@@ -8,6 +8,8 @@ export default {
 				'primary-hover': '#b45309',
 				secondary: '#6b7280',
 				'secondary-hover': '#4b5563',
+				danger: '#dc2626',
+				'danger-hover': '#b91c1c',
 				dark: '#1d1506',
 				accent: '#265BB5',
 				muted: '#475569',

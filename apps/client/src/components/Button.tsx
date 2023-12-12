@@ -6,7 +6,7 @@ type HTMLButtonProps = React.DetailedHTMLProps<
 	HTMLButtonElement
 >;
 
-export type buttonVariant = 'primary' | 'secondary';
+export type buttonVariant = 'primary' | 'secondary' | 'danger';
 
 export interface ButtonProps extends HTMLButtonProps {
 	loading?: boolean;
@@ -21,6 +21,7 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 	const colorVariants = {
 		primary: 'bg-primary hover:bg-primary-hover',
 		secondary: 'bg-secondary hover:bg-secondary-hover',
+		danger: 'bg-danger hover:bg-danger-hover',
 	};
 
 	return (

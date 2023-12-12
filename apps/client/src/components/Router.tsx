@@ -31,6 +31,7 @@ import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import OrganizationUpdatePage from './Pages/Organization/OrganizationUpdatePage';
+import ProductDeletePage from './Pages/Product/ProductDeletePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -142,7 +143,7 @@ function Router() {
 								},
 								{
 									path: 'delete/:id',
-									element: <UnderConstructionPage />,
+									element: <ProductDeletePage />,
 								},
 							],
 						},
