@@ -17,6 +17,7 @@ function OrganizationDeleteForm({ organization }: OrganizationDeleteFormProps) {
 				'All product definitions in this organization',
 				'All inventory items in this organization',
 			]}
+			confirmBeforeDelete
 		/>
 	);
 }

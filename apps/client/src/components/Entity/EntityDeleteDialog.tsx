@@ -8,6 +8,8 @@ import { Utils } from '../../utils';
 import Button from '../Button';
 import FormError from '../Form/FormError';
 import IconButton from '../IconButton';
+import FormInput from '../Form/FormInput';
+import { useForm } from 'react-hook-form';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -15,6 +17,7 @@ export interface EntityDeleteDialogProps {
 	resourceName: string;
 	identifier: string;
 	deletedItems?: string[];
+	confirmBeforeDelete?: boolean;
 }
 
 function EntityDeleteDialog({
@@ -23,12 +26,16 @@ function EntityDeleteDialog({
 	resourceName,
 	identifier,
 	deletedItems = [],
+	confirmBeforeDelete = false,
 }: EntityDeleteDialogProps) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const { register, watch } = useForm<{ name: string }>();
 
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
+
+	const inputContainsValidName = watch('name') == entityName;
 
 	function onClick() {
 		setLoading(true);
@@ -62,14 +69,25 @@ function EntityDeleteDialog({
 			</div>
 
 			<p className="mb-2">This action is going to delete:</p>
-			<ul className="mb-9 list-disc ps-6">
+			<ul className="list-disc ps-6">
 				{[`This ${identifier}`, ...deletedItems].map((item, key) => (
 					<li key={key}>{item}</li>
 				))}
 			</ul>
 
+			{confirmBeforeDelete && (
+				<FormInput
+					label={`Confirm ${identifier} name to delete`}
+					autoFocus
+					disabled={loading}
+					autocomplete="off"
+					{...register('name')}
+				/>
+			)}
+
 			<FormError>{error}</FormError>
-			<div className="flex gap-3 ">
+
+			<div className="mt-6 flex gap-3">
 				<Button
 					variant="secondary"
 					onClick={() => navigate(-1)}
@@ -81,6 +99,7 @@ function EntityDeleteDialog({
 					icon={BsTrash}
 					variant="danger"
 					onClick={onClick}
+					disabled={confirmBeforeDelete && !inputContainsValidName}
 					loading={loading}
 				>
 					Delete {identifier}
