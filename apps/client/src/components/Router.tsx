@@ -30,6 +30,7 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import OrganizationUpdatePage from './Pages/Organization/OrganizationUpdatePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -105,7 +106,7 @@ function Router() {
 				},
 				{
 					path: 'update/:id',
-					element: <UnderConstructionPage />,
+					element: <OrganizationUpdatePage />,
 				},
 				{
 					path: 'delete/:id',
