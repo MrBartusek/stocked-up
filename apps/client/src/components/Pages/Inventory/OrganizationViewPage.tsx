@@ -13,6 +13,7 @@ import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 import WarehousesList from '../../Warehouse/WarehousesList';
+import GoBackButton from '../../GoBackButton';
 
 function OrganizationViewPage() {
 	const { id } = useParams();
@@ -26,15 +27,9 @@ function OrganizationViewPage() {
 			<SecondaryNavbar
 				icon={BsBuildingGear}
 				title={organization?.name}
-				actions={
-					<Link to="/dashboard/select">
-						<Button className="flex items-center gap-3">
-							<BsChevronLeft size={20} />
-							Go back
-						</Button>
-					</Link>
-				}
-			/>
+			>
+				<GoBackButton to="/dashboard/select" />
+			</SecondaryNavbar>
 			<Loader
 				isLoading={isLoading}
 				isError={error != undefined}

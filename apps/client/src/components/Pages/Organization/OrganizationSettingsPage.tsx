@@ -7,6 +7,7 @@ import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
 import OrganizationSettings from '../../Organization/OrganizationSettings';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
+import GoBackButton from '../../GoBackButton';
 
 function OrganizationSettingsPage() {
 	const { id } = useParams();
@@ -17,15 +18,9 @@ function OrganizationSettingsPage() {
 			<SecondaryNavbar
 				icon={BsBuildingGear}
 				title={`${organization?.name} - settings`}
-				actions={
-					<Link to={`../view/${organization.id}`}>
-						<Button className="flex items-center gap-3">
-							<BsChevronLeft size={20} />
-							Go back
-						</Button>
-					</Link>
-				}
-			/>
+			>
+				<GoBackButton to={`../view/${organization.id}`} />
+			</SecondaryNavbar>
 			<Loader
 				isLoading={isLoading}
 				isError={error != undefined}

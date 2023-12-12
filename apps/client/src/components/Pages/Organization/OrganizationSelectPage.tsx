@@ -7,6 +7,7 @@ import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
 import OrganizationCard from '../../Organization/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
+import IconButton from '../../IconButton';
 
 function OrganizationSelectPage() {
 	const { organizations, isLoading, error } = useOrganizationsList();
@@ -16,15 +17,11 @@ function OrganizationSelectPage() {
 			<SecondaryNavbar
 				icon={BsBuilding}
 				title="Your organizations"
-				actions={
-					<Link to="/dashboard/create">
-						<Button className="flex items-center gap-3">
-							<BsPlusCircle size={20} />
-							New
-						</Button>
-					</Link>
-				}
-			/>
+			>
+				<Link to="/dashboard/create">
+					<IconButton icon={BsPlusCircle}>New</IconButton>
+				</Link>
+			</SecondaryNavbar>
 			<Container className="flex flex-col">
 				<Loader
 					isLoading={isLoading}

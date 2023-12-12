@@ -5,10 +5,10 @@ import Container from './Container';
 export interface SecondaryNavbarProps {
 	icon: IconType;
 	title: string;
-	actions?: React.ReactNode;
+	children: React.ReactNode;
 }
 
-export function SecondaryNavbar({ icon, title, actions }: SecondaryNavbarProps) {
+export function SecondaryNavbar({ icon, title, children }: SecondaryNavbarProps) {
 	const iconElement = React.createElement(icon);
 
 	return (
@@ -18,7 +18,7 @@ export function SecondaryNavbar({ icon, title, actions }: SecondaryNavbarProps) 
 					{iconElement}
 					<h2>{title}</h2>
 				</div>
-				{actions}
+				{children}
 			</Container>
 		</div>
 	);
