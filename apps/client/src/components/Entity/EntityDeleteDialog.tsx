@@ -80,7 +80,7 @@ function EntityDeleteDialog({
 					label={`Confirm ${identifier} name to delete`}
 					autoFocus
 					disabled={loading}
-					autocomplete="off"
+					autoComplete="off"
 					{...register('name')}
 				/>
 			)}
