@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { InventoryStatsService } from '../inventory/inventory-stats.service';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehouseStatsService } from './warehouses-stats.service';
-import { Types } from 'mongoose';
-import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 
 describe('WarehouseStatsService', () => {
 	let service: WarehouseStatsService;

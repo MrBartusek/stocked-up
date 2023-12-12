@@ -1,3 +1,4 @@
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
@@ -7,7 +8,6 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 const MOCK_IDS = {
 	inventory: {

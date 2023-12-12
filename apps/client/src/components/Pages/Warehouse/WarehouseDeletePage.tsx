@@ -1,8 +1,6 @@
 import { useParams } from 'react-router-dom';
 import useWarehouseDetails from '../../../hooks/useWarehouseDetails';
-import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
-import TableTopBar from '../../TableTopBar';
 import WarehouseDeleteForm from '../../Warehouse/WarehouseDeleteForm';
 
 function WarehouseDeletePage() {

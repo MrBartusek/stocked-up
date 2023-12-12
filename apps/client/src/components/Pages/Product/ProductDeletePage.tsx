@@ -1,9 +1,6 @@
 import { useParams } from 'react-router-dom';
 import useProductsDetails from '../../../hooks/useProductsDetails';
-import GoBackButton from '../../GoBackButton';
 import Loader from '../../Loader';
-import ProductUpdateForm from '../../Product/ProductUpdateForm';
-import TableTopBar from '../../TableTopBar';
 import ProductDeleteForm from '../../Product/ProductDeleteForm';
 
 function ProductDeletePage() {
