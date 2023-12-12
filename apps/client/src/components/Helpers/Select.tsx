@@ -14,7 +14,7 @@ function Select({ ...props }: SelectProps) {
 				colors: {
 					...theme.colors,
 					primary: tailwindConfig.theme.extend.colors.primary,
-					primary25: tailwindConfig.theme.extend.colors.secondary,
+					primary25: tailwindConfig.theme.extend.colors.accent,
 				},
 			})}
 		/>

@@ -11,7 +11,7 @@ export default {
 				danger: '#dc2626',
 				'danger-hover': '#b91c1c',
 				dark: '#1d1506',
-				accent: '#265BB5',
+				accent: '#fef2e3',
 				muted: '#475569',
 				light: '#f3f4f6',
 				gray: {
