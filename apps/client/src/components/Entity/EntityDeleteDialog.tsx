@@ -4,25 +4,42 @@ import Button from '../Button';
 import IconButton from '../IconButton';
 import FormError from '../Form/FormError';
 import { useNavigate } from 'react-router-dom';
+import { Utils } from '../../utils';
+import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
+import { useState } from 'react';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
+	entityId: string;
+	resourceName: string;
 	identifier: string;
 	deletedItems?: string[];
-	error?: string | null;
-	loading?: boolean;
-	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function EntityDeleteDialog({
 	entityName,
+	entityId,
+	resourceName,
 	identifier,
 	deletedItems = [],
-	error,
-	loading,
-	onClick,
 }: EntityDeleteDialogProps) {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+
+	function onClick() {
+		setLoading(true);
+
+		Utils.postFetcher(`/api/${resourceName}/${entityId}`, undefined, { method: 'DELETE' })
+			.then(() => navigate(`..`))
+			.then(() => queryClient.invalidateQueries(['products']))
+			.then(() => toast.success('Successfully deleted product'))
+			.catch((err) => setError(Utils.requestErrorToString(err)))
+			.finally(() => setLoading(false));
+	}
 
 	return (
 		<div className="flex flex-col">
