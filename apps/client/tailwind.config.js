@@ -6,7 +6,8 @@ export default {
 			colors: {
 				primary: '#d97706',
 				'primary-hover': '#b45309',
-				secondary: '#fef2e3',
+				secondary: '#6b7280',
+				'secondary-hover': '#4b5563',
 				dark: '#1d1506',
 				accent: '#265BB5',
 				muted: '#475569',

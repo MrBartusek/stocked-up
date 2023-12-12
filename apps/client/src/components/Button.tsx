@@ -6,21 +6,31 @@ type HTMLButtonProps = React.DetailedHTMLProps<
 	HTMLButtonElement
 >;
 
+export type buttonVariant = 'primary' | 'secondary';
+
 export interface ButtonProps extends HTMLButtonProps {
 	loading?: boolean;
+	variant?: buttonVariant;
 }
 
-function Button({ loading, ...props }: ButtonProps) {
+function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 	if (loading) {
 		props.disabled = true;
 	}
+
+	const colorVariants = {
+		primary: 'bg-primary hover:bg-primary-hover',
+		secondary: 'bg-secondary hover:bg-secondary-hover',
+	};
+
 	return (
 		<button
 			{...props}
 			className={classNames(
-				'rounded-md bg-primary px-3.5 py-2.5 text-light',
+				`rounded-md px-3.5 py-2.5 text-light`,
 				'transition-opacity',
-				props.disabled ? 'pointer-events-none opacity-75' : 'cursor-pointer hover:bg-primary-hover',
+				colorVariants[variant],
+				{ 'pointer-events-none opacity-75': props.disabled },
 				props.className,
 			)}
 		>
