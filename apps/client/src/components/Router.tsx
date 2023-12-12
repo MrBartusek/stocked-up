@@ -32,6 +32,8 @@ import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import OrganizationUpdatePage from './Pages/Organization/OrganizationUpdatePage';
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
+import WarehouseDeletePage from './Pages/Warehouse/WarehouseDeletePage';
+import InventoryDeletePage from './Pages/Inventory/InventoryDeletePage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -169,7 +171,7 @@ function Router() {
 								},
 								{
 									path: 'delete/:id',
-									element: <UnderConstructionPage />,
+									element: <WarehouseDeletePage />,
 								},
 							],
 						},
@@ -199,7 +201,7 @@ function Router() {
 								},
 								{
 									path: 'delete/:id',
-									element: <UnderConstructionPage />,
+									element: <InventoryDeletePage />,
 								},
 							],
 						},

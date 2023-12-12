@@ -15,9 +15,6 @@ function ProductDeletePage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<TableTopBar header={`You are about to delete product: ${product?.name}`}>
-				<GoBackButton to={`../view/${product?.id}`} />
-			</TableTopBar>
 			<ProductDeleteForm product={product} />
 		</Loader>
 	);

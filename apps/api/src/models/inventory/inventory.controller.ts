@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	Delete,
 	Get,
 	NotFoundException,
 	Param,
@@ -87,7 +88,7 @@ export class InventoryController {
 		return InventoryItem.toBasicDto(item);
 	}
 
-	@Put(':id')
+	@Delete(':id')
 	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
 		const item = await this.inventoryService.delete(id);
 		if (!item) {

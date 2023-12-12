@@ -86,7 +86,7 @@ export class OrganizationsService {
 			{ 'warehouses.id': warehouseId },
 			{
 				$pull: {
-					warehouses: warehouseId,
+					warehouses: { id: warehouseId },
 				},
 			},
 		);

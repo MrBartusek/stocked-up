@@ -46,7 +46,6 @@ export class WarehousesController {
 		if (!warehouse) {
 			throw new NotFoundException();
 		}
-		await this.organizationsService.updateWarehouseReference(warehouse);
 
 		return Warehouse.toDto(warehouse);
 	}

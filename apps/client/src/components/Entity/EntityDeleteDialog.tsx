@@ -35,8 +35,8 @@ function EntityDeleteDialog({
 
 		Utils.postFetcher(`/api/${resourceName}/${entityId}`, undefined, { method: 'DELETE' })
 			.then(() => navigate(`..`))
-			.then(() => queryClient.invalidateQueries(['products']))
-			.then(() => toast.success('Successfully deleted product'))
+			.then(() => queryClient.invalidateQueries([resourceName]))
+			.then(() => toast.success(`Successfully deleted ${identifier}`))
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}
