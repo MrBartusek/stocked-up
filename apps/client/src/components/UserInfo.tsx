@@ -32,7 +32,12 @@ function UserInfo() {
 					to="https://github.com/MrBartusek/stocked-up/issues"
 					target="_blank"
 				>
-					<DropdownItem icon={BsExclamationOctagon}>Report issue</DropdownItem>
+					<DropdownItem
+						icon={BsExclamationOctagon}
+						externalLink
+					>
+						Report issue
+					</DropdownItem>
 				</Link>
 				<DropdownItem
 					icon={BsBoxArrowLeft}
