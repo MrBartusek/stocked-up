@@ -16,8 +16,24 @@ function Navbar() {
 					className="h-16 w-auto"
 				/>
 				<div className="flex flex-row gap-8">
-					<ul className="flex items-center">
-						{!isAuthenticated ? (
+					{!isAuthenticated ? (
+						<ul className="flex items-center gap-6">
+							<li>
+								<Link
+									to="About"
+									className="link-muted"
+								>
+									About
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="pricing"
+									className="link-muted"
+								>
+									Pricing
+								</Link>
+							</li>
 							<li>
 								<Link
 									to="login"
@@ -26,10 +42,11 @@ function Navbar() {
 									Login
 								</Link>
 							</li>
-						) : (
-							<li>{user.email}</li>
-						)}
-					</ul>
+						</ul>
+					) : (
+						<span>{user.email}</span>
+					)}
+
 					<Link to={isAuthenticated ? 'dashboard' : 'register'}>
 						<Button>
 							<div className="flex items-center justify-center gap-2">
