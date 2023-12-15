@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import Button from '../Button';
 import Container from '../Container';
 import StockedUpLogo from '../StockedUpLogo';
+import { useContext } from 'react';
+import { UserContext } from '../Context/UserContext';
 
 function Navbar() {
+	const { isAuthenticated, user } = useContext(UserContext);
 	return (
 		<nav className="border-b border-gray-200 bg-gray-150 p-4">
 			<Container className="flex items-center justify-between">
@@ -14,19 +17,23 @@ function Navbar() {
 				/>
 				<div className="flex flex-row gap-8">
 					<ul className="flex items-center">
-						<li>
-							<Link
-								to="/login"
-								className="link-muted "
-							>
-								Login
-							</Link>
-						</li>
+						{!isAuthenticated ? (
+							<li>
+								<Link
+									to="login"
+									className="link-muted"
+								>
+									Login
+								</Link>
+							</li>
+						) : (
+							<li>{user.email}</li>
+						)}
 					</ul>
-					<Link to="/register">
+					<Link to={isAuthenticated ? 'dashboard' : 'register'}>
 						<Button>
 							<div className="flex items-center justify-center gap-2">
-								Get started for free
+								{isAuthenticated ? 'Open dashboard' : 'Get started for free'}
 								<BsArrowRight size={20} />
 							</div>
 						</Button>
