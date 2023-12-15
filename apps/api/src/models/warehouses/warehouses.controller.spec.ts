@@ -6,6 +6,7 @@ import { InventoryService } from '../inventory/inventory.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 
 const MOCK_TAKEN_ORG_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_ORG_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
@@ -50,12 +51,26 @@ describe('WarehousesController', () => {
 	};
 
 	const mockOrganizationsService = {
-		addWarehouseReference: jest.fn(),
-		deleteWarehouseReference: jest.fn(),
-		updateWarehouseReference: jest.fn(),
+		addWarehouseReference: jest.fn(() => ({
+			_id: MOCK_TAKEN_ORG_ID,
+		})),
+		deleteWarehouseReference: jest.fn(() => ({
+			_id: MOCK_TAKEN_ORG_ID,
+		})),
+		updateWarehouseReference: jest.fn(() => ({
+			_id: MOCK_TAKEN_ORG_ID,
+		})),
 		exist: jest.fn((id: Types.ObjectId) => {
 			return id.toString() == MOCK_TAKEN_ORG_ID.toString();
 		}),
+	};
+
+	const mockOrganizationsStatsService = {
+		recalculateTotalValue: jest.fn(),
+	};
+
+	const mockInventoryService = {
+		deleteManyByWarehouse: jest.fn(),
 	};
 
 	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
@@ -67,15 +82,20 @@ describe('WarehousesController', () => {
 		mockOrganizationsService,
 		'updateWarehouseReference',
 	);
-
-	const mockInventoryService = {
-		deleteManyByWarehouse: jest.fn(),
-	};
+	const recalculateTotalValueSpy = jest.spyOn(
+		mockOrganizationsStatsService,
+		'recalculateTotalValue',
+	);
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [WarehousesController],
-			providers: [WarehousesService, OrganizationsService, InventoryService],
+			providers: [
+				WarehousesService,
+				OrganizationsService,
+				OrganizationsStatsService,
+				InventoryService,
+			],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehouseService)
@@ -83,6 +103,8 @@ describe('WarehousesController', () => {
 			.useValue(mockOrganizationsService)
 			.overrideProvider(InventoryService)
 			.useValue(mockInventoryService)
+			.overrideProvider(OrganizationsStatsService)
+			.useValue(mockOrganizationsStatsService)
 			.compile();
 
 		controller = module.get<WarehousesController>(WarehousesController);
@@ -191,6 +213,7 @@ describe('WarehousesController', () => {
 				}),
 			);
 			expect(deleteWarehouseReferenceSpy).toHaveBeenCalledWith(MOCK_TAKEN_WAREHOUSE_ID);
+			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(MOCK_TAKEN_ORG_ID);
 		});
 
 		it('should not delete warehouse that does not exist', () => {

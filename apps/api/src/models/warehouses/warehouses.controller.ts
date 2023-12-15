@@ -16,12 +16,14 @@ import { InventoryService } from '../inventory/inventory.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 
 @Controller('warehouses')
 export class WarehousesController {
 	constructor(
 		private readonly warehousesService: WarehousesService,
 		private readonly organizationsService: OrganizationsService,
+		private readonly organizationsStatsService: OrganizationsStatsService,
 		private readonly inventoryService: InventoryService,
 	) {}
 
@@ -72,8 +74,9 @@ export class WarehousesController {
 			throw new NotFoundException();
 		}
 
-		await this.organizationsService.deleteWarehouseReference(warehouse._id);
+		const org = await this.organizationsService.deleteWarehouseReference(warehouse._id);
 		await this.inventoryService.deleteManyByWarehouse(warehouse._id);
+		await this.organizationsStatsService.recalculateTotalValue(org._id);
 
 		return Warehouse.toDto(warehouse);
 	}
