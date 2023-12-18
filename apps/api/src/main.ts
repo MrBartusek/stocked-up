@@ -6,9 +6,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import { AppModule } from './app.module';
 import redisClient from './redis';
-import Utils from './utils';
-
-const logger = new Logger('main');
+import Utils from './helpers/utils';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
