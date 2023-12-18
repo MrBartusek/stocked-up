@@ -1,8 +1,32 @@
+import { Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
+import { Request } from 'express';
+
+const { BASE_API_URL, NODE_ENV } = process.env;
+const logger = new Logger('Utils');
 
 class Utils {
 	public static isProduction(): boolean {
-		return process.env.NODE_ENV == 'production';
+		return NODE_ENV == 'production';
+	}
+
+	public static getApiBaseUrl(req?: Request): string {
+		const API_BASE_URL_REGEX = /^https?:\/\/.*api\/?$/;
+		if (BASE_API_URL) {
+			const isValid = API_BASE_URL_REGEX.test(BASE_API_URL);
+			if (!isValid) {
+				logger.warn('Configured BASE_API_URL does not seam valid, please check your .env file');
+			}
+			return BASE_API_URL.endsWith('/') ? BASE_API_URL : BASE_API_URL + '/';
+		}
+
+		if (!req) {
+			logger.error('BASE_API_URL have not been provided. Failed to retrieve absolute base URL');
+			return '/api';
+		}
+
+		logger.warn('BASE_API_URL have not been provided. Please update your .env file');
+		return `${req.protocol}://${req.get('Host')}/api/`;
 	}
 
 	public static get schemaSerializerHelper(): SchemaOptions {

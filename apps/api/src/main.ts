@@ -1,4 +1,4 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import RedisStore from 'connect-redis';
@@ -7,6 +7,8 @@ import * as passport from 'passport';
 import { AppModule } from './app.module';
 import redisClient from './redis';
 import Utils from './utils';
+
+const logger = new Logger('main');
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -17,7 +19,7 @@ async function bootstrap() {
 
 	const redisStore = new RedisStore({
 		client: redisClient,
-		prefix: 'myapp:',
+		prefix: 'session:',
 	});
 
 	app.use(
