@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { BasicProductDto, ProductDto } from 'shared-types';
 import { Organization } from '../../organizations/schemas/organization.schema';
+import DtoHelpers from '../../../helpers/dtoHelpers';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -12,6 +13,9 @@ export class Product {
 
 	@Prop({ required: true, index: 'text' })
 	name: string;
+
+	@Prop()
+	imageKey: string;
 
 	@Prop()
 	description: string;
@@ -32,6 +36,7 @@ export class Product {
 		return {
 			id: document._id,
 			name: document.name,
+			image: DtoHelpers.getImageUrl(document.imageKey),
 			buyPrice: document.buyPrice,
 			sellPrice: document.sellPrice,
 			unit: document.unit,

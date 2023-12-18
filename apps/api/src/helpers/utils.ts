@@ -10,7 +10,7 @@ class Utils {
 		return NODE_ENV == 'production';
 	}
 
-	public static getApiBaseUrl(req?: Request): string {
+	public static getApiBaseUrl(): string {
 		const API_BASE_URL_REGEX = /^https?:\/\/.*api\/?$/;
 		if (BASE_API_URL) {
 			const isValid = API_BASE_URL_REGEX.test(BASE_API_URL);
@@ -20,13 +20,10 @@ class Utils {
 			return BASE_API_URL.endsWith('/') ? BASE_API_URL : BASE_API_URL + '/';
 		}
 
-		if (!req) {
-			logger.error('BASE_API_URL have not been provided. Failed to retrieve absolute base URL');
-			return '/api';
-		}
+		if (!Utils.isProduction()) return 'http://localhost:5173/api/';
 
-		logger.warn('BASE_API_URL have not been provided. Please update your .env file');
-		return `${req.protocol}://${req.get('Host')}/api/`;
+		logger.error('BASE_API_URL have not been provided. Failed to retrieve absolute base URL');
+		return '/api';
 	}
 
 	public static get schemaSerializerHelper(): SchemaOptions {
