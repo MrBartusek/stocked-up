@@ -27,7 +27,7 @@ export class InventoryItem {
 		return {
 			id: document._id,
 			productId: isProductMongoId ? (document.product as any) : document.product._id.toString(),
-			image: DtoHelpers.getImageUrl(document.product.imageKey),
+			image: DtoHelpers.getImageDto(document.product.imageKey),
 			name: document.product.name,
 			quantity: document.quantity,
 			unit: document.product.unit,

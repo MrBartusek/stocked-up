@@ -36,7 +36,7 @@ export class Product {
 		return {
 			id: document._id,
 			name: document.name,
-			image: DtoHelpers.getImageUrl(document.imageKey),
+			image: DtoHelpers.getImageDto(document.imageKey),
 			buyPrice: document.buyPrice,
 			sellPrice: document.sellPrice,
 			unit: document.unit,
