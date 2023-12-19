@@ -5,10 +5,10 @@ import { BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { UserLoginDto, UserRegisterDto } from 'shared-types';
 import { Utils } from '../utils';
-import Alert from './Helpers/Alert';
 import Button from './Button';
 import { UserContext } from './Context/UserContext';
 import FancyInput from './Form/FancyInput';
+import Alert from './Helpers/Alert';
 import RegisterGoBack from './RegisterGoBack';
 
 type Inputs = {

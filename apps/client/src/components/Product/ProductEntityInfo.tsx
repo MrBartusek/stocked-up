@@ -1,18 +1,18 @@
-import { ProductDto } from 'shared-types';
-import EntityContainer from '../Entity/EntityContainer';
-import EntityImageColumn from '../Entity/EntityImageColumn';
-import HeaderWithHint from '../HeaderWithHint';
-import Blockquote from '../Helpers/Blockquote';
-import EntityInfoTable from '../Entity/EntityInfoTable';
 import { useContext } from 'react';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
-import { Utils } from '../../utils';
-import ProductInventoryPeek from './ProductInventoryPeek';
-import EntityActionsRow from '../Entity/EntityActionsRow';
-import ProductAddToInventoryButton from './ProductAddToInventoryButton';
-import IconButton from '../IconButton';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { ProductDto } from 'shared-types';
+import { Utils } from '../../utils';
+import { CurrentAppContext } from '../Context/CurrentAppContext';
+import EntityActionsRow from '../Entity/EntityActionsRow';
+import EntityContainer from '../Entity/EntityContainer';
+import EntityImageColumn from '../Entity/EntityImageColumn';
+import EntityInfoTable from '../Entity/EntityInfoTable';
+import HeaderWithHint from '../HeaderWithHint';
+import Blockquote from '../Helpers/Blockquote';
+import IconButton from '../IconButton';
+import ProductAddToInventoryButton from './ProductAddToInventoryButton';
+import ProductInventoryPeek from './ProductInventoryPeek';
 
 export interface ProductEntityInfoProps {
 	product: ProductDto;

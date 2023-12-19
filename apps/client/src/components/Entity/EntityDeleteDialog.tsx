@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
@@ -6,12 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import placeholderImage from '../../assets/placeholder.png';
 import { Utils } from '../../utils';
 import Button from '../Button';
-import FormError from '../Form/FormError';
-import IconButton from '../IconButton';
-import { useForm } from 'react-hook-form';
 import Form from '../Form/Form';
+import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import IconButton from '../IconButton';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;

@@ -6,8 +6,8 @@ import placeholderImage from '../../assets/placeholder.png';
 import { Utils } from '../../utils';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import Table from '../Helpers/Table';
-import ProductActions from './ProductActions';
 import TableImage from '../TableImage';
+import ProductActions from './ProductActions';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 

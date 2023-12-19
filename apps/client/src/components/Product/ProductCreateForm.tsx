@@ -6,12 +6,12 @@ import { CreateProductDto, ProductDto } from 'shared-types';
 import { Utils } from '../../utils';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
 import Form from '../Form/Form';
+import FormCurrencyInput from '../Form/FormCurrencyInput';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
-import FormSubmitButton from '../Form/FormSubmitButton';
 import FromInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
-import FormCurrencyInput from '../Form/FormCurrencyInput';
 
 type Inputs = {
 	name: string;

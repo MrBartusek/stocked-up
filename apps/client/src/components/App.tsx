@@ -1,7 +1,7 @@
+import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import StockedUp from './StockedUp';
-import { Toaster } from 'react-hot-toast';
-import { useState } from 'react';
 
 function App() {
 	const [queryClient] = useState(() => new QueryClient());
