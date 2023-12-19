@@ -9,7 +9,7 @@ export interface IconButtonProps extends ButtonProps {
 }
 
 function IconButton({ icon, ...props }: IconButtonProps) {
-	const iconElement = React.createElement(icon || BsPlusCircle, { size: 20 });
+	const iconElement = icon ? React.createElement(icon, { size: 20 }) : null;
 
 	return (
 		<Button

@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 import FromHeading from '../Form/FromHeading';
 
 type Inputs = {
@@ -43,18 +45,22 @@ function OrganizationCreateForm() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
 			<FromHeading>Organization Information</FromHeading>
 
-			<FormInput
+			<FormField
 				label="Organization name"
-				placeholder="My company"
-				disabled={loading}
 				required
-				minLength={2}
-				maxLength={32}
-				{...register('name', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="My company"
+					required
+					{...register('name', { required: true })}
+				></FormInput>
+			</FormField>
 
 			<FromHeading
 				description="We are going to create first warehouse for your organization. 
@@ -63,34 +69,31 @@ function OrganizationCreateForm() {
 				Warehouse information
 			</FromHeading>
 
-			<FormInput
+			<FormField
 				label="Warehouse Name"
-				placeholder="US West Main"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
 				required
-				{...register('warehouseName', { required: true })}
-			/>
-			<FormInput
+			>
+				<FormInput
+					placeholder="US West Main"
+					required
+					{...register('warehouseName', { required: true })}
+				></FormInput>
+			</FormField>
+
+			<FormField
 				label="Warehouse address"
-				placeholder="18 Milton Street"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
 				required
-				{...register('warehouseAddress', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="18 Milton Street"
+					required
+					{...register('warehouseAddress', { required: true })}
+				></FormInput>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				loading={loading}
-			>
-				Create organization
-			</Button>
-		</form>
+			<FormSubmitButton>Create organization</FormSubmitButton>
+		</Form>
 	);
 }
 export default OrganizationCreateForm;

@@ -5,10 +5,12 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { CreateWarehouseInOrgDto, WarehouseDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 type Inputs = {
 	name: string;
@@ -42,42 +44,35 @@ function WarehouseCreateForm() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
-				label="Organization"
-				readOnly
-				required
-				value={appContext.organization.name}
-			/>
-
-			<FormInput
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
+			<FormField
 				label="Name"
-				placeholder="US West Main"
-				minLength={2}
-				maxLength={32}
 				required
-				{...register('name', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="US West Main"
+					required
+					{...register('name', { required: true })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Address"
-				placeholder="18 Milton Street"
-				minLength={2}
-				maxLength={32}
 				required
-				{...register('address', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="18 Milton Street"
+					required
+					{...register('address', { required: true })}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-			>
-				Create warehouse
-			</Button>
-		</form>
+			<FormSubmitButton>Create warehouse</FormSubmitButton>
+		</Form>
 	);
 }
 export default WarehouseCreateForm;

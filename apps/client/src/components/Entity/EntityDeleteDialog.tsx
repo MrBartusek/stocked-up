@@ -8,8 +8,10 @@ import { Utils } from '../../utils';
 import Button from '../Button';
 import FormError from '../Form/FormError';
 import IconButton from '../IconButton';
-import FormInput from '../Form/FormInput';
 import { useForm } from 'react-hook-form';
+import Form from '../Form/Form';
+import FormField from '../Form/FormField';
+import FormInput from '../Form/FormInput';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -76,16 +78,17 @@ function EntityDeleteDialog({
 			</ul>
 
 			{confirmBeforeDelete && (
-				<FormInput
-					label={`Confirm ${identifier} name to delete`}
-					autoFocus
-					disabled={loading}
-					autoComplete="off"
-					{...register('name')}
-				/>
-			)}
+				<Form loading={loading}>
+					<FormField label={`Confirm ${identifier} name to delete`}>
+						<FormInput
+							autoComplete="off"
+							{...register('name')}
+						/>
+					</FormField>
 
-			<FormError>{error}</FormError>
+					<FormError>{error}</FormError>
+				</Form>
+			)}
 
 			<div className="mt-6 flex gap-3">
 				<Button

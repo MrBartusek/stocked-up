@@ -5,10 +5,14 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ProductDto, UpdateProductDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Form from '../Form/Form';
+import FormCurrencyInput from '../Form/FormCurrencyInput';
 import FormError from '../Form/FormError';
-import FormInput from '../Form/FormInput';
+import FormField from '../Form/FormField';
+import FromInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
+import FormTextArea from '../Form/FormTextArea';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;
@@ -25,7 +29,11 @@ type Inputs = {
 
 function ProductUpdateForm({ product }: ProductCreateFormProps) {
 	const appContext = useContext(CurrentAppContext);
-	const { register, handleSubmit } = useForm<Inputs>({ defaultValues: product });
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Inputs>({ defaultValues: product });
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -51,81 +59,82 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
-				label="Organization"
-				readOnly
-				value={appContext.organization.name}
-			/>
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
+			<FormField label="Organization">
+				<FromInput
+					value={appContext.organization.name}
+					readOnly
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Product name"
-				placeholder="Engine oil filter"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
+				errors={errors.name}
 				required
-				{...register('name', { required: true })}
-			/>
+			>
+				<FromInput
+					placeholder="Engine oil filter"
+					required
+					{...register('name', { required: true })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Product description"
-				as="textarea"
-				maxLength={1024}
-				rows={3}
-				{...register('description')}
-			/>
+				errors={errors.description}
+			>
+				<FormTextArea {...register('description')} />
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="SKU"
-				placeholder="ICWP-PL-WSSV"
 				hint="Product stock-keeping unit"
-				disabled={loading}
-				{...register('sku')}
-			/>
+				errors={errors.sku}
+			>
+				<FromInput
+					placeholder="ICWP-PL-WSSV"
+					{...register('sku')}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Buy price"
-				placeholder="8.00"
-				type="number"
-				min={0}
-				step={0.01}
-				disabled={loading}
-				suffixText={appContext.organization.currency}
 				hint="price that your company pays for this product"
-				{...register('buyPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
-			/>
+				errors={errors.buyPrice}
+			>
+				<FormCurrencyInput
+					placeholder="8.00"
+					{...register('buyPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Sell price"
-				placeholder="12.00"
-				type="number"
-				min={0}
-				step={0.01}
-				maxLength={32}
-				disabled={loading}
-				suffixText={appContext.organization.currency}
 				hint="price that customers will pay for this product"
-				{...register('sellPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
-			/>
+				errors={errors.sellPrice}
+			>
+				<FormCurrencyInput
+					placeholder="12.00"
+					{...register('sellPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Unit"
-				placeholder="part / box / barrel"
-				disabled={loading}
-				{...register('unit')}
-			/>
+				errors={errors.unit}
+			>
+				<FromInput
+					placeholder="part / box / barrel"
+					{...register('unit')}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-			>
-				Update product
-			</Button>
-		</form>
+			<FormSubmitButton>Update product</FormSubmitButton>
+		</Form>
 	);
 }
 export default ProductUpdateForm;

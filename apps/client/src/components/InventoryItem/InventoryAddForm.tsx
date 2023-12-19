@@ -7,10 +7,12 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { CreateInventoryItemDto, OrganizationDto } from 'shared-types';
 import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
-import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 type Inputs = {
 	quantity: number;
@@ -53,23 +55,27 @@ function InventoryAddForm() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
-				label="Warehouse"
-				readOnly
-				required
-				value={appContext.currentWarehouse.name}
-			/>
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
+			<FormField label="Warehouse">
+				<FormInput
+					readOnly
+					required
+					value={appContext.currentWarehouse.name}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Product"
-				disabled
-				value={product?.name}
-				noEndMargin
-				minLength={2}
-				maxLength={32}
-				required
-			/>
+				className="mb-0"
+			>
+				<FormInput
+					disabled
+					value={product?.name}
+				/>
+			</FormField>
 			<Link
 				className={classNames('link-primary mb-1 ms-1 mt-3 flex items-center gap-2', {
 					'animate-bounce': product == undefined,
@@ -82,32 +88,31 @@ function InventoryAddForm() {
 				<BsArrowLeftRight /> {product ? 'Change' : 'Select'} product
 			</Link>
 
-			<FormInput
+			<FormField
 				label="Quantity"
 				hint="If you know current item quantity you can add it here"
-				placeholder="0"
-				type="number"
-				{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
-			/>
+			>
+				<FormInput
+					placeholder="0"
+					type="number"
+					{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Location"
 				hint="Where is this item located in warehouse"
-				placeholder="shelf / aisle / bin number"
-				{...register('location')}
-			/>
+			>
+				<FormInput
+					placeholder="shelf / aisle / bin number"
+					{...register('location')}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
 
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-				disabled={product == undefined}
-			>
-				Add product to inventory
-			</Button>
-		</form>
+			<FormSubmitButton disabled={product == undefined}>Add product to inventory</FormSubmitButton>
+		</Form>
 	);
 }
 export default InventoryAddForm;

@@ -5,10 +5,12 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ProductDto, UpdateWarehouseDto, WarehouseDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 export interface WarehouseUpdateFormProps {
 	warehouse: WarehouseDto;
@@ -44,42 +46,39 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
-				label="Organization"
-				readOnly
-				value={appContext.organization.name}
-			/>
+		<Form onSubmit={handleSubmit(onSubmit)}>
+			<FormField label="Organization">
+				<FormInput
+					value={appContext.organization.name}
+					readOnly
+				/>
+			</FormField>
 
-			<FormInput
-				label="Warehouse Name"
-				placeholder="US West Main"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
+			<FormField
+				label="Name"
 				required
-				{...register('name', { required: true })}
-			/>
-			<FormInput
-				label="Warehouse address"
-				placeholder="18 Milton Street"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
+			>
+				<FormInput
+					placeholder="US West Main"
+					required
+					{...register('name', { required: true })}
+				/>
+			</FormField>
+
+			<FormField
+				label="Address"
 				required
-				{...register('address', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="18 Milton Street"
+					required
+					{...register('address', { required: true })}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-			>
-				Update warehouse
-			</Button>
-		</form>
+			<FormSubmitButton>Update warehouse</FormSubmitButton>
+		</Form>
 	);
 }
 export default WarehouseUpdateForm;

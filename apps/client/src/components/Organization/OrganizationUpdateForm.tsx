@@ -5,9 +5,11 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { OrganizationDto, UpdateOrganizationDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 export interface OrganizationUpdateFormProps {
 	organization: OrganizationDto;
@@ -41,37 +43,35 @@ function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
+			<FormField
 				label="Organization name"
-				placeholder="My company"
-				disabled={loading}
-				minLength={2}
-				maxLength={32}
 				required
-				{...register('name', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="My company"
+					required
+					{...register('name', { required: true })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Currency"
-				placeholder="USD"
-				disabled={loading}
-				minLength={1}
-				maxLength={16}
 				required
-				{...register('currency', { required: true })}
-			/>
+			>
+				<FormInput
+					placeholder="USD"
+					required
+					{...register('currency', { required: true })}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-			>
-				Update organization
-			</Button>
-		</form>
+			<FormSubmitButton>Update organization</FormSubmitButton>
+		</Form>
 	);
 }
 export default OrganizationUpdateForm;

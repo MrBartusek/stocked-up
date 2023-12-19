@@ -2,24 +2,25 @@ import React, { forwardRef, useContext } from 'react';
 import { FormContext } from './Form';
 import { REGULAR_INPUT_CLASSNAMES } from './regularInputClassnames';
 
-type InputProps = React.DetailedHTMLProps<
-	React.InputHTMLAttributes<HTMLInputElement>,
-	HTMLInputElement
+type TextareaProps = React.DetailedHTMLProps<
+	React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+	HTMLTextAreaElement
 >;
 
-export interface FormInputProps extends InputProps {}
+export interface FormTextAreaProps extends TextareaProps {}
 
-const FormInput = forwardRef(function FromInput(props: FormInputProps, ref: any) {
+const FormTextArea = forwardRef(function FormTextArea(props: FormTextAreaProps, ref: any) {
 	const { formLoading: formDisabled } = useContext(FormContext);
 
 	return (
-		<input
+		<textarea
 			{...props}
 			ref={ref}
+			rows={props.rows ?? 3}
 			disabled={formDisabled || props.readOnly || props.disabled}
 			className={REGULAR_INPUT_CLASSNAMES}
 		/>
 	);
 });
 
-export default FormInput;
+export default FormTextArea;

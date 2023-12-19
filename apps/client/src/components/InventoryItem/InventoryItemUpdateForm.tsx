@@ -5,10 +5,12 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { InventoryItemDto, ProductDto, UpdateInventoryItemDto } from 'shared-types';
 import { Utils } from '../../utils';
-import Button from '../Button';
 import { CurrentAppContext } from '../Context/CurrentAppContext';
+import Form from '../Form/Form';
 import FormError from '../Form/FormError';
+import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;
@@ -48,37 +50,39 @@ function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormInput
-				label="Warehouse"
-				readOnly
-				value={appContext.currentWarehouse.name}
-			/>
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
+			<FormField label="Warehouse">
+				<FormInput
+					readOnly
+					required
+					value={appContext.currentWarehouse.name}
+				/>
+			</FormField>
 
-			<FormInput
-				label="Quantity"
-				placeholder="0"
-				type="number"
-				{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v), required: true })}
-			/>
+			<FormField label="Quantity">
+				<FormInput
+					placeholder="0"
+					type="number"
+					{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
+				/>
+			</FormField>
 
-			<FormInput
+			<FormField
 				label="Location"
 				hint="Where is this item located in warehouse"
-				placeholder="shelf / aisle / bin number"
-				{...register('location')}
-			/>
+			>
+				<FormInput
+					placeholder="shelf / aisle / bin number"
+					{...register('location')}
+				/>
+			</FormField>
 
 			<FormError>{error}</FormError>
-
-			<Button
-				role="submit"
-				className="mt-4"
-				loading={loading}
-			>
-				Update inventory item
-			</Button>
-		</form>
+			<FormSubmitButton>Update inventory item</FormSubmitButton>
+		</Form>
 	);
 }
 export default InventoryItemUpdateForm;
