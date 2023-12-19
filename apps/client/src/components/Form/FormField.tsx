@@ -10,7 +10,7 @@ export interface FancyInputProps {
 	errors?: FieldError;
 }
 
-function FormField({ label, hint, required, className, errors, children }: FancyInputProps) {
+function FormField({ label, hint, required, className, children }: FancyInputProps) {
 	return (
 		<div className={classNames(className, 'relative my-6')}>
 			<div className="mb-2 ms-1">

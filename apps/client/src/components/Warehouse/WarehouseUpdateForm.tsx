@@ -46,7 +46,10 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 	}
 
 	return (
-		<Form onSubmit={handleSubmit(onSubmit)}>
+		<Form
+			onSubmit={handleSubmit(onSubmit)}
+			loading={loading}
+		>
 			<FormField label="Organization">
 				<FormInput
 					value={appContext.organization.name}
