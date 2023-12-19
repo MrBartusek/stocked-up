@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
 import { InventoryService } from '../inventory/inventory.service';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 
 const MOCK_TAKEN_ORG_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_ORG_ID = new Types.ObjectId('657047c4e0cecd73abbad627');

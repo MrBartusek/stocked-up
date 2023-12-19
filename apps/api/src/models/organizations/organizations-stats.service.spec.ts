@@ -9,7 +9,7 @@ describe('OrganizationsStatsService', () => {
 	let service: OrganizationsStatsService;
 
 	const mockOrgRepository = {
-		findOneAndUpdate: jest.fn((id: Types.ObjectId) => {
+		findOneAndUpdate: jest.fn(() => {
 			return {
 				stats: {
 					totalProducts: 100,
@@ -18,7 +18,7 @@ describe('OrganizationsStatsService', () => {
 				},
 			};
 		}),
-		findById: jest.fn((id: Types.ObjectId) => {
+		findById: jest.fn(() => {
 			return {
 				settings: {
 					valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,

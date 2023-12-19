@@ -1,12 +1,12 @@
-import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { AppModule } from './app.module';
-import redisClient from './redis';
 import Utils from './helpers/utils';
+import redisClient from './redis';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);

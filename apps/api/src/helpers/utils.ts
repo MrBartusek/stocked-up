@@ -1,6 +1,5 @@
 import { Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
-import { Request } from 'express';
 
 const { BASE_API_URL, NODE_ENV } = process.env;
 const logger = new Logger('Utils');

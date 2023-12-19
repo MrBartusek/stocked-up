@@ -13,10 +13,10 @@ import { Types } from 'mongoose';
 import { CreateWarehouseInOrgDto, UpdateWarehouseDto, WarehouseDto } from 'shared-types';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { InventoryService } from '../inventory/inventory.service';
+import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 
 @Controller('warehouses')
 export class WarehousesController {

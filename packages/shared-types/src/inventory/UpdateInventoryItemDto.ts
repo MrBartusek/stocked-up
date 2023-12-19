@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString, Length, isString } from "class-validator";
+import { IsNumber, IsOptional, IsString, Length } from "class-validator";
 
 export class UpdateInventoryItemDto {
     @IsNumber()

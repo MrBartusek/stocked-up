@@ -11,7 +11,7 @@ describe('WarehousesService', () => {
 		create: jest.fn((dto: CreateWarehouseDto) => {
 			return dto;
 		}),
-		exist: jest.fn((id: Types.ObjectId) => {
+		exist: jest.fn(() => {
 			return true;
 		}),
 		findById: jest.fn((id: Types.ObjectId) => {

@@ -1,5 +1,5 @@
-import { BasicWarehouseDto } from "../warehouse/BasicWarehouseDto";
 import { BaseDto } from "../BaseDto";
+import { BasicWarehouseDto } from "../warehouse/BasicWarehouseDto";
 
 export class OrganizationDto extends BaseDto {
     name: string;

@@ -1,6 +1,6 @@
-import { IsMongoId, MaxLength, ValidateNested } from "class-validator";
-import { CreateWarehouseDto } from "./CreateWarehouseDto"
 import { Type } from "class-transformer";
+import { IsMongoId, ValidateNested } from "class-validator";
+import { CreateWarehouseDto } from "./CreateWarehouseDto";
 
 export class CreateWarehouseInOrgDto {
     @IsMongoId()

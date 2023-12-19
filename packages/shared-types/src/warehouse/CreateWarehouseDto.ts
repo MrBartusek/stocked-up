@@ -1,4 +1,4 @@
-import { IsBoolean, Length } from "class-validator"
+import { Length } from "class-validator"
 
 export class CreateWarehouseDto {
     @Length(2, 32)
