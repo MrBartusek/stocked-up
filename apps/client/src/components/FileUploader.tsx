@@ -1,7 +1,4 @@
-import {
-    BsCloudUploadFill,
-    BsTrashFill
-} from 'react-icons/bs';
+import { BsCloudUploadFill, BsTrashFill } from 'react-icons/bs';
 import { ImageDto } from 'shared-types/dist/ImageDto';
 
 export interface FileUploaderProps {
