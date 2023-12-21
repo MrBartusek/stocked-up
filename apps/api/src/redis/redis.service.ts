@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 @Injectable()
 export class RedisService {
-	constructor(@Inject('CLIENT') private readonly client: Redis) {}
+	constructor(@Inject('CLIENT') private readonly _client: Redis) {}
 
-	getClient(): Redis {
-		return this.client;
+	get client(): Redis {
+		return this._client;
 	}
 }

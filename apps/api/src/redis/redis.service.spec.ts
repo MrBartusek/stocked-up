@@ -23,7 +23,7 @@ describe('RedisService', () => {
 	});
 
 	it('should retrieve client', async () => {
-		const client = service.getClient();
+		const client = service.client;
 		await client.set('test', 'test');
 		expect(setSpy).toBeCalledWith('test', 'test');
 	});

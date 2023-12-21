@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
+import { Readable } from 'node:stream';
 
 const { BASE_API_URL, NODE_ENV } = process.env;
 const logger = new Logger('Utils');
@@ -35,6 +36,14 @@ class Utils {
 				},
 			},
 		};
+	}
+
+	public static async streamToBuffer(stream: Readable) {
+		const chunks = [];
+		for await (const chunk of stream) {
+			chunks.push(chunk);
+		}
+		return Buffer.concat(chunks);
 	}
 }
 

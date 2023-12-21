@@ -14,13 +14,11 @@ import { Readable } from 'node:stream';
 
 const { AWS_BUCKET_NAME } = process.env;
 
-const SINGED_URL_EXPIRE = 24 * 60 * 60;
-
 @Injectable()
 export class S3Service {
 	constructor(@InjectS3() private readonly s3: S3) {}
 
-	async uploadFile(file: Express.Multer.File): Promise<string> {
+	async uploadObject(file: Express.Multer.File): Promise<string> {
 		const key = this.generateFileKey();
 		const params: PutObjectCommandInput = {
 			Bucket: AWS_BUCKET_NAME,
@@ -32,7 +30,7 @@ export class S3Service {
 		return key;
 	}
 
-	async getObject(key: string) {
+	async getObjectBody(key: string): Promise<Readable | null> {
 		const params: GetObjectCommandInput = {
 			Bucket: AWS_BUCKET_NAME,
 			Key: key,
@@ -43,7 +41,7 @@ export class S3Service {
 		return body;
 	}
 
-	async deleteFile(key: string): Promise<void> {
+	async deleteObject(key: string): Promise<void> {
 		const params: DeleteObjectCommandInput = {
 			Bucket: AWS_BUCKET_NAME,
 			Key: key,

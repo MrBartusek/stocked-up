@@ -1,14 +1,6 @@
-import {
-	Controller,
-	Get,
-	NotFoundException,
-	Param,
-	Redirect,
-	HttpRedirectResponse,
-	Res,
-} from '@nestjs/common';
-import { ImagesService } from './images.service';
+import { Controller, Get, Param, Redirect, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { ImagesService } from './images.service';
 
 @Controller('images')
 export class ImagesController {
