@@ -11,9 +11,10 @@ import { ProductsModule } from './models/products/products.module';
 import { UsersModule } from './models/users/users.module';
 import { WarehousesModule } from './models/warehouses/warehouses.module';
 import { S3Module } from './s3/s3.module';
+import { ImagesModule } from './images/images.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
-	rootPath: join(__dirname, '../..', 'client', 'dist'),
+	rootPath: join(__dirname, '../../..', 'client', 'dist'),
 });
 
 @Module({
@@ -27,6 +28,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 		OrganizationsModule,
 		InventoryModule,
 		S3Module,
+		ImagesModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
