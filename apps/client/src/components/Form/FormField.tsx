@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { FieldError } from 'react-hook-form';
 
-export interface FancyInputProps {
+export interface FormFieldProps {
 	label: string;
 	hint?: string;
 	required?: boolean;
@@ -10,7 +10,7 @@ export interface FancyInputProps {
 	errors?: FieldError;
 }
 
-function FormField({ label, hint, required, className, children }: FancyInputProps) {
+function FormField({ label, hint, required, className, children }: FormFieldProps) {
 	return (
 		<div className={classNames(className, 'relative my-6')}>
 			<div className="mb-2 ms-1">

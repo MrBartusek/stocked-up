@@ -7,10 +7,12 @@ import * as passport from 'passport';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis';
+import { json } from 'express';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
+	app.use(json({ limit: '50mb' }));
 	app.setGlobalPrefix('api');
 	app.useGlobalPipes(new ValidationPipe());
 	setupSwagger(app);

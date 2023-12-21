@@ -13,6 +13,8 @@ import FormField from '../Form/FormField';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
+import { ImageDto } from 'shared-types/dist/ImageDto';
+import FormImageInput from '../Form/FormImageInput';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;
@@ -21,6 +23,7 @@ export interface ProductCreateFormProps {
 type Inputs = {
 	name: string;
 	description?: string;
+	image?: ImageDto;
 	buyPrice?: number;
 	sellPrice?: number;
 	unit?: string;
@@ -32,6 +35,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 	const {
 		register,
 		handleSubmit,
+		control,
 		formState: { errors },
 	} = useForm<Inputs>({ defaultValues: product });
 
@@ -87,6 +91,13 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				errors={errors.description}
 			>
 				<FormTextArea {...register('description')} />
+			</FormField>
+
+			<FormField label="Product image">
+				<FormImageInput
+					control={control}
+					name={'image'}
+				/>
 			</FormField>
 
 			<FormField
