@@ -112,6 +112,7 @@ describe('ProductsController', () => {
 			const product = await controller.update(MOCK_TAKEN_PRODUCT_ID, {
 				organizationId: orgId.toString(),
 				name: 'updated-product',
+				image: { hasImage: false },
 			});
 
 			expect(product).toEqual(
@@ -126,6 +127,7 @@ describe('ProductsController', () => {
 			const product = controller.update(MOCK_FREE_PRODUCT_ID, {
 				organizationId: new Types.ObjectId().toString(),
 				name: 'updated-product',
+				image: { hasImage: false },
 			});
 
 			expect(product).rejects.toThrow(NotFoundException);
