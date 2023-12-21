@@ -1,6 +1,7 @@
 import {
 	DeleteObjectCommandInput,
 	GetObjectCommand,
+	GetObjectCommandInput,
 	HeadObjectCommand,
 	HeadObjectCommandInput,
 	PutObjectCommandInput,
@@ -9,6 +10,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable } from '@nestjs/common';
 import { InjectS3, S3 } from 'nestjs-s3';
 import * as crypto from 'node:crypto';
+import { Readable } from 'node:stream';
 
 const { AWS_BUCKET_NAME } = process.env;
 
@@ -30,14 +32,15 @@ export class S3Service {
 		return key;
 	}
 
-	async getObjectUrl(key: string): Promise<string> {
-		const command = new GetObjectCommand({
+	async getObject(key: string) {
+		const params: GetObjectCommandInput = {
 			Bucket: AWS_BUCKET_NAME,
 			Key: key,
-		});
+		};
 
-		const url = await getSignedUrl(this.s3, command, { expiresIn: SINGED_URL_EXPIRE });
-		return url;
+		const object = await this.s3.getObject(params);
+		const body = object.Body as Readable;
+		return body;
 	}
 
 	async deleteFile(key: string): Promise<void> {

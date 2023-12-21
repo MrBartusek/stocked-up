@@ -5,8 +5,10 @@ import {
 	Param,
 	Redirect,
 	HttpRedirectResponse,
+	Res,
 } from '@nestjs/common';
 import { ImagesService } from './images.service';
+import { Response } from 'express';
 
 @Controller('images')
 export class ImagesController {
@@ -17,12 +19,8 @@ export class ImagesController {
 	getDefault() {}
 
 	@Get(':key')
-	@Redirect()
-	async getByKey(@Param('key') key: string) {
-		const url = await this.imagesService.getImageUrlByKey(key);
-		if (!url) {
-			throw new NotFoundException("Image with this key doesn't exist");
-		}
-		return { url, statusCode: 301 } as HttpRedirectResponse;
+	async getByKey(@Param('key') key: string, @Res() response: Response) {
+		const object = await this.imagesService.getObject(key);
+		object.pipe(response);
 	}
 }
