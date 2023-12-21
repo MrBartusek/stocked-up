@@ -1,9 +1,14 @@
-import { IsBase64, IsBoolean, IsEmpty } from "class-validator";
+import { IsBoolean, IsDataURI, IsEmpty, IsOptional } from "class-validator";
 
 export class ImageDto {
     @IsBoolean()
     hasImage: boolean;
 
-    @IsBase64()
+    @IsEmpty()
+    @IsOptional()
     url?: string;
+
+    @IsOptional()
+    @IsDataURI()
+    data?: string;
 }

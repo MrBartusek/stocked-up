@@ -22,7 +22,7 @@ function Dropzone({ onChange, render }: DropzoneProps) {
 
 		const url = await PromiseFileReader.readAsDataURL(file);
 
-		onChange({ hasImage: true, url });
+		onChange({ hasImage: true, url, data: url });
 	};
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({

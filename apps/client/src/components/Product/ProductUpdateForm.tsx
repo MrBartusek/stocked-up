@@ -23,7 +23,7 @@ export interface ProductCreateFormProps {
 type Inputs = {
 	name: string;
 	description?: string;
-	image?: ImageDto;
+	image: ImageDto;
 	buyPrice?: number;
 	sellPrice?: number;
 	unit?: string;
@@ -48,10 +48,16 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
+		const { image, ...rest } = inputs;
+
 		const dto: UpdateProductDto = {
 			organizationId: appContext.organization.id,
 			...product,
-			...inputs,
+			image: {
+				hasImage: image.hasImage,
+				data: image.data,
+			},
+			...rest,
 		};
 
 		Utils.postFetcher<ProductDto>(`/api/products/${product.id}`, dto, { method: 'PUT' })
