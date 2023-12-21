@@ -6,7 +6,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
-import redisClient from './redis';
+import redisClient from './redis/connect';
 import { json } from 'express';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
