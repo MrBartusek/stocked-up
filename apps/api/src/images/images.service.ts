@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, PayloadTooLargeException } from '@nestjs/common';
 import { Document } from 'mongoose';
 import { ImageDto } from 'shared-types/dist/ImageDto';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
@@ -33,18 +33,23 @@ export class ImagesService {
 			await this.s3Service.deleteObject(document.imageKey);
 		}
 		if (shouldUploadImage) {
-			return this.uploadBase64(dto.data);
+			const buffer = this.base64ToBuffer(dto.data);
+
+			const oneMb = 1000000;
+			const fileToLarge = buffer.byteLength > 5 * oneMb;
+
+			if (fileToLarge) {
+				throw new PayloadTooLargeException('Max image size is 5MB');
+			}
+
+			const key = await this.s3Service.uploadObject(buffer);
+			return key;
 		}
+
 		return null;
 	}
 
 	private base64ToBuffer(base64: string) {
 		return Buffer.from(base64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
-	}
-
-	private async uploadBase64(base64: string) {
-		const buffer = this.base64ToBuffer(base64);
-		const key = await this.s3Service.uploadObject(buffer);
-		return key;
 	}
 }
