@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { CreateProductDto, ProductDto } from 'shared-types';
 import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import Form from '../Form/Form';
 import FormCurrencyInput from '../Form/FormCurrencyInput';
 import FormError from '../Form/FormError';

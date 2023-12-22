@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserLoginDto, UserRegisterDto } from 'shared-types';
 import { Utils } from '../utils';
 import Button from './Button';
-import { UserContext } from './Context/UserContext';
+import { UserContext } from '../context/UserContext';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
 import RegisterGoBack from './RegisterGoBack';

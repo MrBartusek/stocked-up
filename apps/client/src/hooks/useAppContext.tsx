@@ -2,8 +2,8 @@ import { useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
-import useOrganizationDetails from './hooks/useOrganisationDetails';
-import { Utils } from './utils';
+import useOrganizationDetails from './useOrganisationDetails';
+import { Utils } from '../utils';
 
 export interface CurrentAppContextType {
 	isLoading: boolean;

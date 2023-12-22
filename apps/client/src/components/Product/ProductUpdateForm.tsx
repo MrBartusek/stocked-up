@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ProductDto, UpdateProductDto } from 'shared-types';
 import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import Form from '../Form/Form';
 import FormCurrencyInput from '../Form/FormCurrencyInput';
 import FormError from '../Form/FormError';

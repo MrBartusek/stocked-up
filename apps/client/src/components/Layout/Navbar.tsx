@@ -3,7 +3,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
 import Container from '../Container';
-import { UserContext } from '../Context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import StockedUpLogo from '../StockedUpLogo';
 
 function Navbar() {

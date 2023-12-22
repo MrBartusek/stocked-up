@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import Table from '../Helpers/Table';
 import WarehouseActions from './WarehouseActions';
 

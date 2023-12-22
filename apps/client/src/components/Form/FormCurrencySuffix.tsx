@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 
 function FormCurrencySuffix() {
 	const appContext = useContext(CurrentAppContext);

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../../context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
 import InventoryAddForm from '../../InventoryItem/InventoryAddForm';
 import TableTopBar from '../../TableTopBar';

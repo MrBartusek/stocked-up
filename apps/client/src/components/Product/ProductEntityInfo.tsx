@@ -3,7 +3,7 @@ import { BsPencil, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
 import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import EntityActionsRow from '../Entity/EntityActionsRow';
 import EntityContainer from '../Entity/EntityContainer';
 import EntityImageColumn from '../Entity/EntityImageColumn';

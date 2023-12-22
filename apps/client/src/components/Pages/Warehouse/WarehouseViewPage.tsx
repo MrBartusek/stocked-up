@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import WarehouseEntityInfo from '../../../WarehouseEntityInfo';
+import WarehouseEntityInfo from '../../WarehouseEntityInfo';
 import useWarehouseDetails from '../../../hooks/useWarehouseDetails';
 import Loader from '../../Loader';
 

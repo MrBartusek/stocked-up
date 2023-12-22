@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { BsCheckCircle, BsPencil, BsTrash } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
-import { CurrentAppContext } from './components/Context/CurrentAppContext';
-import EntityActionsRow from './components/Entity/EntityActionsRow';
-import EntityInfoTable from './components/Entity/EntityInfoTable';
-import IconButton from './components/IconButton';
-import { Utils } from './utils';
+import { CurrentAppContext } from '../context/CurrentAppContext';
+import EntityActionsRow from './Entity/EntityActionsRow';
+import EntityInfoTable from './Entity/EntityInfoTable';
+import IconButton from './IconButton';
+import { Utils } from '../utils';
 
 export interface WarehouseEntityInfoProps {
 	warehouse: WarehouseDto;

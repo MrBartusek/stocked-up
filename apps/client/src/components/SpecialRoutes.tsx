@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from './Context/UserContext';
+import { UserContext } from '../context/UserContext';
 
 export interface SpecialRouteProps {
 	children: React.ReactNode;

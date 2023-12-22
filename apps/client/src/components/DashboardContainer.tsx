@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import { UserContext } from './Context/UserContext';
+import { UserContext } from '../context/UserContext';
 import Loader from './Loader';
 
 function DashboardContainer() {

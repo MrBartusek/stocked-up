@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CurrentAppContext } from '../../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../../context/CurrentAppContext';
 import GoBackButton from '../../GoBackButton';
 import TableTopBar from '../../TableTopBar';
 import WarehouseCreateForm from '../../Warehouse/WarehouseCreateForm';

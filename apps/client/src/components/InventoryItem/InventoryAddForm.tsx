@@ -7,7 +7,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { CreateInventoryItemDto, OrganizationDto } from 'shared-types';
 import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';

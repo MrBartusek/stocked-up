@@ -1,5 +1,5 @@
 import humanFormat from 'human-format';
-import { CurrentAppContextType } from './useAppContext';
+import { CurrentAppContextType } from './hooks/useAppContext';
 
 export class HTTPResponseError extends Error {
 	public response: Response;

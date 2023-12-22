@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import usePageInfo from '../../hooks/usePageInfo';
-import useCurrentAppContext from '../../useAppContext';
-import { CurrentAppContext } from '../Context/CurrentAppContext';
+import useCurrentAppContext from '../../hooks/useAppContext';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import Loader from '../Loader';
 import Sidebar from '../Sidebar/Sidebar';
 

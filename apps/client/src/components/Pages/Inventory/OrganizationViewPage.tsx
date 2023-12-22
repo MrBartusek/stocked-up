@@ -1,6 +1,6 @@
 import { BsBuildingGear, BsPencil, BsTrash } from 'react-icons/bs';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import OrganizationSettingsSection from '../../../OrganizationSettingsSection';
+import OrganizationSettingsSection from '../../OrganizationSettingsSection';
 import useOrganizationDetails from '../../../hooks/useOrganisationDetails';
 import { Utils } from '../../../utils';
 import Container from '../../Container';
