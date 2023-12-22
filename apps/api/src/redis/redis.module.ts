@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { RedisService } from './redis.service';
 import client from './connect';
+import { RedisService } from './redis.service';
 
 @Module({
 	providers: [{ provide: 'CLIENT', useValue: client }, RedisService],

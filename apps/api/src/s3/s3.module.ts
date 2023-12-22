@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { S3Service } from './s3.service';
 import * as S3Lib from 'nestjs-s3';
+import { S3Service } from './s3.service';
 
 const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION } = process.env;
 

@@ -1,6 +1,5 @@
 import { BsBuildingGear, BsPencil, BsTrash } from 'react-icons/bs';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import OrganizationSettingsSection from '../../OrganizationSettingsSection';
 import useOrganizationDetails from '../../../hooks/useOrganisationDetails';
 import { Utils } from '../../../utils';
 import Container from '../../Container';
@@ -11,6 +10,7 @@ import HeaderWithHint from '../../HeaderWithHint';
 import IconButton from '../../IconButton';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import Loader from '../../Loader';
+import OrganizationSettingsSection from '../../OrganizationSettingsSection';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 import WarehousesList from '../../Warehouse/WarehousesList';
 

@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { BsPlusCircle } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import useInventoryList from '../../../hooks/useInventoryList';
 import { CurrentAppContext } from '../../../context/CurrentAppContext';
+import useInventoryList from '../../../hooks/useInventoryList';
 import IconButton from '../../IconButton';
 import InventoryTable from '../../InventoryItem/InventoryTable';
 import Loader from '../../Loader';

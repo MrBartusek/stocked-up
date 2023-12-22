@@ -1,9 +1,9 @@
 import { useContext } from 'react';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import BigNumberCard from '../BigNumberCard';
 import Card from '../Card';
 import ChartCard from '../ChartCard';
-import { CurrentAppContext } from '../../context/CurrentAppContext';
 import DashboardContent from '../DashboardContent';
 import TotalSalesChart from '../TotalSalesChart';
 import WarehousesValueChart from '../Warehouse/WarehousesValueChart';

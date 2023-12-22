@@ -1,15 +1,15 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import RedisStore from 'connect-redis';
+import { json } from 'express';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis/connect';
-import { json } from 'express';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);

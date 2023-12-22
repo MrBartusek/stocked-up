@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { BsPlusCircle } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import useProductsList from '../../../hooks/useProductsList';
 import { CurrentAppContext } from '../../../context/CurrentAppContext';
+import useProductsList from '../../../hooks/useProductsList';
 import IconButton from '../../IconButton';
 import Loader from '../../Loader';
 import ProductsTable from '../../Product/ProductsTable';

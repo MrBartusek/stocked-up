@@ -1,12 +1,8 @@
 import {
-	DeleteObjectCommandInput,
-	GetObjectCommand,
-	GetObjectCommandInput,
-	HeadObjectCommand,
-	HeadObjectCommandInput,
-	PutObjectCommandInput,
+    DeleteObjectCommandInput,
+    GetObjectCommandInput,
+    PutObjectCommandInput
 } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable } from '@nestjs/common';
 import { InjectS3, S3 } from 'nestjs-s3';
 import * as crypto from 'node:crypto';

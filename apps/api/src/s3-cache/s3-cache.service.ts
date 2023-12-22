@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { S3Service } from '../s3/s3.service';
-import { RedisService } from '../redis/redis.service';
 import { Readable } from 'stream';
 import Utils from '../helpers/utils';
+import { RedisService } from '../redis/redis.service';
+import { S3Service } from '../s3/s3.service';
 
 const ONE_DAY = 24 * 60 * 60;
 const REDIS_PREFIX = 's3-cache:';

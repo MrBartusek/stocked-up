@@ -1,7 +1,7 @@
 import { BsSliders } from 'react-icons/bs';
-import IconButton from './IconButton';
 import { Link } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
+import IconButton from './IconButton';
 
 export interface OrganizationSettingsSectionProps {
 	organization: OrganizationDto;
