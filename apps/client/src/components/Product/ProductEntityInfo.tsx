@@ -23,7 +23,7 @@ function ProductEntityInfo({ product }: ProductEntityInfoProps) {
 
 	return (
 		<EntityContainer>
-			<EntityImageColumn />
+			<EntityImageColumn image={product.image} />
 			<div>
 				<HeaderWithHint hint="product definition">{product?.name}</HeaderWithHint>
 

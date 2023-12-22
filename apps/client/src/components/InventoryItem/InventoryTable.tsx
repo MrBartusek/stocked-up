@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
 import Table from '../Helpers/Table';
 import InventoryItemActions from './InventoryItemActions';
+import TableImage from '../TableImage';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();
 
@@ -17,6 +18,11 @@ function InventoryTable({ items }: InventoryTableProps) {
 		columnHelper.accessor('name', {
 			header: '#',
 			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
+			size: 0,
+		}),
+		columnHelper.accessor('image', {
+			header: 'Image',
+			cell: (info) => <TableImage image={info.getValue()} />,
 			size: 0,
 		}),
 		columnHelper.accessor('name', {

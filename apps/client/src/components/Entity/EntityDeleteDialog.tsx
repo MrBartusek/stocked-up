@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import placeholderImage from '../../assets/placeholder.png';
 import { Utils } from '../../utils';
 import Button from '../Button';
 import Form from '../Form/Form';
@@ -12,6 +11,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
+import { ImageDto } from 'shared-types/dist/ImageDto';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -20,6 +20,7 @@ export interface EntityDeleteDialogProps {
 	identifier: string;
 	deletedItems?: string[];
 	confirmBeforeDelete?: boolean;
+	image?: ImageDto;
 }
 
 function EntityDeleteDialog({
@@ -29,6 +30,7 @@ function EntityDeleteDialog({
 	identifier,
 	deletedItems = [],
 	confirmBeforeDelete = false,
+	image,
 }: EntityDeleteDialogProps) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -58,7 +60,7 @@ function EntityDeleteDialog({
 			<div className="my-6 flex w-96 gap-4 rounded-md border border-gray-300 p-4">
 				<div>
 					<img
-						src={placeholderImage}
+						src={image?.url || '/api/images/default'}
 						className="w-16 rounded-md"
 						width={50}
 						height={50}

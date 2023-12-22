@@ -1,19 +1,21 @@
 import classNames from 'classnames';
-import placeholderImage from '../../assets/placeholder.png';
+import { ImageDto } from 'shared-types/dist/ImageDto';
 
 type ImgProps = React.DetailedHTMLProps<
 	React.ImgHTMLAttributes<HTMLImageElement>,
 	HTMLImageElement
 >;
 
-export interface EntityImageColumnProps extends ImgProps {}
+export interface EntityImageColumnProps extends ImgProps {
+	image: ImageDto;
+}
 
-function EntityImageColumn({ ...props }: EntityImageColumnProps) {
+function EntityImageColumn({ image, ...props }: EntityImageColumnProps) {
 	return (
 		<div className="hidden w-48 flex-shrink-0 xl:flex">
 			<img
-				src={placeholderImage}
 				{...props}
+				src={image.url}
 				className={classNames(props.className, 'm-auto h-auto w-full rounded-md')}
 				width={50}
 				height={50}

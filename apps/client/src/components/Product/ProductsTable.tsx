@@ -2,9 +2,8 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
-import placeholderImage from '../../assets/placeholder.png';
-import { Utils } from '../../utils';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import ProductActions from './ProductActions';
@@ -25,9 +24,9 @@ function ProductsTable({ products }: ProductsTableProps) {
 			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
 			size: 0,
 		}),
-		columnHelper.display({
+		columnHelper.accessor('image', {
 			header: 'Image',
-			cell: (info) => <TableImage src={info.getValue<string>() || placeholderImage} />,
+			cell: (info) => <TableImage image={info.getValue()} />,
 			size: 0,
 		}),
 		columnHelper.accessor('name', {

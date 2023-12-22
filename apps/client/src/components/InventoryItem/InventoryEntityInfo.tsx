@@ -21,7 +21,7 @@ function InventoryEntityInfo({ inventoryItem }: InventoryEntityInfoProps) {
 
 	return (
 		<EntityContainer>
-			<EntityImageColumn />
+			<EntityImageColumn image={inventoryItem.image} />
 			<div>
 				<HeaderWithHint
 					hint="inventory item"

@@ -10,6 +10,7 @@ function ProductDeleteForm({ product }: ProductDeleteFormProps) {
 		<EntityDeleteDialog
 			entityName={product.name}
 			entityId={product.id}
+			image={product.image}
 			resourceName="products"
 			identifier="product definition"
 			deletedItems={['Inventory items associated with this product']}

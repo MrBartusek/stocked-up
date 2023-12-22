@@ -10,6 +10,7 @@ function InventoryItemDeleteForm({ item }: InventoryItemDeleteFormProps) {
 		<EntityDeleteDialog
 			entityName={item.name}
 			entityId={item.id}
+			image={item.image}
 			resourceName="inventory"
 			identifier="inventory item"
 		/>
