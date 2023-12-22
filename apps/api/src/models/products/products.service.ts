@@ -23,7 +23,7 @@ export class ProductsService {
 		const { image, ...rest } = dto;
 		const product = await this.productsRepository.findOneByIdAndUpdate(id, rest);
 		product.imageKey = await this.imagesService.handleImageDtoAndGetKey(product, image);
-		return product.save();
+		return await this.productsRepository.findOneByIdAndUpdate(id, product);
 	}
 
 	delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {

@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { CreateProductDto } from 'shared-types';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
+import { ImagesService } from '../../images/images.service';
 
 describe('ProductsService', () => {
 	let service: ProductsService;
@@ -31,6 +32,12 @@ describe('ProductsService', () => {
 		countDocuments: jest.fn(() => 100),
 	};
 
+	const mockImagesService = {
+		handleImageDtoAndGetKey: jest.fn(() => 'img-key'),
+	};
+
+	const handleImageDtoAndGetKeySpy = jest.spyOn(mockImagesService, 'handleImageDtoAndGetKey');
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
@@ -38,6 +45,10 @@ describe('ProductsService', () => {
 				{
 					provide: ProductsRepository,
 					useValue: mockProductsRepository,
+				},
+				{
+					provide: ImagesService,
+					useValue: mockImagesService,
 				},
 			],
 		}).compile();
@@ -61,16 +72,18 @@ describe('ProductsService', () => {
 		);
 	});
 
-	it('should update product', () => {
-		const product = service.update(new Types.ObjectId(), {
+	it('should update product', async () => {
+		const product = await service.update(new Types.ObjectId(), {
 			organizationId: '123',
 			name: 'updated-product',
+			image: { hasImage: false },
 		});
 		expect(product).toEqual(
 			expect.objectContaining({
 				name: 'updated-product',
 			}),
 		);
+		expect(handleImageDtoAndGetKeySpy).toBeCalled();
 	});
 
 	it('should delete product', () => {
