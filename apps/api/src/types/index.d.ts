@@ -1,6 +1,6 @@
 import UserSessionData from '../auth/types/userSessionData';
 
-export { };
+export {};
 
 declare global {
 	namespace Express {

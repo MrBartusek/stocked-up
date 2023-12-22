@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { S3Service } from '../s3/s3.service';
-import { S3CacheService } from '../s3-cache/s3-cache.service';
+import { Injectable } from '@nestjs/common';
 import { Document } from 'mongoose';
 import { ImageDto } from 'shared-types/dist/ImageDto';
+import { S3CacheService } from '../s3-cache/s3-cache.service';
+import { S3Service } from '../s3/s3.service';
 
 export interface DocumentWithImage extends Document {
 	imageKey: string;
