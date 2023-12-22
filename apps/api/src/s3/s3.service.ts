@@ -16,17 +16,18 @@ export class S3Service {
 
 	private readonly logger = new Logger(S3Service.name);
 
-	async uploadObject(file: Buffer): Promise<string> {
+	async uploadObject(buffer: Buffer): Promise<string> {
 		const key = this.generateFileKey();
+
 		const params: PutObjectCommandInput = {
 			Bucket: AWS_BUCKET_NAME,
-			Body: file,
+			Body: buffer,
 			Key: key,
 		};
 
 		await this.s3.putObject(params);
 
-		this.logger.log(`Uploaded S3 object with key: ${key}`);
+		this.logger.log(`Uploaded S3 object! Key: "${key}"`);
 		return key;
 	}
 

@@ -1,4 +1,4 @@
-import { IsBoolean, IsDataURI, IsEmpty, IsOptional } from "class-validator";
+import { IsBoolean, IsDataURI, IsEmpty, IsMimeType, IsOptional } from "class-validator";
 
 export class ImageDto {
     @IsBoolean()
@@ -10,5 +10,5 @@ export class ImageDto {
 
     @IsOptional()
     @IsDataURI()
-    data?: string;
+    data?: string
 }

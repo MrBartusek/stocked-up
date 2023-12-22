@@ -24,25 +24,26 @@ export class ImagesService {
 		dto: ImageDto,
 	): Promise<string | null> {
 		const documentHasImage = document.imageKey != null;
+		const newImageReceived = dto.data != null;
 
-		if (dto.hasImage && !documentHasImage) {
-			if (!dto.data) {
-				throw new BadRequestException(
-					'Malformed ImageDto, object does not have and image, data property expected',
-				);
-			}
-			return this.uploadBase64(dto.data);
-		} else if (!dto.hasImage && documentHasImage) {
+		const shouldUploadImage = dto.hasImage && newImageReceived;
+		const shouldDeleteImage = documentHasImage && (shouldUploadImage || !dto.hasImage);
+
+		if (shouldDeleteImage) {
 			await this.s3Service.deleteObject(document.imageKey);
-			return null;
-		} else if (dto.hasImage && documentHasImage && dto.data) {
-			await this.s3Service.deleteObject(document.imageKey);
+		}
+		if (shouldUploadImage) {
 			return this.uploadBase64(dto.data);
 		}
+		return null;
+	}
+
+	private base64ToBuffer(base64: string) {
+		return Buffer.from(base64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
 	}
 
 	private async uploadBase64(base64: string) {
-		const buffer = Buffer.from(base64, 'base64');
+		const buffer = this.base64ToBuffer(base64);
 		const key = await this.s3Service.uploadObject(buffer);
 		return key;
 	}
