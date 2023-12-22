@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { S3Module } from 'nestjs-s3';
+import { S3CacheModule } from '../s3-cache/s3-cache.module';
 import { ImagesController } from './images.controller';
 import { ImagesService } from './images.service';
-import { S3Service } from '../s3/s3.service';
-import { S3CacheModule } from '../s3-cache/s3-cache.module';
+import { S3Module } from '../s3/s3.module';
 
 @Module({
 	controllers: [ImagesController],
 	providers: [ImagesService],
-	imports: [S3CacheModule],
+	imports: [S3CacheModule, S3Module],
+	exports: [ImagesService],
 })
 export class ImagesModule {}

@@ -3,10 +3,14 @@ import mongoose, { Types } from 'mongoose';
 import { CreateProductDto, UpdateProductDto } from 'shared-types';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
+import { ImagesService } from '../../images/images.service';
 
 @Injectable()
 export class ProductsService {
-	constructor(private readonly productsRepository: ProductsRepository) {}
+	constructor(
+		private readonly productsRepository: ProductsRepository,
+		private readonly imagesService: ImagesService,
+	) {}
 
 	create(dto: CreateProductDto): Promise<ProductDocument> {
 		return this.productsRepository.create({
@@ -15,8 +19,11 @@ export class ProductsService {
 		});
 	}
 
-	update(id: mongoose.Types.ObjectId, dto: UpdateProductDto): Promise<ProductDocument> {
-		return this.productsRepository.findOneByIdAndUpdate(id, dto);
+	async update(id: mongoose.Types.ObjectId, dto: UpdateProductDto): Promise<ProductDocument> {
+		const { image, ...rest } = dto;
+		const product = await this.productsRepository.findOneByIdAndUpdate(id, rest);
+		product.imageKey = await this.imagesService.handleImageDtoAndGetKey(product, image);
+		return product.save();
 	}
 
 	delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {

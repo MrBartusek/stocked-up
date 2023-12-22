@@ -56,7 +56,6 @@ export class ProductsController {
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(new ValidationPipe()) dto: UpdateProductDto,
 	): Promise<ProductDto> {
-		console.log(dto);
 		const product = await this.productsService.update(id, dto);
 		if (!product) {
 			throw new NotFoundException();
