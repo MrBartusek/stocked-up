@@ -5,6 +5,7 @@ import Button from '../Button';
 import Container from '../Container';
 import { UserContext } from '../../context/UserContext';
 import StockedUpLogo from '../StockedUpLogo';
+import UserInfo from '../UserInfo';
 
 function Navbar() {
 	const { isAuthenticated, user } = useContext(UserContext);
@@ -44,7 +45,7 @@ function Navbar() {
 							</li>
 						</ul>
 					) : (
-						<span>{user.email}</span>
+						<UserInfo />
 					)}
 
 					<Link to={isAuthenticated ? 'dashboard' : 'register'}>
