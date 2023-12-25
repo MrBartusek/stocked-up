@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { CreateWarehouseDto } from 'shared-types';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
+import { InventoryService } from '../inventory/inventory.service';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
@@ -38,6 +39,12 @@ describe('WarehousesService', () => {
 		}),
 	};
 
+	const mockInventoryService = {
+		deleteManyByWarehouse: jest.fn(),
+	};
+
+	const deleteManyByWarehouseSpy = jest.spyOn(mockInventoryService, 'deleteManyByWarehouse');
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
@@ -46,10 +53,18 @@ describe('WarehousesService', () => {
 					provide: WarehouseRepository,
 					useValue: mockWarehousesRepository,
 				},
+				{
+					provide: InventoryService,
+					useValue: mockInventoryService,
+				},
 			],
 		}).compile();
 
 		service = module.get<WarehousesService>(WarehousesService);
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	it('should be defined', () => {
@@ -74,13 +89,16 @@ describe('WarehousesService', () => {
 		);
 	});
 
-	it('should delete warehouse', () => {
-		expect(service.delete(new Types.ObjectId())).toEqual(
+	it('should delete warehouse', async () => {
+		const warehouse = await service.delete(new Types.ObjectId());
+
+		expect(warehouse).toEqual(
 			expect.objectContaining({
 				name: 'test-name',
 				address: 'test-address',
 			}),
 		);
+		expect(deleteManyByWarehouseSpy).toHaveBeenCalledWith(warehouse._id);
 	});
 
 	it('should check if warehouse exist', () => {

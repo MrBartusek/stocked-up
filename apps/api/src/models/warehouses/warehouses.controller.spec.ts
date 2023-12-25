@@ -69,10 +69,6 @@ describe('WarehousesController', () => {
 		recalculateTotalValue: jest.fn(),
 	};
 
-	const mockInventoryService = {
-		deleteManyByWarehouse: jest.fn(),
-	};
-
 	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
 	const deleteWarehouseReferenceSpy = jest.spyOn(
 		mockOrganizationsService,
@@ -90,19 +86,12 @@ describe('WarehousesController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [WarehousesController],
-			providers: [
-				WarehousesService,
-				OrganizationsService,
-				OrganizationsStatsService,
-				InventoryService,
-			],
+			providers: [WarehousesService, OrganizationsService, OrganizationsStatsService],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehouseService)
 			.overrideProvider(OrganizationsService)
 			.useValue(mockOrganizationsService)
-			.overrideProvider(InventoryService)
-			.useValue(mockInventoryService)
 			.overrideProvider(OrganizationsStatsService)
 			.useValue(mockOrganizationsStatsService)
 			.compile();

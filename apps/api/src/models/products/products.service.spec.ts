@@ -4,6 +4,7 @@ import { CreateProductDto } from 'shared-types';
 import { ImagesService } from '../../images/images.service';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
+import { InventoryService } from '../inventory/inventory.service';
 
 describe('ProductsService', () => {
 	let service: ProductsService;
@@ -36,6 +37,11 @@ describe('ProductsService', () => {
 		handleImageDtoAndGetKey: jest.fn(() => 'img-key'),
 	};
 
+	const mockInventoryService = {
+		deleteManyByProduct: jest.fn(),
+	};
+
+	const deleteManyByProductSpy = jest.spyOn(mockInventoryService, 'deleteManyByProduct');
 	const handleImageDtoAndGetKeySpy = jest.spyOn(mockImagesService, 'handleImageDtoAndGetKey');
 
 	beforeEach(async () => {
@@ -45,6 +51,10 @@ describe('ProductsService', () => {
 				{
 					provide: ProductsRepository,
 					useValue: mockProductsRepository,
+				},
+				{
+					provide: InventoryService,
+					useValue: mockInventoryService,
 				},
 				{
 					provide: ImagesService,
@@ -86,13 +96,15 @@ describe('ProductsService', () => {
 		expect(handleImageDtoAndGetKeySpy).toBeCalled();
 	});
 
-	it('should delete product', () => {
-		const product = service.delete(new Types.ObjectId());
+	it('should delete product', async () => {
+		const product = await service.delete(new Types.ObjectId());
+
 		expect(product).toEqual(
 			expect.objectContaining({
 				name: expect.any(String),
 			}),
 		);
+		expect(deleteManyByProductSpy).toBeCalledWith(product._id);
 	});
 
 	it('should find one product', () => {

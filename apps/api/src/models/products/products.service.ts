@@ -14,7 +14,7 @@ export class ProductsService {
 		private readonly inventoryService: InventoryService,
 	) {}
 
-	async create(dto: CreateProductDto): Promise<ProductDocument> {
+	create(dto: CreateProductDto): Promise<ProductDocument> {
 		return this.productsRepository.create({
 			organization: dto.organizationId as any,
 			...dto,

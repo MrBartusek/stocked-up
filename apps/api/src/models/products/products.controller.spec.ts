@@ -55,12 +55,7 @@ describe('ProductsController', () => {
 		recalculateTotalValue: jest.fn(),
 	};
 
-	const mockInventoryService = {
-		deleteManyByProduct: jest.fn(),
-	};
-
 	const updateProductsCountSpy = jest.spyOn(mockOrganizationsStatsService, 'updateProductsCount');
-	const deleteManyByProductSpy = jest.spyOn(mockInventoryService, 'deleteManyByProduct');
 	const recalculateTotalValueSpy = jest.spyOn(
 		mockOrganizationsStatsService,
 		'recalculateTotalValue',
@@ -69,14 +64,12 @@ describe('ProductsController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [ProductsController],
-			providers: [ProductsService, OrganizationsStatsService, InventoryService],
+			providers: [ProductsService, OrganizationsStatsService],
 		})
 			.overrideProvider(ProductsService)
 			.useValue(mockProductsService)
 			.overrideProvider(OrganizationsStatsService)
 			.useValue(mockOrganizationsStatsService)
-			.overrideProvider(InventoryService)
-			.useValue(mockInventoryService)
 			.compile();
 
 		controller = module.get<ProductsController>(ProductsController);
@@ -162,7 +155,6 @@ describe('ProductsController', () => {
 				}),
 			);
 			expect(updateProductsCountSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId), 1);
-			expect(deleteManyByProductSpy).toHaveBeenCalledWith(MOCK_TAKEN_PRODUCT_ID);
 			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
 		});
 
