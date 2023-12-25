@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Param, Redirect, Res } from '@nestjs/common';
+import { Controller, Get, Header, NotFoundException, Param, Redirect, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { ImagesService } from './images.service';
 
@@ -18,6 +18,9 @@ export class ImagesController {
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
 	async getByKey(@Param('key') key: string, @Res() response: Response) {
 		const object = await this.imagesService.getObject(key);
+		if (!object) {
+			throw new NotFoundException('Object with provided key was not found');
+		}
 		object.pipe(response);
 	}
 }

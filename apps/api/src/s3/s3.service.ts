@@ -1,6 +1,7 @@
 import {
 	DeleteObjectCommandInput,
 	GetObjectCommandInput,
+	NoSuchKey,
 	PutObjectCommandInput,
 } from '@aws-sdk/client-s3';
 import { Injectable, Logger } from '@nestjs/common';
@@ -37,7 +38,13 @@ export class S3Service {
 			Key: key,
 		};
 
-		const object = await this.s3.getObject(params);
+		const object = await this.s3.getObject(params).catch((error) => {
+			if (error instanceof NoSuchKey) {
+				return null;
+			}
+			throw error;
+		});
+		if (object == null) return null;
 		const body = object.Body as Readable;
 		return body;
 	}
