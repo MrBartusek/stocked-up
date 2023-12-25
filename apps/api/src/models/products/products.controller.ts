@@ -29,14 +29,13 @@ export class ProductsController {
 	constructor(
 		private readonly productsService: ProductsService,
 		private readonly organizationStatsService: OrganizationsStatsService,
-		private readonly inventoryService: InventoryService,
 	) {}
 
 	@Post()
 	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
-		const orgId = new Types.ObjectId(dto.organizationId);
 		const product = await this.productsService.create(dto);
 
+		const orgId = new Types.ObjectId(dto.organizationId);
 		await this.updateTotalProductsCount(orgId);
 
 		return Product.toDto(product);
@@ -61,8 +60,8 @@ export class ProductsController {
 			throw new NotFoundException();
 		}
 
-		const organizationId = new Types.ObjectId(product.organization as any);
-		await this.organizationStatsService.recalculateTotalValue(organizationId);
+		const orgId = new Types.ObjectId(product.organization as any);
+		await this.organizationStatsService.recalculateTotalValue(orgId);
 
 		return Product.toDto(product);
 	}
@@ -73,11 +72,11 @@ export class ProductsController {
 		if (!product) {
 			throw new NotFoundException();
 		}
-		const organizationId = new Types.ObjectId(product.organization as any);
 
-		await this.updateTotalProductsCount(organizationId);
-		await this.inventoryService.deleteManyByProduct(id);
-		await this.organizationStatsService.recalculateTotalValue(organizationId);
+		const orgId = product.organization as any as Types.ObjectId;
+
+		await this.updateTotalProductsCount(orgId);
+		await this.organizationStatsService.recalculateTotalValue(orgId);
 
 		return Product.toDto(product);
 	}
@@ -88,7 +87,7 @@ export class ProductsController {
 		return products.map((product) => Product.toBasicDto(product));
 	}
 
-	async updateTotalProductsCount(organizationId: Types.ObjectId) {
+	private async updateTotalProductsCount(organizationId: Types.ObjectId) {
 		const newCount = await this.productsService.countAll(organizationId);
 		await this.organizationStatsService.updateProductsCount(organizationId, newCount);
 	}

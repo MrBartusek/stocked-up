@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import mongoose, { Types } from 'mongoose';
 import { CreateProductDto, UpdateProductDto } from 'shared-types';
 import { ImagesService } from '../../images/images.service';
+import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
 
@@ -10,9 +11,10 @@ export class ProductsService {
 	constructor(
 		private readonly productsRepository: ProductsRepository,
 		private readonly imagesService: ImagesService,
+		private readonly inventoryService: InventoryService,
 	) {}
 
-	create(dto: CreateProductDto): Promise<ProductDocument> {
+	async create(dto: CreateProductDto): Promise<ProductDocument> {
 		return this.productsRepository.create({
 			organization: dto.organizationId as any,
 			...dto,
@@ -26,8 +28,10 @@ export class ProductsService {
 		return await this.productsRepository.findOneByIdAndUpdate(id, product);
 	}
 
-	delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {
-		return this.productsRepository.deleteOneById(id);
+	async delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {
+		const product = await this.productsRepository.deleteOneById(id);
+		await this.inventoryService.deleteManyByProduct(id);
+		return product;
 	}
 
 	exist(id: Types.ObjectId) {
