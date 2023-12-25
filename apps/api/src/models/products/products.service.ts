@@ -36,6 +36,7 @@ export class ProductsService {
 		const product = await this.productsRepository.deleteOneById(id);
 		if (!product) return null;
 		await this.inventoryService.deleteManyByProduct(id);
+		await this.imagesService.deleteImage(product);
 		return product;
 	}
 

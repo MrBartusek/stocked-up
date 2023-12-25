@@ -49,6 +49,14 @@ export class ImagesService {
 		return null;
 	}
 
+	async deleteImage(document: DocumentWithImage): Promise<boolean> {
+		if (document.imageKey) {
+			await this.s3Service.deleteObject(document.imageKey);
+			return true;
+		}
+		return false;
+	}
+
 	private base64ToBuffer(base64: string) {
 		return Buffer.from(base64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
 	}
