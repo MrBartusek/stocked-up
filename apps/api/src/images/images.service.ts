@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, PayloadTooLargeException } from '@nestjs/common';
+import { Injectable, PayloadTooLargeException } from '@nestjs/common';
 import { Document } from 'mongoose';
 import { ImageDto } from 'shared-types/dist/ImageDto';
 import { S3CacheService } from '../s3-cache/s3-cache.service';

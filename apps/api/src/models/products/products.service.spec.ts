@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateProductDto } from 'shared-types';
+import { ImagesService } from '../../images/images.service';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
-import { ImagesService } from '../../images/images.service';
 
 describe('ProductsService', () => {
 	let service: ProductsService;

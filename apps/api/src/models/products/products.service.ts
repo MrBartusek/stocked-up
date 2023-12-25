@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import mongoose, { Types } from 'mongoose';
 import { CreateProductDto, UpdateProductDto } from 'shared-types';
+import { ImagesService } from '../../images/images.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
-import { ImagesService } from '../../images/images.service';
 
 @Injectable()
 export class ProductsService {
