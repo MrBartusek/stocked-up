@@ -1,5 +1,5 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import MongooseModuleHelper from '../../helpers/mongose-module-helper';
 import { InventoryModule } from '../inventory/inventory.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { Warehouse, WarehouseSchema } from './schemas/warehouse.schema';
@@ -10,7 +10,7 @@ import { WarehousesService } from './warehouses.service';
 
 @Module({
 	imports: [
-		MongooseModule.forFeature([{ name: Warehouse.name, schema: WarehouseSchema }]),
+		MongooseModuleHelper.forFeature(Warehouse, WarehouseSchema),
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
 	],
