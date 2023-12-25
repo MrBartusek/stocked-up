@@ -8,7 +8,7 @@ import StockedUpLogo from '../StockedUpLogo';
 import UserInfo from '../UserInfo';
 
 function Navbar() {
-	const { isAuthenticated, user } = useContext(UserContext);
+	const { isAuthenticated } = useContext(UserContext);
 	return (
 		<nav className="border-b border-gray-200 bg-gray-150 p-4">
 			<Container className="flex items-center justify-between">
