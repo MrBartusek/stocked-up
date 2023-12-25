@@ -6,10 +6,17 @@ import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
+import { InventoryService } from '../inventory/inventory.service';
+import { WarehousesService } from '../warehouses/warehouses.service';
+import { ProductsService } from '../products/products.service';
 
 @Injectable()
 export class OrganizationsService {
-	constructor(private readonly organizationRepository: OrganizationRepository) {}
+	constructor(
+		private readonly organizationRepository: OrganizationRepository,
+		private readonly warehousesService: WarehousesService,
+		private readonly productsService: ProductsService,
+	) {}
 
 	async create(dto: CreateOrganizationDto): Promise<OrganizationDocument> {
 		return this.organizationRepository.create({
@@ -25,6 +32,14 @@ export class OrganizationsService {
 	}
 
 	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
+		const org = await this.findById(id);
+		for await (const reference of org.warehouses) {
+			await this.warehousesService.delete(reference.id as any);
+		}
+		const products = await this.productsService.findAll(org._id);
+		for await (const product of products) {
+			await this.productsService.delete(product._id);
+		}
 		return this.organizationRepository.deleteOneById(id);
 	}
 

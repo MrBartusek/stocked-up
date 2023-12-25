@@ -11,7 +11,7 @@ import { Product, ProductSchema } from './schemas/product.schema';
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Product, ProductSchema),
-		OrganizationsModule,
+		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
 		ImagesModule,
 	],
