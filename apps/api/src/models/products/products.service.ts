@@ -21,15 +21,20 @@ export class ProductsService {
 		});
 	}
 
-	async update(id: mongoose.Types.ObjectId, dto: UpdateProductDto): Promise<ProductDocument> {
+	async update(
+		id: mongoose.Types.ObjectId,
+		dto: UpdateProductDto,
+	): Promise<ProductDocument | null> {
 		const { image, ...rest } = dto;
 		const product = await this.productsRepository.findOneByIdAndUpdate(id, rest);
+		if (!product) return null;
 		product.imageKey = await this.imagesService.handleImageDtoAndGetKey(product, image);
 		return await this.productsRepository.findOneByIdAndUpdate(id, product);
 	}
 
-	async delete(id: mongoose.Types.ObjectId): Promise<ProductDocument> {
+	async delete(id: mongoose.Types.ObjectId): Promise<ProductDocument | null> {
 		const product = await this.productsRepository.deleteOneById(id);
+		if (!product) return null;
 		await this.inventoryService.deleteManyByProduct(id);
 		return product;
 	}
