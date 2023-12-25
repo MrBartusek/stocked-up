@@ -24,7 +24,6 @@ export class WarehousesController {
 		private readonly warehousesService: WarehousesService,
 		private readonly organizationsService: OrganizationsService,
 		private readonly organizationsStatsService: OrganizationsStatsService,
-		private readonly inventoryService: InventoryService,
 	) {}
 
 	@Post()
@@ -75,7 +74,6 @@ export class WarehousesController {
 		}
 
 		const org = await this.organizationsService.deleteWarehouseReference(warehouse._id);
-		await this.inventoryService.deleteManyByWarehouse(warehouse._id);
 		await this.organizationsStatsService.recalculateTotalValue(org._id);
 
 		return Warehouse.toDto(warehouse);

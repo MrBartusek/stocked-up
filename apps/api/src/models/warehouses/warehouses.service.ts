@@ -3,10 +3,14 @@ import { Types } from 'mongoose';
 import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
+import { InventoryService } from '../inventory/inventory.service';
 
 @Injectable()
 export class WarehousesService {
-	constructor(private readonly warehouseRepository: WarehouseRepository) {}
+	constructor(
+		private readonly warehouseRepository: WarehouseRepository,
+		private readonly inventoryService: InventoryService,
+	) {}
 
 	create(createWarehouseDto: CreateWarehouseDto): Promise<WarehouseDocument> {
 		return this.warehouseRepository.create({
@@ -23,8 +27,11 @@ export class WarehousesService {
 		return this.warehouseRepository.findById(id);
 	}
 
-	delete(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {
-		return this.warehouseRepository.deleteOneById(id);
+	async delete(id: Types.ObjectId): Promise<WarehouseDocument | null> {
+		const warehouse = await this.warehouseRepository.deleteOneById(id);
+		if (!warehouse) return null;
+		await this.inventoryService.deleteManyByWarehouse(warehouse._id);
+		return warehouse;
 	}
 
 	exist(id: Types.ObjectId) {
