@@ -4,3 +4,4 @@ ignore:
   - "**/*main.*"
   - "**/*.repository.*"
   - "**/mongoose-module-helper.ts"
+  - "**/redis/connect.ts"
