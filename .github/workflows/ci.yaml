@@ -1,6 +1,6 @@
 name: CI
 
-'on':
+on:
   push:
     branches:
       - master
@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Set up Node 18
+      - name: Set up Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Cache NPM dependencies
         uses: actions/cache@v3
         id: cache-npm
@@ -36,10 +36,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Set up Node 18
+      - name: Set up Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Restore cache
         uses: actions/cache@v3
         id: npm-cache
@@ -54,7 +54,7 @@ jobs:
           path: |
             packages/*/dist
             apps/*/dist
-          key: '${{ runner.os }}-build-${{ github.sha }}'
+          key: "${{ runner.os }}-build-${{ github.sha }}"
 
   lint:
     name: Lint
@@ -64,10 +64,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Set up Node 18
+      - name: Set up Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Restore cache
         uses: actions/cache@v3
         id: npm-cache
@@ -76,7 +76,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
       - name: Lint
         run: npm run lint
-  
+
   test:
     name: Unit Test API
     runs-on: ubuntu-latest
@@ -85,10 +85,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Set up Node 18
+      - name: Set up Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Restore NPM cache
         uses: actions/cache@v3
         id: npm-cache
@@ -101,7 +101,7 @@ jobs:
           path: |
             packages/*/dist
             apps/*/dist
-          key: '${{ runner.os }}-build-${{ github.sha }}'
+          key: "${{ runner.os }}-build-${{ github.sha }}"
       - name: Test
         run: npm run test:cov --workspace=api
       - name: Upload coverage reports to Codecov
@@ -113,9 +113,9 @@ jobs:
     name: Perform CodeQL Analysis
     runs-on: ubuntu-latest
     permissions:
-        actions: read
-        contents: read
-        security-events: write
+      actions: read
+      contents: read
+      security-events: write
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -126,4 +126,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
-          category: '/language:javascript'
+          category: "/language:javascript"
