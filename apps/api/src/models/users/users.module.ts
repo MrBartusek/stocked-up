@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import MongooseModuleHelper from '../../helpers/mongose-module-helper';
+import MongooseModuleHelper from '../../helpers/mongoose-module-helper';
 import { User, UserSchema } from './schemas/user.schema';
 import { UsersController } from './users.controller';
 import { UserRepository } from './users.repository';
