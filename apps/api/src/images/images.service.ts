@@ -19,6 +19,14 @@ export class ImagesService {
 		return this.s3CacheService.getObject(key);
 	}
 
+	async deleteImage(document: DocumentWithImage): Promise<boolean> {
+		if (document.imageKey) {
+			await this.s3Service.deleteObject(document.imageKey);
+			return true;
+		}
+		return false;
+	}
+
 	async handleImageDtoAndGetKey(
 		document: DocumentWithImage,
 		dto: ImageDto,
@@ -37,14 +45,6 @@ export class ImagesService {
 		}
 
 		return null;
-	}
-
-	async deleteImage(document: DocumentWithImage): Promise<boolean> {
-		if (document.imageKey) {
-			await this.s3Service.deleteObject(document.imageKey);
-			return true;
-		}
-		return false;
 	}
 
 	private async uploadBase64(base64: string): Promise<string> {
