@@ -15,6 +15,7 @@ describe('ProductsService', () => {
 			name: 'test-product',
 			buyPrice: 10,
 			sellPrice: 10,
+			imageKey: 'image-key',
 		};
 	};
 
@@ -35,6 +36,7 @@ describe('ProductsService', () => {
 
 	const mockImagesService = {
 		handleImageDtoAndGetKey: jest.fn(() => 'img-key'),
+		deleteImage: jest.fn(),
 	};
 
 	const mockInventoryService = {
@@ -42,7 +44,8 @@ describe('ProductsService', () => {
 	};
 
 	const deleteManyByProductSpy = jest.spyOn(mockInventoryService, 'deleteManyByProduct');
-	const handleImageDtoAndGetKeySpy = jest.spyOn(mockImagesService, 'handleImageDtoAndGetKey');
+	const handleImageDtoSpy = jest.spyOn(mockImagesService, 'handleImageDtoAndGetKey');
+	const deleteImageSpy = jest.spyOn(mockImagesService, 'deleteImage');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -64,6 +67,10 @@ describe('ProductsService', () => {
 		}).compile();
 
 		service = module.get<ProductsService>(ProductsService);
+	});
+
+	afterAll(() => {
+		jest.clearAllMocks();
 	});
 
 	it('should be defined', () => {
@@ -93,7 +100,7 @@ describe('ProductsService', () => {
 				name: 'updated-product',
 			}),
 		);
-		expect(handleImageDtoAndGetKeySpy).toBeCalled();
+		expect(handleImageDtoSpy).toBeCalled();
 	});
 
 	it('should delete product', async () => {
@@ -105,6 +112,11 @@ describe('ProductsService', () => {
 			}),
 		);
 		expect(deleteManyByProductSpy).toBeCalledWith(product._id);
+		expect(deleteImageSpy).toHaveBeenCalledWith(
+			expect.objectContaining({
+				imageKey: 'image-key',
+			}),
+		);
 	});
 
 	it('should find one product', () => {

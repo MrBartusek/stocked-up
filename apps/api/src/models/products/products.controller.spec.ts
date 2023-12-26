@@ -20,6 +20,7 @@ describe('ProductsController', () => {
 			organization: new Types.ObjectId(),
 			buyPrice: 10,
 			sellPrice: 10,
+			imageKey: 'image-key',
 		};
 	};
 
