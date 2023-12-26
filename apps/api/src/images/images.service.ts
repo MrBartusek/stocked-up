@@ -33,17 +33,7 @@ export class ImagesService {
 			await this.s3Service.deleteObject(document.imageKey);
 		}
 		if (shouldUploadImage) {
-			const buffer = this.base64ToBuffer(dto.data);
-
-			const oneMb = 1000000;
-			const fileToLarge = buffer.byteLength > 5 * oneMb;
-
-			if (fileToLarge) {
-				throw new PayloadTooLargeException('Max image size is 5MB');
-			}
-
-			const key = await this.s3Service.uploadObject(buffer);
-			return key;
+			return this.uploadBase64(dto.data);
 		}
 
 		return null;
@@ -55,6 +45,23 @@ export class ImagesService {
 			return true;
 		}
 		return false;
+	}
+
+	private async uploadBase64(base64: string): Promise<string> {
+		const buffer = this.base64ToBuffer(base64);
+
+		this.validateImageThrowIfInvalid(buffer);
+
+		return this.s3Service.uploadObject(buffer);
+	}
+
+	private validateImageThrowIfInvalid(buffer: Buffer): void {
+		const oneMb = 1000000;
+		const fileToLarge = buffer.byteLength > 5 * oneMb;
+
+		if (fileToLarge) {
+			throw new PayloadTooLargeException('Max image size is 5MB');
+		}
 	}
 
 	private base64ToBuffer(base64: string) {
