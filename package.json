@@ -10,7 +10,8 @@
         "start": "dotenv -- node apps/api/dist/main",
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
-        "clean": "turbo daemon clean"
+        "clean": "turbo daemon clean",
+        "test": "turbo run test"
     },
     "workspaces": [
         "apps/*",
