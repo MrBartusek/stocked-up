@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import { CreateWarehouseDto } from 'shared-types';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
+import { WarehousesService } from '../warehouses/warehouses.service';
+import { ProductsService } from '../products/products.service';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;
@@ -15,7 +17,11 @@ describe('OrganizationsService', () => {
 			stats: {},
 			settings: {},
 			acls: [],
-			warehouseS: [],
+			warehouses: [
+				{
+					id: 'warehouse-id',
+				},
+			],
 		};
 	};
 
@@ -33,6 +39,18 @@ describe('OrganizationsService', () => {
 		findById: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
 	};
 
+	const mockWarehousesService = {
+		delete: jest.fn(),
+	};
+
+	const mockProductsService = {
+		findAll: jest.fn(() => [{ _id: 'product-id' }]),
+		delete: jest.fn(),
+	};
+
+	const warehouseDeleteSpy = jest.spyOn(mockWarehousesService, 'delete');
+	const productDeleteSpy = jest.spyOn(mockProductsService, 'delete');
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
@@ -40,6 +58,14 @@ describe('OrganizationsService', () => {
 				{
 					provide: OrganizationRepository,
 					useValue: mockOrganizationRepository,
+				},
+				{
+					provide: WarehousesService,
+					useValue: mockWarehousesService,
+				},
+				{
+					provide: ProductsService,
+					useValue: mockProductsService,
 				},
 			],
 		}).compile();
@@ -61,9 +87,12 @@ describe('OrganizationsService', () => {
 		expect(org.name).toBe('updated-name');
 	});
 
-	it('should delete organization', async () => {
+	it('should delete organization (with children)', async () => {
 		const org = await service.delete({ name: 'test-name' } as any);
+
 		expect(org.name).toBe('test-name');
+		expect(warehouseDeleteSpy).toHaveBeenCalledWith(org.warehouses[0].id);
+		expect(productDeleteSpy).toBeCalledWith('product-id');
 	});
 
 	it('should find by id', async () => {
