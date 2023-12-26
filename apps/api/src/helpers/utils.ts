@@ -2,15 +2,16 @@ import { Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
 import { Readable } from 'node:stream';
 
-const { BASE_API_URL, NODE_ENV } = process.env;
 const logger = new Logger('Utils');
 
 class Utils {
 	public static isProduction(): boolean {
+		const { NODE_ENV } = process.env;
 		return NODE_ENV == 'production';
 	}
 
 	public static getApiBaseUrl(): string {
+		const { BASE_API_URL } = process.env;
 		const API_BASE_URL_REGEX = /^https?:\/\/.*api\/?$/;
 		if (BASE_API_URL) {
 			const isValid = API_BASE_URL_REGEX.test(BASE_API_URL);
