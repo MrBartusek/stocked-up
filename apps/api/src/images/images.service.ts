@@ -1,6 +1,7 @@
-import { Injectable, PayloadTooLargeException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, PayloadTooLargeException } from '@nestjs/common';
 import { Document } from 'mongoose';
 import { ImageDto } from 'shared-types/dist/ImageDto';
+import * as sharp from 'sharp';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
 
@@ -14,6 +15,8 @@ export class ImagesService {
 		private readonly s3CacheService: S3CacheService,
 		private readonly s3Service: S3Service,
 	) {}
+
+	private readonly logger = new Logger(ImagesService.name);
 
 	getObject(key: string) {
 		return this.s3CacheService.getObject(key);
@@ -52,7 +55,12 @@ export class ImagesService {
 
 		this.validateImageThrowIfInvalid(buffer);
 
-		return this.s3Service.uploadObject(buffer);
+		const processImage = await this.processImage(buffer).catch((error) => {
+			this.logger.warn('Sharp image processing failed', error);
+			throw new BadRequestException('Image processing failed');
+		});
+
+		return this.s3Service.uploadObject(processImage);
 	}
 
 	private validateImageThrowIfInvalid(buffer: Buffer): void {
@@ -62,6 +70,10 @@ export class ImagesService {
 		if (fileToLarge) {
 			throw new PayloadTooLargeException('Max image size is 5MB');
 		}
+	}
+
+	private processImage(buffer: Buffer): Promise<Buffer> {
+		return sharp(buffer).resize(256, 256, { fit: 'cover' }).png().toBuffer();
 	}
 
 	private base64ToBuffer(base64: string) {
