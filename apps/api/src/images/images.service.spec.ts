@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DocumentWithImage, ImagesService } from './images.service';
+import { ImageDto } from 'shared-types/dist/ImageDto';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
-import { ImageDto } from 'shared-types/dist/ImageDto';
-import { PayloadTooLargeException } from '@nestjs/common';
+import { DocumentWithImage, ImagesService } from './images.service';
 
 const MOCK_IMAGE =
 	'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/9+C3QAAAABJRU5ErkJggg==';

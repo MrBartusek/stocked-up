@@ -2,7 +2,6 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateProductDto } from 'shared-types';
-import { InventoryService } from '../inventory/inventory.service';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';

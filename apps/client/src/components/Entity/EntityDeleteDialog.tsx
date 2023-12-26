@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { ImageDto } from 'shared-types/dist/ImageDto';
 import { Utils } from '../../utils';
 import Button from '../Button';
 import Form from '../Form/Form';
@@ -11,7 +12,6 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
-import { ImageDto } from 'shared-types/dist/ImageDto';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;

@@ -2,13 +2,12 @@ import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
 import { CreateOrganizationDto, UpdateOrganizationDto } from 'shared-types';
+import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { InventoryService } from '../inventory/inventory.service';
-import { WarehousesService } from '../warehouses/warehouses.service';
-import { ProductsService } from '../products/products.service';
 
 @Injectable()
 export class OrganizationsService {

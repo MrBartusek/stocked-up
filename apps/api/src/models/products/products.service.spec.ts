@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateProductDto } from 'shared-types';
 import { ImagesService } from '../../images/images.service';
+import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
-import { InventoryService } from '../inventory/inventory.service';
 
 describe('ProductsService', () => {
 	let service: ProductsService;

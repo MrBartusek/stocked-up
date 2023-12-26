@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateWarehouseDto } from 'shared-types';
+import { ProductsService } from '../products/products.service';
+import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
-import { WarehousesService } from '../warehouses/warehouses.service';
-import { ProductsService } from '../products/products.service';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;

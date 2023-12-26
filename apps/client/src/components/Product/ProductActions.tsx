@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { BsInfoCircleFill, BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
-import ActionButton from '../ActionButton';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import ActionButton from '../ActionButton';
 import TableActionsWrapper from '../TableActionsWrapper';
 
 export interface ProductActionsProps {
