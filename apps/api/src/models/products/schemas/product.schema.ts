@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { BasicProductDto, ProductDto } from 'shared-types';
-import DtoHelpers from '../../../helpers/dtoHelpers';
+import DtoHelper from '../../../helpers/dto.helper';
 import { Organization } from '../../organizations/schemas/organization.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
@@ -36,7 +36,7 @@ export class Product {
 		return {
 			id: document._id,
 			name: document.name,
-			image: DtoHelpers.getImageDto(document.imageKey),
+			image: DtoHelper.getImageDto(document.imageKey),
 			buyPrice: document.buyPrice,
 			sellPrice: document.sellPrice,
 			unit: document.unit,

@@ -1,5 +1,5 @@
 import { Module, forwardRef } from '@nestjs/common';
-import MongooseModuleHelper from '../../helpers/mongoose-module-helper';
+import MongooseModuleHelper from '../../helpers/mongoose-module.helper';
 import { ProductsModule } from '../products/products.module';
 import { WarehousesModule } from '../warehouses/warehouses.module';
 import { OrganizationsStatsService } from './organizations-stats.service';

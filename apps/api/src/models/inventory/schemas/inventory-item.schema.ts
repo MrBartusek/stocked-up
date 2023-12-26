@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
-import DtoHelpers from '../../../helpers/dtoHelpers';
+import DtoHelper from '../../../helpers/dto.helper';
 import { ProductDocument } from '../../products/schemas/product.schema';
 import { Warehouse } from '../../warehouses/schemas/warehouse.schema';
 
@@ -27,7 +27,7 @@ export class InventoryItem {
 		return {
 			id: document._id,
 			productId: isProductMongoId ? (document.product as any) : document.product._id.toString(),
-			image: DtoHelpers.getImageDto(document.product.imageKey),
+			image: DtoHelper.getImageDto(document.product.imageKey),
 			name: document.product.name,
 			quantity: document.quantity,
 			unit: document.product.unit,
