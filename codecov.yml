@@ -3,3 +3,4 @@ ignore:
   - "**/*initializer.*"
   - "**/*main.*"
   - "**/*.repository.*"
+  - "**/mongoose-module-helper.ts"
