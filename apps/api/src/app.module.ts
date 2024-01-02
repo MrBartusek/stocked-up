@@ -14,6 +14,7 @@ import { WarehousesModule } from './models/warehouses/warehouses.module';
 import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
+import { GravatarModule } from './gravatar/gravatar.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),
@@ -33,6 +34,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 		ImagesModule,
 		RedisModule,
 		S3CacheModule,
+		GravatarModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
