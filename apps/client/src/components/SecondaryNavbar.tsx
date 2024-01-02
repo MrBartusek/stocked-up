@@ -5,7 +5,7 @@ import Container from './Container';
 export interface SecondaryNavbarProps {
 	icon: IconType;
 	title: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 }
 
 export function SecondaryNavbar({ icon, title, children }: SecondaryNavbarProps) {
