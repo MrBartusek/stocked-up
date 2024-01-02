@@ -6,6 +6,7 @@ import Dropdown from './Dropdown/Dropdown';
 import DropdownItem from './Dropdown/DropdownItem';
 import DropdownMenu from './Dropdown/DropdownMenu';
 import DropdownToggle from './Dropdown/DropdownToggle';
+import UserAvatar from './UserAvatar';
 
 function UserInfo() {
 	const { user, logout } = useContext(UserContext);
@@ -19,9 +20,9 @@ function UserInfo() {
 	return (
 		<Dropdown>
 			<DropdownToggle className="custom-button-simple flex items-center gap-2">
-				<img
-					className="h-6 rounded-full"
-					src="https://dokurno.dev/avatar.webp"
+				<UserAvatar
+					user={user}
+					variant="square"
 				/>
 				<div>{user.email}</div>
 				<BsChevronDown />
