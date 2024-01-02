@@ -7,7 +7,7 @@ export interface UserAvatarProps {
 	size?: number;
 }
 
-function UserAvatar({ user, variant = 'square', size = 6 }: UserAvatarProps) {
+function UserAvatar({ variant = 'square', size = 6 }: UserAvatarProps) {
 	return (
 		<div style={{ width: `${size / 4}rem` }}>
 			<img
