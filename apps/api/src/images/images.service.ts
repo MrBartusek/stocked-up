@@ -50,17 +50,20 @@ export class ImagesService {
 		return null;
 	}
 
-	private async uploadBase64(base64: string): Promise<string> {
-		const buffer = this.base64ToBuffer(base64);
+	public async uploadImage(image: Buffer): Promise<string> {
+		this.validateImageThrowIfInvalid(image);
 
-		this.validateImageThrowIfInvalid(buffer);
-
-		const processImage = await this.processImage(buffer).catch((error) => {
+		const processImage = await this.processImage(image).catch((error) => {
 			this.logger.warn('Sharp image processing failed', error);
 			throw new BadRequestException('Image processing failed');
 		});
 
 		return this.s3Service.uploadObject(processImage);
+	}
+
+	private async uploadBase64(base64: string): Promise<string> {
+		const buffer = this.base64ToBuffer(base64);
+		return this.uploadImage(buffer);
 	}
 
 	private validateImageThrowIfInvalid(buffer: Buffer): void {

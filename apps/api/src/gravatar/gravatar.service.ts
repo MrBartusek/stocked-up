@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import gravatar from 'gravatar';
-import sharp from 'sharp';
+import * as gravatar from 'gravatar';
+import * as sharp from 'sharp';
 
 @Injectable()
 export class GravatarService {
-	getGravatarBuffer(email: string): Promise<Buffer | null> {
+	async getGravatarBuffer(email: string): Promise<Buffer | null> {
 		const url = gravatar.url(email, { protocol: 'https', size: '256' });
 		return axios
-			.get(url)
+			.get(url, { responseType: 'arraybuffer' })
 			.then((res) => sharp(res.data).toBuffer())
 			.catch((error) => {
 				if (error?.response?.status == 404) {
