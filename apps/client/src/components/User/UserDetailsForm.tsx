@@ -10,17 +10,20 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import { ImageDto } from 'shared-types/dist/ImageDto';
+import FormImageInput from '../Form/FormImageInput';
 
 type Inputs = {
 	username: string;
 	email: string;
+	image: ImageDto;
 };
 
 function UserDetailsForm() {
 	const { user } = useContext(UserContext);
 
-	const { register, handleSubmit } = useForm<Inputs>({
-		defaultValues: { username: user.username, email: user.email },
+	const { register, handleSubmit, control } = useForm<Inputs>({
+		defaultValues: { username: user.username, email: user.email, image: user.image },
 	});
 	const queryClient = useQueryClient();
 
@@ -31,10 +34,7 @@ function UserDetailsForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: UpdateUserDto = {
-			username: inputs.username,
-			email: inputs.email,
-		};
+		const dto: UpdateUserDto = inputs;
 
 		Utils.postFetcher<UserDto>(`/api/user`, dto, { method: 'UPDATE' })
 			.then(() => {
@@ -51,6 +51,13 @@ function UserDetailsForm() {
 			loading={loading}
 		>
 			{error && <Alert>{error}</Alert>}
+
+			<FormField label="Profile picture">
+				<FormImageInput
+					control={control}
+					name={'image'}
+				/>
+			</FormField>
 
 			<FormField
 				label="Username"
