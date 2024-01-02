@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { ImageDto } from 'shared-types/dist/ImageDto';
 
 describe('UsersController', () => {
 	let controller: UsersController;
@@ -43,7 +42,10 @@ describe('UsersController', () => {
 			id: expect.any(String),
 			username: expect.any(String),
 			email: expect.any(String),
-			image: expect.any(ImageDto),
+			image: {
+				hasImage: expect.any(Boolean),
+				url: expect.any(String),
+			},
 		});
 	});
 
@@ -54,7 +56,10 @@ describe('UsersController', () => {
 			id: expect.any(String),
 			username: expect.any(String),
 			email: expect.any(String),
-			image: expect.any(ImageDto),
+			image: {
+				hasImage: expect.any(Boolean),
+				url: expect.any(String),
+			},
 		});
 	});
 });
