@@ -7,8 +7,11 @@ export class UserProfile {
 	@Prop({ required: true })
 	username: string;
 
-	@Prop()
+	@Prop({ required: true })
 	email: string;
+
+	@Prop()
+	imageKey: string | null;
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);

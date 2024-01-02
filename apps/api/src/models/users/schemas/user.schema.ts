@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { PrivateUserDto, UserDto } from 'shared-types';
-import { UserAuth } from './auth.schema';
-import { UserProfile } from './profile.schema copy';
+import { UserAuth } from './user-auth.schema';
+import { UserProfile } from './user-profile.schema';
+import DtoHelper from '../../../helpers/dto.helper';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -18,6 +19,7 @@ export class User {
 		return {
 			id: document._id,
 			username: document.profile.username,
+			image: DtoHelper.getImageDto(document.profile.imageKey),
 		};
 	}
 

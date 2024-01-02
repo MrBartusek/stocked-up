@@ -14,7 +14,7 @@ export class UsersService {
 
 	create(data: UserCreateData): Promise<UserDocument | undefined> {
 		return this.userRepository.create({
-			profile: { username: data.username, email: data.email },
+			profile: { username: data.username, email: data.email, imageKey: null },
 			auth: { password: data.passwordHash },
 		});
 	}

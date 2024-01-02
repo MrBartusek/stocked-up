@@ -1,4 +1,4 @@
-import { UserProfile } from '../../models/users/schemas/profile.schema copy';
+import { UserProfile } from '../../models/users/schemas/user-profile.schema';
 
 interface UserSessionData extends UserProfile {
 	id: string;
