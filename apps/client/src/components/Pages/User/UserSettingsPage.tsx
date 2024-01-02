@@ -11,7 +11,7 @@ function UserSettingsPage() {
 				icon={BsPersonGear}
 				title="User Settings"
 			/>
-			<Container>
+			<Container className="pt-8">
 				<UserDetailsForm />
 			</Container>
 		</DashboardLayout>
