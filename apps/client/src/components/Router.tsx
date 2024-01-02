@@ -1,4 +1,4 @@
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DashboardContainer from './DashboardContainer';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
@@ -35,6 +35,7 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import UserSettingsPage from './Pages/User/UserSettingsPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -91,6 +92,16 @@ function Router() {
 							replace
 						/>
 					),
+				},
+				{
+					path: 'user',
+					element: <Outlet />,
+					children: [
+						{
+							path: 'settings',
+							element: <UserSettingsPage />,
+						},
+					],
 				},
 				{
 					path: 'select',

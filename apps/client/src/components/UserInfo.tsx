@@ -7,6 +7,7 @@ import DropdownItem from './Dropdown/DropdownItem';
 import DropdownMenu from './Dropdown/DropdownMenu';
 import DropdownToggle from './Dropdown/DropdownToggle';
 import UserAvatar from './UserAvatar';
+import UserSettingsDropdownItem from './UserSettingsDropdownItem';
 
 function UserInfo() {
 	const { user, logout } = useContext(UserContext);
@@ -28,7 +29,7 @@ function UserInfo() {
 				<BsChevronDown />
 			</DropdownToggle>
 			<DropdownMenu>
-				<DropdownItem icon={BsSliders}>Settings</DropdownItem>
+				<UserSettingsDropdownItem />
 				<Link
 					to="https://github.com/MrBartusek/stocked-up/issues"
 					target="_blank"

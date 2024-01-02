@@ -11,13 +11,15 @@ type ButtonProps = React.DetailedHTMLProps<
 export interface DropdownItemProps extends ButtonProps {
 	icon?: IconType;
 	externalLink?: boolean;
-	children: string;
+	active?: boolean;
+	children?: string;
 }
 
 function DropdownItem({
 	children,
 	icon,
 	className,
+	active = false,
 	externalLink = false,
 	...props
 }: DropdownItemProps) {
@@ -28,8 +30,10 @@ function DropdownItem({
 			className={classNames(
 				'flex w-full items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-150',
 				'justify-center',
+				{ 'bg-gray-150 text-primary': active },
 				className,
 			)}
+			disabled={active}
 			{...props}
 		>
 			{iconElement}
