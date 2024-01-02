@@ -7,7 +7,7 @@ export interface UserAvatarProps {
 	size?: number;
 }
 
-function UserAvatar({ variant = 'square', size = 6 }: UserAvatarProps) {
+function UserAvatar({ user, variant = 'square', size = 6 }: UserAvatarProps) {
 	return (
 		<div style={{ width: `${size / 4}rem` }}>
 			<img
@@ -15,7 +15,7 @@ function UserAvatar({ variant = 'square', size = 6 }: UserAvatarProps) {
 					'rounded-full': variant == 'circle',
 					'rounded-md': variant == 'square',
 				})}
-				src="https://dokurno.dev/avatar.webp"
+				src={user.image.url}
 			/>
 		</div>
 	);
