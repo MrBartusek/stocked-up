@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ProductDto, UpdateProductDto } from 'shared-types';
-import { ImageDto } from 'shared-types/dist/ImageDto';
+import { ImageDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';

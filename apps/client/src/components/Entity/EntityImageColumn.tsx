@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ImageDto } from 'shared-types/dist/ImageDto';
+import { ImageDto } from 'shared-types';
 
 type ImgProps = React.DetailedHTMLProps<
 	React.ImgHTMLAttributes<HTMLImageElement>,

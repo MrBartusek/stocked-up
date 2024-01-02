@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ImageDto } from 'shared-types/dist/ImageDto';
+import { ImageDto } from 'shared-types';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
 import { DocumentWithImage, ImagesService } from './images.service';

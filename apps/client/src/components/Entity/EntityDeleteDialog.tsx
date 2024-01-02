@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { ImageDto } from 'shared-types/dist/ImageDto';
+import { ImageDto } from 'shared-types';
 import { Utils } from '../../utils';
 import Button from '../Button';
 import Form from '../Form/Form';

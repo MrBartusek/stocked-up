@@ -1,3 +1,4 @@
+import { ImageDto } from './ImageDto';
 import { SimpleResponseDto } from './SimpleResponseDto';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { UserRegisterDto } from './auth/UserRegisterDto';
@@ -43,6 +44,7 @@ export {
     UserDto,
     UserLoginDto,
     UserRegisterDto,
-    WarehouseDto
+    WarehouseDto,
+    ImageDto
 };
 

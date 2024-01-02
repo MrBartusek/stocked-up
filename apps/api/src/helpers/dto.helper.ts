@@ -1,4 +1,4 @@
-import { ImageDto } from 'shared-types/dist/ImageDto';
+import { ImageDto } from 'shared-types';
 import Utils from './utils';
 
 class DtoHelper {
