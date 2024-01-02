@@ -25,12 +25,10 @@ function FileUploader({ value, isDragActive, onChange }: FileUploaderProps) {
 	}
 	return (
 		<div className="flex h-20 items-center gap-6">
-			<div className="h-16 w-16 flex-shrink-0 overflow-hidden ">
-				<img
-					src={value.url || '/api/images/default'}
-					className="h-auto w-auto rounded-md"
-					width={50}
-					height={50}
+			<div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+				<div
+					style={{ backgroundImage: `url('${value.url || '/api/images/default'}')` }}
+					className="h-full w-auto bg-cover"
 				/>
 			</div>
 			<div className="flex flex-col">
