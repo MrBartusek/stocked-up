@@ -22,7 +22,12 @@ type Inputs = {
 function UserDetailsForm() {
 	const { user } = useContext(UserContext);
 
-	const { register, handleSubmit, control } = useForm<Inputs>({
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { isDirty },
+	} = useForm<Inputs>({
 		defaultValues: { username: user.username, email: user.email, image: user.image },
 	});
 	const queryClient = useQueryClient();
@@ -34,9 +39,16 @@ function UserDetailsForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: UpdateUserDto = inputs;
+		const { image, ...rest } = inputs;
+		const dto: UpdateUserDto = {
+			image: {
+				hasImage: image.hasImage,
+				data: image.data,
+			},
+			...rest,
+		};
 
-		Utils.postFetcher<UserDto>(`/api/user`, dto, { method: 'UPDATE' })
+		Utils.postFetcher<UserDto>(`/api/users`, dto, { method: 'PUT' })
 			.then(() => {
 				queryClient.invalidateQueries(['users', 'me']);
 				toast.success(`Successfully updated user details!`);

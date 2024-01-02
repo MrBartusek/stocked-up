@@ -5,7 +5,7 @@ import * as sharp from 'sharp';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
 
-export interface DocumentWithImage extends Document {
+export interface DocumentWithImage {
 	imageKey: string;
 }
 

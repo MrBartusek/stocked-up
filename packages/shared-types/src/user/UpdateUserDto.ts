@@ -1,4 +1,6 @@
-import { IsEmail, IsOptional, Length } from "class-validator";
+import { Type } from "class-transformer";
+import { IsEmail, Length, ValidateNested } from "class-validator";
+import { ImageDto } from "../ImageDto";
 
 export class UpdateUserDto {
     @Length(4, 16)
@@ -6,4 +8,8 @@ export class UpdateUserDto {
 
     @IsEmail()
     email: string;
+
+    @ValidateNested()
+    @Type(() => ImageDto)
+    image: ImageDto;
 }

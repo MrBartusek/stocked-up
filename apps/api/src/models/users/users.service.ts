@@ -3,6 +3,8 @@ import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
 import { ImagesService } from '../../images/images.service';
 import { GravatarService } from '../../gravatar/gravatar.service';
+import { UpdateUserDto } from 'shared-types';
+import { Types } from 'mongoose';
 
 export interface UserCreateData {
 	username: string;
@@ -27,6 +29,14 @@ export class UsersService {
 			profile: { username: data.username, email: data.email, imageKey: avatarKey },
 			auth: { password: data.passwordHash },
 		});
+	}
+
+	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto) {
+		const { image, ...rest } = dto;
+
+		const user = await this.userRepository.findOneByIdAndUpdate(id, { $set: { profile: rest } });
+		user.profile.imageKey = await this.imagesService.handleImageDtoAndGetKey(user.profile, image);
+		return await this.userRepository.findOneByIdAndUpdate(id, user);
 	}
 
 	findOne(username: string): Promise<UserDocument | undefined> {
