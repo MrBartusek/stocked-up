@@ -22,7 +22,7 @@ function UserInfo() {
 			<DropdownToggle className="custom-button-simple flex items-center gap-2">
 				<UserAvatar
 					user={user}
-					variant="square"
+					variant="circle"
 				/>
 				<div>{user.email}</div>
 				<BsChevronDown />
