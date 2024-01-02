@@ -1,14 +1,11 @@
 import { useContext } from 'react';
-import { BsArrowRight } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
-import Container from '../Container';
+import GoToDashboardButton from '../../GoToDashboardButton';
 import { UserContext } from '../../context/UserContext';
+import Container from '../Container';
 import StockedUpLogo from '../StockedUpLogo';
+import TryDemoButton from '../TryDemoButton';
 import UserInfo from '../UserInfo';
 import NavbarNavigation from './NavbarNavigation';
-import GoToDashboardButton from '../../GoToDashboardButton';
-import TryDemoButton from '../TryDemoButton';
 
 function Navbar() {
 	const { isAuthenticated } = useContext(UserContext);

@@ -1,11 +1,11 @@
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { BasicWarehouseDto, ProductDto } from 'shared-types';
+import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 import { HTTPResponseError, Utils } from '../../utils';
 import EntityInfoTable from '../Entity/EntityInfoTable';
 import Loader from '../Loader';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { CurrentAppContext } from '../../context/CurrentAppContext';
 
 export interface ProductInventoryPeek {
 	warehouse: BasicWarehouseDto;

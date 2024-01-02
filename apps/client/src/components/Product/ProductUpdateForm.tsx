@@ -4,17 +4,17 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ProductDto, UpdateProductDto } from 'shared-types';
-import { Utils } from '../../utils';
+import { ImageDto } from 'shared-types/dist/ImageDto';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormCurrencyInput from '../Form/FormCurrencyInput';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
+import FormImageInput from '../Form/FormImageInput';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
-import { ImageDto } from 'shared-types/dist/ImageDto';
-import FormImageInput from '../Form/FormImageInput';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;

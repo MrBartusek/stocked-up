@@ -1,5 +1,5 @@
-import useUser from '../hooks/useUser';
 import { UserContext } from '../context/UserContext';
+import useUser from '../hooks/useUser';
 import Router from './Router';
 
 function StockedUp() {

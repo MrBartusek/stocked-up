@@ -26,6 +26,7 @@ import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
 import UnderConstructionPage from './Pages/UnderConstructionPage';
+import UserSettingsPage from './Pages/User/UserSettingsPage';
 import WarehouseDeletePage from './Pages/Warehouse/WarehouseDeletePage';
 import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
 import WarehouseViewPage from './Pages/Warehouse/WarehouseViewPage';
@@ -35,7 +36,6 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import UserSettingsPage from './Pages/User/UserSettingsPage';
 
 function Router() {
 	const router = createBrowserRouter([

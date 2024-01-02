@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { BsPersonFillGear, BsPersonGear } from 'react-icons/bs';
+import { BsPersonGear } from 'react-icons/bs';
 import { UserContext } from '../../../context/UserContext';
 import Container from '../../Container';
 import DashboardLayout from '../../Layout/DasboardLayout';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
-import UserAvatar from '../../UserAvatar';
 import UserDetailsForm from '../../User/UserDetailsForm';
+import UserAvatar from '../../UserAvatar';
 
 function UserSettingsPage() {
 	const { user } = useContext(UserContext);
