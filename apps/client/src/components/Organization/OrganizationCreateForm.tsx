@@ -59,7 +59,7 @@ function OrganizationCreateForm() {
 					placeholder="My company"
 					required
 					{...register('name', { required: true })}
-				></FormInput>
+				/>
 			</FormField>
 
 			<FromHeading
@@ -77,7 +77,7 @@ function OrganizationCreateForm() {
 					placeholder="US West Main"
 					required
 					{...register('warehouseName', { required: true })}
-				></FormInput>
+				/>
 			</FormField>
 
 			<FormField
@@ -88,7 +88,7 @@ function OrganizationCreateForm() {
 					placeholder="18 Milton Street"
 					required
 					{...register('warehouseAddress', { required: true })}
-				></FormInput>
+				/>
 			</FormField>
 
 			<FormError>{error}</FormError>

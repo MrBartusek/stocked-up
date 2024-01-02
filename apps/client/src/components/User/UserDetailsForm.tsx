@@ -66,7 +66,7 @@ function UserDetailsForm() {
 				<FormInput
 					required
 					{...register('username', { required: true })}
-				></FormInput>
+				/>
 			</FormField>
 
 			<FormField
@@ -77,7 +77,7 @@ function UserDetailsForm() {
 					required
 					type="email"
 					{...register('email', { required: true })}
-				></FormInput>
+				/>
 			</FormField>
 
 			<FormSubmitButton>Update details</FormSubmitButton>
