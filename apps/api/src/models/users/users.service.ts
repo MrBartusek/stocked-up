@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
+import { ImagesService } from '../../images/images.service';
+import { GravatarService } from '../../gravatar/gravatar.service';
 
 export interface UserCreateData {
 	username: string;
@@ -10,11 +12,19 @@ export interface UserCreateData {
 
 @Injectable()
 export class UsersService {
-	constructor(private readonly userRepository: UserRepository) {}
+	constructor(
+		private readonly userRepository: UserRepository,
+		private readonly imagesService: ImagesService,
+		private readonly gravatarService: GravatarService,
+	) {}
 
-	create(data: UserCreateData): Promise<UserDocument | undefined> {
+	private readonly logger = new Logger(UsersService.name);
+
+	async create(data: UserCreateData): Promise<UserDocument | undefined> {
+		const avatarKey = await this.importDefaultAvatar(data.email);
+
 		return this.userRepository.create({
-			profile: { username: data.username, email: data.email, imageKey: null },
+			profile: { username: data.username, email: data.email, imageKey: avatarKey },
 			auth: { password: data.passwordHash },
 		});
 	}
@@ -33,5 +43,12 @@ export class UsersService {
 
 	isUsernameTaken(username: string) {
 		return this.userRepository.exist({ 'profile.username': username });
+	}
+
+	private async importDefaultAvatar(email: string): Promise<string | null> {
+		const gravatar = await this.gravatarService.getGravatarBuffer(email);
+		if (!gravatar) return null;
+		this.logger.log(`Saving default Gravatar as avatar for new user: ${email}`);
+		return this.imagesService.uploadImage(gravatar);
 	}
 }
