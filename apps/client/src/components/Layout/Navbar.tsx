@@ -7,6 +7,8 @@ import { UserContext } from '../../context/UserContext';
 import StockedUpLogo from '../StockedUpLogo';
 import UserInfo from '../UserInfo';
 import NavbarNavigation from './NavbarNavigation';
+import GoToDashboardButton from '../../GoToDashboardButton';
+import TryDemoButton from '../TryDemoButton';
 
 function Navbar() {
 	const { isAuthenticated } = useContext(UserContext);
@@ -18,21 +20,10 @@ function Navbar() {
 					className="h-16 w-auto"
 				/>
 				<div className="flex flex-row items-center gap-8">
-					<div>{!isAuthenticated ? <NavbarNavigation /> : <UserInfo />}</div>
+					{!isAuthenticated ? <NavbarNavigation /> : <UserInfo />}
 					<div className="flex items-center gap-4">
-						{!isAuthenticated && (
-							<Link to="/register/demo">
-								<Button variant="primary-outline">Try demo account</Button>
-							</Link>
-						)}
-						<Link to={isAuthenticated ? 'dashboard' : 'register'}>
-							<Button>
-								<div className="flex items-center justify-center gap-2">
-									{isAuthenticated ? 'Open dashboard' : 'Get started for free'}
-									<BsArrowRight size={20} />
-								</div>
-							</Button>
-						</Link>
+						{!isAuthenticated && <TryDemoButton />}
+						<GoToDashboardButton isAuthenticated={isAuthenticated} />
 					</div>
 				</div>
 			</Container>
