@@ -22,12 +22,7 @@ type Inputs = {
 function UserDetailsForm() {
 	const { user } = useContext(UserContext);
 
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isDirty },
-	} = useForm<Inputs>({
+	const { register, handleSubmit, control } = useForm<Inputs>({
 		defaultValues: { username: user.username, email: user.email, image: user.image },
 	});
 	const queryClient = useQueryClient();
