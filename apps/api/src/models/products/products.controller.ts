@@ -1,5 +1,4 @@
 import {
-	BadRequestException,
 	Body,
 	Controller,
 	Delete,
@@ -16,7 +15,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import {
-	BasicProductDto,
 	CreateProductDto,
 	PageDto,
 	PageQueryDto,
@@ -24,11 +22,11 @@ import {
 	UpdateProductDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
-import Utils from '../../helpers/utils';
 
 @ApiTags('products')
 @Controller('products')
@@ -62,10 +60,14 @@ export class ProductsController {
 	@Get('list/:id')
 	async list(
 		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
-		@Query(ValidationPipe) pageQuery: PageQueryDto<ProductDto>,
+		@Query(
+			ValidationPipe,
+			new PageQueryValidationPipe<ProductDto>({
+				allowedFilters: ['name', 'buyPrice', 'sellPrice'],
+			}),
+		)
+		pageQuery: PageQueryDto<ProductDto>,
 	): Promise<PageDto<ProductDto>> {
-		Utils.validatePageQueryFilter(pageQuery, ['name', 'buyPrice', 'sellPrice']);
-
 		const { data, meta } = await this.productsService.paginate(orgId, pageQuery);
 
 		const productDTOs = data.map((product) => Product.toBasicDto(product));
