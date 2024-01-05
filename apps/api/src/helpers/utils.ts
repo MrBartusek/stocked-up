@@ -1,6 +1,7 @@
-import { Logger } from '@nestjs/common';
+import { BadRequestException, Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
 import { Readable } from 'node:stream';
+import { PageQueryDto } from 'shared-types';
 
 const logger = new Logger('Utils');
 
@@ -45,6 +46,24 @@ class Utils {
 			chunks.push(chunk);
 		}
 		return Buffer.concat(chunks);
+	}
+
+	public static validatePageQueryFilter<T = any>(
+		pageQuery: PageQueryDto<T>,
+		allowedFilter: (keyof T)[],
+	) {
+		if (typeof pageQuery.orderBy != 'string') {
+			throw new BadRequestException('orderBy must be string!');
+		}
+
+		const hasProhibitedFilters = !allowedFilter.includes(pageQuery.orderBy);
+
+		if (pageQuery.orderBy && hasProhibitedFilters) {
+			throw new BadRequestException(
+				`This resource cant be filtered by ${pageQuery.orderBy}! ` +
+					`Allowed filters are: ${allowedFilter.join(', ')}`,
+			);
+		}
 	}
 }
 
