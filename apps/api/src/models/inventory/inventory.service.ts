@@ -59,7 +59,7 @@ export class InventoryService {
 		return this.inventoryRepository.findAndAggregateWithProduct(query);
 	}
 
-	findAllInWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
+	listByWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
 		return this.inventoryRepository.findAndAggregateWithProduct({ warehouse: warehouseId });
 	}
 }

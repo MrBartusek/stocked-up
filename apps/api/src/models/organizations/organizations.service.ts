@@ -39,7 +39,7 @@ export class OrganizationsService {
 		return this.organizationRepository.deleteOneById(id);
 	}
 
-	async findAllForUser(id: mongoose.Types.ObjectId) {
+	async listAllForUser(id: mongoose.Types.ObjectId) {
 		return this.organizationRepository.find({ 'acls.id': id });
 	}
 

@@ -51,7 +51,7 @@ describe('OrganizationsController', () => {
 		})),
 		addWarehouseReference: jest.fn((id) => regularMockFindFunction(id)),
 		updateAcl: jest.fn((id) => regularMockFindFunction(id)),
-		findAllForUser: jest.fn((id) => {
+		listAllForUser: jest.fn((id) => {
 			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return [];
 			return Array(2).fill(regularMockFindFunction(new Types.ObjectId()));
 		}),

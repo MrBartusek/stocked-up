@@ -121,7 +121,7 @@ export class InventoryController {
 	async list(
 		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
 	): Promise<BasicInventoryItemDto[]> {
-		const items = await this.inventoryService.findAllInWarehouse(warehouseId);
+		const items = await this.inventoryService.listByWarehouse(warehouseId);
 
 		return items.map((i) => InventoryItem.toBasicDto(i));
 	}
