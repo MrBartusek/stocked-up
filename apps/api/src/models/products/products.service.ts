@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import mongoose, { Types } from 'mongoose';
-import { CreateProductDto, UpdateProductDto } from 'shared-types';
+import { CreateProductDto, PageQueryDto, ProductDto, UpdateProductDto } from 'shared-types';
 import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
+import { RepositoryPaginateResult } from '../../database/entity.repository';
 
 @Injectable()
 export class ProductsService {
@@ -56,8 +57,11 @@ export class ProductsService {
 		return this.productsRepository.findById(id);
 	}
 
-	list(organizationId: mongoose.Types.ObjectId): Promise<ProductDocument[]> {
-		return this.productsRepository.find({ organization: organizationId });
+	paginate(
+		organizationId: mongoose.Types.ObjectId,
+		pageQueryDto: PageQueryDto,
+	): Promise<RepositoryPaginateResult<ProductDocument>> {
+		return this.productsRepository.paginate({ organization: organizationId }, pageQueryDto);
 	}
 
 	countAll(organizationId: mongoose.Types.ObjectId): Promise<number> {

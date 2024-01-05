@@ -1,9 +1,15 @@
 import * as mongoose from 'mongoose';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
+import { PageMeta, PageQueryDto } from 'shared-types';
 
 const DEFAULT_PROJECTIONS = {
 	__v: 0,
 };
+
+export interface RepositoryPaginateResult<T> {
+	data: T[];
+	meta: PageMeta;
+}
 
 export abstract class EntityRepository<T extends Document> {
 	constructor(protected readonly entityModel: Model<T>) {}
@@ -87,5 +93,35 @@ export abstract class EntityRepository<T extends Document> {
 
 	async aggregate(pipeline: mongoose.PipelineStage[]): Promise<any[]> {
 		return this.entityModel.aggregate(pipeline).exec();
+	}
+
+	async paginate(
+		entityFilterQuery: FilterQuery<T>,
+		pageQueryDto: PageQueryDto,
+	): Promise<RepositoryPaginateResult<T>> {
+		const { page, pageSize, orderBy, orderDirection } = pageQueryDto;
+		const skip = pageSize * (page - 1);
+
+		if (pageQueryDto.search) {
+			entityFilterQuery.$text = { $search: pageQueryDto.search };
+		}
+
+		const cursor = this.entityModel
+			.find(entityFilterQuery, DEFAULT_PROJECTIONS)
+			.skip(skip)
+			.limit(pageSize);
+
+		if (orderBy) {
+			cursor.sort({ [orderBy]: orderDirection });
+		}
+
+		const data = await cursor.exec();
+
+		const totalItems = await this.countDocuments(entityFilterQuery);
+		const hasPreviousPage = page > 1;
+		const hasNextPage = page * pageSize < totalItems;
+		const meta: PageMeta = { page, pageLength: pageSize, totalItems, hasPreviousPage, hasNextPage };
+
+		return { data, meta };
 	}
 }

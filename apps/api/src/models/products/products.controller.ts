@@ -8,12 +8,20 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 	UseGuards,
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { BasicProductDto, CreateProductDto, ProductDto, UpdateProductDto } from 'shared-types';
+import {
+	BasicProductDto,
+	CreateProductDto,
+	PageDto,
+	PageQueryDto,
+	ProductDto,
+	UpdateProductDto,
+} from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
@@ -49,10 +57,24 @@ export class ProductsController {
 		return Product.toDto(product);
 	}
 
+	@Get('list/:id')
+	async list(
+		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
+		@Query(ValidationPipe) pageQuery: PageQueryDto<ProductDto>,
+	): Promise<PageDto<ProductDto>> {
+		const { data, meta } = await this.productsService.paginate(orgId, pageQuery);
+
+		const productDTOs = data.map((product) => Product.toBasicDto(product));
+		return {
+			meta,
+			data: productDTOs,
+		};
+	}
+
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(new ValidationPipe()) dto: UpdateProductDto,
+		@Body(ValidationPipe) dto: UpdateProductDto,
 	): Promise<ProductDto> {
 		const product = await this.productsService.update(id, dto);
 		if (!product) {
@@ -78,12 +100,6 @@ export class ProductsController {
 		await this.organizationStatsService.recalculateTotalValue(orgId);
 
 		return Product.toDto(product);
-	}
-
-	@Get('list/:id')
-	async list(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<BasicProductDto[]> {
-		const products = await this.productsService.list(id);
-		return products.map((product) => Product.toBasicDto(product));
 	}
 
 	private async updateTotalProductsCount(organizationId: Types.ObjectId) {

@@ -1,18 +1,18 @@
 import { useQuery } from 'react-query';
-import { BasicProductDto } from 'shared-types';
+import { BasicProductDto, PageDto } from 'shared-types';
 import { Utils } from '../utils';
 
 function useProductsList(organizationId: string) {
-	const { data, error, isLoading } = useQuery(
+	const { data, error, isLoading } = useQuery<PageDto<BasicProductDto>>(
 		['products', 'list', organizationId],
-		() => Utils.getFetcher(`/api/products/list/${organizationId}`),
+		() => Utils.getFetcher(`/api/products/list/${organizationId}?page=1`),
 		{
 			enabled: organizationId != undefined,
 		},
 	);
 
 	return {
-		products: data as BasicProductDto[],
+		products: data?.data,
 		isLoading,
 		error: error,
 	};

@@ -1,4 +1,7 @@
 import { ImageDto } from './ImageDto';
+import { PageDto } from './PageDto';
+import { PageMeta } from './PageMeta';
+import { PageQueryDto } from './PageQueryDto';
 import { SimpleResponseDto } from './SimpleResponseDto';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { UserRegisterDto } from './auth/UserRegisterDto';
@@ -45,6 +48,9 @@ export {
     UserLoginDto,
     UserRegisterDto,
     WarehouseDto,
-    ImageDto
+    ImageDto,
+    PageDto,
+    PageQueryDto,
+    PageMeta
 };
 

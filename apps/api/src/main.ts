@@ -17,7 +17,7 @@ async function bootstrap() {
 	app.use(json({ limit: '50mb' }));
 	app.useStaticAssets(join(__dirname, '../..', 'public'), { prefix: '/public/' });
 	app.setGlobalPrefix('api');
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	setupSwagger(app);
 
 	const redisStore = new RedisStore({
