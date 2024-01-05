@@ -44,12 +44,12 @@ describe('OrganizationsService', () => {
 	};
 
 	const mockProductsService = {
-		findAll: jest.fn(() => [{ _id: 'product-id' }]),
-		delete: jest.fn(),
+		list: jest.fn(() => [{ _id: 'product-id' }]),
+		deleteAllByOrg: jest.fn(() => 1),
 	};
 
 	const warehouseDeleteSpy = jest.spyOn(mockWarehousesService, 'delete');
-	const productDeleteSpy = jest.spyOn(mockProductsService, 'delete');
+	const productDeleteSpy = jest.spyOn(mockProductsService, 'deleteAllByOrg');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -88,11 +88,11 @@ describe('OrganizationsService', () => {
 	});
 
 	it('should delete organization (with children)', async () => {
-		const org = await service.delete({ name: 'test-name' } as any);
+		const org = await service.delete(new Types.ObjectId());
 
 		expect(org.name).toBe('test-name');
 		expect(warehouseDeleteSpy).toHaveBeenCalledWith(org.warehouses[0].id);
-		expect(productDeleteSpy).toBeCalledWith('product-id');
+		expect(productDeleteSpy).toBeCalledWith(org._id);
 	});
 
 	it('should find by id', async () => {

@@ -40,7 +40,7 @@ describe('ProductsController', () => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
 			return regularMockFindFunction(id);
 		}),
-		findAll: jest.fn((id: Types.ObjectId) => {
+		list: jest.fn((id: Types.ObjectId) => {
 			return Array(10).fill(regularMockFindFunction(id));
 		}),
 		delete: jest.fn((id: Types.ObjectId) => {
