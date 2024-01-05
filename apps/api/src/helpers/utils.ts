@@ -52,13 +52,15 @@ class Utils {
 		pageQuery: PageQueryDto<T>,
 		allowedFilter: (keyof T)[],
 	) {
+		if (!pageQuery.orderBy) return;
+
 		if (typeof pageQuery.orderBy != 'string') {
 			throw new BadRequestException('orderBy must be string!');
 		}
 
 		const hasProhibitedFilters = !allowedFilter.includes(pageQuery.orderBy);
 
-		if (pageQuery.orderBy && hasProhibitedFilters) {
+		if (hasProhibitedFilters) {
 			throw new BadRequestException(
 				`This resource cant be filtered by ${pageQuery.orderBy}! ` +
 					`Allowed filters are: ${allowedFilter.join(', ')}`,

@@ -23,7 +23,7 @@ function ProductsListPage() {
 					<IconButton icon={BsPlusCircle}>Create new product</IconButton>
 				</Link>
 			</TableTopBar>
-			<ProductsTable products={products} />
+			<ProductsTable products={products!} />
 		</Loader>
 	);
 }
