@@ -4,8 +4,8 @@ import { Utils } from '../utils';
 
 function useProductsList(organizationId: string) {
 	const { data, error, isLoading } = useQuery(
-		['products', 'by-org', organizationId],
-		() => Utils.getFetcher(`/api/products/by-org/${organizationId}`),
+		['products', 'list', organizationId],
+		() => Utils.getFetcher(`/api/products/list/${organizationId}`),
 		{
 			enabled: organizationId != undefined,
 		},
