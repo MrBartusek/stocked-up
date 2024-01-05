@@ -35,7 +35,7 @@ export class OrganizationsService {
 		for await (const reference of org.warehouses) {
 			await this.warehousesService.delete(reference.id as any);
 		}
-		const products = await this.productsService.findAll(org._id);
+		const products = await this.productsService.list(org._id);
 		for await (const product of products) {
 			await this.productsService.delete(product._id);
 		}

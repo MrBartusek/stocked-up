@@ -48,7 +48,7 @@ export class ProductsService {
 		return this.productsRepository.findById(id);
 	}
 
-	findAll(organizationId: mongoose.Types.ObjectId): Promise<ProductDocument[]> {
+	list(organizationId: mongoose.Types.ObjectId): Promise<ProductDocument[]> {
 		return this.productsRepository.find({ organization: organizationId });
 	}
 

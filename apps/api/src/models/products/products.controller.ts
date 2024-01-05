@@ -81,8 +81,8 @@ export class ProductsController {
 	}
 
 	@Get('by-org/:id')
-	async findAll(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<BasicProductDto[]> {
-		const products = await this.productsService.findAll(id);
+	async list(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<BasicProductDto[]> {
+		const products = await this.productsService.list(id);
 		return products.map((product) => Product.toBasicDto(product));
 	}
 

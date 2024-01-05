@@ -118,7 +118,7 @@ export class InventoryController {
 	}
 
 	@Get('by-warehouse/:id')
-	async findAll(
+	async list(
 		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
 	): Promise<BasicInventoryItemDto[]> {
 		const items = await this.inventoryService.findAllInWarehouse(warehouseId);

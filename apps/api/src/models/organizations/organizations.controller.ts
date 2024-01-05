@@ -60,7 +60,7 @@ export class OrganizationsController {
 	}
 
 	@Get()
-	async findAll(@Req() request: Request): Promise<OrganizationDto[]> {
+	async list(@Req() request: Request): Promise<OrganizationDto[]> {
 		const userId = new Types.ObjectId(request.user.id);
 		const orgs = await this.organizationsService.findAllForUser(userId);
 		return orgs.map((org) => Organization.toDto(org));

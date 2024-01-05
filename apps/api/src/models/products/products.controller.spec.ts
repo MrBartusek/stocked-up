@@ -166,7 +166,7 @@ describe('ProductsController', () => {
 	});
 
 	it('should find all products by org', async () => {
-		const product = await controller.findAll(new Types.ObjectId());
+		const product = await controller.list(new Types.ObjectId());
 
 		expect(product).toEqual(
 			expect.arrayContaining([

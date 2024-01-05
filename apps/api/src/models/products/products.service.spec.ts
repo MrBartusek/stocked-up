@@ -129,7 +129,7 @@ describe('ProductsService', () => {
 	});
 
 	it('should find all products', () => {
-		const products = service.findAll(new Types.ObjectId());
+		const products = service.list(new Types.ObjectId());
 		expect(products).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({

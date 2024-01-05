@@ -170,7 +170,7 @@ describe('OrganizationsController', () => {
 	describe('Find all organizations', () => {
 		it('should find all organizations for user', async () => {
 			const mockRequest = { user: { id: MOCK_USER_WITH_ORGS } } as any as Request;
-			const orgs = await controller.findAll(mockRequest);
+			const orgs = await controller.list(mockRequest);
 
 			expect(orgs.length).toBe(2);
 			expect(orgs[0]).toEqual(
@@ -182,7 +182,7 @@ describe('OrganizationsController', () => {
 
 		it('should not find organizations for user that does not have any', async () => {
 			const mockRequest = { user: { id: MOCK_USER_NO_ORGS } } as any as Request;
-			const orgs = await controller.findAll(mockRequest);
+			const orgs = await controller.list(mockRequest);
 
 			expect(orgs.length).toBe(0);
 		});
