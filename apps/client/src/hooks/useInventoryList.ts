@@ -6,7 +6,7 @@ function useInventoryList(warehouseId: string) {
 	const { data, error, isLoading } = useQuery(
 		['inventory', 'by-warehouse', warehouseId],
 		() =>
-			Utils.getFetcher<PageDto<InventoryItemDto>>(
+			Utils.getFetcher<PageDto<BasicInventoryItemDto>>(
 				`/api/inventory/by-warehouse/${warehouseId}?page=1`,
 			),
 		{

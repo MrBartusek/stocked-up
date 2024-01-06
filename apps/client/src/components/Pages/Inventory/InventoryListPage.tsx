@@ -23,7 +23,7 @@ function InventoryListPage() {
 					<IconButton icon={BsPlusCircle}>Add new inventory item</IconButton>
 				</Link>
 			</TableTopBar>
-			<InventoryTable items={inventory} />
+			<InventoryTable items={inventory!} />
 		</Loader>
 	);
 }
