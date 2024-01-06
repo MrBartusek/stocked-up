@@ -32,6 +32,7 @@ describe('ProductsService', () => {
 			...query,
 		})),
 		countDocuments: jest.fn(() => 100),
+		paginate: jest.fn(() => ({ data: [regularMockFindFunction(new Types.ObjectId())] })),
 	};
 
 	const mockImagesService = {
@@ -128,9 +129,10 @@ describe('ProductsService', () => {
 		);
 	});
 
-	it('should find all products', () => {
-		const products = service.list(new Types.ObjectId());
-		expect(products).toEqual(
+	it('should paginate all products', async () => {
+		const products = await service.paginate(new Types.ObjectId(), { page: 1 });
+
+		expect(products.data).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({
 					name: expect.any(String),

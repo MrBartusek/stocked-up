@@ -17,7 +17,7 @@ export class PageQueryDto<T = any> {
     @Min(1)
     @Max(100)
     @IsOptional()
-    pageSize = 25;
+    pageSize? = 25;
 
     @IsString()
     @IsOptional()
