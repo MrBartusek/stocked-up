@@ -1,39 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { CreateProductDto } from 'shared-types';
+import { MockEntityRepository } from '../../helpers/mock-entity-repistory';
 import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 describe('ProductsService', () => {
 	let service: ProductsService;
 
-	const regularMockFindFunction = (id?: Types.ObjectId) => {
-		return {
-			_id: id,
-			name: 'test-product',
-			buyPrice: 10,
-			sellPrice: 10,
-			imageKey: 'image-key',
-		};
-	};
-
-	const mockProductsRepository = {
-		create: jest.fn((dto: CreateProductDto) => {
-			return dto;
-		}),
-		find: jest.fn(() => new Array(10).fill(() => regularMockFindFunction(new Types.ObjectId()))),
-		findById: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
-		deleteOneById: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
-		exist: jest.fn(() => true),
-		findOneByIdAndUpdate: jest.fn((id: Types.ObjectId, query: any) => ({
-			...regularMockFindFunction(id),
-			...query,
-		})),
-		countDocuments: jest.fn(() => 100),
-		paginate: jest.fn(() => ({ data: [regularMockFindFunction(new Types.ObjectId())] })),
-	};
+	const mockProductsRepository = new MockEntityRepository<Product>({
+		name: 'test-product',
+		buyPrice: 10,
+		sellPrice: 10,
+		imageKey: 'image-key',
+		organization: new Types.ObjectId() as any,
+		sku: 'TEST-SKU',
+		description: 'test',
+		unit: 'part',
+	});
 
 	const mockImagesService = {
 		handleImageDtoAndGetKey: jest.fn(() => 'img-key'),
@@ -78,8 +65,8 @@ describe('ProductsService', () => {
 		expect(service).toBeDefined();
 	});
 
-	it('should create product', () => {
-		const product = service.create({
+	it('should create product', async () => {
+		const product = await service.create({
 			organizationId: '123',
 			name: 'created-product',
 		});
@@ -120,8 +107,8 @@ describe('ProductsService', () => {
 		);
 	});
 
-	it('should find one product', () => {
-		const product = service.findOne(new Types.ObjectId());
+	it('should find one product', async () => {
+		const product = await service.findOne(new Types.ObjectId());
 		expect(product).toEqual(
 			expect.objectContaining({
 				name: expect.any(String),
@@ -141,8 +128,8 @@ describe('ProductsService', () => {
 		);
 	});
 
-	it('should count all products', () => {
-		const count = service.countAll(new Types.ObjectId());
+	it('should count all products', async () => {
+		const count = await service.countAll(new Types.ObjectId());
 		expect(count).toBeGreaterThan(1);
 	});
 });
