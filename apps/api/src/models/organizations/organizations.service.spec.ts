@@ -1,43 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { CreateWarehouseDto } from 'shared-types';
 import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
+import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;
 
-	const regularMockFindFunction = (id: Types.ObjectId) => {
-		return {
-			_id: id,
-			name: 'test-name',
-			currency: 'USD',
-			stats: {},
-			settings: {},
-			acls: [],
-			warehouses: [
-				{
-					id: 'warehouse-id',
-				},
-			],
-		};
-	};
-
-	const mockOrganizationRepository = {
-		create: jest.fn((dto: CreateWarehouseDto) => {
-			return dto;
-		}),
-		findOneByIdAndUpdate: jest.fn((id: Types.ObjectId, dto: any) => ({
-			...regularMockFindFunction(id),
-			...dto.$set,
-		})),
-		deleteOneById: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
-		exist: jest.fn(() => true),
-		findOneAndUpdate: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
-		findById: jest.fn((id: Types.ObjectId) => regularMockFindFunction(id)),
-	};
+	const mockOrganizationRepository = new MockOrganizationsRepository();
 
 	const mockWarehousesService = {
 		delete: jest.fn(),
