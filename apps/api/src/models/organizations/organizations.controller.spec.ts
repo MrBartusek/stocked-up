@@ -52,8 +52,8 @@ describe('OrganizationsController', () => {
 		addWarehouseReference: jest.fn((id) => regularMockFindFunction(id)),
 		updateAcl: jest.fn((id) => regularMockFindFunction(id)),
 		listAllForUser: jest.fn((id) => {
-			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return [];
-			return Array(2).fill(regularMockFindFunction(new Types.ObjectId()));
+			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return { data: [] };
+			return { data: Array(2).fill(regularMockFindFunction(new Types.ObjectId())) };
 		}),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
@@ -170,10 +170,10 @@ describe('OrganizationsController', () => {
 	describe('Find all organizations', () => {
 		it('should find all organizations for user', async () => {
 			const mockRequest = { user: { id: MOCK_USER_WITH_ORGS } } as any as Request;
-			const orgs = await controller.list(mockRequest);
+			const orgs = await controller.list(mockRequest, { page: 1 });
 
-			expect(orgs.length).toBe(2);
-			expect(orgs[0]).toEqual(
+			expect(orgs.data.length).toBe(2);
+			expect(orgs.data[0]).toEqual(
 				expect.objectContaining({
 					name: 'test-org',
 				}),
@@ -182,9 +182,9 @@ describe('OrganizationsController', () => {
 
 		it('should not find organizations for user that does not have any', async () => {
 			const mockRequest = { user: { id: MOCK_USER_NO_ORGS } } as any as Request;
-			const orgs = await controller.list(mockRequest);
+			const orgs = await controller.list(mockRequest, { page: 1 });
 
-			expect(orgs.length).toBe(0);
+			expect(orgs.data.length).toBe(0);
 		});
 	});
 
