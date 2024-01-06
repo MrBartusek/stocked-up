@@ -1,13 +1,13 @@
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import useStockedUpTable from '../../hooks/useStockedUpTable';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import ProductActions from './ProductActions';
-import useStockedUpTable from '../../hooks/useStockedUpTable';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 

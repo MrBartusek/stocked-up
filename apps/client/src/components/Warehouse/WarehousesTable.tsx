@@ -1,12 +1,12 @@
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import useStockedUpTable from '../../hooks/useStockedUpTable';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import WarehouseActions from './WarehouseActions';
-import useStockedUpTable from '../../hooks/useStockedUpTable';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
