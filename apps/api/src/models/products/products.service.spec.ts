@@ -1,26 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { CreateProductDto } from 'shared-types';
-import { MockEntityRepository } from '../../helpers/mock-entity-repistory';
 import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
+import { MockProductsRepository } from './mocks/mock-products-repository';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
-import { Product } from './schemas/product.schema';
 
 describe('ProductsService', () => {
 	let service: ProductsService;
 
-	const mockProductsRepository = new MockEntityRepository<Product>({
-		name: 'test-product',
-		buyPrice: 10,
-		sellPrice: 10,
-		imageKey: 'image-key',
-		organization: new Types.ObjectId() as any,
-		sku: 'TEST-SKU',
-		description: 'test',
-		unit: 'part',
-	});
+	const mockProductsRepository = new MockProductsRepository();
 
 	const mockImagesService = {
 		handleImageDtoAndGetKey: jest.fn(() => 'img-key'),
