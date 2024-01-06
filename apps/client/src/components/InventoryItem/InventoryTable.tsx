@@ -4,6 +4,7 @@ import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import InventoryItemActions from './InventoryItemActions';
+import useStockedUpTable from '../../hooks/useStockedUpTable';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();
 
@@ -23,7 +24,7 @@ function InventoryTable({ items }: InventoryTableProps) {
 		columnHelper.accessor('image', {
 			header: 'Image',
 			cell: (info) => <TableImage image={info.getValue()} />,
-			size: 0,
+			size: 100,
 		}),
 		columnHelper.accessor('name', {
 			header: 'Product Name',
@@ -31,7 +32,10 @@ function InventoryTable({ items }: InventoryTableProps) {
 		}),
 		columnHelper.accessor('quantity', {
 			header: 'Quantity',
-			cell: (info) => `${info.getValue()} ${info.row.original.unit || ''}`,
+			cell: (info) => (
+				<div className="text-center">{`${info.getValue()} ${info.row.original.unit || ''}`}</div>
+			),
+			maxSize: 100,
 		}),
 		columnHelper.display({
 			header: 'Actions',
@@ -41,10 +45,9 @@ function InventoryTable({ items }: InventoryTableProps) {
 		}),
 	];
 
-	const table = useReactTable({
+	const table = useStockedUpTable({
 		data: items,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
 	});
 
 	function onClickRow(product: BasicProductDto) {

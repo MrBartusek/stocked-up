@@ -6,6 +6,7 @@ import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import WarehouseActions from './WarehouseActions';
+import useStockedUpTable from '../../hooks/useStockedUpTable';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -43,10 +44,9 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 		}),
 	];
 
-	const table = useReactTable({
+	const table = useStockedUpTable({
 		data: warehouses,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
 	});
 
 	function onClickRow(warehouse: WarehouseDto) {

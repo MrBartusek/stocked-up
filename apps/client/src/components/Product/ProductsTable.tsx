@@ -7,6 +7,7 @@ import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import ProductActions from './ProductActions';
+import useStockedUpTable from '../../hooks/useStockedUpTable';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
@@ -27,7 +28,7 @@ function ProductsTable({ products }: ProductsTableProps) {
 		columnHelper.accessor('image', {
 			header: 'Image',
 			cell: (info) => <TableImage image={info.getValue()} />,
-			size: 0,
+			size: 100,
 		}),
 		columnHelper.accessor('name', {
 			header: 'Product Name',
@@ -36,10 +37,12 @@ function ProductsTable({ products }: ProductsTableProps) {
 		columnHelper.accessor('buyPrice', {
 			header: 'Buy Price',
 			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			maxSize: 200,
 		}),
 		columnHelper.accessor('sellPrice', {
 			header: 'Sell Price',
 			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			maxSize: 200,
 		}),
 		columnHelper.accessor('unit', {
 			header: 'Unit',
@@ -53,10 +56,9 @@ function ProductsTable({ products }: ProductsTableProps) {
 		}),
 	];
 
-	const table = useReactTable({
+	const table = useStockedUpTable({
 		data: products,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
 	});
 
 	function onClickRow(product: BasicProductDto) {

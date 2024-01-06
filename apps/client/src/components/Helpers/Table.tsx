@@ -10,7 +10,7 @@ function Table({ table, onClickRow }: TableProps) {
 	const data = table.getRowModel().rows;
 
 	return (
-		<div className="overflow-x-auto">
+		<div className="overflow-x-auto rounded-sm">
 			<table className="min-w-full table-fixed">
 				<thead className="bg-gray-700">
 					{table.getHeaderGroups().map((headerGroup, i) => (
@@ -18,9 +18,12 @@ function Table({ table, onClickRow }: TableProps) {
 							{headerGroup.headers.map((header, i) => (
 								<th
 									key={i}
-									className="p-3 font-semibold text-white"
+									className={classNames(
+										'p-3 font-normal text-white',
+										header.getSize() <= 100 ? 'text-center' : 'text-left',
+									)}
 									style={{
-										widows: header.getSize(),
+										width: header.getSize() == 99999 ? 'auto' : header.getSize(),
 									}}
 								>
 									{flexRender(header.column.columnDef.header, header.getContext())}
@@ -42,7 +45,7 @@ function Table({ table, onClickRow }: TableProps) {
 								{row.getVisibleCells().map((cell, i) => (
 									<td
 										key={i}
-										className="p-3"
+										className={classNames('p-3')}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
