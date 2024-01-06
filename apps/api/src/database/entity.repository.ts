@@ -96,20 +96,19 @@ export abstract class EntityRepository<T extends Document> {
 	}
 
 	async paginate(
-		entityFilterQuery: FilterQuery<T>,
+		filterQueryOrPipeline: FilterQuery<T> | mongoose.PipelineStage[],
 		pageQueryDto: PageQueryDto,
 	): Promise<RepositoryPaginateResult<T>> {
 		const { page, pageSize, orderBy, orderDirection } = pageQueryDto;
 		const skip = pageSize * (page - 1);
 
+		const aggregatePipeline = this.convertQueryToAggregatePipeline(filterQueryOrPipeline);
+
 		if (pageQueryDto.search) {
-			entityFilterQuery.$text = { $search: pageQueryDto.search };
+			aggregatePipeline[0]['$match']['$text'] = { $search: pageQueryDto.search };
 		}
 
-		const cursor = this.entityModel
-			.find(entityFilterQuery, DEFAULT_PROJECTIONS)
-			.skip(skip)
-			.limit(pageSize);
+		const cursor = this.entityModel.aggregate(aggregatePipeline).skip(skip).limit(pageSize);
 
 		if (orderBy) {
 			cursor.sort({ [orderBy]: orderDirection });
@@ -117,11 +116,21 @@ export abstract class EntityRepository<T extends Document> {
 
 		const data = await cursor.exec();
 
-		const totalItems = await this.countDocuments(entityFilterQuery);
+		const totalItems = await this.countDocuments(filterQueryOrPipeline);
 		const hasPreviousPage = page > 1;
 		const hasNextPage = page * pageSize < totalItems;
 		const meta: PageMeta = { page, pageLength: pageSize, totalItems, hasPreviousPage, hasNextPage };
 
 		return { data, meta };
+	}
+
+	convertQueryToAggregatePipeline(
+		filterQueryOrPipeline: FilterQuery<T> | mongoose.PipelineStage[],
+	): mongoose.PipelineStage[] {
+		if (Array.isArray(filterQueryOrPipeline)) {
+			return filterQueryOrPipeline;
+		} else {
+			return [{ $match: filterQueryOrPipeline }];
+		}
 	}
 }
