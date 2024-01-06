@@ -4,6 +4,8 @@ import { FilterQuery, Model, Types } from 'mongoose';
 import { EntityRepository } from '../../database/entity.repository';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.schema';
+import mongoose from 'mongoose';
+import { PageQueryDto } from 'shared-types';
 
 @Injectable()
 export class InventoryRepository extends EntityRepository<InventoryItemDocument> {
@@ -12,22 +14,11 @@ export class InventoryRepository extends EntityRepository<InventoryItemDocument>
 	}
 
 	findAndAggregateWithProduct(match: FilterQuery<any>) {
-		return this.aggregate([
-			{
-				$match: match,
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-		]);
+		return this.aggregate(this.getAggregateQuery(match));
+	}
+
+	aggregateWithProductAndPaginate(match: FilterQuery<any>, pageQueryDto: PageQueryDto) {
+		return this.paginate(this.getAggregateQuery(match), pageQueryDto);
 	}
 
 	async calculateTotalWarehouseValue(
@@ -62,5 +53,24 @@ export class InventoryRepository extends EntityRepository<InventoryItemDocument>
 		}
 
 		return result[0].totalValue;
+	}
+
+	private getAggregateQuery(match: FilterQuery<any>): mongoose.PipelineStage[] {
+		return [
+			{
+				$match: match,
+			},
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'product',
+					foreignField: '_id',
+					as: 'product',
+				},
+			},
+			{
+				$unwind: '$product',
+			},
+		];
 	}
 }

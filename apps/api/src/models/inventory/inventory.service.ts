@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
-import { CreateInventoryItemDto, UpdateInventoryItemDto } from 'shared-types';
+import {
+	CreateInventoryItemDto,
+	PageDto,
+	PageQueryDto,
+	UpdateInventoryItemDto,
+} from 'shared-types';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
 
@@ -55,11 +60,20 @@ export class InventoryService {
 		}
 	}
 
-	find(query: FilterQuery<any>): Promise<InventoryItemDocument[]> {
-		return this.inventoryRepository.findAndAggregateWithProduct(query);
+	find(
+		query: FilterQuery<any>,
+		pageQueryDto: PageQueryDto,
+	): Promise<PageDto<InventoryItemDocument>> {
+		return this.inventoryRepository.aggregateWithProductAndPaginate(query, pageQueryDto);
 	}
 
-	listByWarehouse(warehouseId: Types.ObjectId): Promise<InventoryItemDocument[]> {
-		return this.inventoryRepository.findAndAggregateWithProduct({ warehouse: warehouseId });
+	listByWarehouse(
+		warehouseId: Types.ObjectId,
+		pageQueryDto: PageQueryDto,
+	): Promise<PageDto<InventoryItemDocument>> {
+		return this.inventoryRepository.aggregateWithProductAndPaginate(
+			{ warehouse: warehouseId },
+			pageQueryDto,
+		);
 	}
 }

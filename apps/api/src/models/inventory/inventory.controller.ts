@@ -18,6 +18,8 @@ import {
 	BasicInventoryItemDto,
 	CreateInventoryItemDto,
 	InventoryItemDto,
+	PageDto,
+	PageQueryDto,
 	UpdateInventoryItemDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
@@ -28,6 +30,7 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -120,10 +123,22 @@ export class InventoryController {
 	@Get('by-warehouse/:id')
 	async list(
 		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
-	): Promise<BasicInventoryItemDto[]> {
-		const items = await this.inventoryService.listByWarehouse(warehouseId);
+		@Query(
+			ValidationPipe,
+			new PageQueryValidationPipe<BasicInventoryItemDto>({
+				allowedFilters: ['quantity'],
+				disableTextSearch: true,
+			}),
+		)
+		pageQuery: PageQueryDto<BasicInventoryItemDto>,
+	): Promise<PageDto<BasicInventoryItemDto>> {
+		const { data, meta } = await this.inventoryService.listByWarehouse(warehouseId, pageQuery);
 
-		return items.map((i) => InventoryItem.toBasicDto(i));
+		const itemDTOs = data.map((product) => InventoryItem.toBasicDto(product));
+		return {
+			meta,
+			data: itemDTOs,
+		};
 	}
 
 	@Get(':id')
