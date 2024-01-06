@@ -64,8 +64,8 @@ describe('InventoryController', () => {
 			return getMockInventoryItem(id);
 		}),
 		listByWarehouse: jest.fn((id) => {
-			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return [];
-			return Array(10).fill(getMockInventoryItem(new Types.ObjectId()));
+			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return { data: [] };
+			return { data: Array(10).fill(getMockInventoryItem(new Types.ObjectId())) };
 		}),
 		findByProduct: jest.fn(() => null),
 	};
@@ -210,10 +210,10 @@ describe('InventoryController', () => {
 
 	describe('Find all inventory items', () => {
 		it('should find all inventory item in warehouse', async () => {
-			const items = await controller.list(MOCK_IDS.warehouse.taken);
+			const items = await controller.list(MOCK_IDS.warehouse.taken, { page: 1 });
 
-			expect(items).toHaveLength(10);
-			expect(items[0]).toEqual(
+			expect(items.data).toHaveLength(10);
+			expect(items.data[0]).toEqual(
 				expect.objectContaining({
 					quantity: 0,
 				}),
@@ -221,9 +221,9 @@ describe('InventoryController', () => {
 		});
 
 		it('should return an empty list if warehouse does not exist', async () => {
-			const items = await controller.list(MOCK_IDS.warehouse.free);
+			const items = await controller.list(MOCK_IDS.warehouse.free, { page: 1 });
 
-			expect(items).toEqual([]);
+			expect(items.data.length).toBe(0);
 		});
 	});
 
