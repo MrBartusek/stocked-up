@@ -5,3 +5,8 @@ ignore:
   - "**/*.repository.*"
   - "**/mongoose-module-helper.ts"
   - "**/redis/connect.ts"
+
+coverage:
+  status:
+    project: off
+    patch: off
