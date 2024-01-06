@@ -1,18 +1,21 @@
 import { useQuery } from 'react-query';
-import { BasicInventoryItemDto } from 'shared-types';
+import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
 import { Utils } from '../utils';
 
 function useInventoryList(warehouseId: string) {
 	const { data, error, isLoading } = useQuery(
 		['inventory', 'by-warehouse', warehouseId],
-		() => Utils.getFetcher(`/api/inventory/by-warehouse/${warehouseId}`),
+		() =>
+			Utils.getFetcher<PageDto<InventoryItemDto>>(
+				`/api/inventory/by-warehouse/${warehouseId}?page=1`,
+			),
 		{
 			enabled: warehouseId != undefined,
 		},
 	);
 
 	return {
-		inventory: data as BasicInventoryItemDto[],
+		inventory: data?.data,
 		isLoading,
 		error: error,
 	};

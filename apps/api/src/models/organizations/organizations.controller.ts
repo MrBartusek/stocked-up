@@ -9,6 +9,7 @@ import {
 	Patch,
 	Post,
 	Put,
+	Query,
 	Req,
 	UseGuards,
 	ValidationPipe,
@@ -18,6 +19,8 @@ import { Types } from 'mongoose';
 import {
 	CreateOrganizationDto,
 	OrganizationDto,
+	PageDto,
+	PageQueryDto,
 	PatchOrganizationSettingsDto,
 	UpdateOrganizationDto,
 	WarehouseDto,
@@ -30,6 +33,7 @@ import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
@@ -60,10 +64,25 @@ export class OrganizationsController {
 	}
 
 	@Get()
-	async list(@Req() request: Request): Promise<OrganizationDto[]> {
+	async list(
+		@Req() request: Request,
+		@Query(
+			ValidationPipe,
+			new PageQueryValidationPipe<OrganizationDto>({
+				disableOrderBy: true,
+				disableTextSearch: true,
+			}),
+		)
+		pageQuery: PageQueryDto<OrganizationDto>,
+	): Promise<PageDto<OrganizationDto>> {
 		const userId = new Types.ObjectId(request.user.id);
-		const orgs = await this.organizationsService.listAllForUser(userId);
-		return orgs.map((org) => Organization.toDto(org));
+		const { data, meta } = await this.organizationsService.listAllForUser(userId, pageQuery);
+
+		const orgDTOs = data.map((org) => Organization.toDto(org));
+		return {
+			meta,
+			data: orgDTOs,
+		};
 	}
 
 	@Put(':id')

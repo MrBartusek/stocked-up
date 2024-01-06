@@ -46,7 +46,7 @@ export class PageQueryValidationPipe<T = any> implements PipeTransform<PageQuery
 	}
 
 	private validateDisableOrderBy(pageQuery: PageQueryDto<T>) {
-		const triedToOrderBy = pageQuery.orderBy || pageQuery.orderDirection;
+		const triedToOrderBy = pageQuery.orderBy != null;
 		if (triedToOrderBy) {
 			throw new BadRequestException(
 				'orderBy and orderDirection are not available for this resource',

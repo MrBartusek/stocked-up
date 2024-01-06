@@ -10,7 +10,7 @@ export class PageQueryDto<T = any> {
     @Transform((p) => parseInt(p.value))
     @IsInt()
     @Min(1)
-    page: number;
+    page? = 1;
 
     @Transform((p) => parseInt(p.value))
     @IsInt()

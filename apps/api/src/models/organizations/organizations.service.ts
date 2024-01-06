@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
-import { CreateOrganizationDto, UpdateOrganizationDto } from 'shared-types';
+import { CreateOrganizationDto, PageQueryDto, UpdateOrganizationDto } from 'shared-types';
 import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
@@ -39,8 +39,8 @@ export class OrganizationsService {
 		return this.organizationRepository.deleteOneById(id);
 	}
 
-	async listAllForUser(id: mongoose.Types.ObjectId) {
-		return this.organizationRepository.find({ 'acls.id': id });
+	async listAllForUser(id: mongoose.Types.ObjectId, pageQueryDto: PageQueryDto) {
+		return this.organizationRepository.paginate({ 'acls.id': id }, pageQueryDto);
 	}
 
 	async findById(id: mongoose.Types.ObjectId) {
