@@ -5,7 +5,7 @@ import { InventoryService } from './inventory.service';
 describe('InventoryService', () => {
 	let service: InventoryService;
 
-	const mockInventoryService = {};
+	const mockInventoryRepository = {};
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -13,7 +13,7 @@ describe('InventoryService', () => {
 				InventoryService,
 				{
 					provide: InventoryRepository,
-					useValue: mockInventoryService,
+					useValue: mockInventoryRepository,
 				},
 			],
 		}).compile();
