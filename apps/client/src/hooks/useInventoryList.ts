@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
+import { BasicInventoryItemDto, PageDto } from 'shared-types';
 import { Utils } from '../utils';
 
 function useInventoryList(warehouseId: string) {
