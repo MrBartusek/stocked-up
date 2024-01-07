@@ -7,8 +7,17 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import { PageQueryDto, SortDirection } from 'shared-types';
+import { PageQueryDto } from 'shared-types';
 import SortingChangeHandler from '../types/sortingChangeHandler';
+
+/**
+ * For some reason Rollup doesn't want to import SortDirection from shared-types
+ * in this file, so it needs to be hard-coded here
+ */
+enum SortDirection {
+	DESC = 'desc',
+	ASC = 'asc',
+}
 
 export interface UseTableAdapterProps<TData>
 	extends Omit<TableOptions<TData>, 'getCoreRowModel' | 'manualSorting' | 'onSortingChange'> {
