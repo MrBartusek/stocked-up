@@ -1,5 +1,4 @@
 import {
-	OnChangeFn,
 	SortingState,
 	Table,
 	TableOptions,
@@ -25,6 +24,7 @@ function useTableAdapter<TData>({
 	function adaptSortingState(query: PageQueryDto | undefined): SortingState {
 		if (!query) return [];
 		if (!query.orderBy) return [];
+
 		const orderDirection = query.orderDirection || SortDirection.DESC;
 		return [{ id: query.orderBy as string, desc: orderDirection == SortDirection.DESC }];
 	}
@@ -34,27 +34,32 @@ function useTableAdapter<TData>({
 		if (!sortingChangeHandler) return;
 
 		const state = updater(adaptSortingState(query));
+
 		if (state.length == 0) {
 			sortingChangeHandler({ orderBy: undefined, orderDirection: undefined });
-		} else {
-			const orderBy = state[0].id;
-			const orderDirection = state[0].desc ? SortDirection.DESC : SortDirection.ASC;
-			sortingChangeHandler({ orderBy, orderDirection });
+			return;
 		}
+
+		const orderBy = state[0].id;
+		const orderDirection = state[0].desc ? SortDirection.DESC : SortDirection.ASC;
+		sortingChangeHandler({ orderBy, orderDirection });
 	}
 
 	const table = useReactTable({
 		...props,
+
 		defaultColumn: {
 			...props.defaultColumn,
 			size: 99999,
 			minSize: 50,
 			enableSorting: false,
 		},
-		manualSorting: true,
+
 		state: {
 			sorting: adaptSortingState(query),
 		},
+		manualSorting: true,
+
 		onSortingChange: handleSortingChange,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
