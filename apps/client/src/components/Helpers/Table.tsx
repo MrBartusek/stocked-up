@@ -1,6 +1,6 @@
 import { Table as TableType, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { BsSortDown, BsSortDownAlt, BsSortUp } from 'react-icons/bs';
+import { BsSortDownAlt, BsSortUp } from 'react-icons/bs';
 
 export interface TableProps {
 	table: TableType<any>;

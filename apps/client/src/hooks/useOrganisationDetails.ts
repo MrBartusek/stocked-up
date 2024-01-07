@@ -15,7 +15,7 @@ function useOrganizationDetails(organizationId?: string) {
 	);
 
 	return {
-		organization: data,
+		organization: data as OrganizationDto,
 		isLoading,
 		error: error,
 	};

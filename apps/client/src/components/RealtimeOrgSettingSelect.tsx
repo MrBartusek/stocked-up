@@ -1,10 +1,9 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BsXCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { OrganizationDto, PatchOrganizationSettingsDto } from 'shared-types';
-import { Utils } from '../utils';
 import FormSelect from './Form/FormSelect';
-import axios from 'axios';
 
 export interface RealtimeOrgSettingSelectProps {
 	name: React.ReactNode;
