@@ -44,7 +44,7 @@ export class Utils {
 			return this.dashboardUrl(
 				organizationIdOrContext.organization.id,
 				organizationIdOrContext.currentWarehouse.id,
-			);
+			);			1;
 		}
 	}
 

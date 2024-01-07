@@ -1,12 +1,12 @@
+import { AxiosError } from 'axios';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BasicWarehouseDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
-import { HTTPResponseError, Utils } from '../../utils';
+import { Utils } from '../../utils';
 import EntityInfoTable from '../Entity/EntityInfoTable';
 import Loader from '../Loader';
-import { AxiosError } from 'axios';
 
 export interface ProductInventoryPeek {
 	warehouse: BasicWarehouseDto;
