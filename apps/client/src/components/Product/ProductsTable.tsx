@@ -65,7 +65,7 @@ function ProductsTable({ products, query, handleSortingChange }: ProductsTablePr
 
 	const table = useTableAdapter({
 		data: products,
-		query,
+		sortingStateQuery: query,
 		handleSortingChange: handleSortingChange,
 		columns,
 	});

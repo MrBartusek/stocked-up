@@ -12,12 +12,12 @@ import SortingChangeHandler from '../types/sortingChangeHandler';
 
 export interface UseStockedUpTableProps<TData>
 	extends Omit<TableOptions<TData>, 'getCoreRowModel' | 'manualSorting' | 'onSortingChange'> {
-	query?: PageQueryDto<any>;
+	sortingStateQuery?: PageQueryDto<any>;
 	handleSortingChange?: SortingChangeHandler;
 }
 
 function useTableAdapter<TData>({
-	query,
+	sortingStateQuery,
 	handleSortingChange: sortingChangeHandler,
 	...props
 }: UseStockedUpTableProps<TData>): Table<TData> {
@@ -33,7 +33,7 @@ function useTableAdapter<TData>({
 		if (typeof updater != 'function') return;
 		if (!sortingChangeHandler) return;
 
-		const state = updater(adaptSortingState(query));
+		const state = updater(adaptSortingState(sortingStateQuery));
 
 		if (state.length == 0) {
 			sortingChangeHandler({ orderBy: undefined, orderDirection: undefined });
@@ -56,7 +56,7 @@ function useTableAdapter<TData>({
 		},
 
 		state: {
-			sorting: adaptSortingState(query),
+			sorting: adaptSortingState(sortingStateQuery),
 		},
 		manualSorting: true,
 
