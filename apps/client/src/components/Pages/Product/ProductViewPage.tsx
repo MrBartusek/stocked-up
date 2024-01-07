@@ -13,7 +13,7 @@ function ProductViewPage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<ProductEntityInfo product={product} />
+			<ProductEntityInfo product={product!} />
 		</Loader>
 	);
 }
