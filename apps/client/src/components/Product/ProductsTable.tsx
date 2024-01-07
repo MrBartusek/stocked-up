@@ -1,14 +1,14 @@
-import { SortingState, Updater, createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto, PageQueryDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
+import SortingChangeHandler from '../../types/sortingChangeHandler';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import ProductActions from './ProductActions';
-import SortingChangeHandler from '../../types/sortingChangeHandler';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
