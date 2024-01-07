@@ -1,8 +1,7 @@
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { PrivateUserDto } from 'shared-types';
-import { Utils } from '../utils';
-import axios, { AxiosError } from 'axios';
 
 export interface UseUserType {
 	isLoading: boolean;

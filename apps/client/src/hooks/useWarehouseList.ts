@@ -15,7 +15,7 @@ function useWarehousesList(organizationId?: string) {
 	);
 
 	return {
-		warehouses: data,
+		warehouses: data as WarehouseDto[],
 		isLoading,
 		error: error,
 	};

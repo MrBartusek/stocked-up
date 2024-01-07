@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FieldError } from 'react-hook-form';
 
 export interface FormFieldProps {
-	label: string;
+	label?: string;
 	hint?: string;
 	required?: boolean;
 	className?: string;
@@ -15,7 +15,7 @@ function FormField({ label, hint, required, className, children }: FormFieldProp
 		<div className={classNames(className, 'relative my-6')}>
 			<div className="mb-2 ms-1">
 				<span className="flex gap-1">
-					<label>{label}</label>
+					{label ? <label>{label}</label> : null}
 					{hint ? <span className="text-muted">({hint})</span> : null}
 					{required ? <span>*</span> : null}
 				</span>

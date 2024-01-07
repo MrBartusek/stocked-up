@@ -1,6 +1,6 @@
+import { AxiosError } from 'axios';
 import humanFormat from 'human-format';
 import { CurrentAppContextType } from './hooks/useAppContext';
-import axios, { AxiosError } from 'axios';
 
 export class HTTPResponseError extends Error {
 	public response: Response;

@@ -1,13 +1,13 @@
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsPerson, BsShieldLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserLoginDto } from 'shared-types';
-import { HTTPResponseError, Utils } from '../utils';
+import { Utils } from '../utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
-import axios from 'axios';
 
 type Inputs = {
 	username: string;
@@ -30,11 +30,11 @@ function LoginForm() {
 			.post(`/api/auth/login`, dto)
 			.then(() => navigate('/dashboard'))
 			.then(() => navigate(0))
-			.catch((err: HTTPResponseError) => {
-				if (err.response.statusText == 'Unauthorized') {
+			.catch((error: AxiosError) => {
+				if (error?.response?.statusText == 'Unauthorized') {
 					return setError('Provided username and password are not valid');
 				}
-				setError(Utils.requestErrorToString(err));
+				setError(Utils.requestErrorToString(error));
 			})
 			.finally(() => setLoading(false));
 	}

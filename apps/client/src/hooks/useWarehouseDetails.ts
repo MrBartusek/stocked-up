@@ -1,7 +1,6 @@
+import axios from 'axios';
 import { useQuery } from 'react-query';
 import { WarehouseDto } from 'shared-types';
-import { Utils } from '../utils';
-import axios from 'axios';
 
 function useWarehouseDetails(warehouseId?: string) {
 	const fetchWarehouse = async (id: string) => {
