@@ -83,14 +83,10 @@ function OrganizationCreateForm() {
 				/>
 			</FormField>
 
-			<FormField
-				label="Warehouse address"
-				required
-			>
+			<FormField label="Warehouse address">
 				<FormInput
 					placeholder="18 Milton Street"
-					required
-					{...register('warehouseAddress', { required: true })}
+					{...register('warehouseAddress')}
 				/>
 			</FormField>
 

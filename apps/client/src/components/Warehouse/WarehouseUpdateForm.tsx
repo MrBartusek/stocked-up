@@ -72,14 +72,10 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 				/>
 			</FormField>
 
-			<FormField
-				label="Address"
-				required
-			>
+			<FormField label="Address">
 				<FormInput
 					placeholder="18 Milton Street"
-					required
-					{...register('address', { required: true })}
+					{...register('address')}
 				/>
 			</FormField>
 
