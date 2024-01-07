@@ -12,7 +12,7 @@ function InventoryDeletePage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<InventoryItemDeleteForm item={inventoryItem} />
+			<InventoryItemDeleteForm item={inventoryItem!} />
 		</Loader>
 	);
 }

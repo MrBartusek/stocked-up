@@ -13,7 +13,7 @@ function InventoryViewPage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<InventoryEntityInfo inventoryItem={inventoryItem} />
+			<InventoryEntityInfo inventoryItem={inventoryItem!} />
 		</Loader>
 	);
 }

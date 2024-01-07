@@ -17,7 +17,7 @@ function InventoryUpdatePage() {
 			<TableTopBar header={`You are updating inventory item: ${inventoryItem?.name}`}>
 				<GoBackButton to={`../view/${inventoryItem?.id}`} />
 			</TableTopBar>
-			<InventoryItemUpdateForm inventoryItem={inventoryItem} />
+			<InventoryItemUpdateForm inventoryItem={inventoryItem!} />
 		</Loader>
 	);
 }

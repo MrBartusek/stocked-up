@@ -12,7 +12,7 @@ function ProductDeletePage() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<ProductDeleteForm product={product} />
+			<ProductDeleteForm product={product!} />
 		</Loader>
 	);
 }
