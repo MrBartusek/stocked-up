@@ -10,7 +10,7 @@ import {
 import { PageQueryDto, SortDirection } from 'shared-types';
 import SortingChangeHandler from '../types/sortingChangeHandler';
 
-export interface UseStockedUpTableProps<TData>
+export interface UseTableAdapterProps<TData>
 	extends Omit<TableOptions<TData>, 'getCoreRowModel' | 'manualSorting' | 'onSortingChange'> {
 	sortingStateQuery?: PageQueryDto<any>;
 	handleSortingChange?: SortingChangeHandler;
@@ -20,7 +20,7 @@ function useTableAdapter<TData>({
 	sortingStateQuery,
 	handleSortingChange: sortingChangeHandler,
 	...props
-}: UseStockedUpTableProps<TData>): Table<TData> {
+}: UseTableAdapterProps<TData>): Table<TData> {
 	function adaptSortingState(query: PageQueryDto | undefined): SortingState {
 		if (!query) return [];
 		if (!query.orderBy) return [];
