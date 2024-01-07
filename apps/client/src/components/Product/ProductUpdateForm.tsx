@@ -14,6 +14,7 @@ import FormImageInput from '../Form/FormImageInput';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
+import axios from 'axios';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;
@@ -59,10 +60,13 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 			...rest,
 		};
 
-		Utils.postFetcher<ProductDto>(`/api/products/${product.id}`, dto, { method: 'PUT' })
-			.then(() => queryClient.invalidateQueries(['products', product.id]))
-			.then(() => navigate(`../view/${product.id}`))
-			.then(() => toast.success('Successfully updated product'))
+		axios
+			.put<ProductDto>(`/api/products/${product.id}`, dto)
+			.then(() => {
+				queryClient.invalidateQueries(['products', product.id]);
+				toast.success('Successfully updated product');
+				navigate(`../view/${product.id}`);
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

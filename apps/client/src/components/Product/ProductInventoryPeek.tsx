@@ -6,6 +6,7 @@ import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 import { HTTPResponseError, Utils } from '../../utils';
 import EntityInfoTable from '../Entity/EntityInfoTable';
 import Loader from '../Loader';
+import { AxiosError } from 'axios';
 
 export interface ProductInventoryPeek {
 	warehouse: BasicWarehouseDto;
@@ -16,9 +17,7 @@ function ProductInventoryPeek({ warehouse, product }: ProductInventoryPeek) {
 	const { inventoryItem, isLoading, error } = useInventoryItemByProduct(warehouse.id, product.id);
 	const appContext = useContext(CurrentAppContext);
 
-	function isNotFoundError(error: any) {
-		const isHttpError = error instanceof HTTPResponseError;
-		if (!isHttpError) return false;
+	function isNotFoundError(error: AxiosError) {
 		return error?.response?.status == 404;
 	}
 

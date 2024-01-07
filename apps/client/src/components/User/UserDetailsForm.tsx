@@ -12,6 +12,7 @@ import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
 import { ImageDto } from 'shared-types';
 import FormImageInput from '../Form/FormImageInput';
+import axios from 'axios';
 
 type Inputs = {
 	username: string;
@@ -43,7 +44,8 @@ function UserDetailsForm() {
 			...rest,
 		};
 
-		Utils.postFetcher<UserDto>(`/api/users`, dto, { method: 'PUT' })
+		axios
+			.put<UserDto>(`/api/users`, dto)
 			.then(() => {
 				queryClient.invalidateQueries(['users', 'me']);
 				toast.success(`Successfully updated user details!`);

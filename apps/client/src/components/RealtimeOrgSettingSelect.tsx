@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query';
 import { OrganizationDto, PatchOrganizationSettingsDto } from 'shared-types';
 import { Utils } from '../utils';
 import FormSelect from './Form/FormSelect';
+import axios from 'axios';
 
 export interface RealtimeOrgSettingSelectProps {
 	name: React.ReactNode;
@@ -33,7 +34,8 @@ function RealtimeOrgSettingSelect({
 		setTemporaryValue(newValue);
 
 		const dto: PatchOrganizationSettingsDto = { [property as string]: newValue.value };
-		Utils.postFetcher(`/api/organizations/${organization.id}/settings`, dto, { method: 'PATCH' })
+		axios
+			.patch(`/api/organizations/${organization.id}/settings`, dto)
 			.then(() => {
 				setError(false);
 			})

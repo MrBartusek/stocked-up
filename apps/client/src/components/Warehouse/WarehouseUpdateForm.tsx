@@ -11,6 +11,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import axios from 'axios';
 
 export interface WarehouseUpdateFormProps {
 	warehouse: WarehouseDto;
@@ -36,11 +37,14 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 
 		const dto: UpdateWarehouseDto = inputs;
 
-		Utils.postFetcher<ProductDto>(`/api/warehouses/${warehouse.id}`, dto, { method: 'PUT' })
-			.then(() => queryClient.invalidateQueries(['warehouses', warehouse.id]))
-			.then(() => queryClient.invalidateQueries(['organizations', appContext.organization.id]))
-			.then(() => navigate(`../view/${warehouse.id}`))
-			.then(() => toast.success('Successfully updated warehouse'))
+		axios
+			.put<ProductDto>(`/api/warehouses/${warehouse.id}`, dto)
+			.then(() => {
+				queryClient.invalidateQueries(['warehouses', warehouse.id]);
+				queryClient.invalidateQueries(['organizations', appContext.organization.id]);
+				toast.success('Successfully updated warehouse');
+				navigate(`../view/${warehouse.id}`);
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

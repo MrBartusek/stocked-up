@@ -12,6 +12,7 @@ import FormField from '../Form/FormField';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
+import axios from 'axios';
 
 type Inputs = {
 	name: string;
@@ -41,9 +42,12 @@ function ProductCreateForm() {
 			...inputs,
 		};
 
-		Utils.postFetcher<ProductDto>(`/api/products`, dto)
-			.then(() => navigate('..'))
-			.then(() => toast.success('Successfully created product'))
+		axios
+			.post<ProductDto>(`/api/products`, dto)
+			.then(() => {
+				navigate('..');
+				toast.success('Successfully created product');
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

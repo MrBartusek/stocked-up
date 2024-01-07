@@ -1,14 +1,16 @@
+import axios from 'axios';
 import { useQuery } from 'react-query';
 import { BasicInventoryItemDto, PageDto } from 'shared-types';
-import { Utils } from '../utils';
 
 function useInventoryList(warehouseId: string) {
+	const fetchInventoryList = async (id: string) => {
+		const { data } = await axios.get(`/api/inventory/by-warehouse/${id}`, { params: { page: 1 } });
+		return data as PageDto<BasicInventoryItemDto>;
+	};
+
 	const { data, error, isLoading } = useQuery(
 		['inventory', 'by-warehouse', warehouseId],
-		() =>
-			Utils.getFetcher<PageDto<BasicInventoryItemDto>>(
-				`/api/inventory/by-warehouse/${warehouseId}?page=1`,
-			),
+		() => fetchInventoryList(warehouseId),
 		{
 			enabled: warehouseId != undefined,
 		},

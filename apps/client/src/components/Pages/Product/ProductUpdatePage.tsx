@@ -17,7 +17,7 @@ function ProductUpdatePage() {
 			<TableTopBar header={`You are updating product: ${product?.name}`}>
 				<GoBackButton to={`../view/${product?.id}`} />
 			</TableTopBar>
-			<ProductUpdateForm product={product} />
+			<ProductUpdateForm product={product!} />
 		</Loader>
 	);
 }

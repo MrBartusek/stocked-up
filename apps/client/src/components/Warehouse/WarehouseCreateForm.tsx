@@ -11,6 +11,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import axios from 'axios';
 
 type Inputs = {
 	name: string;
@@ -35,10 +36,13 @@ function WarehouseCreateForm() {
 			warehouse: inputs,
 		};
 
-		Utils.postFetcher<WarehouseDto>(`/api/warehouses`, dto)
-			.then(() => queryClient.invalidateQueries(['organizations', appContext.organization.id]))
-			.then(() => navigate('..'))
-			.then(() => toast.success('Successfully created warehouse'))
+		axios
+			.post<WarehouseDto>(`/api/warehouses`, dto)
+			.then(() => {
+				queryClient.invalidateQueries(['organizations', appContext.organization.id]);
+				toast.success('Successfully created warehouse');
+				navigate('..');
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

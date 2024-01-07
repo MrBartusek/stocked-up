@@ -13,6 +13,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import axios from 'axios';
 
 type Inputs = {
 	quantity: number;
@@ -38,6 +39,7 @@ function InventoryAddForm() {
 	}, [productFetchError, productId, setSearchParams]);
 
 	function onSubmit(inputs: Inputs) {
+		if (!product) return;
 		setLoading(true);
 		setError(null);
 
@@ -47,7 +49,8 @@ function InventoryAddForm() {
 			...inputs,
 		};
 
-		Utils.postFetcher<OrganizationDto>(`/api/inventory/`, dto)
+		axios
+			.post<OrganizationDto>(`/api/inventory/`, dto)
 			.then(() => navigate('..'))
 			.then(() => toast.success('Successfully created item'))
 			.catch((err) => setError(Utils.requestErrorToString(err)))

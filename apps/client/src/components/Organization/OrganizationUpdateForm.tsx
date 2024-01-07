@@ -10,6 +10,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import axios from 'axios';
 
 export interface OrganizationUpdateFormProps {
 	organization: OrganizationDto;
@@ -34,10 +35,13 @@ function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
 
 		const dto: UpdateOrganizationDto = inputs;
 
-		Utils.postFetcher(`/api/organizations/${organization.id}`, dto, { method: 'PUT' })
-			.then(() => queryClient.invalidateQueries(['organizations', organization.id]))
-			.then(() => navigate(`../view/${organization.id}`))
-			.then(() => toast.success('Successfully updated organization'))
+		axios
+			.put(`/api/organizations/${organization.id}`, dto)
+			.then(() => {
+				queryClient.invalidateQueries(['organizations', organization.id]);
+				toast.success('Successfully updated organization');
+				navigate(`../view/${organization.id}`);
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

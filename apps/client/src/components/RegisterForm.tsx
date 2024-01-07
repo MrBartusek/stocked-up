@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -30,10 +31,11 @@ function RegisterForm() {
 		setError(null);
 
 		const registerDto: UserRegisterDto = inputs;
-		Utils.postFetcher(`/api/auth/register`, registerDto)
+		axios
+			.post(`/api/auth/register`, registerDto)
 			.then(() => {
 				const loginDto: UserLoginDto = { username: inputs.username, password: inputs.password };
-				return Utils.postFetcher(`/api/auth/login`, loginDto);
+				return axios.post(`/api/auth/login`, loginDto);
 			})
 			.then(invalidateUser)
 			.then(() => navigate('/dashboard'))

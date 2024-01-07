@@ -7,6 +7,7 @@ import { HTTPResponseError, Utils } from '../utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
+import axios from 'axios';
 
 type Inputs = {
 	username: string;
@@ -25,7 +26,8 @@ function LoginForm() {
 		setError(null);
 
 		const dto: UserLoginDto = inputs;
-		Utils.postFetcher(`/api/auth/login`, dto)
+		axios
+			.post(`/api/auth/login`, dto)
 			.then(() => navigate('/dashboard'))
 			.then(() => navigate(0))
 			.catch((err: HTTPResponseError) => {

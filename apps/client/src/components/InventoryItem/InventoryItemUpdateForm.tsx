@@ -11,6 +11,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import axios from 'axios';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;
@@ -41,10 +42,13 @@ function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps
 
 		const dto: UpdateInventoryItemDto = inputs;
 
-		Utils.postFetcher<ProductDto>(`/api/inventory/${inventoryItem.id}`, dto, { method: 'PUT' })
-			.then(() => queryClient.invalidateQueries(['warehouses', inventoryItem.id]))
-			.then(() => navigate(`../view/${inventoryItem.id}`))
-			.then(() => toast.success('Successfully updated warehouse'))
+		axios
+			.put<ProductDto>(`/api/inventory/${inventoryItem.id}`, dto)
+			.then(() => {
+				queryClient.invalidateQueries(['warehouses', inventoryItem.id]);
+				toast.success('Successfully updated warehouse');
+				navigate(`../view/${inventoryItem.id}`);
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

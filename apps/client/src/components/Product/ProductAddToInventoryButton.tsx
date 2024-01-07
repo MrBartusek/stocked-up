@@ -6,6 +6,7 @@ import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
 import { HTTPResponseError, Utils } from '../../utils';
 import IconButton from '../IconButton';
+import { AxiosError } from 'axios';
 
 export interface ProductAddToInventoryButtonProps {
 	product: ProductDto;
@@ -18,9 +19,7 @@ function ProductAddToInventoryButton({ product }: ProductAddToInventoryButtonPro
 		product.id,
 	);
 
-	function isNotFoundError(error: any) {
-		const isHttpError = error instanceof HTTPResponseError;
-		if (!isHttpError) return false;
+	function isNotFoundError(error: AxiosError) {
 		return error?.response?.status == 404;
 	}
 

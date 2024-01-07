@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { PrivateUserDto } from 'shared-types';
 import { Utils } from '../utils';
+import axios, { AxiosError } from 'axios';
 
 export interface UseUserType {
 	isLoading: boolean;
@@ -13,24 +14,24 @@ export interface UseUserType {
 
 function useUser(): UseUserType {
 	const [stale, setStale] = useState(false);
-
 	const queryClient = useQueryClient();
 
-	const { data, error, isLoading } = useQuery(
-		['users', 'me'],
-		() => Utils.getFetcher(`/api/users/me`),
-		{
-			retry(failureCount: number, error: any) {
-				if (error?.response?.status == 403) return false;
-				return failureCount < 1;
-			},
-			onSuccess() {
-				setStale(false);
-			},
-			refetchInterval: 60 * 1000,
-			refetchOnWindowFocus: false,
+	const fetchUser = async () => {
+		const { data } = await axios.get(`/api/users/me`);
+		return data as PrivateUserDto;
+	};
+
+	const { data, error, isLoading } = useQuery(['users', 'me'], fetchUser, {
+		retry(failureCount: number, error: AxiosError) {
+			if (error?.response?.status == 403) return false;
+			return failureCount < 1;
 		},
-	);
+		onSuccess() {
+			setStale(false);
+		},
+		refetchInterval: 60 * 1000,
+		refetchOnWindowFocus: false,
+	});
 
 	async function invalidateUser() {
 		queryClient.clear();
@@ -38,7 +39,7 @@ function useUser(): UseUserType {
 	}
 
 	async function logout(): Promise<void> {
-		await Utils.postFetcher('/api/auth/logout');
+		await axios.post('/api/auth/logout');
 		return invalidateUser();
 	}
 

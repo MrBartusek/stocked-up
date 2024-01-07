@@ -1,5 +1,6 @@
 import humanFormat from 'human-format';
 import { CurrentAppContextType } from './hooks/useAppContext';
+import axios, { AxiosError } from 'axios';
 
 export class HTTPResponseError extends Error {
 	public response: Response;
@@ -13,36 +14,6 @@ export class HTTPResponseError extends Error {
 }
 
 export class Utils {
-	public static async getFetcher<T>(
-		input: RequestInfo | URL,
-		init?: RequestInit | undefined,
-	): Promise<T> {
-		return await fetch(input, init).then(async (res) => {
-			const body = await res.json();
-			if (res.ok) {
-				return body;
-			}
-			return Promise.reject(new HTTPResponseError(res, body));
-		});
-	}
-
-	public static async postFetcher<T>(
-		input: RequestInfo | URL,
-		dto?: object,
-		init?: RequestInit,
-	): Promise<T> {
-		const body = JSON.stringify(dto);
-		return this.getFetcher<T>(input, {
-			method: 'post',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: body,
-			...init,
-		});
-	}
-
 	public static humanizeNumber(input?: number) {
 		return humanFormat(input || 0, { separator: '', decimals: 2 });
 	}
@@ -77,12 +48,13 @@ export class Utils {
 		}
 	}
 
-	public static requestErrorToString(error: HTTPResponseError | any): string {
-		if (error?.body?.message && error?.body?.message?.length > 0) {
-			if (Array.isArray(error.body.message)) {
-				return error.body.message[0];
+	public static requestErrorToString(error: AxiosError<any>): string {
+		const messages = error.response?.data?.message;
+		if (messages && messages.length > 0) {
+			if (Array.isArray(messages)) {
+				return messages[0];
 			} else {
-				return error.body.message;
+				return messages;
 			}
 		} else if (error?.response?.statusText) {
 			return error.response.statusText;

@@ -1,25 +1,30 @@
+import axios, { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 import { InventoryItemDto } from 'shared-types';
-import { Utils } from '../utils';
 
 function useInventoryItemByProduct(warehouseId: string, productId: string) {
+	const fetchItemByProduct = async (warehouseId: string, productId: string) => {
+		const { data } = await axios.get(`/api/inventory/by-product`, {
+			params: { warehouseId, productId },
+		});
+		return data as InventoryItemDto;
+	};
+
 	const { data, error, isLoading } = useQuery(
 		['inventory', 'by-product', warehouseId, productId],
-		() =>
-			Utils.getFetcher(
-				`/api/inventory/by-product?warehouseId=${warehouseId}&productId=${productId}`,
-			),
+		() => fetchItemByProduct(warehouseId, productId),
 		{
 			enabled: warehouseId != undefined && productId != undefined,
-			retry(failureCount: number, error: any) {
-				if (error?.response?.status == 404) return false;
+			retry(failureCount: number, error: AxiosError) {
+				console.log(error.response?.status);
+				if (error.response?.status == 404) return false;
 				return failureCount < 2;
 			},
 		},
 	);
 
 	return {
-		inventoryItem: data as InventoryItemDto,
+		inventoryItem: data,
 		isLoading,
 		error: error,
 	};

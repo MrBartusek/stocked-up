@@ -1,18 +1,23 @@
+import axios from 'axios';
 import { useQuery } from 'react-query';
 import { ProductDto } from 'shared-types';
-import { Utils } from '../utils';
 
 function useProductsDetails(productId?: string) {
+	const fetchProduct = async (id: string) => {
+		const { data } = await axios.get(`/api/products/${id}`);
+		return data as ProductDto;
+	};
+
 	const { data, error, isLoading } = useQuery(
 		['products', productId],
-		() => Utils.getFetcher(`/api/products/${productId}`),
+		() => fetchProduct(productId!),
 		{
 			enabled: productId != undefined,
 		},
 	);
 
 	return {
-		product: data as ProductDto,
+		product: data,
 		isLoading,
 		error: error,
 	};

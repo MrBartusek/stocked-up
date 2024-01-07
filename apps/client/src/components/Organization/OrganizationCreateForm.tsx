@@ -10,6 +10,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FromHeading from '../Form/FromHeading';
+import axios from 'axios';
 
 type Inputs = {
 	name: string;
@@ -35,8 +36,10 @@ function OrganizationCreateForm() {
 			},
 		};
 
-		Utils.postFetcher<OrganizationDto>(`/api/organizations`, dto)
-			.then((org) => {
+		axios
+			.post<OrganizationDto>(`/api/organizations`, dto)
+			.then((response) => {
+				const org = response.data;
 				navigate(`/dashboard/${org.id}/${org.warehouses[0].id}`);
 				toast.success(`Successfully created new organization: ${org.name}`);
 			})

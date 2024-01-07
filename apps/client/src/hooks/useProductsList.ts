@@ -1,11 +1,16 @@
+import axios from 'axios';
 import { useQuery } from 'react-query';
-import { BasicProductDto, PageDto } from 'shared-types';
-import { Utils } from '../utils';
+import { PageDto, ProductDto } from 'shared-types';
 
 function useProductsList(organizationId: string) {
-	const { data, error, isLoading } = useQuery<PageDto<BasicProductDto>>(
+	const fetchProducts = async (id: string) => {
+		const { data } = await axios.get(`/api/products/list/${id}`, { params: { page: 1 } });
+		return data as PageDto<ProductDto>;
+	};
+
+	const { data, error, isLoading } = useQuery(
 		['products', 'list', organizationId],
-		() => Utils.getFetcher(`/api/products/list/${organizationId}?page=1`),
+		() => fetchProducts(organizationId),
 		{
 			enabled: organizationId != undefined,
 		},

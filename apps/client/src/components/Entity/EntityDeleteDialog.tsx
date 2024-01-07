@@ -12,6 +12,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
+import axios from 'axios';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -44,7 +45,8 @@ function EntityDeleteDialog({
 	function onClick() {
 		setLoading(true);
 
-		Utils.postFetcher(`/api/${resourceName}/${entityId}`, undefined, { method: 'DELETE' })
+		axios
+			.delete(`/api/${resourceName}/${entityId}`)
 			.then(() => navigate(`..`))
 			.then(() => queryClient.invalidateQueries([resourceName]))
 			.then(() => toast.success(`Successfully deleted ${identifier}`))
