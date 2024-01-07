@@ -63,7 +63,7 @@ export class ProductsController {
 		@Query(
 			ValidationPipe,
 			new PageQueryValidationPipe<ProductDto>({
-				allowedFilters: ['name', 'buyPrice', 'sellPrice'],
+				allowedFilters: ['name', 'buyPrice', 'sellPrice', 'unit'],
 			}),
 		)
 		pageQuery: PageQueryDto<ProductDto>,
