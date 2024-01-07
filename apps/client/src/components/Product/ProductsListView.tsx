@@ -17,16 +17,20 @@ function ProductsListView() {
 			isLoading={isLoading}
 			isError={error != undefined}
 		>
-			<SearchBar
-				value={query.search}
-				onSearch={handleSearch}
-			/>
-			<ProductsTable
-				products={products?.data || []}
-				query={query}
-				handleSortingChange={handleSortingChange}
-			/>
-			<Pagination meta={products?.meta || ({} as any)} />
+			{products && (
+				<>
+					<SearchBar
+						value={query.search}
+						onSearch={handleSearch}
+					/>
+					<ProductsTable
+						products={products.data}
+						query={query}
+						handleSortingChange={handleSortingChange}
+					/>
+					<Pagination meta={products.meta} />
+				</>
+			)}
 		</Loader>
 	);
 }
