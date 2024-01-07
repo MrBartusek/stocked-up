@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
-import useStockedUpTable from '../../hooks/useStockedUpTable';
+import useTableAdapter from '../../hooks/useTableAdapter';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import InventoryItemActions from './InventoryItemActions';
@@ -45,7 +45,7 @@ function InventoryTable({ items }: InventoryTableProps) {
 		}),
 	];
 
-	const table = useStockedUpTable({
+	const table = useTableAdapter({
 		data: items,
 		columns,
 	});

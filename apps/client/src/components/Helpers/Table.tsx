@@ -1,5 +1,6 @@
 import { Table as TableType, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
+import { BsSortDown, BsSortDownAlt, BsSortUp } from 'react-icons/bs';
 
 export interface TableProps {
 	table: TableType<any>;
@@ -21,12 +22,18 @@ function Table({ table, onClickRow }: TableProps) {
 									className={classNames(
 										'p-3 font-normal text-white',
 										header.getSize() <= 100 ? 'text-center' : 'text-left',
+										{ 'cursor-pointer select-none': header.column.getCanSort() },
 									)}
 									style={{
 										width: header.getSize() == 99999 ? 'auto' : header.getSize(),
 									}}
+									onClick={header.column.getToggleSortingHandler()}
 								>
 									{flexRender(header.column.columnDef.header, header.getContext())}
+									{{
+										asc: <BsSortDownAlt className="ms-1 inline-block" />,
+										desc: <BsSortUp className="ms-1 inline-block" />,
+									}[header.column.getIsSorted() as string] ?? null}
 								</th>
 							))}
 						</tr>

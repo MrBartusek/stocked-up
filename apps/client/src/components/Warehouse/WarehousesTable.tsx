@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import useStockedUpTable from '../../hooks/useStockedUpTable';
+import useTableAdapter from '../../hooks/useTableAdapter';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table';
 import WarehouseActions from './WarehouseActions';
@@ -44,7 +44,7 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 		}),
 	];
 
-	const table = useStockedUpTable({
+	const table = useTableAdapter({
 		data: warehouses,
 		columns,
 	});

@@ -1,23 +1,24 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { PageDto, ProductDto } from 'shared-types';
+import { PageDto, PageQueryDto, ProductDto } from 'shared-types';
 
-function useProductsList(organizationId: string) {
+function useProductsList(organizationId: string, query: PageQueryDto) {
 	const fetchProducts = async (id: string) => {
-		const { data } = await axios.get(`/api/products/list/${id}`, { params: { page: 1 } });
+		const { data } = await axios.get(`/api/products/list/${id}`, { params: query });
 		return data as PageDto<ProductDto>;
 	};
 
 	const { data, error, isLoading } = useQuery(
-		['products', 'list', organizationId],
+		['products', 'list', organizationId, query],
 		() => fetchProducts(organizationId),
 		{
 			enabled: organizationId != undefined,
+			keepPreviousData: true,
 		},
 	);
 
 	return {
-		products: data?.data,
+		products: data,
 		isLoading,
 		error: error,
 	};

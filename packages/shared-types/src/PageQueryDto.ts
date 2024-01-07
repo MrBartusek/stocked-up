@@ -1,10 +1,6 @@
 import { Transform } from "class-transformer";
-import { IsEnum, IsInt, IsNumberString, IsOptional, IsString, MAX, Max, Min } from "class-validator";
-
-enum OrderDirection {
-    DESC = 'desc',
-    ASC = 'asc'
-}
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from "class-validator";
+import { SortDirection } from "./SortDirection";
 
 export class PageQueryDto<T = any> {
     @Transform((p) => parseInt(p.value))
@@ -24,8 +20,8 @@ export class PageQueryDto<T = any> {
     orderBy?: keyof T;
 
     @IsOptional()
-    @IsEnum(OrderDirection)
-    orderDirection?: OrderDirection = OrderDirection.DESC;
+    @IsEnum(SortDirection)
+    orderDirection?: SortDirection = SortDirection.DESC;
 
     @IsString()
     @IsOptional()
