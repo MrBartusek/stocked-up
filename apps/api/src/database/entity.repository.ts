@@ -105,7 +105,9 @@ export abstract class EntityRepository<T extends Document> {
 		const aggregatePipeline = this.convertQueryToAggregatePipeline(filterQueryOrPipeline);
 
 		if (pageQueryDto.search) {
-			aggregatePipeline[0]['$match']['$text'] = { $search: pageQueryDto.search };
+			aggregatePipeline[0]['$match']['$text'] = {
+				$search: pageQueryDto.search,
+			};
 		}
 
 		const cursor = this.entityModel.aggregate(aggregatePipeline).skip(skip).limit(pageSize);
