@@ -54,6 +54,12 @@ export abstract class EntityRepository<T extends Document> {
 		return count;
 	}
 
+	async countDocumentsFromAggregate(pipeline: mongoose.PipelineStage[]) {
+		const result = await this.entityModel.aggregate(pipeline).count('total');
+		if (result.length == 0) return 0;
+		return result[0].total || 0;
+	}
+
 	async exist(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
 		const count = await this.countDocuments(entityFilterQuery);
 		return count > 0;
@@ -117,7 +123,7 @@ export abstract class EntityRepository<T extends Document> {
 		}
 
 		const items = await cursor.exec();
-		const totalItems = await this.countDocuments(filterQueryOrPipeline);
+		const totalItems = await this.countDocumentsFromAggregate(aggregatePipeline);
 		const meta = this.createPageMeta({ page, totalItems, pageSize });
 
 		return { items, meta };
