@@ -10,7 +10,10 @@ export interface WarehousesValueChartProps {
 }
 
 function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
-	const { warehouses, isLoading, error } = useWarehousesList(organization.id, { page: 1 });
+	const { warehouses, isLoading, error } = useWarehousesList(organization.id, {
+		page: 1,
+		pageSize: 100,
+	});
 
 	function prepareChartData() {
 		if (!warehouses) return undefined;
