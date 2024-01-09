@@ -1,7 +1,7 @@
 import { SortDirection } from 'shared-types';
 
-interface SortingOptions {
-	orderBy?: string;
+interface SortingOptions<T = any> {
+	orderBy?: keyof T;
 	orderDirection?: SortDirection;
 }
 
