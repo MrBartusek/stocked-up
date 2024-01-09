@@ -10,12 +10,12 @@ export interface WarehousesValueChartProps {
 }
 
 function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
-	const { warehouses, isLoading, error } = useWarehousesList(organization.id);
+	const { warehouses, isLoading, error } = useWarehousesList(organization.id, { page: 1 });
 
 	function prepareChartData() {
 		if (!warehouses) return undefined;
 
-		const filteredWarehouses = warehouses.filter((w) => {
+		const filteredWarehouses = warehouses.items.filter((w) => {
 			const percentageOfTotal = (w.totalValue / organization.stats.totalValue) * 100;
 			return percentageOfTotal > 1;
 		});
