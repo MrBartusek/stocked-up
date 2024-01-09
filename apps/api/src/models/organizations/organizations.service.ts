@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
-import { CreateOrganizationDto, PageQueryDto, UpdateOrganizationDto } from 'shared-types';
+import { CreateOrganizationDto, PageDto, PageQueryDto, UpdateOrganizationDto } from 'shared-types';
 import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
@@ -103,14 +103,17 @@ export class OrganizationsService {
 		);
 	}
 
-	async findAllWarehouses(orgId: mongoose.Types.ObjectId | string): Promise<WarehouseDocument[]> {
+	async listAllWarehouses(
+		orgId: mongoose.Types.ObjectId,
+		pageQueryDto: PageQueryDto,
+	): Promise<PageDto<WarehouseDocument>> {
 		const id = new mongoose.Types.ObjectId(orgId);
-		return this.organizationRepository.findAllWarehouses(id);
+		return this.organizationRepository.paginateAllWarehouses(id, pageQueryDto);
 	}
 
 	async updateAcl(
-		organizationId: mongoose.Types.ObjectId | string,
-		userId: mongoose.Types.ObjectId | string,
+		organizationId: mongoose.Types.ObjectId,
+		userId: mongoose.Types.ObjectId,
 		role: string | null,
 	): Promise<OrganizationDocument> {
 		return this.organizationRepository.findOneAndUpdate(

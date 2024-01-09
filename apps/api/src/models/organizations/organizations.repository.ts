@@ -4,6 +4,8 @@ import { Model, Types } from 'mongoose';
 import { EntityRepository } from '../../database/entity.repository';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { Organization, OrganizationDocument } from './schemas/organization.schema';
+import { PageDto, PageQueryDto } from 'shared-types';
+import { PipelineStage } from 'mongoose';
 
 @Injectable()
 export class OrganizationRepository extends EntityRepository<OrganizationDocument> {
@@ -11,8 +13,8 @@ export class OrganizationRepository extends EntityRepository<OrganizationDocumen
 		super(userModel);
 	}
 
-	async findAllWarehouses(orgId: Types.ObjectId): Promise<WarehouseDocument[]> {
-		const result = await this.aggregate([
+	getWarehousesAggregateQuery(orgId: Types.ObjectId): PipelineStage[] {
+		return [
 			{
 				$match: {
 					_id: orgId,
@@ -29,7 +31,19 @@ export class OrganizationRepository extends EntityRepository<OrganizationDocumen
 					as: 'warehouseDetails',
 				},
 			},
-		]);
-		return result.map((r) => r.warehouseDetails[0]);
+		];
+	}
+
+	async paginateAllWarehouses(
+		orgId: Types.ObjectId,
+		pageQueryDto: PageQueryDto<WarehouseDocument>,
+	): Promise<PageDto<WarehouseDocument>> {
+		const result = await this.paginate(this.getWarehousesAggregateQuery(orgId), pageQueryDto);
+		return { ...result, data: result.data.map((r: any) => r.warehouseDetails[0]) };
+	}
+
+	async findAllWarehouses(orgId: Types.ObjectId): Promise<WarehouseDocument[]> {
+		const result = await this.aggregate(this.getWarehousesAggregateQuery(orgId));
+		return result.map((r: any) => r.warehouseDetails[0]);
 	}
 }

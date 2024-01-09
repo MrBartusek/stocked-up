@@ -56,8 +56,9 @@ export class OrganizationsController {
 
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(createOrganizationDto.warehouse);
+		const userId = new Types.ObjectId(request.user.id);
 
-		await this.organizationsService.updateAcl(org.id, request.user.id, 'owner');
+		await this.organizationsService.updateAcl(org.id, userId, 'owner');
 		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 
 		return Organization.toDto(updatedOrg);
@@ -118,9 +119,22 @@ export class OrganizationsController {
 	@Get(':id/warehouses')
 	async findWarehouses(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-	): Promise<WarehouseDto[]> {
-		const warehouses = await this.organizationsService.findAllWarehouses(id);
-		return warehouses.map((w) => Warehouse.toDto(w));
+		@Query(
+			ValidationPipe,
+			new PageQueryValidationPipe<OrganizationDto>({
+				disableOrderBy: true,
+				disableTextSearch: true,
+			}),
+		)
+		pageQuery: PageQueryDto<OrganizationDto>,
+	): Promise<PageDto<WarehouseDto>> {
+		const { data, meta } = await this.organizationsService.listAllWarehouses(id, pageQuery);
+		const warehouseDTOs = data.map((warehouse) => Warehouse.toDto(warehouse));
+
+		return {
+			meta,
+			data: warehouseDTOs,
+		};
 	}
 
 	@Patch(':id/settings')
