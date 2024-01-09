@@ -1,6 +1,6 @@
 import { Table as TableType, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { BsSortDownAlt, BsSortUp } from 'react-icons/bs';
+import TableSortIndicator from '../TableSortIndicator';
 
 export interface TableProps {
 	table: TableType<any>;
@@ -30,10 +30,10 @@ function Table({ table, onClickRow }: TableProps) {
 									onClick={header.column.getToggleSortingHandler()}
 								>
 									{flexRender(header.column.columnDef.header, header.getContext())}
-									{{
-										asc: <BsSortDownAlt className="ms-1 inline-block" />,
-										desc: <BsSortUp className="ms-1 inline-block" />,
-									}[header.column.getIsSorted() as string] ?? null}
+									<TableSortIndicator
+										canSort={header.column.getCanSort()}
+										isSorted={header.column.getIsSorted()}
+									/>
 								</th>
 							))}
 						</tr>
