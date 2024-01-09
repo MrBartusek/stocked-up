@@ -44,8 +44,8 @@ function ProductCreateForm() {
 
 		axios
 			.post<ProductDto>(`/api/products`, dto)
-			.then(() => {
-				navigate('..');
+			.then((res) => {
+				navigate(Utils.dashboardUrl(appContext) + `/products/view/${res.data.id}`);
 				toast.success('Successfully created product');
 			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
