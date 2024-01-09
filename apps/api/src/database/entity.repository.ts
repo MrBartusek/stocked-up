@@ -117,11 +117,8 @@ export abstract class EntityRepository<T extends Document> {
 		}
 
 		const items = await cursor.exec();
-
 		const totalItems = await this.countDocuments(filterQueryOrPipeline);
-		const hasPreviousPage = page > 1;
-		const hasNextPage = page * pageSize < totalItems;
-		const meta: PageMeta = { page, pageLength: pageSize, totalItems, hasPreviousPage, hasNextPage };
+		const meta = this.createPageMeta({ page, totalItems, pageSize });
 
 		return { items, meta };
 	}
@@ -134,5 +131,19 @@ export abstract class EntityRepository<T extends Document> {
 		} else {
 			return [{ $match: filterQueryOrPipeline }];
 		}
+	}
+
+	private createPageMeta(options: {
+		page: number;
+		pageSize: number;
+		totalItems: number;
+	}): PageMeta {
+		const { page, pageSize, totalItems } = options;
+
+		const totalPages = Math.ceil(totalItems / pageSize);
+		const hasPreviousPage = page > 1;
+		const hasNextPage = page < totalPages;
+
+		return { page, pageLength: pageSize, totalItems, hasPreviousPage, hasNextPage, totalPages };
 	}
 }

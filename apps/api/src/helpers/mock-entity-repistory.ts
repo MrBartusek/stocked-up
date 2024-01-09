@@ -58,6 +58,7 @@ export class MockEntityRepository<T = any> {
 		const meta: PageMeta = {
 			page: pageQueryDto.page,
 			pageLength: pageQueryDto.pageSize,
+			totalPages: 1,
 			totalItems: 10,
 			hasNextPage: false,
 			hasPreviousPage: false,
