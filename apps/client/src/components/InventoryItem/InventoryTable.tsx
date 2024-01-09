@@ -1,18 +1,21 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
-import { BasicInventoryItemDto, BasicProductDto } from 'shared-types';
+import { BasicInventoryItemDto, BasicProductDto, PageQueryDto } from 'shared-types';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import Table from '../Helpers/Table';
 import TableImage from '../TableImage';
 import InventoryItemActions from './InventoryItemActions';
+import SortingChangeHandler from '../../types/sortingChangeHandler';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();
 
 export interface InventoryTableProps {
 	items: BasicInventoryItemDto[];
+	query: PageQueryDto<BasicInventoryItemDto>;
+	handleSortingChange: SortingChangeHandler;
 }
 
-function InventoryTable({ items }: InventoryTableProps) {
+function InventoryTable({ items, query, handleSortingChange }: InventoryTableProps) {
 	const navigate = useNavigate();
 
 	const columns = [
@@ -32,10 +35,8 @@ function InventoryTable({ items }: InventoryTableProps) {
 		}),
 		columnHelper.accessor('quantity', {
 			header: 'Quantity',
-			cell: (info) => (
-				<div className="text-center">{`${info.getValue()} ${info.row.original.unit || ''}`}</div>
-			),
-			maxSize: 100,
+			cell: (info) => `${info.getValue()} ${info.row.original.unit || ''}`,
+			enableSorting: true,
 		}),
 		columnHelper.display({
 			header: 'Actions',
@@ -47,6 +48,8 @@ function InventoryTable({ items }: InventoryTableProps) {
 
 	const table = useTableAdapter({
 		data: items,
+		sortingStateQuery: query,
+		handleSortingChange: handleSortingChange,
 		columns,
 	});
 
