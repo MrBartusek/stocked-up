@@ -16,7 +16,6 @@ function useInventoryItemByProduct(warehouseId: string, productId: string) {
 		{
 			enabled: warehouseId != undefined && productId != undefined,
 			retry(failureCount: number, error: AxiosError) {
-				console.log(error.response?.status);
 				if (error.response?.status == 404) return false;
 				return failureCount < 2;
 			},
