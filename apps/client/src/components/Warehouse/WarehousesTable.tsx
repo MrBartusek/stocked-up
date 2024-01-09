@@ -5,7 +5,7 @@ import { PageQueryDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import { Utils } from '../../utils';
-import Table from '../Helpers/Table';
+import Table from '../Helpers/Table/Table';
 import WarehouseActions from './WarehouseActions';
 
 const columnHelper = createColumnHelper<WarehouseDto>();

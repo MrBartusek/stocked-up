@@ -6,7 +6,7 @@ import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
 import { Utils } from '../../utils';
-import Table from '../Helpers/Table';
+import Table from '../Helpers/Table/Table';
 import TableImage from '../TableImage';
 import ProductActions from './ProductActions';
 

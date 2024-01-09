@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto, PageQueryDto } from 'shared-types';
 import useTableAdapter from '../../hooks/useTableAdapter';
-import Table from '../Helpers/Table';
+import Table from '../Helpers/Table/Table';
 import TableImage from '../TableImage';
 import InventoryItemActions from './InventoryItemActions';
 import SortingChangeHandler from '../../types/sortingChangeHandler';

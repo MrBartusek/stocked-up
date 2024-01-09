@@ -1,6 +1,8 @@
 import { Table as TableType, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
-import TableSortIndicator from '../TableSortIndicator';
+import TableSortIndicator from './TableSortIndicator';
+import { BsBoxSeam, BsSlashCircle } from 'react-icons/bs';
+import EmptyTableNotice from './EmptyTableNotice';
 
 export interface TableProps {
 	table: TableType<any>;
@@ -62,9 +64,7 @@ function Table({ table, onClickRow }: TableProps) {
 					</tbody>
 				) : null}
 			</table>
-			{data.length == 0 ? (
-				<div className="p-4 text-center text-muted">This table is empty</div>
-			) : null}
+			{data.length == 0 && <EmptyTableNotice />}
 		</div>
 	);
 }
