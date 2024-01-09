@@ -132,12 +132,12 @@ export class InventoryController {
 		)
 		pageQuery: PageQueryDto<BasicInventoryItemDto>,
 	): Promise<PageDto<BasicInventoryItemDto>> {
-		const { data, meta } = await this.inventoryService.listByWarehouse(warehouseId, pageQuery);
+		const { items, meta } = await this.inventoryService.listByWarehouse(warehouseId, pageQuery);
 
-		const itemDTOs = data.map((product) => InventoryItem.toBasicDto(product));
+		const itemDTOs = items.map((product) => InventoryItem.toBasicDto(product));
 		return {
 			meta,
-			data: itemDTOs,
+			items: itemDTOs,
 		};
 	}
 

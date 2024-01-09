@@ -24,7 +24,7 @@ function ProductsListView() {
 						onSearch={handleSearch}
 					/>
 					<ProductsTable
-						products={products.data}
+						products={products.items}
 						query={query}
 						handleSortingChange={handleSortingChange}
 					/>

@@ -54,7 +54,7 @@ export class MockEntityRepository<T = any> {
 		entityFilterQuery: FilterQuery<T>,
 		pageQueryDto: PageQueryDto,
 	): Promise<RepositoryPaginateResult<T>> {
-		const data = await this.find();
+		const items = await this.find();
 		const meta: PageMeta = {
 			page: pageQueryDto.page,
 			pageLength: pageQueryDto.pageSize,
@@ -62,6 +62,6 @@ export class MockEntityRepository<T = any> {
 			hasNextPage: false,
 			hasPreviousPage: false,
 		};
-		return { data, meta };
+		return { items, meta };
 	}
 }

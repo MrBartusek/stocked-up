@@ -22,7 +22,7 @@ function WarehousesListView() {
 				<>
 					<WarehousesTable
 						query={query}
-						warehouses={warehouses.data}
+						warehouses={warehouses.items}
 					/>
 					<Pagination meta={warehouses.meta} />
 				</>

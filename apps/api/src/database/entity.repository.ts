@@ -7,7 +7,7 @@ const DEFAULT_PROJECTIONS = {
 };
 
 export interface RepositoryPaginateResult<T> {
-	data: T[];
+	items: T[];
 	meta: PageMeta;
 }
 
@@ -116,14 +116,14 @@ export abstract class EntityRepository<T extends Document> {
 			cursor.sort({ [orderBy]: orderDirection });
 		}
 
-		const data = await cursor.exec();
+		const items = await cursor.exec();
 
 		const totalItems = await this.countDocuments(filterQueryOrPipeline);
 		const hasPreviousPage = page > 1;
 		const hasNextPage = page * pageSize < totalItems;
 		const meta: PageMeta = { page, pageLength: pageSize, totalItems, hasPreviousPage, hasNextPage };
 
-		return { data, meta };
+		return { items, meta };
 	}
 
 	convertQueryToAggregatePipeline(

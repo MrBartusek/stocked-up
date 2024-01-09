@@ -20,7 +20,7 @@ function InventoryListView() {
 			{inventory && (
 				<>
 					<InventoryTable
-						items={inventory.data}
+						items={inventory.items}
 						query={query}
 						handleSortingChange={handleSortingChange}
 					/>

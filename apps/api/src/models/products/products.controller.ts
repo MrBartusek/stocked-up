@@ -68,12 +68,12 @@ export class ProductsController {
 		)
 		pageQuery: PageQueryDto<ProductDto>,
 	): Promise<PageDto<ProductDto>> {
-		const { data, meta } = await this.productsService.paginate(orgId, pageQuery);
+		const { items, meta } = await this.productsService.paginate(orgId, pageQuery);
 
-		const productDTOs = data.map((product) => Product.toBasicDto(product));
+		const productDTOs = items.map((product) => Product.toBasicDto(product));
 		return {
 			meta,
-			data: productDTOs,
+			items: productDTOs,
 		};
 	}
 

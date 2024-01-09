@@ -39,7 +39,7 @@ export class OrganizationRepository extends EntityRepository<OrganizationDocumen
 		pageQueryDto: PageQueryDto<WarehouseDocument>,
 	): Promise<PageDto<WarehouseDocument>> {
 		const result = await this.paginate(this.getWarehousesAggregateQuery(orgId), pageQueryDto);
-		return { ...result, data: result.data.map((r: any) => r.warehouseDetails[0]) };
+		return { ...result, items: result.items.map((r: any) => r.warehouseDetails[0]) };
 	}
 
 	async findAllWarehouses(orgId: Types.ObjectId): Promise<WarehouseDocument[]> {

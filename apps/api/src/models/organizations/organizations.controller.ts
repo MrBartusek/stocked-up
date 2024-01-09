@@ -77,12 +77,12 @@ export class OrganizationsController {
 		pageQuery: PageQueryDto<OrganizationDto>,
 	): Promise<PageDto<OrganizationDto>> {
 		const userId = new Types.ObjectId(request.user.id);
-		const { data, meta } = await this.organizationsService.listAllForUser(userId, pageQuery);
+		const { items, meta } = await this.organizationsService.listAllForUser(userId, pageQuery);
 
-		const orgDTOs = data.map((org) => Organization.toDto(org));
+		const orgDTOs = items.map((org) => Organization.toDto(org));
 		return {
 			meta,
-			data: orgDTOs,
+			items: orgDTOs,
 		};
 	}
 
@@ -128,12 +128,12 @@ export class OrganizationsController {
 		)
 		pageQuery: PageQueryDto<OrganizationDto>,
 	): Promise<PageDto<WarehouseDto>> {
-		const { data, meta } = await this.organizationsService.listAllWarehouses(id, pageQuery);
-		const warehouseDTOs = data.map((warehouse) => Warehouse.toDto(warehouse));
+		const { items, meta } = await this.organizationsService.listAllWarehouses(id, pageQuery);
+		const warehouseDTOs = items.map((warehouse) => Warehouse.toDto(warehouse));
 
 		return {
 			meta,
-			data: warehouseDTOs,
+			items: warehouseDTOs,
 		};
 	}
 

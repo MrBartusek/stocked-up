@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { OrganizationDto, PageDto, PageQueryDto } from 'shared-types';
 
 function useInfiniteOrganizationsList() {
@@ -25,7 +25,7 @@ function useInfiniteOrganizationsList() {
 		);
 
 	return {
-		organizations: data?.pages.flatMap((p) => p.data),
+		organizations: data?.pages.flatMap((p) => p.items),
 		fetchNextPage,
 		hasNextPage,
 		isLoading,
