@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WarehouseDto } from 'shared-types';
+import { PageQueryDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import { Utils } from '../../utils';
@@ -12,9 +12,10 @@ const columnHelper = createColumnHelper<WarehouseDto>();
 
 export interface WarehousesTableProps {
 	warehouses: WarehouseDto[];
+	query: PageQueryDto<WarehouseDto>;
 }
 
-function WarehousesTable({ warehouses }: WarehousesTableProps) {
+function WarehousesTable({ warehouses, query }: WarehousesTableProps) {
 	const navigate = useNavigate();
 	const appContext = useContext(CurrentAppContext);
 
@@ -46,6 +47,7 @@ function WarehousesTable({ warehouses }: WarehousesTableProps) {
 
 	const table = useTableAdapter({
 		data: warehouses,
+		sortingStateQuery: query,
 		columns,
 	});
 

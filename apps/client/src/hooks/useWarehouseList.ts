@@ -1,21 +1,23 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { WarehouseDto } from 'shared-types';
+import { PageDto, PageQueryDto, WarehouseDto } from 'shared-types';
 
-function useWarehousesList(organizationId?: string) {
-	const fetchWarehouses = async (organizationId: string) => {
-		const { data } = await axios.get(`/api/organizations/${organizationId}/warehouses`);
-		return data as WarehouseDto[];
+function useWarehousesList(organizationId: string, query: PageQueryDto<WarehouseDto>) {
+	const fetchWarehouses = async (organizationId: string, query: PageQueryDto) => {
+		const { data } = await axios.get(`/api/organizations/${organizationId}/warehouses`, {
+			params: query,
+		});
+		return data as PageDto<WarehouseDto>;
 	};
 
-	const { data, error, isLoading } = useQuery<any>(
+	const { data, error, isLoading } = useQuery<PageDto<WarehouseDto>>(
 		['organizations', organizationId, 'warehouses'],
-		() => fetchWarehouses(organizationId!),
-		{ enabled: organizationId != undefined },
+		() => fetchWarehouses(organizationId!, query),
+		{ enabled: organizationId != undefined, keepPreviousData: true },
 	);
 
 	return {
-		warehouses: data as WarehouseDto[],
+		warehouses: data,
 		isLoading,
 		error: error,
 	};
