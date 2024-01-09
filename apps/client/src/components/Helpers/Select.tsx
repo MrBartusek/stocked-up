@@ -3,12 +3,25 @@ import ReactSelect, { Props } from 'react-select';
 //@ts-ignore
 import tailwindConfig from '../../../tailwind.config.js';
 
-export interface SelectProps extends Props {}
+export interface SelectProps extends Props {
+	hideSeparator?: boolean;
+}
 
-function Select({ ...props }: SelectProps) {
+function Select({ hideSeparator = false, ...props }: SelectProps) {
+	const propsCopy = Object.assign({}, props);
+	if (hideSeparator) {
+		propsCopy.components = { IndicatorSeparator: () => null };
+	}
+
 	return (
 		<ReactSelect
-			{...props}
+			{...propsCopy}
+			styles={{
+				dropdownIndicator: (baseStyles) => ({
+					...baseStyles,
+					paddingLeft: hideSeparator ? 0 : undefined,
+				}),
+			}}
 			theme={(theme) => ({
 				...theme,
 				colors: {

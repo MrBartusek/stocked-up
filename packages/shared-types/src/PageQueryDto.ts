@@ -11,7 +11,7 @@ export class PageQueryDto<T = any> {
     @Transform((p) => parseInt(p.value))
     @IsInt()
     @Min(1)
-    @Max(100)
+    @Max(250)
     @IsOptional()
     pageSize? = 25;
 

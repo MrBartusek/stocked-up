@@ -9,7 +9,8 @@ import ProductsTable from './ProductsTable';
 
 function ProductsListView() {
 	const appContext = useContext(CurrentAppContext);
-	const { query, handleSearch, handleSortingChange } = usePageQueryState();
+	const { query, handleSearch, handleSortingChange, handlePageChange, handlePageSizeChange } =
+		usePageQueryState();
 	const { products, isLoading, error } = useProductsList(appContext.organization.id, query);
 
 	return (
@@ -28,7 +29,11 @@ function ProductsListView() {
 						query={query}
 						handleSortingChange={handleSortingChange}
 					/>
-					<Pagination meta={products.meta} />
+					<Pagination
+						meta={products.meta}
+						handlePageChange={handlePageChange}
+						handlePageSizeChange={handlePageSizeChange}
+					/>
 				</>
 			)}
 		</Loader>

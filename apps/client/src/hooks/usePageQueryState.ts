@@ -7,17 +7,32 @@ import SortingOptions from '../types/sortingOptions';
  * used by component such as: SearchBar, Pagination and entity tables
  */
 function usePageQueryState<T = any>() {
-	const [query, setQuery] = useState<PageQueryDto<T>>({ page: 1 });
+	const [query, setQuery] = useState<PageQueryDto<T>>({ page: 1, pageSize: 10 });
 
 	function handleSearch(search: string) {
-		setQuery({ ...query, search });
+		setQuery((q) => ({ ...q, search }));
 	}
 
 	function handleSortingChange(options: SortingOptions<T>) {
-		setQuery({ ...query, ...options });
+		setQuery((q) => ({ ...q, ...options }));
 	}
 
-	return { query, setQuery, handleSearch, handleSortingChange };
+	function handlePageChange(page: number) {
+		setQuery((q) => ({ ...q, page: page }));
+	}
+
+	function handlePageSizeChange(pageSize: number) {
+		setQuery((q) => ({ ...q, pageSize, page: 1 }));
+	}
+
+	return {
+		query,
+		setQuery,
+		handleSearch,
+		handleSortingChange,
+		handlePageChange,
+		handlePageSizeChange,
+	};
 }
 
 export default usePageQueryState;

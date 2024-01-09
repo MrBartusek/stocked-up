@@ -10,7 +10,7 @@ import WarehousesTable from '../../Warehouse/WarehousesTable';
 function WarehousesListView() {
 	const appContext = useContext(CurrentAppContext);
 
-	const { query } = usePageQueryState<WarehouseDto>();
+	const { query, handlePageChange, handlePageSizeChange } = usePageQueryState<WarehouseDto>();
 	const { warehouses, isLoading, error } = useWarehousesList(appContext.organization.id, query);
 
 	return (
@@ -24,7 +24,11 @@ function WarehousesListView() {
 						query={query}
 						warehouses={warehouses.items}
 					/>
-					<Pagination meta={warehouses.meta} />
+					<Pagination
+						meta={warehouses.meta}
+						handlePageChange={handlePageChange}
+						handlePageSizeChange={handlePageSizeChange}
+					/>
 				</>
 			)}
 		</Loader>

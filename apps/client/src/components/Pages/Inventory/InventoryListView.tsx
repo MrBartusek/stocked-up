@@ -9,7 +9,8 @@ import { BasicInventoryItemDto } from 'shared-types';
 
 function InventoryListView() {
 	const appContext = useContext(CurrentAppContext);
-	const { query, handleSortingChange } = usePageQueryState<BasicInventoryItemDto>();
+	const { query, handleSortingChange, handlePageChange, handlePageSizeChange } =
+		usePageQueryState<BasicInventoryItemDto>();
 	const { inventory, isLoading, error } = useInventoryList(appContext.currentWarehouse.id, query);
 
 	return (
@@ -24,7 +25,11 @@ function InventoryListView() {
 						query={query}
 						handleSortingChange={handleSortingChange}
 					/>
-					<Pagination meta={inventory.meta} />
+					<Pagination
+						meta={inventory.meta}
+						handlePageChange={handlePageChange}
+						handlePageSizeChange={handlePageSizeChange}
+					/>
 				</>
 			)}
 		</Loader>
