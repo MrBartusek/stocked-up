@@ -10,7 +10,7 @@ function NotFound() {
 		<SideBySideImage imageSrc={UndrawNotFound}>
 			<h1 className="text-3xl">Page not found!</h1>
 			<p className="my-12">The page that you were looking for was not found</p>
-			<Button onClick={() => navigate(-1)}>Go back</Button>
+			<Button onClick={() => navigate('/')}>Go to home page</Button>
 		</SideBySideImage>
 	);
 }
