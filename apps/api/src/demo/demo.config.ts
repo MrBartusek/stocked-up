@@ -68,7 +68,7 @@ const DEMO_CONFIG: DemoAccountConfig = {
 			buyPrice: 8.99,
 			sellPrice: 12.99,
 			sku: 'TF-007',
-			unit: 'quart',
+			unit: 'bottle',
 		},
 		{
 			name: 'Radiator Hose',
@@ -84,7 +84,7 @@ const DEMO_CONFIG: DemoAccountConfig = {
 			buyPrice: 5.99,
 			sellPrice: 8.99,
 			sku: 'HB-009',
-			unit: 'pair',
+			unit: 'box',
 		},
 		{
 			name: 'Fuel Pump',
