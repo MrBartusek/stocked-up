@@ -9,6 +9,10 @@ import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
 import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
+import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
+import { ProductDocument } from '../models/products/schemas/product.schema';
+import Utils from '../helpers/utils';
+import { Type } from '@aws-sdk/client-s3';
 
 @Injectable()
 export class DemoService {
@@ -29,7 +33,8 @@ export class DemoService {
 		const user = await this.createUser(key);
 		const org = await this.createOrganizationAndWarehouses(key);
 
-		await this.createProductDefinitions(org._id);
+		const products = await this.createProductDefinitions(org._id);
+		await this.randomlyDistributeInventory(org, products);
 		await this.updateStats(org._id);
 		await this.organizationsService.updateAcl(org._id, user._id, 'admin');
 
@@ -50,7 +55,7 @@ export class DemoService {
 		const organization = await this.organizationsService.create({
 			name: `Auto Pro Parts (${key})`,
 			warehouse: {
-				name: warehouseNames.shift(),
+				name: '',
 			},
 		});
 
@@ -61,9 +66,35 @@ export class DemoService {
 		return this.organizationsService.findById(organization._id);
 	}
 
-	private async createProductDefinitions(organizationId: Types.ObjectId): Promise<void> {
+	private async createProductDefinitions(
+		organizationId: Types.ObjectId,
+	): Promise<ProductDocument[]> {
+		const result: ProductDocument[] = [];
 		for await (const product of DEMO_CONFIG.products) {
-			await this.productsService.create({ organizationId: organizationId.toString(), ...product });
+			const document = await this.productsService.create({
+				organizationId: organizationId.toString(),
+				...product,
+			});
+			result.push(document);
+		}
+		return result;
+	}
+
+	private async randomlyDistributeInventory(
+		organization: OrganizationDocument,
+		products: ProductDocument[],
+	): Promise<void> {
+		for await (const warehouseReference of organization.warehouses) {
+			const warehouseId = warehouseReference.id as any as Types.ObjectId;
+			const randomProducts = this.pickRandomNProducts(products, Utils.randomRange(8, 25));
+
+			for await (const randomProduct of randomProducts) {
+				await this.inventoryService.create({
+					warehouseId: warehouseId.toString(),
+					productId: randomProduct._id.toString(),
+					quantity: Utils.randomRange(0, 200),
+				});
+			}
 		}
 	}
 
@@ -73,6 +104,11 @@ export class DemoService {
 			DEMO_CONFIG.products.length,
 		);
 		await this.organizationsStatsService.recalculateTotalValue(organizationId);
+	}
+
+	pickRandomNProducts(products: ProductDocument[], count: number): ProductDocument[] {
+		const randomProducts = [...products].sort(() => Math.random() - 0.5);
+		return randomProducts.slice(0, count);
 	}
 
 	private generateDemoKey(bytes = 3) {
