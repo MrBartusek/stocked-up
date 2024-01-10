@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsBoxArrowLeft, BsChevronDown, BsExclamationOctagon } from 'react-icons/bs';
+import { BsBoxArrowLeft, BsChevronDown, BsExclamationOctagon, BsPerson } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import Dropdown from './Dropdown/Dropdown';
@@ -8,6 +8,7 @@ import DropdownMenu from './Dropdown/DropdownMenu';
 import DropdownToggle from './Dropdown/DropdownToggle';
 import UserAvatar from './UserAvatar';
 import UserSettingsDropdownItem from './UserSettingsDropdownItem';
+import Badge from '../Badge';
 
 function UserInfo() {
 	const { user, logout } = useContext(UserContext);
@@ -20,6 +21,12 @@ function UserInfo() {
 					variant="circle"
 				/>
 				<div>{user.email}</div>
+				{user.isDemo && (
+					<Badge>
+						<BsPerson />
+						Demo
+					</Badge>
+				)}
 				<BsChevronDown />
 			</DropdownToggle>
 			<DropdownMenu>
