@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { BasicInventoryItemDto, BasicProductDto, PageQueryDto } from 'shared-types';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import Table from '../Helpers/Table/Table';
-import TableImage from '../TableImage';
+import TableImage from '../Helpers/Table/TableImage';
 import InventoryItemActions from './InventoryItemActions';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
+import TableIndex from '../Helpers/Table/TableIndex';
 
 const columnHelper = createColumnHelper<BasicInventoryItemDto>();
 
@@ -21,7 +22,12 @@ function InventoryTable({ items, query, handleSortingChange }: InventoryTablePro
 	const columns = [
 		columnHelper.accessor('name', {
 			header: '#',
-			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
+			cell: (info) => (
+				<TableIndex
+					info={info}
+					query={query}
+				/>
+			),
 			size: 0,
 		}),
 		columnHelper.accessor('image', {

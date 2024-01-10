@@ -7,8 +7,9 @@ import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table/Table';
-import TableImage from '../TableImage';
+import TableImage from '../Helpers/Table/TableImage';
 import ProductActions from './ProductActions';
+import TableIndex from '../Helpers/Table/TableIndex';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
@@ -25,7 +26,12 @@ function ProductsTable({ products, query, handleSortingChange }: ProductsTablePr
 	const columns = [
 		columnHelper.display({
 			header: '#',
-			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
+			cell: (info) => (
+				<TableIndex
+					info={info}
+					query={query}
+				/>
+			),
 			size: 0,
 		}),
 		columnHelper.accessor('image', {

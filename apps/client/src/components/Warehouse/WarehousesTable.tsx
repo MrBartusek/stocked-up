@@ -7,6 +7,7 @@ import useTableAdapter from '../../hooks/useTableAdapter';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table/Table';
 import WarehouseActions from './WarehouseActions';
+import TableIndex from '../Helpers/Table/TableIndex';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -22,7 +23,12 @@ function WarehousesTable({ warehouses, query }: WarehousesTableProps) {
 	const columns = [
 		columnHelper.display({
 			header: '#',
-			cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
+			cell: (info) => (
+				<TableIndex
+					info={info}
+					query={query}
+				/>
+			),
 			size: 0,
 		}),
 		columnHelper.accessor('name', {

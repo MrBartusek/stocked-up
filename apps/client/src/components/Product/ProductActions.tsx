@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BasicProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import ActionButton from '../ActionButton';
-import TableActionsWrapper from '../TableActionsWrapper';
+import TableActionsWrapper from '../Helpers/Table/TableActionsWrapper';
 
 export interface ProductActionsProps {
 	product: BasicProductDto;

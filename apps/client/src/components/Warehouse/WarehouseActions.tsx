@@ -5,7 +5,7 @@ import { WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import ActionButton from '../ActionButton';
-import TableActionsWrapper from '../TableActionsWrapper';
+import TableActionsWrapper from '../Helpers/Table/TableActionsWrapper';
 
 export interface WarehouseActionsProps {
 	warehouse: WarehouseDto;
