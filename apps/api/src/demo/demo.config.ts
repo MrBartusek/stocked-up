@@ -12,7 +12,7 @@ export interface DemoAccountConfig {
 
 // Most of this is ChatGPT
 const DEMO_CONFIG: DemoAccountConfig = {
-	warehouses: ['City Centre Store', 'Suburbs store', 'Main warehouse', 'Online store warehouse'],
+	warehouses: ['City Centre Store', 'Suburbs Store', 'Main Warehouse', 'Online Store Warehouse'],
 	products: [
 		{
 			name: 'Oil Filter',
