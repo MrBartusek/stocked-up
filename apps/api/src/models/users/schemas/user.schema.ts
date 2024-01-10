@@ -7,13 +7,19 @@ import DtoHelper from '../../../helpers/dto.helper';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
 	@Prop({ type: UserProfile, required: true })
 	profile: UserProfile;
 
 	@Prop({ type: UserAuth, required: true })
 	auth: UserAuth;
+
+	@Prop()
+	createdAt?: Date;
+
+	@Prop()
+	updatedAt?: Date;
 
 	public static toDto(document: UserDocument): UserDto {
 		return {

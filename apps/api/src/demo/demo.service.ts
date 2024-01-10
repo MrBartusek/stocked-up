@@ -13,6 +13,7 @@ import { OrganizationDocument } from '../models/organizations/schemas/organizati
 import { ProductDocument } from '../models/products/schemas/product.schema';
 import Utils from '../helpers/utils';
 import { Type } from '@aws-sdk/client-s3';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class DemoService {
@@ -26,6 +27,24 @@ export class DemoService {
 	) {}
 
 	private readonly logger = new Logger(DemoService.name);
+
+	@Cron(CronExpression.EVERY_HOUR)
+	async purgeDemoAccounts(): Promise<void> {
+		const UNIX_24_HOURS = 24 * 60 * 60 * 1000;
+		const demoAccountCutoff = new Date(Date.now() - UNIX_24_HOURS);
+
+		const demoAccountsToDelete = await this.userService.find({
+			'profile.isDemo': true,
+			createdAt: { $lte: demoAccountCutoff },
+		});
+
+		for await (const account of demoAccountsToDelete) {
+			const user = await this.userService.delete(account._id);
+			this.logger.log(
+				`Purged stale demo account: ${user.profile.username} (${user.profile.email})`,
+			);
+		}
+	}
 
 	async setupDemoAccount(): Promise<UserDocument> {
 		const key = this.generateDemoKey();

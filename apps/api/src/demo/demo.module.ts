@@ -5,10 +5,18 @@ import { OrganizationsModule } from '../models/organizations/organizations.modul
 import { WarehousesModule } from '../models/warehouses/warehouses.module';
 import { ProductsModule } from '../models/products/products.module';
 import { InventoryModule } from '../models/inventory/inventory.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
 	providers: [DemoService],
-	imports: [UsersModule, OrganizationsModule, WarehousesModule, ProductsModule, InventoryModule],
+	imports: [
+		ScheduleModule.forRoot(),
+		UsersModule,
+		OrganizationsModule,
+		WarehousesModule,
+		ProductsModule,
+		InventoryModule,
+	],
 	exports: [DemoService],
 })
 export class DemoModule {}

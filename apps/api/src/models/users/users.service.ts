@@ -1,10 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
 import { ImagesService } from '../../images/images.service';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { UpdateUserDto } from 'shared-types';
-import { Types } from 'mongoose';
+import { Types, FilterQuery } from 'mongoose';
 
 export interface UserCreateData {
 	username: string;
@@ -37,12 +37,23 @@ export class UsersService {
 		});
 	}
 
-	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto) {
+	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto): Promise<UserDocument> {
 		const { image, ...rest } = dto;
 
 		const user = await this.userRepository.findOneByIdAndUpdate(id, { $set: { profile: rest } });
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
 		user.profile.imageKey = await this.imagesService.handleImageDtoAndGetKey(user.profile, image);
 		return await this.userRepository.findOneByIdAndUpdate(id, user);
+	}
+
+	async delete(id: Types.ObjectId): Promise<UserDocument> {
+		const user = await this.userRepository.deleteOneById(id);
+		this.imagesService.deleteImage(user.profile);
+		return user;
 	}
 
 	findOne(username: string): Promise<UserDocument | undefined> {
@@ -51,7 +62,11 @@ export class UsersService {
 		});
 	}
 
-	findById(id: string): Promise<UserDocument | undefined> {
+	find(entityFilterQuery: FilterQuery<UserDocument>): Promise<UserDocument[]> {
+		return this.userRepository.find(entityFilterQuery);
+	}
+
+	findById(id: string): Promise<UserDocument | null> {
 		return this.userRepository.findById(id);
 	}
 
