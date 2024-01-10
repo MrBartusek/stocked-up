@@ -35,7 +35,7 @@ export class AuthService {
 
 	async validateUser(username: string, password: string): Promise<UserDocument> {
 		const user = await this.usersService.findOne(username);
-
+		console.log(user);
 		if (user && user.profile.isDemo && user.auth.password == null) {
 			return user;
 		}

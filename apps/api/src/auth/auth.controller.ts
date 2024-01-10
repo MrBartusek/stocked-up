@@ -10,11 +10,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
-import { UserRegisterDto } from 'shared-types';
+import { PrivateUserDto, UserRegisterDto } from 'shared-types';
 import { DemoService } from '../demo/demo.service';
 import { AuthService } from './auth.service';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { User } from '../models/users/schemas/user.schema';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -54,8 +55,9 @@ export class AuthController {
 
 	@HttpCode(200)
 	@Post('demo')
-	async demoLogin(): Promise<any> {
+	async demoLogin(): Promise<PrivateUserDto> {
 		const user = await this.demoService.setupDemoAccount();
-		return { statusCode: 200, message: 'Created demo account!', email: user.email };
+		const dto = User.toPrivateDto(user);
+		return dto;
 	}
 }

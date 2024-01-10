@@ -6,6 +6,7 @@ import { WarehousesService } from '../models/warehouses/warehouses.service';
 import { ProductsService } from '../models/products/products.service';
 import { InventoryService } from '../models/inventory/inventory.service';
 import { UserProfile } from '../models/users/schemas/user-profile.schema';
+import { User, UserDocument } from '../models/users/schemas/user.schema';
 
 @Injectable()
 export class DemoService {
@@ -17,13 +18,13 @@ export class DemoService {
 		private readonly inventoryService: InventoryService,
 	) {}
 
-	async setupDemoAccount(): Promise<UserProfile> {
+	async setupDemoAccount(): Promise<UserDocument> {
 		const key = this.generateDemoKey();
 		const user = await this.createUser(key);
 		const org = await this.createOrganizationAndWarehouses(key);
 		await this.organizationsService.updateAcl(org._id, user._id, 'admin');
 
-		return user.profile;
+		return user;
 	}
 
 	private async createOrganizationAndWarehouses(key: string) {
@@ -43,7 +44,7 @@ export class DemoService {
 
 	private async createUser(key: string) {
 		return this.userService.create({
-			username: `Demo (${key})`,
+			username: `Demo-${key}`,
 			email: `demo-${key}@dokurno.dev`,
 			isDemo: true,
 		});
