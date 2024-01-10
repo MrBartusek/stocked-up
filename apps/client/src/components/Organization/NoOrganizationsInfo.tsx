@@ -1,6 +1,6 @@
-import { BsBuildingFillSlash, BsBuildingSlash, BsPlusCircle } from 'react-icons/bs';
-import IconButton from '../IconButton';
+import { BsBuildingSlash, BsPlusCircle } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import IconButton from '../IconButton';
 
 function NoOrganizationsInfo() {
 	return (
