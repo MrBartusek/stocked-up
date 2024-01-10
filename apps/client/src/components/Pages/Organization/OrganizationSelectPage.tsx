@@ -8,6 +8,7 @@ import Loader from '../../Loader';
 import OrganizationCard from '../../Organization/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 import LoadMoreButton from '../../LoadMoreButton';
+import NoOrganizationsInfo from '../../Organization/NoOrganizationsInfo';
 
 function OrganizationSelectPage() {
 	const { organizations, isLoading, error, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -28,6 +29,7 @@ function OrganizationSelectPage() {
 					isLoading={isLoading}
 					isError={error != null}
 				>
+					{organizations?.length == 0 && <NoOrganizationsInfo />}
 					{organizations?.map((org, i) => (
 						<OrganizationCard
 							organization={org}
