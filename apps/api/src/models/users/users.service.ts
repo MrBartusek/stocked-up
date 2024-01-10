@@ -9,7 +9,8 @@ import { Types } from 'mongoose';
 export interface UserCreateData {
 	username: string;
 	email: string;
-	passwordHash: string;
+	passwordHash?: string;
+	isDemo?: boolean;
 }
 
 @Injectable()
@@ -26,8 +27,13 @@ export class UsersService {
 		const avatarKey = await this.importDefaultAvatar(data.email);
 
 		return this.userRepository.create({
-			profile: { username: data.username, email: data.email, imageKey: avatarKey },
-			auth: { password: data.passwordHash },
+			profile: {
+				username: data.username,
+				email: data.email,
+				imageKey: avatarKey,
+				isDemo: data.isDemo,
+			},
+			auth: { password: data.passwordHash || null },
 		});
 	}
 
@@ -40,7 +46,9 @@ export class UsersService {
 	}
 
 	findOne(username: string): Promise<UserDocument | undefined> {
-		return this.userRepository.findOne({ 'profile.username': username });
+		return this.userRepository.findOne({
+			$or: [{ 'profile.username': username }, { 'profile.email': username }],
+		});
 	}
 
 	findById(id: string): Promise<UserDocument | undefined> {

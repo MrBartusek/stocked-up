@@ -15,6 +15,7 @@ import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
 import { GravatarModule } from './gravatar/gravatar.module';
+import { DemoModule } from './demo/demo.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),
@@ -35,6 +36,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 		RedisModule,
 		S3CacheModule,
 		GravatarModule,
+		DemoModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

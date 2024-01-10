@@ -5,7 +5,7 @@ export type UserAuthDocument = HydratedDocument<UserAuth>;
 
 export class UserAuth {
 	@Prop()
-	password: string;
+	password: string | null;
 }
 
 export const UserAuthSchema = SchemaFactory.createForClass(UserAuth);

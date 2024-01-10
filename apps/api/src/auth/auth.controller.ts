@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	HttpCode,
 	Post,
 	Req,
 	UseGuards,
@@ -10,6 +11,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { UserRegisterDto } from 'shared-types';
+import { DemoService } from '../demo/demo.service';
 import { AuthService } from './auth.service';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -17,15 +19,20 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-	constructor(private readonly authService: AuthService) {}
+	constructor(
+		private readonly authService: AuthService,
+		private readonly demoService: DemoService,
+	) {}
 
 	@UseGuards(LocalAuthGuard)
+	@HttpCode(200)
 	@Post('login')
 	login(): any {
 		return { message: 'Logged in!', statusCode: 200 };
 	}
 
 	@UseGuards(AuthenticatedGuard)
+	@HttpCode(200)
 	@Post('logout')
 	logout(@Req() request: Request): Promise<any> {
 		return new Promise((resolve) => {
@@ -38,9 +45,17 @@ export class AuthController {
 		});
 	}
 
+	@HttpCode(200)
 	@Post('register')
 	async register(@Body(new ValidationPipe()) body: UserRegisterDto): Promise<any> {
 		const user = await this.authService.registerUser(body);
 		return { message: `Created user with id: ${user._id}`, statusCode: 200 };
+	}
+
+	@HttpCode(200)
+	@Post('demo')
+	async demoLogin(): Promise<any> {
+		const user = await this.demoService.setupDemoAccount();
+		return { statusCode: 200, message: 'Created demo account!', email: user.email };
 	}
 }

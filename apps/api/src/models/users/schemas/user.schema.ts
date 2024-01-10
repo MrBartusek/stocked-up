@@ -27,6 +27,7 @@ export class User {
 		return {
 			...User.toDto(document),
 			email: document.profile.email,
+			isDemo: document.profile.isDemo,
 		};
 	}
 }

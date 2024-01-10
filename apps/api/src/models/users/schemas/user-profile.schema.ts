@@ -12,6 +12,9 @@ export class UserProfile {
 
 	@Prop()
 	imageKey: string | null;
+
+	@Prop({ default: false })
+	isDemo?: boolean;
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
