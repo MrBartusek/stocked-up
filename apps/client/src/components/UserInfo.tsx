@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { BsBoxArrowLeft, BsChevronDown, BsExclamationOctagon } from 'react-icons/bs';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import Dropdown from './Dropdown/Dropdown';
 import DropdownItem from './Dropdown/DropdownItem';
@@ -11,12 +11,6 @@ import UserSettingsDropdownItem from './UserSettingsDropdownItem';
 
 function UserInfo() {
 	const { user, logout } = useContext(UserContext);
-	const navigate = useNavigate();
-
-	async function logoutUser() {
-		await logout();
-		navigate('/');
-	}
 
 	return (
 		<Dropdown>
@@ -43,7 +37,7 @@ function UserInfo() {
 				</Link>
 				<DropdownItem
 					icon={BsBoxArrowLeft}
-					onClick={logoutUser}
+					onClick={logout}
 				>
 					Logout
 				</DropdownItem>

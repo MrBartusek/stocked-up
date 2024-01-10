@@ -12,7 +12,6 @@ export interface UseUserType {
 }
 
 function useUser(): UseUserType {
-	const [stale, setStale] = useState(false);
 	const queryClient = useQueryClient();
 
 	const fetchUser = async () => {
@@ -20,13 +19,10 @@ function useUser(): UseUserType {
 		return data as PrivateUserDto;
 	};
 
-	const { data, error, isLoading } = useQuery(['users', 'me'], fetchUser, {
+	const { data, error, isLoading, refetch } = useQuery(['users', 'me'], fetchUser, {
 		retry(failureCount: number, error: AxiosError) {
 			if (error?.response?.status == 403) return false;
 			return failureCount < 1;
-		},
-		onSuccess() {
-			setStale(false);
 		},
 		refetchInterval: 60 * 1000,
 		refetchOnWindowFocus: false,
@@ -34,7 +30,7 @@ function useUser(): UseUserType {
 
 	async function invalidateUser() {
 		queryClient.clear();
-		setStale(true);
+		await refetch();
 	}
 
 	async function logout(): Promise<void> {
@@ -44,7 +40,7 @@ function useUser(): UseUserType {
 
 	return {
 		isLoading: isLoading,
-		isAuthenticated: data != undefined && !error && !stale,
+		isAuthenticated: data != undefined && !error,
 		invalidateUser,
 		logout,
 		user: data as PrivateUserDto,

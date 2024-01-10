@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsPerson, BsShieldLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { Utils } from '../utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
+import { UserContext } from '../context/UserContext';
 
 type Inputs = {
 	username: string;
@@ -16,7 +17,7 @@ type Inputs = {
 
 function LoginForm() {
 	const { register, handleSubmit } = useForm<Inputs>();
-	const navigate = useNavigate();
+	const { invalidateUser } = useContext(UserContext);
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -28,8 +29,7 @@ function LoginForm() {
 		const dto: UserLoginDto = inputs;
 		axios
 			.post(`/api/auth/login`, dto)
-			.then(() => navigate('/dashboard'))
-			.then(() => navigate(0))
+			.then(invalidateUser)
 			.catch((error: AxiosError) => {
 				if (error?.response?.statusText == 'Unauthorized') {
 					return setError('Provided username and password are not valid');
