@@ -33,6 +33,11 @@ export class UsersController {
 	@Get('me')
 	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
 		const user = await this.usersService.findById(request.user.id);
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
 		return User.toPrivateDto(user);
 	}
 
