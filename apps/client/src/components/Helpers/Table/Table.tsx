@@ -1,8 +1,7 @@
 import { Table as TableType, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
-import TableSortIndicator from './TableSortIndicator';
-import { BsBoxSeam, BsSlashCircle } from 'react-icons/bs';
 import EmptyTableNotice from './EmptyTableNotice';
+import TableSortIndicator from './TableSortIndicator';
 
 export interface TableProps {
 	table: TableType<any>;
