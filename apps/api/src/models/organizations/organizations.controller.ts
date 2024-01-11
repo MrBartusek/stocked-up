@@ -34,7 +34,9 @@ import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('organizations')
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
 export class OrganizationsController {

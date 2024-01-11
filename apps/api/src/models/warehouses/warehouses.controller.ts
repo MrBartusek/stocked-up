@@ -16,7 +16,9 @@ import { OrganizationsStatsService } from '../organizations/organizations-stats.
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('warehouses')
 @Controller('warehouses')
 export class WarehousesController {
 	constructor(
