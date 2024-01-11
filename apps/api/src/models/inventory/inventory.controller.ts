@@ -23,6 +23,7 @@ import {
 	UpdateInventoryItemDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
@@ -30,7 +31,6 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)

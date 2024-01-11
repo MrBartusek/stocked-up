@@ -1,4 +1,4 @@
-import { Document, FilterQuery, Types, UpdateQuery } from 'mongoose';
+import { FilterQuery, Types, UpdateQuery } from 'mongoose';
 import { PageMeta, PageQueryDto } from 'shared-types';
 import { RepositoryPaginateResult } from '../database/entity.repository';
 

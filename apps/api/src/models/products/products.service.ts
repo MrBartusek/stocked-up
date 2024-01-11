@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import mongoose, { Types } from 'mongoose';
-import { CreateProductDto, PageQueryDto, ProductDto, UpdateProductDto } from 'shared-types';
+import { CreateProductDto, PageQueryDto, UpdateProductDto } from 'shared-types';
+import { RepositoryPaginateResult } from '../../database/entity.repository';
 import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
-import { RepositoryPaginateResult } from '../../database/entity.repository';
 
 @Injectable()
 export class ProductsService {

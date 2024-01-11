@@ -12,10 +12,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { PrivateUserDto, UserRegisterDto } from 'shared-types';
 import { DemoService } from '../demo/demo.service';
+import { User } from '../models/users/schemas/user.schema';
 import { AuthService } from './auth.service';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { User } from '../models/users/schemas/user.schema';
 
 @Controller('auth')
 @ApiTags('auth')

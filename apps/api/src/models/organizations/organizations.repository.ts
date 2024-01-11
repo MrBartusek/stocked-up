@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, PipelineStage, Types } from 'mongoose';
+import { PageDto, PageQueryDto } from 'shared-types';
 import { EntityRepository } from '../../database/entity.repository';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { Organization, OrganizationDocument } from './schemas/organization.schema';
-import { PageDto, PageQueryDto } from 'shared-types';
-import { PipelineStage } from 'mongoose';
 
 @Injectable()
 export class OrganizationRepository extends EntityRepository<OrganizationDocument> {

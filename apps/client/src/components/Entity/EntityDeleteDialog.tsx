@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -12,7 +13,6 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
-import axios from 'axios';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;

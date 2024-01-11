@@ -14,6 +14,7 @@ import {
 	UseGuards,
 	ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import {
@@ -26,6 +27,7 @@ import {
 	WarehouseDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
@@ -33,8 +35,6 @@ import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
-import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('organizations')
 @Controller('organizations')

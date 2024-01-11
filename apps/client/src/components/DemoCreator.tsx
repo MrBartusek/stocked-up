@@ -1,12 +1,12 @@
-import { PrivateUserDto, UserLoginDto } from 'shared-types';
-import Button from './Button';
-import RegisterGoBack from './RegisterGoBack';
 import axios from 'axios';
-import { Utils } from '../utils';
-import toast from 'react-hot-toast';
 import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import { PrivateUserDto, UserLoginDto } from 'shared-types';
 import { UserContext } from '../context/UserContext';
+import { Utils } from '../utils';
+import Button from './Button';
 import Alert from './Helpers/Alert';
+import RegisterGoBack from './RegisterGoBack';
 
 function DemoCreator() {
 	const [loading, setLoading] = useState(false);

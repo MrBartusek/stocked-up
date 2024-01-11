@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { PrivateUserDto } from 'shared-types';
 

@@ -5,6 +5,8 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { DemoModule } from './demo/demo.module';
+import { GravatarModule } from './gravatar/gravatar.module';
 import { ImagesModule } from './images/images.module';
 import { InventoryModule } from './models/inventory/inventory.module';
 import { OrganizationsModule } from './models/organizations/organizations.module';
@@ -14,8 +16,6 @@ import { WarehousesModule } from './models/warehouses/warehouses.module';
 import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
-import { GravatarModule } from './gravatar/gravatar.module';
-import { DemoModule } from './demo/demo.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),

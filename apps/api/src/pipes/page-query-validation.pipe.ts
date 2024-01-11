@@ -1,10 +1,4 @@
-import {
-	ArgumentMetadata,
-	BadRequestException,
-	Inject,
-	Injectable,
-	PipeTransform,
-} from '@nestjs/common';
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { PageQueryDto } from 'shared-types';
 
 interface PageQueryValidationPipeOptions<T> {

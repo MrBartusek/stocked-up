@@ -4,11 +4,11 @@ import useInfiniteOrganizationsList from '../../../hooks/useOrganizationsList';
 import Container from '../../Container';
 import IconButton from '../../IconButton';
 import DashboardLayout from '../../Layout/DasboardLayout';
+import LoadMoreButton from '../../LoadMoreButton';
 import Loader from '../../Loader';
+import NoOrganizationsInfo from '../../Organization/NoOrganizationsInfo';
 import OrganizationCard from '../../Organization/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
-import LoadMoreButton from '../../LoadMoreButton';
-import NoOrganizationsInfo from '../../Organization/NoOrganizationsInfo';
 
 function OrganizationSelectPage() {
 	const { organizations, isLoading, error, hasNextPage, isFetchingNextPage, fetchNextPage } =

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepository } from './users.repository';
-import { UsersService } from './users.service';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
+import { UserRepository } from './users.repository';
+import { UsersService } from './users.service';
 
 describe('UsersService', () => {
 	let service: UsersService;

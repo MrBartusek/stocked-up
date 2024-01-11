@@ -1,7 +1,6 @@
-import { BadRequestException, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { SchemaOptions } from '@nestjs/mongoose';
 import { Readable } from 'node:stream';
-import { PageQueryDto } from 'shared-types';
 
 const logger = new Logger('Utils');
 

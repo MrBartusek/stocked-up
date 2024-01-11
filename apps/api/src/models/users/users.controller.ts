@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { Types } from 'mongoose';
 import { PrivateUserDto, UpdateUserDto, UserDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
-import { Types } from 'mongoose';
 
 @Controller('users')
 @ApiTags('users')

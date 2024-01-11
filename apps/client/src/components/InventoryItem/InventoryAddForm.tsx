@@ -1,3 +1,4 @@
+import axios from 'axios';
 import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +14,6 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import axios from 'axios';
 
 type Inputs = {
 	quantity: number;
