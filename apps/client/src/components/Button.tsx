@@ -23,6 +23,8 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 		secondary: 'bg-secondary hover:bg-secondary-hover',
 		danger: 'bg-danger hover:bg-danger-hover',
 		'primary-outline': 'border border-primary text-primary hover:bg-primary hover:text-light',
+		'secondary-outline':
+			'border border-secondary text-secondary hover:bg-secondary hover:text-light',
 	};
 
 	return (
