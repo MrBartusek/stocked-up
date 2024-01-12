@@ -6,7 +6,12 @@ type HTMLButtonProps = React.DetailedHTMLProps<
 	HTMLButtonElement
 >;
 
-export type buttonVariant = 'primary' | 'primary-outline' | 'secondary' | 'danger';
+export type buttonVariant =
+	| 'primary'
+	| 'primary-outline'
+	| 'secondary'
+	| 'secondary-outline'
+	| 'danger';
 
 export interface ButtonProps extends HTMLButtonProps {
 	loading?: boolean;
