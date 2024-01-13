@@ -4,7 +4,7 @@ export class CreateWarehouseDto {
     @Length(2, 32)
     name: string
 
-    @Length(2, 32)
     @IsOptional()
+    @Length(2, 32)
     address?: string
 }
