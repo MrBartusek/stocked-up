@@ -212,8 +212,8 @@ describe('InventoryController', () => {
 		it('should find all inventory item in warehouse', async () => {
 			const items = await controller.list(MOCK_IDS.warehouse.taken, { page: 1 });
 
-			expect(items.data).toHaveLength(10);
-			expect(items.data[0]).toEqual(
+			expect(items.items).toHaveLength(10);
+			expect(items.items[0]).toEqual(
 				expect.objectContaining({
 					quantity: 0,
 				}),
@@ -223,7 +223,7 @@ describe('InventoryController', () => {
 		it('should return an empty list if warehouse does not exist', async () => {
 			const items = await controller.list(MOCK_IDS.warehouse.free, { page: 1 });
 
-			expect(items.data.length).toBe(0);
+			expect(items.items.length).toBe(0);
 		});
 	});
 

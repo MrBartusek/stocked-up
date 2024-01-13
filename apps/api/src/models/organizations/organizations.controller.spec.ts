@@ -172,8 +172,8 @@ describe('OrganizationsController', () => {
 			const mockRequest = { user: { id: MOCK_USER_WITH_ORGS } } as any as Request;
 			const orgs = await controller.list(mockRequest, { page: 1 });
 
-			expect(orgs.data.length).toBe(2);
-			expect(orgs.data[0]).toEqual(
+			expect(orgs.items.length).toBe(2);
+			expect(orgs.items[0]).toEqual(
 				expect.objectContaining({
 					name: 'test-org',
 				}),
@@ -184,7 +184,7 @@ describe('OrganizationsController', () => {
 			const mockRequest = { user: { id: MOCK_USER_NO_ORGS } } as any as Request;
 			const orgs = await controller.list(mockRequest, { page: 1 });
 
-			expect(orgs.data.length).toBe(0);
+			expect(orgs.items.length).toBe(0);
 		});
 	});
 
