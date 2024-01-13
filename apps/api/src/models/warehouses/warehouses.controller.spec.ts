@@ -49,7 +49,7 @@ describe('WarehousesController', () => {
 		}),
 	};
 
-	const mockOrganizationsService = {
+	const mockOrgService = {
 		addWarehouseReference: jest.fn(() => ({
 			_id: MOCK_TAKEN_ORG_ID,
 		})),
@@ -64,23 +64,14 @@ describe('WarehousesController', () => {
 		}),
 	};
 
-	const mockOrganizationsStatsService = {
+	const mockOrgStatService = {
 		recalculateTotalValue: jest.fn(),
 	};
 
-	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
-	const deleteWarehouseReferenceSpy = jest.spyOn(
-		mockOrganizationsService,
-		'deleteWarehouseReference',
-	);
-	const updateWarehouseReferenceSpy = jest.spyOn(
-		mockOrganizationsService,
-		'updateWarehouseReference',
-	);
-	const recalculateTotalValueSpy = jest.spyOn(
-		mockOrganizationsStatsService,
-		'recalculateTotalValue',
-	);
+	const addWarehouseRefSpy = jest.spyOn(mockOrgService, 'addWarehouseReference');
+	const deleteWarehouseRefSpy = jest.spyOn(mockOrgService, 'deleteWarehouseReference');
+	const updateWarehouseRefSpy = jest.spyOn(mockOrgService, 'updateWarehouseReference');
+	const recalculateTotalValueSpy = jest.spyOn(mockOrgStatService, 'recalculateTotalValue');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -90,9 +81,9 @@ describe('WarehousesController', () => {
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehouseService)
 			.overrideProvider(OrganizationsService)
-			.useValue(mockOrganizationsService)
+			.useValue(mockOrgService)
 			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrganizationsStatsService)
+			.useValue(mockOrgStatService)
 			.compile();
 
 		controller = module.get<WarehousesController>(WarehousesController);
@@ -141,7 +132,7 @@ describe('WarehousesController', () => {
 					address: 'test-address',
 				}),
 			);
-			expect(addWarehouseReferenceSpy).toHaveBeenCalledWith(
+			expect(addWarehouseRefSpy).toHaveBeenCalledWith(
 				MOCK_TAKEN_ORG_ID,
 				expect.objectContaining({
 					name: 'test-name',
@@ -176,7 +167,7 @@ describe('WarehousesController', () => {
 					address: 'updated-address',
 				}),
 			);
-			expect(updateWarehouseReferenceSpy).toHaveBeenCalledWith(
+			expect(updateWarehouseRefSpy).toHaveBeenCalledWith(
 				expect.objectContaining({
 					_id: MOCK_TAKEN_WAREHOUSE_ID,
 					name: 'updated-name',
@@ -200,7 +191,7 @@ describe('WarehousesController', () => {
 					name: 'test-name',
 				}),
 			);
-			expect(deleteWarehouseReferenceSpy).toHaveBeenCalledWith(MOCK_TAKEN_WAREHOUSE_ID);
+			expect(deleteWarehouseRefSpy).toHaveBeenCalledWith(MOCK_TAKEN_WAREHOUSE_ID);
 			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(MOCK_TAKEN_ORG_ID);
 		});
 
