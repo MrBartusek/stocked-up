@@ -1,23 +1,27 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ModalBackdrop from './ModalBackdrop';
 import { ModalContext } from './ModalContext';
 
 export interface ModalDialogProps {
 	children?: React.ReactNode;
 	open?: boolean;
+	handleClose?: () => void;
 }
 
-function ModalDialog({ children, open: openProp = true }: ModalDialogProps) {
+function ModalDialog({ children, open: openProp = true, handleClose }: ModalDialogProps) {
 	const [open, setOpen] = useState(openProp);
 
-	function handleClose() {
-		console.log('hide');
+	useEffect(() => {
+		setOpen(openProp);
+	}, [openProp]);
+
+	function handleCloseInternal() {
 		setOpen(false);
 	}
 
 	return (
-		<ModalContext.Provider value={{ close: handleClose }}>
+		<ModalContext.Provider value={{ close: handleClose || handleCloseInternal }}>
 			<div
 				className={classNames(
 					'fixed left-0 right-0 top-0 z-40 h-full max-h-full w-full',
@@ -25,7 +29,7 @@ function ModalDialog({ children, open: openProp = true }: ModalDialogProps) {
 					{ hidden: !open },
 				)}
 			>
-				<div className="relative z-50 m-auto max-h-full w-full max-w-3xl p-4 md:mt-16">
+				<div className="relative z-50 m-auto max-h-full w-full max-w-3xl p-4">
 					<div className="relative rounded-lg border border-gray-300 bg-gray-50 shadow">
 						{children}
 					</div>

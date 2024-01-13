@@ -23,7 +23,7 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 		props.disabled = true;
 	}
 
-	const colorVariants = {
+	const colorVariants: { [key in buttonVariant]: string } = {
 		primary: 'bg-primary hover:bg-primary-hover',
 		secondary: 'bg-secondary hover:bg-secondary-hover',
 		danger: 'bg-danger hover:bg-danger-hover',

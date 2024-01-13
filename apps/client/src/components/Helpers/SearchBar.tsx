@@ -35,6 +35,7 @@ function SearchBar({ onSearch, value }: SearchBarProps) {
 			<FormField>
 				<FormInput
 					placeholder="Search for products"
+					type="search"
 					{...register('search')}
 				/>
 			</FormField>

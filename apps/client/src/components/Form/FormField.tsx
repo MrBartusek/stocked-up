@@ -12,7 +12,7 @@ export interface FormFieldProps {
 
 function FormField({ label, hint, required, className, children }: FormFieldProps) {
 	return (
-		<div className={classNames(className, 'relative my-6')}>
+		<div className={classNames(className, 'relative mb-6')}>
 			<div className="mb-2 ms-1">
 				<span className="flex gap-1">
 					{label ? <label>{label}</label> : null}

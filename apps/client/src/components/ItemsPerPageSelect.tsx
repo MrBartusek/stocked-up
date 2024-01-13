@@ -2,13 +2,18 @@ import Select from './Helpers/Select';
 
 export interface ItemsPerPageSelectProps {
 	value: number;
+	disabled?: boolean;
 	onChange?: (value: number) => void;
 }
 
-function ItemsPerPageSelect({ value, onChange }: ItemsPerPageSelectProps) {
-	const OPTIONS = [10, 25, 50, 100, 250];
+function ItemsPerPageSelect({ value, disabled, onChange }: ItemsPerPageSelectProps) {
+	const options = [10, 25, 50, 100, 250];
 
-	const selectOptions = OPTIONS.map((v) => ({ value: v, label: v }));
+	if (!options.includes(value)) {
+		options.push(value);
+	}
+
+	const selectOptions = options.map((v) => ({ value: v, label: v }));
 
 	function handleChange(newValue: any) {
 		const value: number = newValue.value;
@@ -19,6 +24,7 @@ function ItemsPerPageSelect({ value, onChange }: ItemsPerPageSelectProps) {
 	return (
 		<Select
 			hideSeparator
+			isDisabled={disabled}
 			isSearchable={false}
 			options={selectOptions}
 			value={selectOptions.find((o) => o.value == value) || selectOptions[1]}

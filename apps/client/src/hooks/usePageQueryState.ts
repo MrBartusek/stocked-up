@@ -6,11 +6,11 @@ import SortingOptions from '../types/sortingOptions';
  * This hook is a wrapper over PageQueryDto state with additional common set function
  * used by component such as: SearchBar, Pagination and entity tables
  */
-function usePageQueryState<T = any>() {
-	const [query, setQuery] = useState<PageQueryDto<T>>({ page: 1, pageSize: 10 });
+function usePageQueryState<T = any>(baseQuery?: PageQueryDto<T>) {
+	const [query, setQuery] = useState<PageQueryDto<T>>({ page: 1, pageSize: 10, ...baseQuery });
 
 	function handleSearch(search: string) {
-		setQuery((q) => ({ ...q, search }));
+		setQuery((q) => ({ ...q, search, page: 1 }));
 	}
 
 	function handleSortingChange(options: SortingOptions<T>) {

@@ -14,38 +14,31 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import ProductSelectorModal from '../ProductsSelector/ProductsSelectorModal';
+import FormProductSelect from '../Form/FormProductSelector';
 
 type Inputs = {
 	quantity: number;
 	location: string;
+	productId: string;
 };
 
 function InventoryAddForm() {
 	const appContext = useContext(CurrentAppContext);
-	const { register, handleSubmit } = useForm<Inputs>();
+	const [searchParams] = useSearchParams();
+	const productId = searchParams.get('productId')!;
+
+	const { register, handleSubmit, control } = useForm<Inputs>({ defaultValues: { productId } });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const productId = searchParams.get('productId')!;
-	const { product, error: productFetchError } = useProductsDetails(productId);
-
-	useEffect(() => {
-		if (productId && productFetchError != undefined) {
-			toast.error('Provided product ID is invalid, please input product manual');
-			setSearchParams(undefined);
-		}
-	}, [productFetchError, productId, setSearchParams]);
 
 	function onSubmit(inputs: Inputs) {
-		if (!product) return;
 		setLoading(true);
 		setError(null);
 
 		const dto: CreateInventoryItemDto = {
 			warehouseId: appContext.currentWarehouse.id,
-			productId: product.id,
 			...inputs,
 		};
 
@@ -73,23 +66,14 @@ function InventoryAddForm() {
 			<FormField
 				label="Product"
 				className="mb-0"
+				required
 			>
-				<FormInput
-					disabled
-					value={product?.name}
+				<FormProductSelect
+					required
+					name={'productId'}
+					control={control}
 				/>
 			</FormField>
-			<Link
-				className={classNames('link-primary mb-1 ms-1 mt-3 flex items-center gap-2', {
-					'animate-bounce': product == undefined,
-				})}
-				to={
-					Utils.dashboardUrl(appContext.organization.id, appContext.currentWarehouse.id) +
-					`/products`
-				}
-			>
-				<BsArrowLeftRight /> {product ? 'Change' : 'Select'} product
-			</Link>
 
 			<FormField
 				label="Quantity"
@@ -114,7 +98,7 @@ function InventoryAddForm() {
 
 			<FormError>{error}</FormError>
 
-			<FormSubmitButton disabled={product == undefined}>Add product to inventory</FormSubmitButton>
+			<FormSubmitButton>Add product to inventory</FormSubmitButton>
 		</Form>
 	);
 }
