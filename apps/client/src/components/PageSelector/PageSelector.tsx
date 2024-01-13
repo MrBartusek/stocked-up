@@ -1,7 +1,7 @@
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import PageButton from './PageButton';
-import { PageMeta } from 'shared-types';
 import { useMemo } from 'react';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { PageMeta } from 'shared-types';
+import PageButton from './PageButton';
 
 export interface PageSelectorProps {
 	meta: PageMeta;

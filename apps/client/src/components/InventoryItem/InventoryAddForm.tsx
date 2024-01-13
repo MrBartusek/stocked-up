@@ -1,21 +1,17 @@
 import axios from 'axios';
-import classNames from 'classnames';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { BsArrowLeftRight } from 'react-icons/bs';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CreateInventoryItemDto, OrganizationDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import useProductsDetails from '../../hooks/useProductsDetails';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
-import FormSubmitButton from '../Form/FormSubmitButton';
-import ProductSelectorModal from '../ProductsSelector/ProductsSelectorModal';
 import FormProductSelect from '../Form/FormProductSelector';
+import FormSubmitButton from '../Form/FormSubmitButton';
 
 type Inputs = {
 	quantity: number;

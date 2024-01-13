@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import Button from '../Button';
-import ProductSelectorModal from '../ProductsSelector/ProductsSelectorModal';
-import { BasicProductDto } from 'shared-types';
 import ProductSelectorButton from '../ProductsSelector/ProductSelectorButton';
 
 type InputProps = React.DetailedHTMLProps<
