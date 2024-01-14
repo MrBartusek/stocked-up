@@ -15,7 +15,7 @@ describe('UsersService', () => {
 		findOne: jest.fn((query) => ({
 			id: '123',
 			profile: {
-				username: query['profile.username'],
+				username: 'test',
 			},
 		})),
 		findById: jest.fn((id) => ({ id })),
