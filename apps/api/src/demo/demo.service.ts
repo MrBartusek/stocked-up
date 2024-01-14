@@ -78,11 +78,12 @@ export class DemoService {
 			},
 		});
 
+		let finalOrg = organization;
 		for await (const name of warehouseNames) {
 			const warehouse = await this.warehousesService.create(organization._id, { name });
-			this.organizationsService.addWarehouseReference(organization._id, warehouse);
+			finalOrg = await this.organizationsService.addWarehouseReference(organization._id, warehouse);
 		}
-		return this.organizationsService.findById(organization._id);
+		return finalOrg;
 	}
 
 	private async createProductDefinitions(
@@ -104,12 +105,11 @@ export class DemoService {
 		products: ProductDocument[],
 	): Promise<void> {
 		for await (const warehouseReference of organization.warehouses) {
-			const warehouseId = warehouseReference.id as any as Types.ObjectId;
 			const randomProducts = this.pickRandomNProducts(products, Utils.randomRange(8, 25));
 
 			for await (const randomProduct of randomProducts) {
 				await this.inventoryService.create({
-					warehouseId: warehouseId.toString(),
+					warehouseId: warehouseReference.id.toString(),
 					productId: randomProduct._id.toString(),
 					quantity: Utils.randomRange(0, 200),
 				});
@@ -125,7 +125,7 @@ export class DemoService {
 		await this.organizationsStatsService.recalculateTotalValue(organizationId);
 	}
 
-	pickRandomNProducts(products: ProductDocument[], count: number): ProductDocument[] {
+	private pickRandomNProducts(products: ProductDocument[], count: number): ProductDocument[] {
 		const randomProducts = [...products].sort(() => Math.random() - 0.5);
 		return randomProducts.slice(0, count);
 	}
