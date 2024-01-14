@@ -71,8 +71,11 @@ describe('WarehousesService', () => {
 		expect(service).toBeDefined();
 	});
 
-	it('should create warehouse', () => {
-		expect(service.create({ name: 'test-name', address: 'test-address' })).toEqual(
+	it('should create warehouse', async () => {
+		const dto = { name: 'test-name', address: 'test-address' };
+		const warehouse = await service.create(new Types.ObjectId(), dto);
+
+		expect(warehouse).toEqual(
 			expect.objectContaining({
 				name: 'test-name',
 				address: 'test-address',
@@ -80,8 +83,11 @@ describe('WarehousesService', () => {
 		);
 	});
 
-	it('should update warehouse', () => {
-		expect(service.create({ name: 'updated-name', address: 'updated-address' })).toEqual(
+	it('should update warehouse', async () => {
+		const dto = { name: 'updated-name', address: 'updated-address' };
+		const warehouse = await service.create(new Types.ObjectId(), dto);
+
+		expect(warehouse).toEqual(
 			expect.objectContaining({
 				name: 'updated-name',
 				address: 'updated-address',

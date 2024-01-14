@@ -24,11 +24,11 @@ describe('WarehousesController', () => {
 				address: 'test-address',
 			};
 		}),
-		create: jest.fn((dto: CreateWarehouseDto) => {
+		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
 			return {
 				_id: MOCK_FREE_WAREHOUSE_ID,
-				name: dto.name,
-				address: dto.address,
+				organization,
+				...dto,
 			};
 		}),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => {
