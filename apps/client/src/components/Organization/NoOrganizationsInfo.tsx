@@ -7,7 +7,7 @@ function NoOrganizationsInfo() {
 		<div className="flex items-center justify-center px-8 py-32">
 			<div className="flex flex-col items-center gap-4">
 				<div className="flex flex-col items-center gap-5">
-					<div className="text-7xl text-danger">
+					<div className="text-7xl text-muted">
 						<BsBuildingSlash />
 					</div>
 					<div className="text-2xl">No organizations found!</div>
