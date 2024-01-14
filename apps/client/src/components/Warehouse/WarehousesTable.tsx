@@ -8,15 +8,17 @@ import { Utils } from '../../utils';
 import Table from '../Helpers/Table/Table';
 import WarehouseActions from './WarehouseActions';
 import TableIndex from '../Helpers/Table/TableIndex';
+import SortingChangeHandler from '../../types/sortingChangeHandler';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
 export interface WarehousesTableProps {
 	warehouses: WarehouseDto[];
 	query: PageQueryDto<WarehouseDto>;
+	handleSortingChange: SortingChangeHandler;
 }
 
-function WarehousesTable({ warehouses, query }: WarehousesTableProps) {
+function WarehousesTable({ warehouses, query, handleSortingChange }: WarehousesTableProps) {
 	const navigate = useNavigate();
 	const appContext = useContext(CurrentAppContext);
 
@@ -34,14 +36,17 @@ function WarehousesTable({ warehouses, query }: WarehousesTableProps) {
 		columnHelper.accessor('name', {
 			header: 'Warehouse Name',
 			cell: (info) => info.getValue(),
+			enableSorting: true,
 		}),
 		columnHelper.accessor('address', {
 			header: 'Address',
 			cell: (info) => info.getValue(),
+			enableSorting: true,
 		}),
 		columnHelper.accessor('totalValue', {
 			header: 'Total Stock Value',
 			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			enableSorting: true,
 		}),
 		columnHelper.display({
 			header: 'Actions',
@@ -54,6 +59,7 @@ function WarehousesTable({ warehouses, query }: WarehousesTableProps) {
 	const table = useTableAdapter({
 		data: warehouses,
 		sortingStateQuery: query,
+		handleSortingChange,
 		columns,
 	});
 

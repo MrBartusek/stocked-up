@@ -6,11 +6,13 @@ import useWarehousesList from '../../../hooks/useWarehouseList';
 import Loader from '../../Loader';
 import Pagination from '../../Pagination';
 import WarehousesTable from '../../Warehouse/WarehousesTable';
+import SearchBar from '../../Helpers/SearchBar';
 
 function WarehousesListView() {
 	const appContext = useContext(CurrentAppContext);
 
-	const { query, handlePageChange, handlePageSizeChange } = usePageQueryState<WarehouseDto>();
+	const { query, handlePageChange, handlePageSizeChange, handleSortingChange, handleSearch } =
+		usePageQueryState<WarehouseDto>();
 	const { warehouses, isLoading, error } = useWarehousesList(appContext.organization.id, query);
 
 	return (
@@ -20,9 +22,15 @@ function WarehousesListView() {
 		>
 			{warehouses && (
 				<>
+					<SearchBar
+						value={query.search}
+						onSearch={handleSearch}
+						placeholder="Search for warehouses"
+					/>
 					<WarehousesTable
 						query={query}
 						warehouses={warehouses.items}
+						handleSortingChange={handleSortingChange}
 					/>
 					<Pagination
 						meta={warehouses.meta}

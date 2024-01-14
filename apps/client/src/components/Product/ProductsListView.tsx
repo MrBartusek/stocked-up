@@ -23,6 +23,7 @@ function ProductsListView() {
 					<SearchBar
 						value={query.search}
 						onSearch={handleSearch}
+						placeholder="Search for products"
 					/>
 					<ProductsTable
 						products={products.items}

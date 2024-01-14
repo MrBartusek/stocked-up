@@ -9,10 +9,11 @@ type Inputs = {
 
 export interface SearchBarProps {
 	value?: string;
-	onSearch?: (search: string) => void;
+	onSearch: (search: string) => void;
+	placeholder?: string;
 }
 
-function SearchBar({ onSearch, value }: SearchBarProps) {
+function SearchBar({ onSearch, value, placeholder }: SearchBarProps) {
 	const { register, getValues } = useForm<Inputs>({ defaultValues: { search: value } });
 
 	let debounceTimeout: NodeJS.Timeout;
@@ -34,7 +35,7 @@ function SearchBar({ onSearch, value }: SearchBarProps) {
 		>
 			<FormField>
 				<FormInput
-					placeholder="Search for products"
+					placeholder={placeholder || 'Search'}
 					type="search"
 					{...register('search')}
 				/>

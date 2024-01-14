@@ -66,7 +66,7 @@ export class WarehousesController {
 		@Query(
 			ValidationPipe,
 			new PageQueryValidationPipe<WarehouseDto>({
-				allowedFilters: ['name', 'totalValue'],
+				allowedFilters: ['name', 'totalValue', 'address'],
 			}),
 		)
 		pageQuery: PageQueryDto<WarehouseDto>,

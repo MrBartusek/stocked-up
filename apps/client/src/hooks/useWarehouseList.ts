@@ -11,7 +11,7 @@ function useWarehousesList(organizationId: string, query: PageQueryDto<Warehouse
 	};
 
 	const { data, error, isLoading } = useQuery<PageDto<WarehouseDto>>(
-		['organizations', organizationId, 'warehouses'],
+		['warehouses', 'list', organizationId, query],
 		() => fetchWarehouses(organizationId!, query),
 		{ enabled: organizationId != undefined, keepPreviousData: true },
 	);

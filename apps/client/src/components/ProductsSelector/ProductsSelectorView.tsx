@@ -29,6 +29,7 @@ function ProductsSelectorView({ onClickRow }: ProductsSelectorViewProps) {
 					<SearchBar
 						value={query.search}
 						onSearch={handleSearch}
+						placeholder="Search for products"
 					/>
 					<ProductsSelectorTable
 						onClickRow={onClickRow}
