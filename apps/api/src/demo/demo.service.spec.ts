@@ -89,8 +89,6 @@ describe('DemoService', () => {
 		expect(service).toBeDefined();
 	});
 
-	test.todo('should purge demo accounts');
-
 	it('should create demo account', async () => {
 		const account = await service.setupDemoAccount();
 
