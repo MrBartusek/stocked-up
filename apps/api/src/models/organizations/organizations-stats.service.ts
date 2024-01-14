@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
 import { OrganizationRepository } from './organizations.repository';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class OrganizationsStatsService {
@@ -39,10 +40,9 @@ export class OrganizationsStatsService {
 		);
 
 		let totalOrgValue = 0;
-		const warehouses = await this.organizationRepository.findAllWarehouses(orgId);
-		for await (const warehouse of warehouses) {
+		for await (const warehouseRef of organization.warehouses) {
 			totalOrgValue += await this.warehouseStatsService.recalculateWarehouseValue(
-				warehouse._id,
+				warehouseRef.id,
 				organization.settings.valueCalculationStrategy,
 			);
 		}

@@ -49,8 +49,8 @@ export class InventoryController {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
 		const productId = new Types.ObjectId(dto.productId);
 
-		const warehouseExist = await this.warehousesService.exist(warehouseId);
-		if (!warehouseExist) {
+		const warehouse = await this.warehousesService.findById(warehouseId);
+		if (!warehouse) {
 			throw new BadRequestException("This warehouse doesn't exist");
 		}
 
@@ -67,8 +67,7 @@ export class InventoryController {
 		}
 
 		const item = await this.inventoryService.create(dto);
-		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.organizationStatsService.recalculateTotalValue(organization._id);
+		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -84,9 +83,8 @@ export class InventoryController {
 		}
 
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
-
-		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.organizationStatsService.recalculateTotalValue(organization._id);
+		const warehouse = await this.warehousesService.findById(warehouseId);
+		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
 
 		return InventoryItem.toBasicDto(item);
 	}
@@ -99,9 +97,8 @@ export class InventoryController {
 		}
 
 		const warehouseId = new Types.ObjectId(item.warehouse as any);
-
-		const organization = await this.organizationService.findByWarehouse(warehouseId);
-		await this.organizationStatsService.recalculateTotalValue(organization._id);
+		const warehouse = await this.warehousesService.findById(warehouseId);
+		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
 
 		return InventoryItem.toBasicDto(item);
 	}

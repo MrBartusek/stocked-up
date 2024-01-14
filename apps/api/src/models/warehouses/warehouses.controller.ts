@@ -7,16 +7,24 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { CreateWarehouseInOrgDto, UpdateWarehouseDto, WarehouseDto } from 'shared-types';
+import {
+	CreateWarehouseInOrgDto,
+	PageDto,
+	PageQueryDto,
+	UpdateWarehouseDto,
+	WarehouseDto,
+} from 'shared-types';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 
 @ApiTags('warehouses')
 @Controller('warehouses')
@@ -36,7 +44,7 @@ export class WarehousesController {
 			throw new NotFoundException("Organization with provided id doesn't exist");
 		}
 
-		const warehouse = await this.warehousesService.create(dto.warehouse);
+		const warehouse = await this.warehousesService.create(orgId, dto.warehouse);
 		await this.organizationsService.addWarehouseReference(orgId, warehouse);
 
 		return Warehouse.toDto(warehouse);
@@ -50,6 +58,26 @@ export class WarehousesController {
 		}
 
 		return Warehouse.toDto(warehouse);
+	}
+
+	@Get('list/:id')
+	async list(
+		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
+		@Query(
+			ValidationPipe,
+			new PageQueryValidationPipe<WarehouseDto>({
+				allowedFilters: ['name', 'totalValue'],
+			}),
+		)
+		pageQuery: PageQueryDto<WarehouseDto>,
+	): Promise<PageDto<WarehouseDto>> {
+		const { items, meta } = await this.warehousesService.paginate(orgId, pageQuery);
+
+		const warehouseDTOs = items.map((warehouse) => Warehouse.toDto(warehouse));
+		return {
+			meta,
+			items: warehouseDTOs,
+		};
 	}
 
 	@Put(':id')

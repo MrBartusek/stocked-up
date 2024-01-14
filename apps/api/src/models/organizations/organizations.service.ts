@@ -55,14 +55,6 @@ export class OrganizationsService {
 		return this.organizationRepository.exist({ name });
 	}
 
-	async findByWarehouse(
-		warehouseId: mongoose.Types.ObjectId,
-	): Promise<OrganizationDocument | null> {
-		return this.organizationRepository.findOne({
-			'warehouses.id': warehouseId,
-		});
-	}
-
 	async addWarehouseReference(
 		organizationId: mongoose.Types.ObjectId,
 		warehouse: WarehouseDocument,
@@ -101,14 +93,6 @@ export class OrganizationsService {
 				},
 			},
 		);
-	}
-
-	async listAllWarehouses(
-		orgId: mongoose.Types.ObjectId,
-		pageQueryDto: PageQueryDto,
-	): Promise<PageDto<WarehouseDocument>> {
-		const id = new mongoose.Types.ObjectId(orgId);
-		return this.organizationRepository.paginateAllWarehouses(id, pageQueryDto);
 	}
 
 	async updateAcl(

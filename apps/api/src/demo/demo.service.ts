@@ -79,7 +79,7 @@ export class DemoService {
 		});
 
 		for await (const name of warehouseNames) {
-			const warehouse = await this.warehousesService.create({ name });
+			const warehouse = await this.warehousesService.create(organization._id, { name });
 			this.organizationsService.addWarehouseReference(organization._id, warehouse);
 		}
 		return this.organizationsService.findById(organization._id);

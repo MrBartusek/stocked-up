@@ -24,12 +24,10 @@ import {
 	PageQueryDto,
 	PatchOrganizationSettingsDto,
 	UpdateOrganizationDto,
-	WarehouseDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
-import { Warehouse } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
@@ -56,9 +54,9 @@ export class OrganizationsController {
 			throw new BadRequestException('This organization name is already taken');
 		}
 
-		const org = await this.organizationsService.create(createOrganizationDto);
-		const warehouse = await this.warehousesService.create(createOrganizationDto.warehouse);
 		const userId = new Types.ObjectId(request.user.id);
+		const org = await this.organizationsService.create(createOrganizationDto);
+		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 
 		await this.organizationsService.updateAcl(org.id, userId, 'owner');
 		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
@@ -116,27 +114,6 @@ export class OrganizationsController {
 			throw new NotFoundException();
 		}
 		return Organization.toDto(org);
-	}
-
-	@Get(':id/warehouses')
-	async findWarehouses(
-		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Query(
-			ValidationPipe,
-			new PageQueryValidationPipe<OrganizationDto>({
-				disableOrderBy: true,
-				disableTextSearch: true,
-			}),
-		)
-		pageQuery: PageQueryDto<OrganizationDto>,
-	): Promise<PageDto<WarehouseDto>> {
-		const { items, meta } = await this.organizationsService.listAllWarehouses(id, pageQuery);
-		const warehouseDTOs = items.map((warehouse) => Warehouse.toDto(warehouse));
-
-		return {
-			meta,
-			items: warehouseDTOs,
-		};
 	}
 
 	@Patch(':id/settings')

@@ -4,7 +4,7 @@ import { PageDto, PageQueryDto, WarehouseDto } from 'shared-types';
 
 function useWarehousesList(organizationId: string, query: PageQueryDto<WarehouseDto>) {
 	const fetchWarehouses = async (organizationId: string, query: PageQueryDto) => {
-		const { data } = await axios.get(`/api/organizations/${organizationId}/warehouses`, {
+		const { data } = await axios.get(`/api/warehouses/list/${organizationId}`, {
 			params: query,
 		});
 		return data as PageDto<WarehouseDto>;

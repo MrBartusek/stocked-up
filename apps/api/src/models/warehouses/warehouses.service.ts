@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
+import {
+	CreateWarehouseDto,
+	PageDto,
+	PageQueryDto,
+	UpdateWarehouseDto,
+	WarehouseDto,
+} from 'shared-types';
 import { InventoryService } from '../inventory/inventory.service';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
@@ -12,11 +18,8 @@ export class WarehousesService {
 		private readonly inventoryService: InventoryService,
 	) {}
 
-	create(createWarehouseDto: CreateWarehouseDto): Promise<WarehouseDocument> {
-		return this.warehouseRepository.create({
-			name: createWarehouseDto.name,
-			address: createWarehouseDto.address,
-		});
+	create(organization: Types.ObjectId, dto: CreateWarehouseDto): Promise<WarehouseDocument> {
+		return this.warehouseRepository.create({ organization, ...dto });
 	}
 
 	update(id: Types.ObjectId, dto: UpdateWarehouseDto): Promise<WarehouseDocument | undefined> {
@@ -36,5 +39,12 @@ export class WarehousesService {
 
 	exist(id: Types.ObjectId) {
 		return this.warehouseRepository.exist({ _id: id });
+	}
+
+	paginate(
+		orgId: Types.ObjectId,
+		query: PageQueryDto<WarehouseDto>,
+	): Promise<PageDto<WarehouseDocument>> {
+		return this.warehouseRepository.paginate({ organization: orgId }, query);
 	}
 }
