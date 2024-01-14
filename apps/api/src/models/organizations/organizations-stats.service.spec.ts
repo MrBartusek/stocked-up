@@ -23,13 +23,11 @@ describe('OrganizationsStatsService', () => {
 				settings: {
 					valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
 				},
+				warehouses: Array(8).fill({
+					id: new Types.ObjectId(),
+				}),
 			};
 		}),
-		findAllWarehouses: jest.fn(() =>
-			Array(8).fill({
-				id: new Types.ObjectId(),
-			}),
-		),
 	};
 
 	const mockWarehouseStatsService = {

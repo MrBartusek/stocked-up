@@ -36,9 +36,10 @@ describe('OrganizationsController', () => {
 	};
 
 	const mockWarehousesService = {
-		create: jest.fn((dto: CreateWarehouseDto) => {
+		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
 			return {
 				_id: new Types.ObjectId(),
+				organization,
 				...dto,
 			};
 		}),
@@ -52,8 +53,8 @@ describe('OrganizationsController', () => {
 		addWarehouseReference: jest.fn((id) => regularMockFindFunction(id)),
 		updateAcl: jest.fn((id) => regularMockFindFunction(id)),
 		listAllForUser: jest.fn((id) => {
-			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return { data: [] };
-			return { data: Array(2).fill(regularMockFindFunction(new Types.ObjectId())) };
+			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return { items: [] };
+			return { items: Array(2).fill(regularMockFindFunction(new Types.ObjectId())) };
 		}),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
@@ -243,25 +244,6 @@ describe('OrganizationsController', () => {
 			const org = controller.findById(MOCK_FREE_ORGANIZATION_ID);
 
 			await expect(org).rejects.toThrow(NotFoundException);
-		});
-	});
-
-	describe("List organization's warehouses", () => {
-		it("should list organization's warehouses", async () => {
-			const warehouses = await controller.findWarehouses(MOCK_TAKEN_ORGANIZATION_ID);
-
-			expect(warehouses.length).toBe(2);
-			expect(warehouses[0]).toEqual(
-				expect.objectContaining({
-					name: 'test-warehouse-a',
-				}),
-			);
-		});
-
-		it('should return empty list when no warehouses', async () => {
-			const warehouses = await controller.findWarehouses(MOCK_FREE_ORGANIZATION_ID);
-
-			expect(warehouses.length).toBe(0);
 		});
 	});
 

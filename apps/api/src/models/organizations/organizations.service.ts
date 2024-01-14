@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
-import { CreateOrganizationDto, PageDto, PageQueryDto, UpdateOrganizationDto } from 'shared-types';
+import { CreateOrganizationDto, PageQueryDto, UpdateOrganizationDto } from 'shared-types';
 import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
