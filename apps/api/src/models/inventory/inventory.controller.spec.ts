@@ -64,14 +64,21 @@ describe('InventoryController', () => {
 			return getMockInventoryItem(id);
 		}),
 		listByWarehouse: jest.fn((id) => {
-			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return { data: [] };
-			return { data: Array(10).fill(getMockInventoryItem(new Types.ObjectId())) };
+			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return { items: [] };
+			return { items: Array(10).fill(getMockInventoryItem(new Types.ObjectId())) };
 		}),
 		findByProduct: jest.fn(() => null),
 	};
 
 	const mockWarehousesService = {
 		exist: jest.fn((id: Types.ObjectId) => id.toString() == MOCK_IDS.warehouse.taken.toString()),
+		findById: jest.fn((id: Types.ObjectId) => {
+			if (id.toString() != MOCK_IDS.warehouse.taken.toString()) return null;
+			return {
+				organization: new Types.ObjectId(),
+				id,
+			};
+		}),
 	};
 
 	const mockProductsService = {
