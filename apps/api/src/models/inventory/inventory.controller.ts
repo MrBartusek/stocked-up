@@ -26,7 +26,6 @@ import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { OrganizationsService } from '../organizations/organizations.service';
 import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
@@ -40,7 +39,6 @@ export class InventoryController {
 		private readonly inventoryService: InventoryService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productService: ProductsService,
-		private readonly organizationService: OrganizationsService,
 		private readonly organizationStatsService: OrganizationsStatsService,
 	) {}
 
