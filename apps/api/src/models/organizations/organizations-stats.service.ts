@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { WarehouseStatsService } from '../warehouses/warehouses-stats.service';
 import { OrganizationRepository } from './organizations.repository';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class OrganizationsStatsService {

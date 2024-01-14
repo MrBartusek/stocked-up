@@ -1,19 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { Types } from 'mongoose';
 import * as crypto from 'node:crypto';
+import Utils from '../helpers/utils';
 import { InventoryService } from '../models/inventory/inventory.service';
+import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
+import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
 import { ProductsService } from '../models/products/products.service';
+import { ProductDocument } from '../models/products/schemas/product.schema';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
-import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
-import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
-import { ProductDocument } from '../models/products/schemas/product.schema';
-import Utils from '../helpers/utils';
-import { Type } from '@aws-sdk/client-s3';
-import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class DemoService {
