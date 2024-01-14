@@ -3,23 +3,36 @@ import { Request } from 'express';
 import { UserRegisterDto } from 'shared-types';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { DemoService } from '../demo/demo.service';
+import { Types } from 'mongoose';
 
 describe('AuthController', () => {
 	let controller: AuthController;
 
 	const mockAuthService = {
 		registerUser: jest.fn((dto: UserRegisterDto) => {
-			return { _id: '123', email: dto.email, username: dto.username };
+			return { _id: new Types.ObjectId(), profile: { dto } };
+		}),
+	};
+
+	const mockDemoService = {
+		setupDemoAccount: jest.fn(() => {
+			return {
+				_id: new Types.ObjectId(),
+				profile: { email: 'demo@dokurno.dev', username: 'demo' },
+			};
 		}),
 	};
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [AuthController],
-			providers: [AuthService],
+			providers: [AuthService, DemoService],
 		})
 			.overrideProvider(AuthService)
 			.useValue(mockAuthService)
+			.overrideProvider(DemoService)
+			.useValue(mockDemoService)
 			.compile();
 
 		controller = module.get<AuthController>(AuthController);
@@ -59,5 +72,11 @@ describe('AuthController', () => {
 				statusCode: 200,
 			}),
 		);
+	});
+
+	it('should create demo account', async () => {
+		const user = await controller.createDemo();
+
+		expect(user.username).toBe('demo');
 	});
 });

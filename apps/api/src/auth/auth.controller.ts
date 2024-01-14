@@ -55,7 +55,7 @@ export class AuthController {
 
 	@HttpCode(200)
 	@Post('demo')
-	async demoLogin(): Promise<PrivateUserDto> {
+	async createDemo(): Promise<PrivateUserDto> {
 		const user = await this.demoService.setupDemoAccount();
 		const dto = User.toPrivateDto(user);
 		return dto;
