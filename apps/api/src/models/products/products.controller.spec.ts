@@ -41,7 +41,7 @@ describe('ProductsController', () => {
 			return regularMockFindFunction(id);
 		}),
 		paginate: jest.fn((id: Types.ObjectId) => {
-			return { data: Array(10).fill(regularMockFindFunction(id)) };
+			return { items: Array(10).fill(regularMockFindFunction(id)) };
 		}),
 		delete: jest.fn((id: Types.ObjectId) => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
@@ -168,7 +168,7 @@ describe('ProductsController', () => {
 	it('should find all products by org', async () => {
 		const product = await controller.list(new Types.ObjectId(), { page: 1 });
 
-		expect(product.data).toEqual(
+		expect(product.items).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({
 					name: expect.any(String),

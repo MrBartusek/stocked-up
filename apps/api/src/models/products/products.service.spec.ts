@@ -108,7 +108,7 @@ describe('ProductsService', () => {
 	it('should paginate all products', async () => {
 		const products = await service.paginate(new Types.ObjectId(), { page: 1 });
 
-		expect(products.data).toEqual(
+		expect(products.items).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({
 					name: expect.any(String),
