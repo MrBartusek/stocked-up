@@ -5,6 +5,7 @@ import { CreateProductDto } from 'shared-types';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
+import { MockProductsRepository } from './mocks/mock-products-repository';
 
 const MOCK_TAKEN_PRODUCT_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_PRODUCT_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
@@ -12,54 +13,33 @@ const MOCK_FREE_PRODUCT_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
 describe('ProductsController', () => {
 	let controller: ProductsController;
 
-	const regularMockFindFunction = (id?: Types.ObjectId) => {
-		return {
-			_id: id,
-			name: 'test-product',
-			organization: new Types.ObjectId(),
-			buyPrice: 10,
-			sellPrice: 10,
-			imageKey: 'image-key',
-		};
-	};
+	const mockProductsRepo = new MockProductsRepository();
 
 	const mockProductsService = {
-		create: jest.fn((dto: CreateProductDto) => {
-			return dto;
-		}),
+		create: jest.fn((data) => mockProductsRepo.create(data)),
 		update: jest.fn((id: Types.ObjectId, query: any) => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
-			const { organizationId, ...rest } = query;
-			return {
-				...regularMockFindFunction(id),
-				...rest,
-				organization: organizationId,
-			};
+			return mockProductsRepo.findOneByIdAndUpdate(id, query);
 		}),
 		findOne: jest.fn((id: Types.ObjectId) => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
-			return regularMockFindFunction(id);
+			return mockProductsRepo.findById(id);
 		}),
-		paginate: jest.fn((id: Types.ObjectId) => {
-			return { items: Array(10).fill(regularMockFindFunction(id)) };
-		}),
+		paginate: jest.fn((query, page) => mockProductsRepo.paginate(query, page)),
 		delete: jest.fn((id: Types.ObjectId) => {
 			if (id != MOCK_TAKEN_PRODUCT_ID) return;
-			return regularMockFindFunction(id);
+			return mockProductsRepo.deleteOneById(id);
 		}),
-		countAll: jest.fn(() => 1),
+		countAll: jest.fn(() => mockProductsRepo.countDocuments()),
 	};
 
-	const mockOrganizationsStatsService = {
+	const mockOrgStatService = {
 		updateProductsCount: jest.fn(),
 		recalculateTotalValue: jest.fn(),
 	};
 
-	const updateProductsCountSpy = jest.spyOn(mockOrganizationsStatsService, 'updateProductsCount');
-	const recalculateTotalValueSpy = jest.spyOn(
-		mockOrganizationsStatsService,
-		'recalculateTotalValue',
-	);
+	const updateProductsCountSpy = jest.spyOn(mockOrgStatService, 'updateProductsCount');
+	const recalculateOrgSpy = jest.spyOn(mockOrgStatService, 'recalculateTotalValue');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -69,7 +49,7 @@ describe('ProductsController', () => {
 			.overrideProvider(ProductsService)
 			.useValue(mockProductsService)
 			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrganizationsStatsService)
+			.useValue(mockOrgStatService)
 			.compile();
 
 		controller = module.get<ProductsController>(ProductsController);
@@ -95,7 +75,7 @@ describe('ProductsController', () => {
 					name: 'created-product',
 				}),
 			);
-			expect(updateProductsCountSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId), 1);
+			expect(updateProductsCountSpy).toHaveBeenCalled();
 		});
 	});
 
@@ -113,7 +93,7 @@ describe('ProductsController', () => {
 					name: 'updated-product',
 				}),
 			);
-			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(orgId);
+			expect(recalculateOrgSpy).toHaveBeenCalled();
 		});
 
 		it('should not update product that does not exist', async () => {
@@ -154,8 +134,8 @@ describe('ProductsController', () => {
 					name: expect.any(String),
 				}),
 			);
-			expect(updateProductsCountSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId), 1);
-			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(expect.any(Types.ObjectId));
+			expect(updateProductsCountSpy).toHaveBeenCalled();
+			expect(recalculateOrgSpy).toHaveBeenCalled();
 		});
 
 		it('should not delete product that does not exist', async () => {

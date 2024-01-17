@@ -2,7 +2,7 @@ import { IsMongoId, IsNumber, Length, MaxLength } from "class-validator";
 
 export class CreateProductDto {
     @IsMongoId()
-    organizationId: string;
+    organization: string;
 
     @Length(2, 32)
     name: string;
