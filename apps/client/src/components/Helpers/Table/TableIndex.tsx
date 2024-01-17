@@ -1,9 +1,9 @@
 import { CellContext } from '@tanstack/react-table';
-import { PageQueryDto } from 'shared-types';
+import { IPageQueryDto } from 'shared-types';
 
 export interface TableIndex<T = any> {
 	info: CellContext<T, any>;
-	query: PageQueryDto<T>;
+	query: IPageQueryDto<T>;
 }
 
 function TableIndex({ info, query }: TableIndex) {

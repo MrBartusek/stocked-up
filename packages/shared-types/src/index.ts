@@ -1,7 +1,6 @@
 import { ImageDto } from './ImageDto';
 import { PageDto } from './page/PageDto';
 import { PageMeta } from './page/PageMeta';
-import { PageQueryDto } from './page/PageQueryDto';
 import { SimpleResponseDto } from './SimpleResponseDto';
 import { SortDirection } from './page/SortDirection';
 import { UserLoginDto } from './auth/UserLoginDto';
@@ -15,9 +14,8 @@ import { OrganizationDto } from './organizations/OrganizationDto';
 import { PatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
 import { UpdateOrganizationDto } from './organizations/UpdateOrganizationDto';
 import { BasicProductDto } from './product/BasicProductDto';
-import { ICreateProductDto } from './product/CreateProductDto';
 import { ProductDto } from './product/ProductDto';
-import IUpdateProductDto from './product/UpdateProductDto';
+import IUpdateProductDto from './product/IUpdateProductDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
 import { UpdateUserDto } from './user/UpdateUserDto';
 import { UserDto } from './user/UserDto';
@@ -26,6 +24,8 @@ import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto';
 import { CreateWarehouseInOrgDto } from './warehouse/CreateWarehouseInOrgDto';
 import { UpdateWarehouseDto } from './warehouse/UpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
+import ICreateProductDto from './product/ICreateProductDto';
+import IPageQueryDto from './page/IPageQueryDto';
 
 export {
     BasicInventoryItemDto,
@@ -53,8 +53,8 @@ export {
     WarehouseDto,
     ImageDto,
     PageDto,
-    PageQueryDto,
     PageMeta,
-    SortDirection
+    SortDirection,
+    IPageQueryDto
 };
 
