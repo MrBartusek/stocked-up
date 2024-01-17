@@ -38,7 +38,7 @@ function ProductCreateForm() {
 		setLoading(true);
 
 		const dto: CreateProductDto = {
-			organizationId: appContext.organization.id,
+			organization: appContext.organization.id,
 			...inputs,
 		};
 
