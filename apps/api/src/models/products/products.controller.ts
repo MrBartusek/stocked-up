@@ -42,7 +42,7 @@ export class ProductsController {
 	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 
-		const orgId = new Types.ObjectId(dto.organizationId);
+		const orgId = new Types.ObjectId(dto.organization);
 		await this.updateTotalProductsCount(orgId);
 
 		return Product.toDto(product);

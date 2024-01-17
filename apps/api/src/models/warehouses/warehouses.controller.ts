@@ -37,7 +37,7 @@ export class WarehousesController {
 
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
-		const orgId = new Types.ObjectId(dto.organizationId);
+		const orgId = new Types.ObjectId(dto.organization);
 
 		const orgExist = this.organizationsService.exist(orgId);
 		if (!orgExist) {

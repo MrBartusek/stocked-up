@@ -17,8 +17,8 @@ export class ProductsService {
 
 	create(dto: CreateProductDto): Promise<ProductDocument> {
 		return this.productsRepository.create({
-			organization: dto.organizationId as any,
 			...dto,
+			organization: new Types.ObjectId(dto.organization) as any,
 		});
 	}
 
