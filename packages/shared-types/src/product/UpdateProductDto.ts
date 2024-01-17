@@ -1,10 +1,8 @@
-import { ValidateNested } from "class-validator";
+import { ICreateProductDto } from "..";
 import { ImageDto } from "../ImageDto";
-import { CreateProductDto } from "./CreateProductDto";
-import { Type } from "class-transformer";
 
-export class UpdateProductDto extends CreateProductDto {
-    @ValidateNested()
-    @Type(() => ImageDto)
+interface IUpdateProductDto extends ICreateProductDto {
     image: ImageDto;
 }
+
+export default IUpdateProductDto;

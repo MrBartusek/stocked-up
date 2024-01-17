@@ -15,9 +15,9 @@ import { OrganizationDto } from './organizations/OrganizationDto';
 import { PatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
 import { UpdateOrganizationDto } from './organizations/UpdateOrganizationDto';
 import { BasicProductDto } from './product/BasicProductDto';
-import { CreateProductDto } from './product/CreateProductDto';
+import { ICreateProductDto } from './product/CreateProductDto';
 import { ProductDto } from './product/ProductDto';
-import { UpdateProductDto } from './product/UpdateProductDto';
+import IUpdateProductDto from './product/UpdateProductDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
 import { UpdateUserDto } from './user/UpdateUserDto';
 import { UserDto } from './user/UserDto';
@@ -33,7 +33,7 @@ export {
     BasicWarehouseDto,
     CreateInventoryItemDto,
     CreateOrganizationDto,
-    CreateProductDto,
+    ICreateProductDto,
     CreateWarehouseDto,
     CreateWarehouseInOrgDto,
     InventoryItemDto,
@@ -44,7 +44,7 @@ export {
     SimpleResponseDto,
     UpdateInventoryItemDto,
     UpdateOrganizationDto,
-    UpdateProductDto,
+    IUpdateProductDto,
     UpdateUserDto,
     UpdateWarehouseDto,
     UserDto,
