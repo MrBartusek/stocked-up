@@ -1,9 +1,9 @@
 import { ImageDto } from './ImageDto';
-import { PageDto } from './PageDto';
-import { PageMeta } from './PageMeta';
-import { PageQueryDto } from './PageQueryDto';
+import { PageDto } from './page/PageDto';
+import { PageMeta } from './page/PageMeta';
+import { PageQueryDto } from './page/PageQueryDto';
 import { SimpleResponseDto } from './SimpleResponseDto';
-import { SortDirection } from './SortDirection';
+import { SortDirection } from './page/SortDirection';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { UserRegisterDto } from './auth/UserRegisterDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
