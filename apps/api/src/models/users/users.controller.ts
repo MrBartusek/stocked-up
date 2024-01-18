@@ -16,7 +16,7 @@ import { PrivateUserDto, UserDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/update-user-dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 @ApiTags('users')

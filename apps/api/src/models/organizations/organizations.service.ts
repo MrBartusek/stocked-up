@@ -7,7 +7,7 @@ import { WarehousesService } from '../warehouses/warehouses.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
-import PageQueryDto from '../../dto/page-query-dto';
+import PageQueryDto from '../../dto/page-query.dto';
 import UpdateOrganizationDto from './dto/update-organization.dto';
 import CreateOrganizationDto from './dto/create-organization.dto';
 

@@ -26,7 +26,7 @@ import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import PageQueryDto from '../../dto/page-query-dto';
+import PageQueryDto from '../../dto/page-query.dto';
 import CreateOrganizationDto from './dto/create-organization.dto';
 import UpdateOrganizationDto from './dto/update-organization.dto';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';

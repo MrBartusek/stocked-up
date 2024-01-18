@@ -1,5 +1,5 @@
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import PageQueryDto from '../dto/page-query-dto';
+import PageQueryDto from '../dto/page-query.dto';
 
 interface PageQueryValidationPipeOptions<T> {
 	allowedFilters?: (keyof T)[];
