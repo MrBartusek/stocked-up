@@ -19,7 +19,7 @@ import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
-import PageQueryDto from '../../dto/page-query.dto';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 @ApiTags('warehouses')
 @Controller('warehouses')

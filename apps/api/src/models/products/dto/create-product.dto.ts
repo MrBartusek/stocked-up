@@ -2,7 +2,7 @@ import { IsMongoId, IsNumber, Length, MaxLength, Validate } from 'class-validato
 import { ICreateProductDto } from 'shared-types';
 import { OrganizationExistRule } from '../../../rules/organization-exist.rule';
 
-class CreateProductDto implements ICreateProductDto {
+export class CreateProductDto implements ICreateProductDto {
 	@IsMongoId()
 	@Validate(OrganizationExistRule)
 	organization: string;
@@ -25,5 +25,3 @@ class CreateProductDto implements ICreateProductDto {
 	@MaxLength(64)
 	sku?: string;
 }
-
-export default CreateProductDto;

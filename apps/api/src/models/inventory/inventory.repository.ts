@@ -4,7 +4,7 @@ import mongoose, { FilterQuery, Model, Types } from 'mongoose';
 import { EntityRepository } from '../../database/entity.repository';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.schema';
-import PageQueryDto from 'shared-types/dist/page/IPageQueryDto';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 @Injectable()
 export class InventoryRepository extends EntityRepository<InventoryItemDocument> {

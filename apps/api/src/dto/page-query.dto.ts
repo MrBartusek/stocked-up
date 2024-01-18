@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { IPageQueryDto, SortDirection } from 'shared-types';
 
-class PageQueryDto<T = any> implements IPageQueryDto {
+export class PageQueryDto<T = any> implements IPageQueryDto {
 	@Transform((p) => parseInt(p.value))
 	@IsInt()
 	@Min(1)
@@ -27,5 +27,3 @@ class PageQueryDto<T = any> implements IPageQueryDto {
 	@IsOptional()
 	search?: string;
 }
-
-export default PageQueryDto;

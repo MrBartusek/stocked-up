@@ -5,9 +5,9 @@ import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
-import CreateProductDto from './dto/create-product.dto';
-import UpdateProductDto from './dto/update-product.dto';
-import PageQueryDto from '../../dto/page-query.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 @Injectable()
 export class ProductsService {

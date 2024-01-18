@@ -1,5 +1,5 @@
 import { BaseDto } from "../BaseDto";
-import IImageDto from "../ImageDto";
+import { IImageDto } from "../ImageDto";
 
 export class BasicProductDto extends BaseDto {
     name: string;

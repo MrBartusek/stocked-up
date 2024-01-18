@@ -1,7 +1,7 @@
 import { IsBoolean, IsDataURI, IsEmpty, IsOptional } from 'class-validator';
 import { IImageDto } from 'shared-types';
 
-class ImageDto implements IImageDto {
+export class ImageDto implements IImageDto {
 	@IsBoolean()
 	hasImage: boolean;
 
@@ -13,5 +13,3 @@ class ImageDto implements IImageDto {
 	@IsDataURI()
 	data?: string;
 }
-
-export default ImageDto;

@@ -29,7 +29,7 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import PageQueryDto from '../../dto/page-query.dto';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
