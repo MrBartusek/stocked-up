@@ -1,11 +1,12 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { CreateWarehouseDto, UpdateWarehouseDto } from 'shared-types';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 
 const MOCK_TAKEN_ORG_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_ORG_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
@@ -119,7 +120,7 @@ describe('WarehousesController', () => {
 	describe('create', () => {
 		it('should create warehouse', async () => {
 			const warehouse = await controller.create({
-				organization: MOCK_TAKEN_ORG_ID.toString(),
+				organizationId: MOCK_TAKEN_ORG_ID.toString(),
 				warehouse: {
 					name: 'test-name',
 					address: 'test-address',
@@ -143,7 +144,7 @@ describe('WarehousesController', () => {
 
 		it('should not create warehouse in org that does not exist', () => {
 			const warehouse = controller.create({
-				organization: MOCK_FREE_ORG_ID.toString(),
+				organizationId: MOCK_FREE_ORG_ID.toString(),
 				warehouse: {
 					name: 'test-name',
 					address: 'test-address',

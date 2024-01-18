@@ -56,7 +56,7 @@ describe('ProductsService', () => {
 
 	it('should create product', async () => {
 		const product = await service.create({
-			organizationId: '123',
+			organization: new Types.ObjectId().toString(),
 			name: 'created-product',
 		});
 		expect(product).toEqual(
@@ -68,7 +68,7 @@ describe('ProductsService', () => {
 
 	it('should update product', async () => {
 		const product = await service.update(new Types.ObjectId(), {
-			organizationId: '123',
+			organization: new Types.ObjectId().toString(),
 			name: 'updated-product',
 			image: { hasImage: false },
 		});

@@ -1,7 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { CreateProductDto } from 'shared-types';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
@@ -66,7 +65,7 @@ describe('ProductsController', () => {
 	describe('Create product', () => {
 		it('should create product', async () => {
 			const product = await controller.create({
-				organizationId: new Types.ObjectId().toString(),
+				organization: new Types.ObjectId().toString(),
 				name: 'created-product',
 			});
 
@@ -83,7 +82,7 @@ describe('ProductsController', () => {
 		it('should update product', async () => {
 			const orgId = new Types.ObjectId();
 			const product = await controller.update(MOCK_TAKEN_PRODUCT_ID, {
-				organizationId: orgId.toString(),
+				organization: orgId.toString(),
 				name: 'updated-product',
 				image: { hasImage: false },
 			});
@@ -98,7 +97,7 @@ describe('ProductsController', () => {
 
 		it('should not update product that does not exist', async () => {
 			const product = controller.update(MOCK_FREE_PRODUCT_ID, {
-				organizationId: new Types.ObjectId().toString(),
+				organization: new Types.ObjectId().toString(),
 				name: 'updated-product',
 				image: { hasImage: false },
 			});
