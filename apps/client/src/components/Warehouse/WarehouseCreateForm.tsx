@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { CreateWarehouseInOrgDto, WarehouseDto } from 'shared-types';
+import { ICreateWarehouseInOrgDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -31,7 +31,7 @@ function WarehouseCreateForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: CreateWarehouseInOrgDto = {
+		const dto: ICreateWarehouseInOrgDto = {
 			organizationId: appContext.organization.id,
 			warehouse: inputs,
 		};

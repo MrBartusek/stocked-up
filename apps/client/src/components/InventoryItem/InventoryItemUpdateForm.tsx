@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { InventoryItemDto, ProductDto, UpdateInventoryItemDto } from 'shared-types';
+import { InventoryItemDto, ProductDto, IUpdateInventoryItemDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -40,7 +40,7 @@ function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
-		const dto: UpdateInventoryItemDto = inputs;
+		const dto: IUpdateInventoryItemDto = inputs;
 
 		axios
 			.put<ProductDto>(`/api/inventory/${inventoryItem.id}`, dto)

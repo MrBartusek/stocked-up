@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useInfiniteQuery } from 'react-query';
-import { OrganizationDto, PageDto, PageQueryDto } from 'shared-types';
+import { OrganizationDto, PageDto, IPageQueryDto } from 'shared-types';
 
 function useInfiniteOrganizationsList() {
-	const fetchOrganizations = async (query: PageQueryDto) => {
+	const fetchOrganizations = async (query: IPageQueryDto) => {
 		const { data } = await axios.get(`/api/organizations`, { params: query });
 		return data as PageDto<OrganizationDto>;
 	};
@@ -12,7 +12,7 @@ function useInfiniteOrganizationsList() {
 		useInfiniteQuery(
 			['organizations', 'list'],
 			({ pageParam = 1 }) => {
-				const query: PageQueryDto = {
+				const query: IPageQueryDto = {
 					page: pageParam,
 					pageSize: 10,
 				};

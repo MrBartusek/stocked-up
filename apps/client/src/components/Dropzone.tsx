@@ -2,10 +2,10 @@ import PromiseFileReader from 'promise-file-reader';
 import React, { useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
-import { ImageDto } from 'shared-types';
+import { IImageDto } from 'shared-types';
 
 export interface DropzoneProps {
-	onChange: (file: ImageDto) => void;
+	onChange: (file: IImageDto) => void;
 	render: (isDragActive: boolean) => React.ReactNode;
 }
 

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { ProductDto, UpdateWarehouseDto, WarehouseDto } from 'shared-types';
+import { ProductDto, IUpdateWarehouseDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -35,7 +35,7 @@ function WarehouseUpdateForm({ warehouse }: WarehouseUpdateFormProps) {
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
-		const dto: UpdateWarehouseDto = inputs;
+		const dto: IUpdateWarehouseDto = inputs;
 
 		axios
 			.put<ProductDto>(`/api/warehouses/${warehouse.id}`, dto)

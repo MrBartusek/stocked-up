@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { PageDto, PageQueryDto, ProductDto } from 'shared-types';
+import { PageDto, IPageQueryDto, ProductDto } from 'shared-types';
 
-function useProductsList(organizationId: string, query: PageQueryDto) {
+function useProductsList(organizationId: string, query: IPageQueryDto) {
 	const fetchProducts = async (id: string) => {
 		const { data } = await axios.get(`/api/products/list/${id}`, { params: query });
 		return data as PageDto<ProductDto>;

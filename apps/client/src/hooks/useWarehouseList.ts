@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { PageDto, PageQueryDto, WarehouseDto } from 'shared-types';
+import { PageDto, IPageQueryDto, WarehouseDto } from 'shared-types';
 
-function useWarehousesList(organizationId: string, query: PageQueryDto<WarehouseDto>) {
-	const fetchWarehouses = async (organizationId: string, query: PageQueryDto) => {
+function useWarehousesList(organizationId: string, query: IPageQueryDto<WarehouseDto>) {
+	const fetchWarehouses = async (organizationId: string, query: IPageQueryDto) => {
 		const { data } = await axios.get(`/api/warehouses/list/${organizationId}`, {
 			params: query,
 		});

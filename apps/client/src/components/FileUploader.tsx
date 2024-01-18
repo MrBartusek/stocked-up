@@ -1,10 +1,10 @@
 import { BsCloudUploadFill, BsTrashFill } from 'react-icons/bs';
-import { ImageDto } from 'shared-types';
+import { IImageDto } from 'shared-types';
 
 export interface FileUploaderProps {
-	value: ImageDto;
+	value: IImageDto;
 	isDragActive?: boolean;
-	onChange: (file: ImageDto) => void;
+	onChange: (file: IImageDto) => void;
 }
 
 function FileUploader({ value, isDragActive, onChange }: FileUploaderProps) {

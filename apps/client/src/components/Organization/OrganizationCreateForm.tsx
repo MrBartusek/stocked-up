@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { CreateOrganizationDto, OrganizationDto } from 'shared-types';
+import { ICreateOrganizationDto, OrganizationDto } from 'shared-types';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
@@ -28,7 +28,7 @@ function OrganizationCreateForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: CreateOrganizationDto = {
+		const dto: ICreateOrganizationDto = {
 			name: inputs.name,
 			warehouse: {
 				name: inputs.warehouseName,

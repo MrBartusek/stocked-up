@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BasicProductDto, PageQueryDto } from 'shared-types';
+import { BasicProductDto, IPageQueryDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
@@ -15,7 +15,7 @@ const columnHelper = createColumnHelper<BasicProductDto>();
 
 export interface ProductsTableProps {
 	products: BasicProductDto[];
-	query: PageQueryDto<BasicProductDto>;
+	query: IPageQueryDto<BasicProductDto>;
 	handleSortingChange?: SortingChangeHandler;
 }
 
