@@ -3,7 +3,6 @@ import { PageMeta } from './page/PageMeta';
 import { SimpleResponseDto } from './SimpleResponseDto';
 import { SortDirection } from './page/SortDirection';
 import { UserLoginDto } from './auth/UserLoginDto';
-import { UserRegisterDto } from './auth/UserRegisterDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
 import { CreateInventoryItemDto } from './inventory/CreateInventoryItemDto';
 import { InventoryItemDto } from './inventory/InventoryItemDto';
@@ -26,6 +25,7 @@ import IUpdateUserDto from './user/IUpdateUserDto';
 import IPatchOrganizationSettingsDto from './organizations/PatchOrganizationSettingsDto';
 import IUpdateOrganizationDto from './organizations/UpdateOrganizationDto';
 import IImageDto from './ImageDto';
+import IUserRegisterDto from './auth/IUserRegisterDto';
 
 export {
     BasicInventoryItemDto,
@@ -49,7 +49,7 @@ export {
     UpdateWarehouseDto,
     UserDto,
     UserLoginDto,
-    UserRegisterDto,
+    IUserRegisterDto,
     WarehouseDto,
     IImageDto,
     PageDto,
