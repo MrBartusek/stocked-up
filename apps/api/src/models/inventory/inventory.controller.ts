@@ -34,23 +34,17 @@ export class InventoryController {
 	constructor(
 		private readonly inventoryService: InventoryService,
 		private readonly warehousesService: WarehousesService,
-		private readonly productService: ProductsService,
 		private readonly organizationStatsService: OrganizationsStatsService,
 	) {}
 
 	@Post()
-	async create(@Body(ValidationPipe) dto: CreateInventoryItemDto) {
+	async create(@Body() dto: CreateInventoryItemDto) {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
 		const productId = new Types.ObjectId(dto.productId);
 
 		const warehouse = await this.warehousesService.findById(warehouseId);
 		if (!warehouse) {
 			throw new BadRequestException("This warehouse doesn't exist");
-		}
-
-		const productExist = await this.productService.exist(productId);
-		if (!productExist) {
-			throw new BadRequestException("This product doesn't exist");
 		}
 
 		const itemExist = await this.inventoryService.findByProduct(warehouseId, productId);

@@ -1,10 +1,10 @@
 import { IsMongoId, IsNumber, Length, MaxLength, Validate } from 'class-validator';
 import { ICreateProductDto } from 'shared-types';
-import { OrganizationExistRule } from '../../../rules/organization-exist.rule';
+import { HasOrganizationAccessRule } from '../../../rules/has-organization-access.rule';
 
 export class CreateProductDto implements ICreateProductDto {
 	@IsMongoId()
-	@Validate(OrganizationExistRule)
+	@Validate(HasOrganizationAccessRule)
 	organization: string;
 
 	@Length(2, 32)

@@ -69,4 +69,9 @@ export class ProductsService {
 	countAll(organizationId: mongoose.Types.ObjectId): Promise<number> {
 		return this.productsRepository.countDocuments({ organization: organizationId });
 	}
+
+	async getOrganizationFromProduct(id: mongoose.Types.ObjectId): Promise<Types.ObjectId | null> {
+		const result = await this.productsRepository.findById(id, { organization: 1 });
+		return result ? (result.organization as any) : null;
+	}
 }

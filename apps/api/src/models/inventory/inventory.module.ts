@@ -1,7 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import MongooseModuleHelper from '../../helpers/mongoose-module.helper';
 import { OrganizationsModule } from '../organizations/organizations.module';
-import { ProductsModule } from '../products/products.module';
 import { WarehousesModule } from '../warehouses/warehouses.module';
 import { InventoryStatsService } from './inventory-stats.service';
 import { InventoryController } from './inventory.controller';
@@ -12,7 +11,6 @@ import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.sch
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(InventoryItem, InventoryItemSchema),
-		forwardRef(() => ProductsModule),
 		forwardRef(() => WarehousesModule),
 		forwardRef(() => OrganizationsModule),
 	],

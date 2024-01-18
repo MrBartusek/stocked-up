@@ -7,6 +7,7 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
+import { HasProductAccessRule } from '../../rules/has-product-access.rule';
 
 @Module({
 	imports: [
@@ -15,7 +16,12 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 		forwardRef(() => ProductsModule),
 	],
 	controllers: [OrganizationsController],
-	providers: [OrganizationsService, OrganizationRepository, OrganizationsStatsService],
+	providers: [
+		OrganizationsService,
+		OrganizationRepository,
+		OrganizationsStatsService,
+		HasProductAccessRule,
+	],
 	exports: [OrganizationsService, OrganizationsStatsService],
 })
 export class OrganizationsModule {}

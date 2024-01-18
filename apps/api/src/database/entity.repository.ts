@@ -12,37 +12,35 @@ export interface RepositoryPaginateResult<T> {
 	meta: PageMeta;
 }
 
+type ProjectionType<T> = { [P in keyof T]?: mongoose.ProjectionElementType };
+
 export abstract class EntityRepository<T extends Document> {
 	constructor(protected readonly entityModel: Model<T>) {}
 
 	async findOne(
 		entityFilterQuery?: FilterQuery<T>,
-		projection?: Record<string, unknown>,
+		projections?: ProjectionType<T>,
 	): Promise<T | null> {
-		return this.entityModel
-			.findOne(entityFilterQuery, { ...DEFAULT_PROJECTIONS, ...projection })
-			.exec();
+		return this.entityModel.findOne(entityFilterQuery, projections || DEFAULT_PROJECTIONS).exec();
 	}
 
 	async find(
 		entityFilterQuery?: FilterQuery<T>,
-		projection?: Record<string, unknown>,
+		projections?: ProjectionType<T>,
 	): Promise<T[] | null> {
-		return this.entityModel
-			.find(entityFilterQuery, { ...DEFAULT_PROJECTIONS, ...projection })
-			.exec();
+		return this.entityModel.find(entityFilterQuery, projections || DEFAULT_PROJECTIONS).exec();
 	}
 
 	async findById(
 		id: mongoose.Types.ObjectId | string,
-		projection?: Record<string, unknown>,
+		projections?: ProjectionType<T>,
 	): Promise<T | null> {
 		if (!mongoose.isValidObjectId(id)) {
 			return null;
 		}
 
 		const objectId = new mongoose.Types.ObjectId(id);
-		return this.entityModel.findById(objectId, { ...DEFAULT_PROJECTIONS, ...projection }).exec();
+		return this.entityModel.findById(objectId, projections || DEFAULT_PROJECTIONS).exec();
 	}
 
 	async create(createEntityData: Partial<T>): Promise<T> {
