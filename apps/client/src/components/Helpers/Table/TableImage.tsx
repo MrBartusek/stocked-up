@@ -1,4 +1,4 @@
-import { ImageDto } from 'shared-types';
+import { IImageDto } from 'shared-types';
 
 type ImgProps = React.DetailedHTMLProps<
 	React.ImgHTMLAttributes<HTMLImageElement>,
@@ -6,7 +6,7 @@ type ImgProps = React.DetailedHTMLProps<
 >;
 
 export interface TableImageProps extends ImgProps {
-	image: ImageDto;
+	image: IImageDto;
 }
 
 function TableImage({ image, ...props }: TableImageProps) {

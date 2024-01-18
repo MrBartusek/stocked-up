@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { PageMeta, PageQueryDto } from 'shared-types';
+import { PageMeta } from 'shared-types';
+import { PageQueryDto } from '../dto/page-query.dto';
 
 const DEFAULT_PROJECTIONS = {
 	__v: 0,

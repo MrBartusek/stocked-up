@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BsXCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import { OrganizationDto, PatchOrganizationSettingsDto } from 'shared-types';
+import { OrganizationDto, IPatchOrganizationSettingsDto } from 'shared-types';
 import FormSelect from './Form/FormSelect';
 
 export interface RealtimeOrgSettingSelectProps {
@@ -32,7 +32,7 @@ function RealtimeOrgSettingSelect({
 		setError(false);
 		setTemporaryValue(newValue);
 
-		const dto: PatchOrganizationSettingsDto = { [property as string]: newValue.value };
+		const dto: IPatchOrganizationSettingsDto = { [property as string]: newValue.value };
 		axios
 			.patch(`/api/organizations/${organization.id}/settings`, dto)
 			.then(() => {

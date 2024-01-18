@@ -1,7 +1,4 @@
-import { IsIn, IsOptional } from "class-validator";
 
-export class PatchOrganizationSettingsDto {
-    @IsOptional()
-    @IsIn(['buyPrice', 'sellPrice'])
+export interface IPatchOrganizationSettingsDto {
     valueCalculationStrategy?: string;
 }

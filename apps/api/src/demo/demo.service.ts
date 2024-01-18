@@ -85,13 +85,11 @@ export class DemoService {
 		return finalOrg;
 	}
 
-	private async createProductDefinitions(
-		organizationId: Types.ObjectId,
-	): Promise<ProductDocument[]> {
+	private async createProductDefinitions(organization: Types.ObjectId): Promise<ProductDocument[]> {
 		const result: ProductDocument[] = [];
 		for await (const product of DEMO_CONFIG.products) {
 			const document = await this.productsService.create({
-				organizationId: organizationId.toString(),
+				organization: organization.toString(),
 				...product,
 			});
 			result.push(document);

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { UserLoginDto, UserRegisterDto } from 'shared-types';
+import { UserLoginDto, IUserRegisterDto } from 'shared-types';
 import { UserContext } from '../context/UserContext';
 import { Utils } from '../utils';
 import Button from './Button';
@@ -30,7 +30,7 @@ function RegisterForm() {
 		setLoading(true);
 		setError(null);
 
-		const registerDto: UserRegisterDto = inputs;
+		const registerDto: IUserRegisterDto = inputs;
 		axios
 			.post(`/api/auth/register`, registerDto)
 			.then(() => {

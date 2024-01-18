@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { PageQueryDto } from 'shared-types';
+import { IPageQueryDto } from 'shared-types';
 import SortingOptions from '../types/sortingOptions';
 
 /**
  * This hook is a wrapper over PageQueryDto state with additional common set function
  * used by component such as: SearchBar, Pagination and entity tables
  */
-function usePageQueryState<T = any>(baseQuery?: PageQueryDto<T>) {
-	const [query, setQuery] = useState<PageQueryDto<T>>({ page: 1, pageSize: 10, ...baseQuery });
+function usePageQueryState<T = any>(baseQuery?: IPageQueryDto<T>) {
+	const [query, setQuery] = useState<IPageQueryDto<T>>({ page: 1, pageSize: 10, ...baseQuery });
 
 	function handleSearch(search: string) {
 		setQuery((q) => ({ ...q, search, page: 1 }));

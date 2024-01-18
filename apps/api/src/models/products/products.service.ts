@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import mongoose, { Types } from 'mongoose';
-import { CreateProductDto, PageQueryDto, UpdateProductDto } from 'shared-types';
 import { RepositoryPaginateResult } from '../../database/entity.repository';
 import { ImagesService } from '../../images/images.service';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 @Injectable()
 export class ProductsService {
@@ -17,8 +19,8 @@ export class ProductsService {
 
 	create(dto: CreateProductDto): Promise<ProductDocument> {
 		return this.productsRepository.create({
-			organization: dto.organizationId as any,
 			...dto,
+			organization: new Types.ObjectId(dto.organization) as any,
 		});
 	}
 

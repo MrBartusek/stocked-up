@@ -119,7 +119,7 @@ describe('WarehousesController', () => {
 	describe('create', () => {
 		it('should create warehouse', async () => {
 			const warehouse = await controller.create({
-				organizationId: MOCK_TAKEN_ORG_ID.toString(),
+				organization: MOCK_TAKEN_ORG_ID.toString(),
 				warehouse: {
 					name: 'test-name',
 					address: 'test-address',
@@ -143,7 +143,7 @@ describe('WarehousesController', () => {
 
 		it('should not create warehouse in org that does not exist', () => {
 			const warehouse = controller.create({
-				organizationId: MOCK_FREE_ORG_ID.toString(),
+				organization: MOCK_FREE_ORG_ID.toString(),
 				warehouse: {
 					name: 'test-name',
 					address: 'test-address',

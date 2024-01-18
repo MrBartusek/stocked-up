@@ -1,4 +1,4 @@
-import { ImageDto } from 'shared-types';
+import { ImageDto } from '../models/users/dto/image.dto';
 import Utils from './utils';
 
 class DtoHelper {

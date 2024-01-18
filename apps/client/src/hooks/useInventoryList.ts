@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { BasicInventoryItemDto, PageDto, PageQueryDto } from 'shared-types';
+import { BasicInventoryItemDto, PageDto, IPageQueryDto } from 'shared-types';
 
-function useInventoryList(warehouseId: string, query: PageQueryDto<BasicInventoryItemDto>) {
+function useInventoryList(warehouseId: string, query: IPageQueryDto<BasicInventoryItemDto>) {
 	const fetchInventoryList = async (id: string) => {
 		const { data } = await axios.get(`/api/inventory/by-warehouse/${id}`, { params: query });
 		return data as PageDto<BasicInventoryItemDto>;

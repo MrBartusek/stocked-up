@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { ImageDto, ProductDto, UpdateProductDto } from 'shared-types';
+import { IImageDto, ProductDto, IUpdateProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -23,7 +23,7 @@ export interface ProductCreateFormProps {
 type Inputs = {
 	name: string;
 	description?: string;
-	image: ImageDto;
+	image: IImageDto;
 	buyPrice?: number;
 	sellPrice?: number;
 	unit?: string;
@@ -50,8 +50,8 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 
 		const { image, ...rest } = inputs;
 
-		const dto: UpdateProductDto = {
-			organizationId: appContext.organization.id,
+		const dto: IUpdateProductDto = {
+			organization: appContext.organization.id,
 			...product,
 			image: {
 				hasImage: image.hasImage,

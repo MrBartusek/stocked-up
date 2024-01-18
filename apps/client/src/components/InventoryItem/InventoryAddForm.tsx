@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CreateInventoryItemDto, OrganizationDto } from 'shared-types';
+import { ICreateInventoryItemDto, OrganizationDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -33,7 +33,7 @@ function InventoryAddForm() {
 		setLoading(true);
 		setError(null);
 
-		const dto: CreateInventoryItemDto = {
+		const dto: ICreateInventoryItemDto = {
 			warehouseId: appContext.currentWarehouse.id,
 			...inputs,
 		};

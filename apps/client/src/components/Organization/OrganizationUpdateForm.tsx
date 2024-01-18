@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { OrganizationDto, UpdateOrganizationDto } from 'shared-types';
+import { OrganizationDto, IUpdateOrganizationDto } from 'shared-types';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
@@ -33,7 +33,7 @@ function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
-		const dto: UpdateOrganizationDto = inputs;
+		const dto: IUpdateOrganizationDto = inputs;
 
 		axios
 			.put(`/api/organizations/${organization.id}`, dto)

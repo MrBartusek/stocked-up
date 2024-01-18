@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
-import { BasicInventoryItemDto, BasicProductDto, PageQueryDto } from 'shared-types';
+import { BasicInventoryItemDto, BasicProductDto, IPageQueryDto } from 'shared-types';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
 import Table from '../Helpers/Table/Table';
@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<BasicInventoryItemDto>();
 
 export interface InventoryTableProps {
 	items: BasicInventoryItemDto[];
-	query: PageQueryDto<BasicInventoryItemDto>;
+	query: IPageQueryDto<BasicInventoryItemDto>;
 	handleSortingChange: SortingChangeHandler;
 }
 

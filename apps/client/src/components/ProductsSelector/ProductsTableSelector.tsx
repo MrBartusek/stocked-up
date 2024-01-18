@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { BasicProductDto, PageQueryDto } from 'shared-types';
+import { BasicProductDto, IPageQueryDto } from 'shared-types';
 import TableIndex from '../Helpers/Table/TableIndex';
 import TableImage from '../Helpers/Table/TableImage';
 import useTableAdapter from '../../hooks/useTableAdapter';
@@ -9,7 +9,7 @@ const columnHelper = createColumnHelper<BasicProductDto>();
 
 export interface ProductsTableProps {
 	products: BasicProductDto[];
-	query: PageQueryDto<BasicProductDto>;
+	query: IPageQueryDto<BasicProductDto>;
 	onClickRow?: (product: BasicProductDto) => void;
 }
 

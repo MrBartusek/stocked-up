@@ -7,8 +7,8 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import { PageQueryDto } from 'shared-types';
 import SortingChangeHandler from '../types/sortingChangeHandler';
+import { IPageQueryDto } from 'shared-types';
 
 /**
  * For some reason Rollup doesn't want to import SortDirection from shared-types
@@ -21,7 +21,7 @@ enum SortDirection {
 
 export interface UseTableAdapterProps<TData>
 	extends Omit<TableOptions<TData>, 'getCoreRowModel' | 'manualSorting' | 'onSortingChange'> {
-	sortingStateQuery?: PageQueryDto<any>;
+	sortingStateQuery?: IPageQueryDto<any>;
 	handleSortingChange?: SortingChangeHandler;
 }
 
@@ -30,7 +30,7 @@ function useTableAdapter<TData>({
 	handleSortingChange: sortingChangeHandler,
 	...props
 }: UseTableAdapterProps<TData>): Table<TData> {
-	function adaptSortingState(query: PageQueryDto | undefined): SortingState {
+	function adaptSortingState(query: IPageQueryDto | undefined): SortingState {
 		if (!query) return [];
 		if (!query.orderBy) return [];
 

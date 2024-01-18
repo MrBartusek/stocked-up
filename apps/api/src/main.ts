@@ -10,14 +10,27 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis/connect';
+import { useContainer } from 'class-validator';
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+	// Allow for base64 attachments
 	app.use(json({ limit: '50mb' }));
+
+	// Serve frontend
 	app.useStaticAssets(join(__dirname, '../..', 'public'), { prefix: '/public/' });
+
+	// Frontend is served on / by static serve module, so serve api on /api
 	app.setGlobalPrefix('api');
+
+	// This is for decency injection in custom validators
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+	// Setup validation with class-validator and class-transformer
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
 	setupSwagger(app);
 
 	const redisStore = new RedisStore({

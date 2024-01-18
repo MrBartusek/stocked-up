@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { CreateProductDto, ProductDto } from 'shared-types';
+import { ICreateProductDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -37,8 +37,8 @@ function ProductCreateForm() {
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
 
-		const dto: CreateProductDto = {
-			organizationId: appContext.organization.id,
+		const dto: ICreateProductDto = {
+			organization: appContext.organization.id,
 			...inputs,
 		};
 

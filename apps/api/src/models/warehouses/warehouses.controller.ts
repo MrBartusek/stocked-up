@@ -12,19 +12,16 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import {
-	CreateWarehouseInOrgDto,
-	PageDto,
-	PageQueryDto,
-	UpdateWarehouseDto,
-	WarehouseDto,
-} from 'shared-types';
+import { PageDto, WarehouseDto } from 'shared-types';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
+import { PageQueryDto } from '../../dto/page-query.dto';
+import { CreateWarehouseInOrgDto } from './dto/create-warehouse-in-org.dto';
+import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 
 @ApiTags('warehouses')
 @Controller('warehouses')

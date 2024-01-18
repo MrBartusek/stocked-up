@@ -1,10 +1,10 @@
 import { BaseDto } from "../BaseDto";
-import { ImageDto } from "../ImageDto";
+import { IImageDto } from "../ImageDto";
 
 export class BasicInventoryItemDto extends BaseDto {
     productId: string;
     name: string;
-    image: ImageDto;
+    image: IImageDto;
     quantity: number;
     unit: string;
 }

@@ -14,19 +14,16 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import {
-	CreateProductDto,
-	PageDto,
-	PageQueryDto,
-	ProductDto,
-	UpdateProductDto,
-} from 'shared-types';
+import { PageDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
+import { PageQueryDto } from '../../dto/page-query.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @ApiTags('products')
 @Controller('products')
@@ -42,7 +39,7 @@ export class ProductsController {
 	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 
-		const orgId = new Types.ObjectId(dto.organizationId);
+		const orgId = new Types.ObjectId(dto.organization);
 		await this.updateTotalProductsCount(orgId);
 
 		return Product.toDto(product);

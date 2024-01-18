@@ -1,60 +1,59 @@
-import { ImageDto } from './ImageDto';
-import { PageDto } from './PageDto';
-import { PageMeta } from './PageMeta';
-import { PageQueryDto } from './PageQueryDto';
+import { IImageDto } from './ImageDto';
 import { SimpleResponseDto } from './SimpleResponseDto';
-import { SortDirection } from './SortDirection';
+import { IUserRegisterDto } from './auth/IUserRegisterDto';
 import { UserLoginDto } from './auth/UserLoginDto';
-import { UserRegisterDto } from './auth/UserRegisterDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
-import { CreateInventoryItemDto } from './inventory/CreateInventoryItemDto';
+import { ICreateInventoryItemDto } from './inventory/ICreateInventoryItemDto';
 import { InventoryItemDto } from './inventory/InventoryItemDto';
-import { UpdateInventoryItemDto } from './inventory/UpdateInventoryItemDto';
-import { CreateOrganizationDto } from './organizations/CreateOrganizationDto';
+import { IUpdateInventoryItemDto } from './inventory/IUpdateInventoryItemDto';
+import { ICreateOrganizationDto } from './organizations/ICreateOrganizationDto';
 import { OrganizationDto } from './organizations/OrganizationDto';
-import { PatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
-import { UpdateOrganizationDto } from './organizations/UpdateOrganizationDto';
+import { IPatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
+import { IUpdateOrganizationDto } from './organizations/UpdateOrganizationDto';
+import { IPageQueryDto } from './page/IPageQueryDto';
+import { PageDto } from './page/PageDto';
+import { PageMeta } from './page/PageMeta';
+import { SortDirection } from './page/SortDirection';
 import { BasicProductDto } from './product/BasicProductDto';
-import { CreateProductDto } from './product/CreateProductDto';
+import { ICreateProductDto } from './product/ICreateProductDto';
+import { IUpdateProductDto } from './product/IUpdateProductDto';
 import { ProductDto } from './product/ProductDto';
-import { UpdateProductDto } from './product/UpdateProductDto';
+import { IUpdateUserDto } from './user/IUpdateUserDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
-import { UpdateUserDto } from './user/UpdateUserDto';
 import { UserDto } from './user/UserDto';
 import { BasicWarehouseDto } from './warehouse/BasicWarehouseDto';
-import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto';
-import { CreateWarehouseInOrgDto } from './warehouse/CreateWarehouseInOrgDto';
-import { UpdateWarehouseDto } from './warehouse/UpdateWarehouseDto';
+import { IUpdateWarehouseDto } from './warehouse/IUpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
+import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
+import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
 
 export {
     BasicInventoryItemDto,
     BasicProductDto,
     BasicWarehouseDto,
-    CreateInventoryItemDto,
-    CreateOrganizationDto,
-    CreateProductDto,
-    CreateWarehouseDto,
-    CreateWarehouseInOrgDto,
+    ICreateInventoryItemDto, 
+    ICreateWarehouseDto,
+    ICreateWarehouseInOrgDto, 
+    ICreateOrganizationDto,
+    ICreateProductDto, 
+    IImageDto, 
+    IPageQueryDto, 
+    IPatchOrganizationSettingsDto, 
+    IUpdateOrganizationDto,
+    IUpdateProductDto,
+    IUpdateUserDto, 
+    IUserRegisterDto, 
     InventoryItemDto,
-    OrganizationDto,
-    PatchOrganizationSettingsDto,
+    OrganizationDto, 
+    PageDto,
+    PageMeta, 
     PrivateUserDto,
     ProductDto,
-    SimpleResponseDto,
-    UpdateInventoryItemDto,
-    UpdateOrganizationDto,
-    UpdateProductDto,
-    UpdateUserDto,
-    UpdateWarehouseDto,
+    SimpleResponseDto, 
+    SortDirection, 
+    IUpdateInventoryItemDto, 
+    IUpdateWarehouseDto,
     UserDto,
-    UserLoginDto,
-    UserRegisterDto,
-    WarehouseDto,
-    ImageDto,
-    PageDto,
-    PageQueryDto,
-    PageMeta,
-    SortDirection
+    UserLoginDto, WarehouseDto
 };
 
