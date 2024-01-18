@@ -1,7 +1,4 @@
-import { IsIn, IsOptional } from "class-validator";
 
-interface IPatchOrganizationSettingsDto {
+export interface IPatchOrganizationSettingsDto {
     valueCalculationStrategy?: string;
 }
-
-export default IPatchOrganizationSettingsDto;

@@ -1,8 +1,6 @@
 import { CreateWarehouseDto } from "src/warehouse/CreateWarehouseDto"
 
- interface ICreateOrganizationDto {
+export interface ICreateOrganizationDto {
     name: string
     warehouse: CreateWarehouseDto
 }
-
-export default ICreateOrganizationDto

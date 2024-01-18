@@ -1,4 +1,4 @@
-interface ICreateProductDto {
+export interface ICreateProductDto {
     organization: string;
     name: string;
     description?: string;
@@ -7,5 +7,3 @@ interface ICreateProductDto {
     unit?: string;
     sku?: string;
 }
-
-export default ICreateProductDto;
