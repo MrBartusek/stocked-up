@@ -1,9 +1,9 @@
 import { BaseDto } from "../BaseDto";
-import { ImageDto } from "../ImageDto";
+import IImageDto from "../ImageDto";
 
 export class BasicProductDto extends BaseDto {
     name: string;
-    image: ImageDto;
+    image: IImageDto;
     buyPrice: number;
     sellPrice: number;
     unit?: string;

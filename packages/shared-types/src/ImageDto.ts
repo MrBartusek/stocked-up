@@ -1,14 +1,7 @@
-import { IsBoolean, IsDataURI, IsEmpty, IsMimeType, IsOptional } from "class-validator";
-
-export class ImageDto {
-    @IsBoolean()
+interface IImageDto {
     hasImage: boolean;
-
-    @IsEmpty()
-    @IsOptional()
     url?: string;
-
-    @IsOptional()
-    @IsDataURI()
     data?: string
 }
+
+export default IImageDto;

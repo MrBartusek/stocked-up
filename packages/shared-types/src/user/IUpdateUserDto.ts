@@ -1,9 +1,9 @@
-import { ImageDto } from "../ImageDto";
+import IImageDto from "../ImageDto";
 
 interface IUpdateUserDto {
     username: string;
     email: string;
-    image: ImageDto;
+    image: IImageDto;
 }
 
 export default IUpdateUserDto;

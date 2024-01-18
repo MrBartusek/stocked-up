@@ -1,4 +1,3 @@
-import { ImageDto } from './ImageDto';
 import { PageDto } from './page/PageDto';
 import { PageMeta } from './page/PageMeta';
 import { SimpleResponseDto } from './SimpleResponseDto';
@@ -26,6 +25,7 @@ import IPageQueryDto from './page/IPageQueryDto';
 import IUpdateUserDto from './user/IUpdateUserDto';
 import IPatchOrganizationSettingsDto from './organizations/PatchOrganizationSettingsDto';
 import IUpdateOrganizationDto from './organizations/UpdateOrganizationDto';
+import IImageDto from './ImageDto';
 
 export {
     BasicInventoryItemDto,
@@ -51,7 +51,7 @@ export {
     UserLoginDto,
     UserRegisterDto,
     WarehouseDto,
-    ImageDto,
+    IImageDto,
     PageDto,
     PageMeta,
     SortDirection,

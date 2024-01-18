@@ -1,7 +1,7 @@
 import { BaseDto } from "../BaseDto";
-import { ImageDto } from "../ImageDto";
+import IImageDto from "../ImageDto";
 
 export class UserDto extends BaseDto {
     username: string;
-    image: ImageDto;
+    image: IImageDto;
 }
