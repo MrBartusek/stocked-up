@@ -3,7 +3,7 @@ import { SimpleResponseDto } from './SimpleResponseDto';
 import { IUserRegisterDto } from './auth/IUserRegisterDto';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
-import { ICreateInventoryItemDto } from './inventory/CreateInventoryItemDto';
+import { ICreateInventoryItemDto } from './inventory/ICreateInventoryItemDto';
 import { InventoryItemDto } from './inventory/InventoryItemDto';
 import { IUpdateInventoryItemDto } from './inventory/IUpdateInventoryItemDto';
 import { ICreateOrganizationDto } from './organizations/ICreateOrganizationDto';
@@ -22,18 +22,18 @@ import { IUpdateUserDto } from './user/IUpdateUserDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
 import { UserDto } from './user/UserDto';
 import { BasicWarehouseDto } from './warehouse/BasicWarehouseDto';
-import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto';
-import { CreateWarehouseInOrgDto } from './warehouse/CreateWarehouseInOrgDto';
-import { UpdateWarehouseDto } from './warehouse/UpdateWarehouseDto';
+import { IUpdateWarehouseDto } from './warehouse/IUpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
+import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
+import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
 
 export {
     BasicInventoryItemDto,
     BasicProductDto,
     BasicWarehouseDto,
     ICreateInventoryItemDto, 
-    CreateWarehouseDto,
-    CreateWarehouseInOrgDto, 
+    ICreateWarehouseDto,
+    ICreateWarehouseInOrgDto, 
     ICreateOrganizationDto,
     ICreateProductDto, 
     IImageDto, 
@@ -52,7 +52,7 @@ export {
     SimpleResponseDto, 
     SortDirection, 
     IUpdateInventoryItemDto, 
-    UpdateWarehouseDto,
+    IUpdateWarehouseDto,
     UserDto,
     UserLoginDto, WarehouseDto
 };
