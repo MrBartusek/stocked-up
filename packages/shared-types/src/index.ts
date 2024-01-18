@@ -17,7 +17,6 @@ import { BasicProductDto } from './product/BasicProductDto';
 import { ProductDto } from './product/ProductDto';
 import IUpdateProductDto from './product/IUpdateProductDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
-import { UpdateUserDto } from './user/UpdateUserDto';
 import { UserDto } from './user/UserDto';
 import { BasicWarehouseDto } from './warehouse/BasicWarehouseDto';
 import { CreateWarehouseDto } from './warehouse/CreateWarehouseDto';
@@ -26,6 +25,7 @@ import { UpdateWarehouseDto } from './warehouse/UpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
 import ICreateProductDto from './product/ICreateProductDto';
 import IPageQueryDto from './page/IPageQueryDto';
+import IUpdateUserDto from './user/IUpdateUserDto';
 
 export {
     BasicInventoryItemDto,
@@ -45,7 +45,7 @@ export {
     UpdateInventoryItemDto,
     UpdateOrganizationDto,
     IUpdateProductDto,
-    UpdateUserDto,
+    IUpdateUserDto,
     UpdateWarehouseDto,
     UserDto,
     UserLoginDto,

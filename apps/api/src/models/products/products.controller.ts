@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { PageDto, PageQueryDto, ProductDto } from 'shared-types';
+import { PageDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -23,6 +23,7 @@ import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
 import CreateProductDto from './dto/create-product-dto';
 import UpdateProductDto from './dto/update-product-dto';
+import PageQueryDto from '../../dto/page-query-dto';
 
 @ApiTags('products')
 @Controller('products')

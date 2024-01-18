@@ -12,19 +12,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import {
-	CreateWarehouseInOrgDto,
-	PageDto,
-	PageQueryDto,
-	UpdateWarehouseDto,
-	WarehouseDto,
-} from 'shared-types';
+import { CreateWarehouseInOrgDto, PageDto, UpdateWarehouseDto, WarehouseDto } from 'shared-types';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
+import PageQueryDto from '../../dto/page-query-dto';
 
 @ApiTags('warehouses')
 @Controller('warehouses')
@@ -37,7 +32,7 @@ export class WarehousesController {
 
 	@Post()
 	async create(@Body(ValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
-		const orgId = new Types.ObjectId(dto.organization);
+		const orgId = new Types.ObjectId(dto.organizationId);
 
 		const orgExist = this.organizationsService.exist(orgId);
 		if (!orgExist) {

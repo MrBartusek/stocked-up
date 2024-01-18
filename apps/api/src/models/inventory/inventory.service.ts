@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
-import {
-	CreateInventoryItemDto,
-	PageDto,
-	PageQueryDto,
-	UpdateInventoryItemDto,
-} from 'shared-types';
+import { CreateInventoryItemDto, PageDto, UpdateInventoryItemDto } from 'shared-types';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
+import PageQueryDto from '../../dto/page-query-dto';
 
 @Injectable()
 export class InventoryService {

@@ -19,7 +19,6 @@ import {
 	CreateInventoryItemDto,
 	InventoryItemDto,
 	PageDto,
-	PageQueryDto,
 	UpdateInventoryItemDto,
 } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
@@ -30,6 +29,7 @@ import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
+import PageQueryDto from '../../dto/page-query-dto';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)

@@ -1,6 +1,7 @@
 import { FilterQuery, Types, UpdateQuery } from 'mongoose';
-import { PageMeta, PageQueryDto } from 'shared-types';
+import { PageMeta } from 'shared-types';
 import { RepositoryPaginateResult } from '../database/entity.repository';
+import PageQueryDto from '../dto/page-query-dto';
 
 export class MockEntityRepository<T = any> {
 	constructor(protected readonly mockModel: Partial<T>) {}

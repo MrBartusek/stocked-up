@@ -21,7 +21,6 @@ import {
 	CreateOrganizationDto,
 	OrganizationDto,
 	PageDto,
-	PageQueryDto,
 	PatchOrganizationSettingsDto,
 	UpdateOrganizationDto,
 } from 'shared-types';
@@ -33,6 +32,7 @@ import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
+import PageQueryDto from '../../dto/page-query-dto';
 
 @ApiTags('organizations')
 @Controller('organizations')
