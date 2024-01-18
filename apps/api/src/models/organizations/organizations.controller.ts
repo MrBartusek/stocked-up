@@ -17,13 +17,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import {
-	CreateOrganizationDto,
-	OrganizationDto,
-	PageDto,
-	PatchOrganizationSettingsDto,
-	UpdateOrganizationDto,
-} from 'shared-types';
+import { OrganizationDto, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -33,6 +27,9 @@ import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
 import PageQueryDto from '../../dto/page-query-dto';
+import CreateOrganizationDto from './dto/create-organization.dto';
+import UpdateOrganizationDto from './dto/update-organization.dto';
+import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 
 @ApiTags('organizations')
 @Controller('organizations')

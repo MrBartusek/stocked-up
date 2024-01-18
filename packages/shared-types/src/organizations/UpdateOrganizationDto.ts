@@ -1,9 +1,7 @@
-import { Length } from "class-validator";
 
-export class UpdateOrganizationDto {
-    @Length(2, 32)
+interface IUpdateOrganizationDto {
     name: string;
-
-    @Length(1, 16)
     currency: string;
 }
+
+export default IUpdateOrganizationDto
