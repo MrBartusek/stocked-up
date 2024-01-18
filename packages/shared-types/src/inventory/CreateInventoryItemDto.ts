@@ -1,13 +1,5 @@
-import { IsMongoId, IsNumber, IsOptional } from "class-validator";
-
-export class CreateInventoryItemDto {
-    @IsMongoId()
+export interface ICreateInventoryItemDto {
     warehouseId: string;
-
-    @IsMongoId()
     productId: string;
-
-    @IsNumber()
-    @IsOptional()
     quantity?: number;
 }

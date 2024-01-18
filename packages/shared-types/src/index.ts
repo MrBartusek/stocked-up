@@ -3,9 +3,9 @@ import { SimpleResponseDto } from './SimpleResponseDto';
 import { IUserRegisterDto } from './auth/IUserRegisterDto';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
-import { CreateInventoryItemDto } from './inventory/CreateInventoryItemDto';
+import { ICreateInventoryItemDto } from './inventory/CreateInventoryItemDto';
 import { InventoryItemDto } from './inventory/InventoryItemDto';
-import { UpdateInventoryItemDto } from './inventory/UpdateInventoryItemDto';
+import { IUpdateInventoryItemDto } from './inventory/IUpdateInventoryItemDto';
 import { ICreateOrganizationDto } from './organizations/ICreateOrganizationDto';
 import { OrganizationDto } from './organizations/OrganizationDto';
 import { IPatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
@@ -31,15 +31,28 @@ export {
     BasicInventoryItemDto,
     BasicProductDto,
     BasicWarehouseDto,
-    CreateInventoryItemDto, CreateWarehouseDto,
-    CreateWarehouseInOrgDto, ICreateOrganizationDto,
-    ICreateProductDto, IImageDto, IPageQueryDto, IPatchOrganizationSettingsDto, IUpdateOrganizationDto,
+    ICreateInventoryItemDto, 
+    CreateWarehouseDto,
+    CreateWarehouseInOrgDto, 
+    ICreateOrganizationDto,
+    ICreateProductDto, 
+    IImageDto, 
+    IPageQueryDto, 
+    IPatchOrganizationSettingsDto, 
+    IUpdateOrganizationDto,
     IUpdateProductDto,
-    IUpdateUserDto, IUserRegisterDto, InventoryItemDto,
-    OrganizationDto, PageDto,
-    PageMeta, PrivateUserDto,
+    IUpdateUserDto, 
+    IUserRegisterDto, 
+    InventoryItemDto,
+    OrganizationDto, 
+    PageDto,
+    PageMeta, 
+    PrivateUserDto,
     ProductDto,
-    SimpleResponseDto, SortDirection, UpdateInventoryItemDto, UpdateWarehouseDto,
+    SimpleResponseDto, 
+    SortDirection, 
+    IUpdateInventoryItemDto, 
+    UpdateWarehouseDto,
     UserDto,
     UserLoginDto, WarehouseDto
 };

@@ -14,13 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import {
-	BasicInventoryItemDto,
-	CreateInventoryItemDto,
-	InventoryItemDto,
-	PageDto,
-	UpdateInventoryItemDto,
-} from 'shared-types';
+import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -30,6 +24,8 @@ import { WarehousesService } from '../warehouses/warehouses.service';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
 import { PageQueryDto } from '../../dto/page-query.dto';
+import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
+import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
