@@ -1,10 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { InventoryService } from '../inventory/inventory.service';
+import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
-import { CreateWarehouseDto } from './dto/create-warehouse.dto';
-import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
