@@ -7,12 +7,14 @@ import { InventoryController } from './inventory.controller';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryService } from './inventory.service';
 import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.schema';
+import { ProductsModule } from '../products/products.module';
 
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(InventoryItem, InventoryItemSchema),
 		forwardRef(() => WarehousesModule),
 		forwardRef(() => OrganizationsModule),
+		forwardRef(() => ProductsModule),
 	],
 	controllers: [InventoryController],
 	providers: [InventoryService, InventoryRepository, InventoryStatsService],
