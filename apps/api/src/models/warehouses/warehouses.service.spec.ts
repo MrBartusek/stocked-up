@@ -4,40 +4,12 @@ import { InventoryService } from '../inventory/inventory.service';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
+import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
 
-	const mockWarehousesRepository = {
-		create: jest.fn((dto: CreateWarehouseDto) => {
-			return dto;
-		}),
-		exist: jest.fn(() => {
-			return true;
-		}),
-		findById: jest.fn((id: Types.ObjectId) => {
-			return {
-				_id: id,
-				name: 'test-name',
-				address: 'test-address',
-			};
-		}),
-		deleteOneById: jest.fn((id: Types.ObjectId) => {
-			return {
-				_id: id,
-				name: 'test-name',
-				address: 'test-address',
-			};
-		}),
-		findOneAndUpdate: jest.fn((id: Types.ObjectId, filter: any) => {
-			return {
-				...{ ...filter },
-				_id: id,
-				name: 'test-name',
-				address: 'test-address',
-			};
-		}),
-	};
+	const mockWarehousesRepository = new MockWarehousesRepository();
 
 	const mockInventoryService = {
 		deleteManyByWarehouse: jest.fn(),
@@ -108,11 +80,11 @@ describe('WarehousesService', () => {
 	});
 
 	it('should check if warehouse exist', () => {
-		expect(service.exist(new Types.ObjectId())).toBe(true);
+		expect(service.exist(new Types.ObjectId())).resolves.toBe(true);
 	});
 
 	it('should find warehouse by id', () => {
-		expect(service.findById(new Types.ObjectId())).toEqual(
+		expect(service.findById(new Types.ObjectId())).resolves.toEqual(
 			expect.objectContaining({
 				_id: expect.any(Types.ObjectId),
 				name: expect.any(String),
