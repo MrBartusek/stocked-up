@@ -10,11 +10,13 @@ import { OrganizationDocument } from './schemas/organization.schema';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { OrganizationsStatsService } from './organizations-stats.service';
 
 @Injectable()
 export class OrganizationsService {
 	constructor(
 		private readonly organizationRepository: OrganizationRepository,
+		private readonly organizationsStatsService: OrganizationsStatsService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productsService: ProductsService,
 	) {}
@@ -42,7 +44,7 @@ export class OrganizationsService {
 	}
 
 	async listAllForUser(id: mongoose.Types.ObjectId, pageQueryDto: PageQueryDto) {
-		return this.organizationRepository.paginate({ 'acls.id': id }, pageQueryDto);
+		return this.organizationRepository.paginate({ 'acls.user': id }, pageQueryDto);
 	}
 
 	async findById(id: mongoose.Types.ObjectId) {
@@ -97,31 +99,8 @@ export class OrganizationsService {
 		);
 	}
 
-	async updateAcl(
-		organizationId: mongoose.Types.ObjectId,
-		userId: mongoose.Types.ObjectId,
-		role: string | null,
-	): Promise<OrganizationDocument> {
-		return this.organizationRepository.findOneAndUpdate(
-			{ _id: organizationId },
-			{
-				$push: {
-					acls: {
-						id: userId,
-						role,
-					},
-				},
-			},
-		);
-	}
-
-	async updateSettings(
-		id: mongoose.Types.ObjectId | string,
-		settings: FilterQuery<OrgSettingsDocument>,
-	) {
-		return this.organizationRepository.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { settings: settings } },
-		);
+	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
+		this.organizationRepository.findOneAndUpdate({ _id: id }, { $set: { settings: settings } });
+		return this.organizationsStatsService.recalculateTotalValue(id);
 	}
 }

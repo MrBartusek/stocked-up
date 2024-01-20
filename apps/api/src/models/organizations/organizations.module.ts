@@ -8,6 +8,7 @@ import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
 import { OrganizationNameNotTakenRule } from '../../rules/org-name-not-taken.rule';
+import { OrganizationsSecurityService } from './organizations-security.service';
 
 @Module({
 	imports: [
@@ -19,9 +20,10 @@ import { OrganizationNameNotTakenRule } from '../../rules/org-name-not-taken.rul
 	providers: [
 		OrganizationsService,
 		OrganizationRepository,
+		OrganizationsSecurityService,
 		OrganizationsStatsService,
 		OrganizationNameNotTakenRule,
 	],
-	exports: [OrganizationsService, OrganizationsStatsService],
+	exports: [OrganizationsService, OrganizationsStatsService, OrganizationsSecurityService],
 })
 export class OrganizationsModule {}

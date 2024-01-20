@@ -7,6 +7,7 @@ import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import { DemoService } from './demo.service';
 import { Types } from 'mongoose';
+import { OrganizationsSecurityService } from '../models/organizations/organizations-security.service';
 
 describe('DemoService', () => {
 	let service: DemoService;
@@ -30,20 +31,28 @@ describe('DemoService', () => {
 		})),
 		updateAcl: jest.fn(),
 	};
+
 	const mockOrganizationsStatsService = {
 		updateProductsCount: jest.fn(),
 		recalculateTotalValue: jest.fn(),
 	};
+
+	const mockOrgSecurityService = {
+		addRule: jest.fn(),
+	};
+
 	const mockWarehousesService = {
 		create: jest.fn(() => ({
 			_id: new Types.ObjectId(),
 		})),
 	};
+
 	const mockProductsService = {
 		create: jest.fn(() => ({
 			_id: new Types.ObjectId(),
 		})),
 	};
+
 	const mockInventoryService = {
 		create: jest.fn(() => ({
 			_id: new Types.ObjectId(),
@@ -55,6 +64,7 @@ describe('DemoService', () => {
 	const createWarehouseSpy = jest.spyOn(mockWarehousesService, 'create');
 	const createProductsSpy = jest.spyOn(mockProductsService, 'create');
 	const createInventorySpy = jest.spyOn(mockInventoryService, 'create');
+	const addSecurityRuleSpy = jest.spyOn(mockOrgSecurityService, 'addRule');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -63,6 +73,7 @@ describe('DemoService', () => {
 				UsersService,
 				OrganizationsService,
 				OrganizationsStatsService,
+				OrganizationsSecurityService,
 				WarehousesService,
 				ProductsService,
 				InventoryService,
@@ -80,6 +91,8 @@ describe('DemoService', () => {
 			.useValue(mockProductsService)
 			.overrideProvider(InventoryService)
 			.useValue(mockInventoryService)
+			.overrideProvider(OrganizationsSecurityService)
+			.useValue(mockOrgSecurityService)
 			.compile();
 
 		service = module.get<DemoService>(DemoService);
@@ -96,6 +109,7 @@ describe('DemoService', () => {
 		expect(createOrgSpy).toBeCalledTimes(1);
 		expect(createWarehouseSpy).toHaveBeenCalledTimes(4);
 		expect(createProductsSpy).toHaveBeenCalledTimes(30);
+		expect(addSecurityRuleSpy).toHaveBeenCalledTimes(1);
 		expect(createInventorySpy.mock.calls.length).toBeGreaterThan(1);
 
 		expect(account.profile.username).toBe('demo');

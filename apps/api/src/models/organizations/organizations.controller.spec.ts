@@ -1,15 +1,16 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
 import { Types } from 'mongoose';
+import { CreateWarehouseDto } from '../warehouses/dto/create-warehouse.dto';
+import { UpdateWarehouseDto } from '../warehouses/dto/update-warehouse.dto';
 import { WarehousesService } from '../warehouses/warehouses.service';
-import { OrganizationsStatsService } from './organizations-stats.service';
+import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
-import { CreateWarehouseDto } from '../warehouses/dto/create-warehouse.dto';
-import { UpdateWarehouseDto } from '../warehouses/dto/update-warehouse.dto';
-import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
+import { OrganizationsSecurityService } from './organizations-security.service';
+import exp from 'constants';
 
 const MOCK_USER_WITH_ORGS = new Types.ObjectId('6576d1aa2800e698b8543a7b');
 const MOCK_USER_NO_ORGS = new Types.ObjectId('6576d1aed164e14809b2b7d0');
@@ -90,27 +91,24 @@ describe('OrganizationsController', () => {
 		nameTaken: jest.fn((name) => name == 'taken'),
 	};
 
-	const mockOrganizationsStatsService = {
-		recalculateTotalValue: jest.fn(),
+	const mockSecurityService = {
+		addRule: jest.fn(),
 	};
 
 	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
-	const recalculateTotalValueSpy = jest.spyOn(
-		mockOrganizationsStatsService,
-		'recalculateTotalValue',
-	);
+	const addSecurityRuleSpy = jest.spyOn(mockSecurityService, 'addRule');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [OrganizationsController],
-			providers: [OrganizationsService, OrganizationsStatsService, WarehousesService],
+			providers: [OrganizationsService, OrganizationsSecurityService, WarehousesService],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehousesService)
 			.overrideProvider(OrganizationsService)
 			.useValue(mockOrganizationsService)
-			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrganizationsStatsService)
+			.overrideProvider(OrganizationsSecurityService)
+			.useValue(mockSecurityService)
 			.compile();
 
 		controller = module.get<OrganizationsController>(OrganizationsController);
@@ -151,6 +149,7 @@ describe('OrganizationsController', () => {
 					address: 'test-address',
 				}),
 			);
+			expect(addSecurityRuleSpy).toHaveBeenCalled();
 		});
 	});
 
@@ -240,7 +239,6 @@ describe('OrganizationsController', () => {
 			});
 
 			expect(updatedSettings.valueCalculationStrategy).toBe(OrgValueCalculationStrategy.BuyPrice);
-			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(MOCK_TAKEN_ORGANIZATION_ID);
 		});
 
 		it('should not update organization settings of org that does not exist', async () => {

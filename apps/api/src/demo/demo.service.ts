@@ -13,6 +13,8 @@ import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
+import { OrganizationsSecurityService } from '../models/organizations/organizations-security.service';
+import { OrganizationACLRole } from '../models/organizations/schemas/org-acl-role';
 
 @Injectable()
 export class DemoService {
@@ -20,6 +22,7 @@ export class DemoService {
 		private readonly userService: UsersService,
 		private readonly organizationsService: OrganizationsService,
 		private readonly organizationsStatsService: OrganizationsStatsService,
+		private readonly organizationsSecurityService: OrganizationsSecurityService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productsService: ProductsService,
 		private readonly inventoryService: InventoryService,
@@ -54,7 +57,11 @@ export class DemoService {
 		const products = await this.createProductDefinitions(org._id);
 		await this.randomlyDistributeInventory(org, products);
 		await this.updateStats(org._id);
-		await this.organizationsService.updateAcl(org._id, user._id, 'admin');
+
+		await this.organizationsSecurityService.addRule(org._id, {
+			user: user._id,
+			role: OrganizationACLRole.OWNER,
+		});
 
 		this.logger.log(`Created demo account - ${user.profile.email}`);
 		return user;

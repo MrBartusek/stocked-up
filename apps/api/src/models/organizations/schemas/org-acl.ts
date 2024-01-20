@@ -1,17 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import { HydratedDocument } from 'mongoose';
-import { User } from '../../users/schemas/user.schema';
+import { HydratedDocument, Types } from 'mongoose';
+import { OrganizationACLRole } from './org-acl-role';
 
 export type OrgAclDocument = HydratedDocument<OrgAcl>;
 
 @Schema({ _id: false })
 export class OrgAcl {
-	@Prop({ required: true })
-	role: string;
+	@Prop({ ref: 'User', required: true })
+	user: Types.ObjectId;
 
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-	id: User;
+	@Prop({ required: true })
+	role: OrganizationACLRole;
 }
 
 export const OrgAclSchema = SchemaFactory.createForClass(OrgAcl);

@@ -5,6 +5,7 @@ import { WarehousesService } from '../warehouses/warehouses.service';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
+import { OrganizationsStatsService } from './organizations-stats.service';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;
@@ -18,6 +19,10 @@ describe('OrganizationsService', () => {
 	const mockProductsService = {
 		list: jest.fn(() => [{ _id: 'product-id' }]),
 		deleteAllByOrg: jest.fn(() => 1),
+	};
+
+	const mockStatsService = {
+		recalculateTotalValue: jest.fn(),
 	};
 
 	const warehouseDeleteSpy = jest.spyOn(mockWarehousesService, 'delete');
@@ -38,6 +43,10 @@ describe('OrganizationsService', () => {
 				{
 					provide: ProductsService,
 					useValue: mockProductsService,
+				},
+				{
+					provide: OrganizationsStatsService,
+					useValue: mockStatsService,
 				},
 			],
 		}).compile();

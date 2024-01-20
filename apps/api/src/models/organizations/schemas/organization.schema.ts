@@ -25,7 +25,7 @@ export class Organization {
 	@Prop({ type: OrgSettingsSchema, default: {} })
 	settings: OrgSettings;
 
-	@Prop({ type: [OrgAclSchema], default: [] })
+	@Prop({ type: [OrgAclSchema], default: [], index: true })
 	acls: OrgAcl[];
 
 	@Prop({ type: [OrgWarehouseReferenceSchema], default: [] })

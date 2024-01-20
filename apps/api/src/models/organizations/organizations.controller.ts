@@ -24,10 +24,11 @@ import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
+import { OrganizationsSecurityService } from './organizations-security.service';
+import { OrganizationACLRole } from './schemas/org-acl-role';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -35,7 +36,7 @@ import { Organization } from './schemas/organization.schema';
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsStatsService: OrganizationsStatsService,
+		private readonly organizationsSecurityService: OrganizationsSecurityService,
 		private readonly warehousesService: WarehousesService,
 	) {}
 
@@ -44,11 +45,14 @@ export class OrganizationsController {
 		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
-		const userId = new Types.ObjectId(request.user.id);
+		const user = new Types.ObjectId(request.user.id);
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 
-		await this.organizationsService.updateAcl(org.id, userId, 'owner');
+		await this.organizationsSecurityService.addRule(org.id, {
+			user,
+			role: OrganizationACLRole.OWNER,
+		});
 		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 
 		return Organization.toDto(updatedOrg);
@@ -111,11 +115,11 @@ export class OrganizationsController {
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
 	): Promise<OrgSettings> {
 		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
+
 		if (!org) {
 			throw new NotFoundException();
 		}
 
-		await this.organizationsStatsService.recalculateTotalValue(id);
 		return org.settings;
 	}
 }
