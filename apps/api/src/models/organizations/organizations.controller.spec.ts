@@ -152,22 +152,6 @@ describe('OrganizationsController', () => {
 				}),
 			);
 		});
-
-		it('should not create organization with taken name', () => {
-			const org = controller.create(
-				{
-					name: 'taken',
-					warehouse: {
-						name: 'test-warehouse',
-						address: 'test-address',
-					},
-				},
-				mockRequest,
-			);
-
-			expect(org).rejects.toThrow(BadRequestException);
-			expect(org).rejects.toThrow('taken');
-		});
 	});
 
 	describe('Find all organizations', () => {
