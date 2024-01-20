@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Request } from 'express';
+import { Types } from 'mongoose';
+import { DemoService } from '../demo/demo.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { DemoService } from '../demo/demo.service';
-import { Types } from 'mongoose';
 import { UserRegisterDto } from './dto/user-register.dto';
 
 describe('AuthController', () => {
