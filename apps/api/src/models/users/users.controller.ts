@@ -7,16 +7,15 @@ import {
 	Put,
 	Req,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { PrivateUserDto, UserDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -25,7 +24,7 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Put()
-	async updateProfile(@Req() request: Request, @Body(ValidationPipe) dto: UpdateUserDto) {
+	async updateProfile(@Req() request: Request, @Body() dto: UpdateUserDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.usersService.updateProfile(userId, dto);
 		return User.toPrivateDto(user);

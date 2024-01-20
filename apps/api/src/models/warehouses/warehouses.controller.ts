@@ -8,20 +8,19 @@ import {
 	Post,
 	Put,
 	Query,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, WarehouseDto } from 'shared-types';
+import { PageQueryDto } from '../../dto/page-query.dto';
+import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
-import { Warehouse } from './schemas/warehouse.schema';
-import { WarehousesService } from './warehouses.service';
-import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
-import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateWarehouseInOrgDto } from './dto/create-warehouse-in-org.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { Warehouse } from './schemas/warehouse.schema';
+import { WarehousesService } from './warehouses.service';
 
 @ApiTags('warehouses')
 @Controller('warehouses')
@@ -33,7 +32,7 @@ export class WarehousesController {
 	) {}
 
 	@Post()
-	async create(@Body(ValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
+	async create(@Body() dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
 		const orgId = new Types.ObjectId(dto.organizationId);
 
 		const orgExist = this.organizationsService.exist(orgId);
@@ -61,7 +60,6 @@ export class WarehousesController {
 	async list(
 		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
 		@Query(
-			ValidationPipe,
 			new PageQueryValidationPipe<WarehouseDto>({
 				allowedFilters: ['name', 'totalValue', 'address'],
 			}),
@@ -80,7 +78,7 @@ export class WarehousesController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(ValidationPipe) dto: UpdateWarehouseDto,
+		@Body() dto: UpdateWarehouseDto,
 	): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.update(id, dto);
 		if (!warehouse) {

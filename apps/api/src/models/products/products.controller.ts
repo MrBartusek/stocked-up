@@ -10,20 +10,19 @@ import {
 	Put,
 	Query,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { ProductsService } from './products.service';
-import { Product } from './schemas/product.schema';
-import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 @ApiTags('products')
 @Controller('products')
@@ -36,7 +35,7 @@ export class ProductsController {
 	) {}
 
 	@Post()
-	async create(@Body(new ValidationPipe()) dto: CreateProductDto): Promise<ProductDto> {
+	async create(@Body() dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 
 		const orgId = new Types.ObjectId(dto.organization);
@@ -58,7 +57,6 @@ export class ProductsController {
 	async list(
 		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
 		@Query(
-			ValidationPipe,
 			new PageQueryValidationPipe<ProductDto>({
 				allowedFilters: ['name', 'buyPrice', 'sellPrice', 'unit'],
 			}),
@@ -77,7 +75,7 @@ export class ProductsController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(ValidationPipe) dto: UpdateProductDto,
+		@Body() dto: UpdateProductDto,
 	): Promise<ProductDto> {
 		const product = await this.productsService.update(id, dto);
 		if (!product) {

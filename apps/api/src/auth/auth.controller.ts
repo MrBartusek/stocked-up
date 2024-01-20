@@ -6,7 +6,6 @@ import {
 	Post,
 	Req,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -14,9 +13,9 @@ import { PrivateUserDto } from 'shared-types';
 import { DemoService } from '../demo/demo.service';
 import { User } from '../models/users/schemas/user.schema';
 import { AuthService } from './auth.service';
+import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { UserRegisterDto } from './dto/user-register.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -49,7 +48,7 @@ export class AuthController {
 
 	@HttpCode(200)
 	@Post('register')
-	async register(@Body(new ValidationPipe()) body: UserRegisterDto): Promise<any> {
+	async register(@Body() body: UserRegisterDto): Promise<any> {
 		const user = await this.authService.registerUser(body);
 		return { message: `Created user with id: ${user._id}`, statusCode: 200 };
 	}

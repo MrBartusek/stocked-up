@@ -10,22 +10,21 @@ import {
 	Put,
 	Query,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
-import { InventoryService } from './inventory.service';
-import { InventoryItem } from './schemas/inventory-item.schema';
-import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
+import { InventoryService } from './inventory.service';
+import { InventoryItem } from './schemas/inventory-item.schema';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -69,7 +68,7 @@ export class InventoryController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(ValidationPipe) dto: UpdateInventoryItemDto,
+		@Body() dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
 		if (!item) {
@@ -115,7 +114,6 @@ export class InventoryController {
 	async list(
 		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
 		@Query(
-			ValidationPipe,
 			new PageQueryValidationPipe<BasicInventoryItemDto>({
 				allowedFilters: ['quantity'],
 				disableTextSearch: true,

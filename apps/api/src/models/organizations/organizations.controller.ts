@@ -1,5 +1,4 @@
 import {
-	BadRequestException,
 	Body,
 	Controller,
 	Delete,
@@ -12,24 +11,23 @@ import {
 	Query,
 	Req,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationDto, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { WarehousesService } from '../warehouses/warehouses.service';
+import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
+import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { PageQueryDto } from '../../dto/page-query.dto';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -43,7 +41,7 @@ export class OrganizationsController {
 
 	@Post()
 	async create(
-		@Body(new ValidationPipe()) createOrganizationDto: CreateOrganizationDto,
+		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
 		const userId = new Types.ObjectId(request.user.id);
@@ -60,7 +58,6 @@ export class OrganizationsController {
 	async list(
 		@Req() request: Request,
 		@Query(
-			ValidationPipe,
 			new PageQueryValidationPipe<OrganizationDto>({
 				disableOrderBy: true,
 				disableTextSearch: true,
@@ -81,7 +78,7 @@ export class OrganizationsController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(new ValidationPipe()) dto: UpdateOrganizationDto,
+		@Body() dto: UpdateOrganizationDto,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.update(id, dto);
 		if (!org) {
@@ -111,7 +108,7 @@ export class OrganizationsController {
 	@Patch(':id/settings')
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body(new ValidationPipe()) patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
+		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
 	): Promise<OrgSettings> {
 		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);
 		if (!org) {
