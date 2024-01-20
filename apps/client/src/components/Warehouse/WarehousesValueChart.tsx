@@ -47,32 +47,38 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 				height="100%"
 				width="100%"
 			>
-				<PieChart margin={{ left: 50, right: 50, top: 50, bottom: 50 }}>
-					<Pie
-						data={data}
-						dataKey="value"
-						nameKey="name"
-						innerRadius="80%"
-						outerRadius="100%"
-						fill="#d97706"
-						paddingAngle={2}
-						label={(e) => e.name}
-					>
-						{data?.map((_, i) => (
-							<Cell
-								key={i}
-								fill={Utils.CHART_COLORS[i % Utils.CHART_COLORS.length]}
+				{data && data.length > 0 ? (
+					<PieChart margin={{ left: 50, right: 50, top: 50, bottom: 50 }}>
+						<Pie
+							data={data}
+							dataKey="value"
+							nameKey="name"
+							innerRadius="80%"
+							outerRadius="100%"
+							fill="#d97706"
+							paddingAngle={2}
+							label={(e) => e.name}
+						>
+							{data?.map((_, i) => (
+								<Cell
+									key={i}
+									fill={Utils.CHART_COLORS[i % Utils.CHART_COLORS.length]}
+								/>
+							))}
+							<Label
+								value={`${Utils.humanizeCurrencyText(
+									organization.stats.totalValue,
+									organization.currency,
+								)}`}
+								position="center"
 							/>
-						))}
-						<Label
-							value={`${Utils.humanizeCurrencyText(
-								organization.stats.totalValue,
-								organization.currency,
-							)}`}
-							position="center"
-						/>
-					</Pie>
-				</PieChart>
+						</Pie>
+					</PieChart>
+				) : (
+					<div className="flex h-full items-center justify-center">
+						<span className="text-muted">No data</span>
+					</div>
+				)}
 			</ResponsiveContainer>
 		</Loader>
 	);
