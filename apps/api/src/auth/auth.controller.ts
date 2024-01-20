@@ -6,6 +6,7 @@ import {
 	Post,
 	Req,
 	UseGuards,
+	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -48,9 +49,9 @@ export class AuthController {
 
 	@HttpCode(200)
 	@Post('register')
-	async register(@Body() body: UserRegisterDto): Promise<any> {
+	async register(@Body() body: UserRegisterDto): Promise<PrivateUserDto> {
 		const user = await this.authService.registerUser(body);
-		return { message: `Created user with id: ${user._id}`, statusCode: 200 };
+		return User.toPrivateDto(user);
 	}
 
 	@HttpCode(200)

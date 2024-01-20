@@ -1,20 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
-
-export interface UserRegisterData {
-	username: string;
-	email: string;
-	password: string;
-}
+import { UserRegisterDto } from './dto/user-register.dto';
 
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService) {}
 
-	async registerUser(data: UserRegisterData): Promise<UserDocument> {
+	async registerUser(data: UserRegisterDto): Promise<UserDocument> {
 		const hash = await bcrypt.hash(data.password, 12);
+
 		return this.usersService.create({
 			username: data.username,
 			email: data.email,
