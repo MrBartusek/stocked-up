@@ -7,6 +7,7 @@ import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
+import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 
 const MOCK_TAKEN_ORG_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_ORG_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
@@ -16,37 +17,23 @@ const MOCK_FREE_WAREHOUSE_ID = new Types.ObjectId('65704abb8346be3d278a806f');
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
 
+	const mockWarehousesRepository = new MockWarehousesRepository();
+
 	const mockWarehouseService = {
 		findById: jest.fn((id) => {
 			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return {
-				_id: id,
-				name: 'test-name',
-				address: 'test-address',
-			};
+			return mockWarehousesRepository.findById(id);
 		}),
 		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
-			return {
-				_id: MOCK_FREE_WAREHOUSE_ID,
-				organization,
-				...dto,
-			};
+			return mockWarehousesRepository.create({ ...organization, ...dto });
 		}),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => {
 			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return {
-				_id: id,
-				name: dto.name,
-				address: dto.address,
-			};
+			return mockWarehousesRepository.findOneByIdAndUpdate(id, dto);
 		}),
 		delete: jest.fn((id) => {
 			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return {
-				_id: id,
-				name: 'test-name',
-				address: 'test-address',
-			};
+			return mockWarehousesRepository.deleteOneById(id);
 		}),
 	};
 
@@ -170,7 +157,6 @@ describe('WarehousesController', () => {
 			);
 			expect(updateWarehouseRefSpy).toHaveBeenCalledWith(
 				expect.objectContaining({
-					_id: MOCK_TAKEN_WAREHOUSE_ID,
 					name: 'updated-name',
 				}),
 			);
