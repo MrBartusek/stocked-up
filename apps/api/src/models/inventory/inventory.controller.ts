@@ -35,6 +35,7 @@ export class InventoryController {
 		private readonly inventoryService: InventoryService,
 		private readonly warehousesService: WarehousesService,
 		private readonly organizationStatsService: OrganizationsStatsService,
+		private readonly productService: ProductsService,
 	) {}
 
 	@Post()
@@ -45,6 +46,11 @@ export class InventoryController {
 		const warehouse = await this.warehousesService.findById(warehouseId);
 		if (!warehouse) {
 			throw new BadRequestException("This warehouse doesn't exist");
+		}
+
+		const productExist = await this.productService.exist(productId);
+		if (!productExist) {
+			throw new BadRequestException("This product doesn't exist");
 		}
 
 		const itemExist = await this.inventoryService.findByProduct(warehouseId, productId);
