@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../models/users/users.service';
-import { AuthService, UserRegisterData } from './auth.service';
+import { AuthService } from './auth.service';
 
 const MOCK_PASSWORD = 'test-password';
 
@@ -25,7 +25,7 @@ describe('AuthService', () => {
 			};
 		}),
 
-		create: jest.fn((data: UserRegisterData) => {
+		create: jest.fn((data) => {
 			return {
 				profile: {
 					email: data.email,

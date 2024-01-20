@@ -6,7 +6,6 @@ import {
 	Post,
 	Req,
 	UseGuards,
-	ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';

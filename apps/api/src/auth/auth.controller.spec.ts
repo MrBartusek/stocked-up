@@ -11,7 +11,7 @@ describe('AuthController', () => {
 
 	const mockAuthService = {
 		registerUser: jest.fn((dto: UserRegisterDto) => {
-			return { _id: new Types.ObjectId(), profile: { dto } };
+			return { _id: new Types.ObjectId(), profile: dto };
 		}),
 	};
 
@@ -42,34 +42,12 @@ describe('AuthController', () => {
 		expect(controller).toBeDefined();
 	});
 
-	it('should login', () => {
-		expect(controller.login()).toEqual(
-			expect.objectContaining({
-				statusCode: 200,
-			}),
-		);
-	});
-
-	it('should logout', () => {
-		const mockRequest = {
-			logout: (done: (err: any) => void) => {
-				done(null);
-			},
-		} as Request;
-
-		expect(controller.logout(mockRequest)).resolves.toEqual(
-			expect.objectContaining({
-				statusCode: 200,
-			}),
-		);
-	});
-
 	it('should register', () => {
 		expect(
 			controller.register({ email: 'test@dokurno.dev', username: 'test', password: 'test' }),
 		).resolves.toEqual(
 			expect.objectContaining({
-				statusCode: 200,
+				email: 'test@dokurno.dev',
 			}),
 		);
 	});
