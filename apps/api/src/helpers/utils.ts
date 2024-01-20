@@ -10,6 +10,11 @@ class Utils {
 		return NODE_ENV == 'production';
 	}
 
+	public static isTest(): boolean {
+		const { JEST_WORKER_ID } = process.env;
+		return JEST_WORKER_ID !== undefined;
+	}
+
 	public static getApiBaseUrl(): string {
 		const { BASE_API_URL } = process.env;
 		const API_BASE_URL_REGEX = /^https?:\/\/.*api\/?$/;

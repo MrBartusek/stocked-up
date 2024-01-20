@@ -12,14 +12,22 @@ import Utils from './helpers/utils';
 import redisClient from './redis/connect';
 import { useContainer } from 'class-validator';
 
-async function bootstrap() {
+async function bootstrapNestApp() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+	configureNestApp(app);
+
+	// Serve public folder (not frontend)
+	app.useStaticAssets(join(__dirname, '../..', 'public'), { prefix: '/public/' });
+
+	setupSwagger(app);
+
+	await app.listen(3000);
+}
+
+export function configureNestApp(app: INestApplication): void {
 	// Allow for base64 attachments
 	app.use(json({ limit: '50mb' }));
-
-	// Serve frontend
-	app.useStaticAssets(join(__dirname, '../..', 'public'), { prefix: '/public/' });
 
 	// Frontend is served on / by static serve module, so serve api on /api
 	app.setGlobalPrefix('api');
@@ -31,8 +39,22 @@ async function bootstrap() {
 	// Setup validation with class-validator and class-transformer
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-	setupSwagger(app);
+	setupSession(app);
+	app.use(passport.initialize());
+	app.use(passport.session());
+}
 
+async function setupSwagger(app: INestApplication) {
+	const config = new DocumentBuilder()
+		.setTitle('StockedUp API')
+		.setDescription('StockedUp API documentation')
+		.setVersion('1.0')
+		.build();
+	const document = SwaggerModule.createDocument(app, config);
+	SwaggerModule.setup('api', app, document);
+}
+
+async function setupSession(app: INestApplication) {
 	const redisStore = new RedisStore({
 		client: redisClient,
 		prefix: 'session:',
@@ -41,7 +63,7 @@ async function bootstrap() {
 	app.use(
 		session({
 			store: redisStore,
-			secret: process.env.SESSION_SECRET,
+			secret: Utils.isTest() ? 'keyboard cat' : process.env.SESSION_SECRET,
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
@@ -52,21 +74,6 @@ async function bootstrap() {
 			},
 		}),
 	);
-
-	app.use(passport.initialize());
-	app.use(passport.session());
-
-	await app.listen(3000);
 }
 
-async function setupSwagger(app: INestApplication<any>) {
-	const config = new DocumentBuilder()
-		.setTitle('StockedUp API')
-		.setDescription('StockedUp API documentation')
-		.setVersion('1.0')
-		.build();
-	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup('api', app, document);
-}
-
-bootstrap();
+bootstrapNestApp();

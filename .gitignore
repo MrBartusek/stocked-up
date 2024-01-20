@@ -36,5 +36,5 @@ lerna-debug.log*
 
 .turbo
 .env
-
+globalConfig
 **/**/coverage

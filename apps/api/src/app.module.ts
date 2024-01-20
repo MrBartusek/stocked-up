@@ -26,7 +26,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 		FrontendModule,
 		ProductsModule,
 		WarehousesModule,
-		MongooseModule.forRoot('mongodb://127.0.0.1:27017/stockedUp'),
+		MongooseModule.forRoot(process.env.MONGO_URL),
 		UsersModule,
 		AuthModule,
 		OrganizationsModule,
