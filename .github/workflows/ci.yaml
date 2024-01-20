@@ -135,7 +135,7 @@ jobs:
             apps/*/dist
           key: "${{ runner.os }}-build-${{ github.sha }}"
       - name: Test
-        run: npm run test:cov --workspace=api
+        run: npm run test:e2e --workspace=api
 
   codeql:
     name: Perform CodeQL Analysis
