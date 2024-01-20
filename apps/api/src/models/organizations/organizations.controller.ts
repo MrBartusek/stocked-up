@@ -46,11 +46,6 @@ export class OrganizationsController {
 		@Body(new ValidationPipe()) createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
-		const nameTaken = await this.organizationsService.nameTaken(createOrganizationDto.name);
-		if (nameTaken) {
-			throw new BadRequestException('This organization name is already taken');
-		}
-
 		const userId = new Types.ObjectId(request.user.id);
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);

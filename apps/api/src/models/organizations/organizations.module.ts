@@ -7,7 +7,7 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
-import { HasProductAccessRule } from '../../rules/has-product-access.rule';
+import { OrganizationNameNotTakenRule } from '../../rules/org-name-not-taken.rule';
 
 @Module({
 	imports: [
@@ -20,7 +20,7 @@ import { HasProductAccessRule } from '../../rules/has-product-access.rule';
 		OrganizationsService,
 		OrganizationRepository,
 		OrganizationsStatsService,
-		HasProductAccessRule,
+		OrganizationNameNotTakenRule,
 	],
 	exports: [OrganizationsService, OrganizationsStatsService],
 })
