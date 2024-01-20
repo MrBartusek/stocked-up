@@ -21,7 +21,7 @@ export class MockEntityRepository<T = any> {
 	}
 
 	async create(createEntityData: Partial<T>): Promise<T> {
-		return createEntityData as T;
+		return { _id: new Types.ObjectId(), ...createEntityData } as T;
 	}
 
 	async countDocuments(): Promise<number> {

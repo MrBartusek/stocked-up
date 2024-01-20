@@ -10,7 +10,7 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
 import { OrganizationsAccessService } from './organizations-access.service';
-import exp from 'constants';
+import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 
 const MOCK_USER_WITH_ORGS = new Types.ObjectId('6576d1aa2800e698b8543a7b');
 const MOCK_USER_NO_ORGS = new Types.ObjectId('6576d1aed164e14809b2b7d0');
@@ -21,22 +21,7 @@ const MOCK_FREE_ORGANIZATION_ID = new Types.ObjectId('6576d5d32200a50ebb3698d9')
 describe('OrganizationsController', () => {
 	let controller: OrganizationsController;
 
-	const regularMockFindFunction = (id?: Types.ObjectId) => {
-		return {
-			_id: id,
-			name: 'test-org',
-			warehouses: [
-				{
-					_id: new Types.ObjectId(),
-					name: 'test-warehouse-a',
-				},
-				{
-					_id: new Types.ObjectId(),
-					name: 'test-warehouse-b',
-				},
-			],
-		};
-	};
+	const mockOrgRepo = new MockOrganizationsRepository();
 
 	const mockWarehousesService = {
 		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
@@ -49,26 +34,20 @@ describe('OrganizationsController', () => {
 	};
 
 	const mockOrganizationsService = {
-		create: jest.fn((dto: CreateWarehouseDto) => ({
-			...regularMockFindFunction(new Types.ObjectId()),
-			...dto,
-		})),
-		addWarehouseReference: jest.fn((id) => regularMockFindFunction(id)),
-		updateAcl: jest.fn((id) => regularMockFindFunction(id)),
-		listAllForUser: jest.fn((id) => {
+		create: jest.fn((dto: CreateWarehouseDto) => mockOrgRepo.create(dto)),
+		addWarehouseReference: jest.fn((id) => mockOrgRepo.findById(id)),
+		updateAcl: jest.fn((id) => mockOrgRepo.findById(id)),
+		listAllForUser: jest.fn((id, pageQueryDto) => {
 			if (id.toString() != MOCK_USER_WITH_ORGS.toString()) return { items: [] };
-			return { items: Array(2).fill(regularMockFindFunction(new Types.ObjectId())) };
+			return mockOrgRepo.paginate(id, pageQueryDto);
 		}),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
-			return {
-				...regularMockFindFunction(id),
-				...dto,
-			};
+			return mockOrgRepo.findOneByIdAndUpdate(id, dto);
 		}),
 		delete: jest.fn((id) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
-			return regularMockFindFunction(id);
+			return mockOrgRepo.deleteOneById(id);
 		}),
 		exist: jest.fn((id) => {
 			return id.toString() == MOCK_TAKEN_ORGANIZATION_ID.toString();
@@ -76,19 +55,14 @@ describe('OrganizationsController', () => {
 		updateSettings: jest.fn((id, dto: PatchOrganizationSettingsDto) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
 			return {
-				...regularMockFindFunction(id),
+				...mockOrgRepo.findById(id),
 				settings: dto,
 			};
 		}),
-		findAllWarehouses: jest.fn((id) => {
-			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return [];
-			return regularMockFindFunction(id).warehouses;
-		}),
 		findById: jest.fn((id) => {
 			if (id.toString() != MOCK_TAKEN_ORGANIZATION_ID.toString()) return;
-			return regularMockFindFunction(id);
+			return mockOrgRepo.findById(id);
 		}),
-		nameTaken: jest.fn((name) => name == 'taken'),
 	};
 
 	const mockSecurityService = {
@@ -128,7 +102,7 @@ describe('OrganizationsController', () => {
 		it('should create organization', async () => {
 			const org = await controller.create(
 				{
-					name: 'tes-org',
+					name: 'test-name',
 					warehouse: {
 						name: 'test-warehouse',
 						address: 'test-address',
@@ -139,7 +113,7 @@ describe('OrganizationsController', () => {
 
 			expect(org).toEqual(
 				expect.objectContaining({
-					name: 'test-org',
+					name: 'test-name',
 				}),
 			);
 			expect(addWarehouseReferenceSpy).toHaveBeenCalledWith(
@@ -158,10 +132,10 @@ describe('OrganizationsController', () => {
 			const mockRequest = { user: { id: MOCK_USER_WITH_ORGS } } as any as Request;
 			const orgs = await controller.list(mockRequest, { page: 1 });
 
-			expect(orgs.items.length).toBe(2);
+			expect(orgs.items.length).toBe(10);
 			expect(orgs.items[0]).toEqual(
 				expect.objectContaining({
-					name: 'test-org',
+					name: 'test-name',
 				}),
 			);
 		});
@@ -202,7 +176,7 @@ describe('OrganizationsController', () => {
 
 			expect(org).toEqual(
 				expect.objectContaining({
-					name: 'test-org',
+					name: 'test-name',
 				}),
 			);
 		});
@@ -220,7 +194,7 @@ describe('OrganizationsController', () => {
 
 			expect(org).toEqual(
 				expect.objectContaining({
-					name: 'test-org',
+					name: 'test-name',
 				}),
 			);
 		});
