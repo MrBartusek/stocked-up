@@ -27,7 +27,7 @@ import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { OrganizationsSecurityService } from './organizations-security.service';
+import { OrganizationsAccessService } from './organizations-access.service';
 import { OrganizationACLRole } from './schemas/org-acl-role';
 
 @ApiTags('organizations')
@@ -36,7 +36,7 @@ import { OrganizationACLRole } from './schemas/org-acl-role';
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsSecurityService: OrganizationsSecurityService,
+		private readonly organizationsAccessService: OrganizationsAccessService,
 		private readonly warehousesService: WarehousesService,
 	) {}
 
@@ -49,7 +49,7 @@ export class OrganizationsController {
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 
-		await this.organizationsSecurityService.addRule(org.id, {
+		await this.organizationsAccessService.addRule(org.id, {
 			user,
 			role: OrganizationACLRole.OWNER,
 		});

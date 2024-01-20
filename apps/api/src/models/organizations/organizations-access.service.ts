@@ -10,7 +10,7 @@ export interface AccessRule {
 }
 
 @Injectable()
-export class OrganizationsSecurityService {
+export class OrganizationsAccessService {
 	constructor(private readonly organizationRepository: OrganizationRepository) {}
 
 	async getRole(

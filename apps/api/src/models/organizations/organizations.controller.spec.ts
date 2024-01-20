@@ -9,7 +9,7 @@ import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.d
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
-import { OrganizationsSecurityService } from './organizations-security.service';
+import { OrganizationsAccessService } from './organizations-access.service';
 import exp from 'constants';
 
 const MOCK_USER_WITH_ORGS = new Types.ObjectId('6576d1aa2800e698b8543a7b');
@@ -101,13 +101,13 @@ describe('OrganizationsController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [OrganizationsController],
-			providers: [OrganizationsService, OrganizationsSecurityService, WarehousesService],
+			providers: [OrganizationsService, OrganizationsAccessService, WarehousesService],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehousesService)
 			.overrideProvider(OrganizationsService)
 			.useValue(mockOrganizationsService)
-			.overrideProvider(OrganizationsSecurityService)
+			.overrideProvider(OrganizationsAccessService)
 			.useValue(mockSecurityService)
 			.compile();
 
