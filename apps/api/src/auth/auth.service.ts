@@ -15,17 +15,6 @@ export class AuthService {
 
 	async registerUser(data: UserRegisterData): Promise<UserDocument> {
 		const hash = await bcrypt.hash(data.password, 12);
-
-		const isEmailTaken = await this.usersService.isEmailTaken(data.email);
-		if (isEmailTaken) {
-			throw new BadRequestException({ message: 'This email is already taken' });
-		}
-
-		const isUsernameTaken = await this.usersService.isUsernameTaken(data.username);
-		if (isUsernameTaken) {
-			throw new BadRequestException({ message: 'This username is already taken' });
-		}
-
 		return this.usersService.create({
 			username: data.username,
 			email: data.email,

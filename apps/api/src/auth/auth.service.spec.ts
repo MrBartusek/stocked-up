@@ -1,4 +1,3 @@
-import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../models/users/users.service';
@@ -13,12 +12,6 @@ describe('AuthService', () => {
 	let mockPasswordHashed: string;
 
 	const mockAuthService = {
-		isEmailTaken: jest.fn((email: string) => {
-			return email == 'taken@dokurno.dev';
-		}),
-		isUsernameTaken: jest.fn((username: string) => {
-			return username == 'taken';
-		}),
 		findOne: jest.fn((username: string) => {
 			if (username != 'taken') return null;
 			return {
@@ -68,40 +61,16 @@ describe('AuthService', () => {
 		expect(service).toBeDefined();
 	});
 
-	describe('User registration', () => {
-		it('should register user', () => {
-			expect(
-				service.registerUser({
-					email: 'test@dokurno.dev',
-					username: 'username',
-					password: 'password',
-				}),
-			).resolves.toEqual(
-				expect.objectContaining({ profile: expect.objectContaining({ username: 'username' }) }),
-			);
-		});
-
-		it('should not register user with taken username', () => {
-			const t = () =>
-				service.registerUser({
-					email: 'test@dokurno.dev',
-					username: 'taken',
-					password: 'password',
-				});
-			expect(t).rejects.toThrow(BadRequestException);
-			expect(t).rejects.toThrow('username');
-		});
-
-		it('should not register user with taken email', () => {
-			const t = () =>
-				service.registerUser({
-					email: 'taken@dokurno.dev',
-					username: 'username',
-					password: 'password',
-				});
-			expect(t).rejects.toThrow(BadRequestException);
-			expect(t).rejects.toThrow('email');
-		});
+	it('should register user', () => {
+		expect(
+			service.registerUser({
+				email: 'test@dokurno.dev',
+				username: 'username',
+				password: 'password',
+			}),
+		).resolves.toEqual(
+			expect.objectContaining({ profile: expect.objectContaining({ username: 'username' }) }),
+		);
 	});
 
 	describe('User validation', () => {

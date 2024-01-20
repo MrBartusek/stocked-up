@@ -9,7 +9,7 @@ export class OrganizationNameNotTakenRule implements ValidatorConstraintInterfac
 
 	async validate(value: string) {
 		const taken = await this.organizationsService.nameTaken(value);
-		return taken;
+		return !taken;
 	}
 
 	defaultMessage() {

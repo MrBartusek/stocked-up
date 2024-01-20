@@ -6,10 +6,18 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
+import { EmailNotTakenRule } from '../rules/email-not-taken.rule';
+import { UsernameNotTakenRule } from '../rules/username-not-taken.rule copy';
 
 @Module({
 	imports: [UsersModule, DemoModule, PassportModule.register({ session: true })],
 	controllers: [AuthController],
-	providers: [AuthService, LocalStrategy, SessionSerializer],
+	providers: [
+		AuthService,
+		LocalStrategy,
+		SessionSerializer,
+		UsernameNotTakenRule,
+		EmailNotTakenRule,
+	],
 })
 export class AuthModule {}
