@@ -7,7 +7,7 @@ import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import { DemoService } from './demo.service';
 import { Types } from 'mongoose';
-import { OrganizationsRolesService } from '../models/organizations/organizations-roles.service';
+import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 
 describe('DemoService', () => {
 	let service: DemoService;
@@ -73,7 +73,7 @@ describe('DemoService', () => {
 				UsersService,
 				OrganizationsService,
 				OrganizationsStatsService,
-				OrganizationsRolesService,
+				OrganizationsAclService,
 				WarehousesService,
 				ProductsService,
 				InventoryService,
@@ -91,7 +91,7 @@ describe('DemoService', () => {
 			.useValue(mockProductsService)
 			.overrideProvider(InventoryService)
 			.useValue(mockInventoryService)
-			.overrideProvider(OrganizationsRolesService)
+			.overrideProvider(OrganizationsAclService)
 			.useValue(mockOrgSecurityService)
 			.compile();
 

@@ -27,7 +27,7 @@ import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { OrganizationsRolesService } from './organizations-roles.service';
+import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationACLRole } from './types/org-acl-role.type';
 
 @ApiTags('organizations')
@@ -36,7 +36,7 @@ import { OrganizationACLRole } from './types/org-acl-role.type';
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsRolesService: OrganizationsRolesService,
+		private readonly organizationsRolesService: OrganizationsAclService,
 		private readonly warehousesService: WarehousesService,
 	) {}
 

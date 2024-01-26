@@ -10,16 +10,13 @@ export interface AccessRule {
 }
 
 @Injectable()
-export class OrganizationsRolesService {
+export class OrganizationsAclService {
 	constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-	async getRole(
-		organizationId: Types.ObjectId,
-		user: Types.ObjectId,
-	): Promise<OrganizationACLRole | null> {
+	async getRule(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<AccessRule | null> {
 		const organization = await this.organizationRepository.findById(organizationId, { acls: 1 });
 		const rule = organization.acls.find((rule) => rule.user == user);
-		return rule ? rule.role : null;
+		return rule;
 	}
 
 	async addRule(organization: Types.ObjectId, rule: AccessRule): Promise<OrganizationDocument> {

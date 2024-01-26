@@ -13,7 +13,7 @@ import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
-import { OrganizationsRolesService } from '../models/organizations/organizations-roles.service';
+import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { OrganizationACLRole } from '../models/organizations/types/org-acl-role.type';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class DemoService {
 		private readonly userService: UsersService,
 		private readonly organizationsService: OrganizationsService,
 		private readonly organizationsStatsService: OrganizationsStatsService,
-		private readonly organizationsRolesService: OrganizationsRolesService,
+		private readonly organizationsRolesService: OrganizationsAclService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productsService: ProductsService,
 		private readonly inventoryService: InventoryService,
