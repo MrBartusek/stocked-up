@@ -1,6 +1,6 @@
 import { organizationAccessDecoratorHelper } from '../organization-acccess-decorator.helper';
 import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
-import { OrganizationResourceType } from '../../models/organizations/types/org-resource-type';
+import { OrganizationResourceType } from './org-resource-type';
 
 export function HasOrganizationAccess(role?: OrganizationAclRole): PropertyDecorator {
 	return (target, key) => {
