@@ -9,7 +9,7 @@ import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.d
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
-import { OrganizationsRolesService } from './organizations-access.service';
+import { OrganizationsRolesService } from './organizations-roles.service';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 
 const MOCK_USER_WITH_ORGS = new Types.ObjectId('6576d1aa2800e698b8543a7b');
