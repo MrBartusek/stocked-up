@@ -28,7 +28,7 @@ import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
 import { OrganizationsAclService } from './organizations-acl.service';
-import { OrganizationACLRole } from './types/org-acl-role.type';
+import { OrganizationAclRole } from './types/org-acl-role.type';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -51,7 +51,7 @@ export class OrganizationsController {
 
 		await this.organizationsRolesService.addRule(org.id, {
 			user,
-			role: OrganizationACLRole.OWNER,
+			role: OrganizationAclRole.OWNER,
 		});
 		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 

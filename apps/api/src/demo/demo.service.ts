@@ -14,7 +14,7 @@ import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationACLRole } from '../models/organizations/types/org-acl-role.type';
+import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 
 @Injectable()
 export class DemoService {
@@ -60,7 +60,7 @@ export class DemoService {
 
 		await this.organizationsRolesService.addRule(org._id, {
 			user: user._id,
-			role: OrganizationACLRole.OWNER,
+			role: OrganizationAclRole.OWNER,
 		});
 
 		this.logger.log(`Created demo account - ${user.profile.email}`);

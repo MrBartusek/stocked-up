@@ -1,15 +1,15 @@
 import {
 	ORGANIZATION_ACCESS_DECORATOR_KEY,
 	OrganizationAccessDecoratorMetadata,
-} from './types/org-access-decorator-metadata';
-import { OrganizationACLRole } from './types/org-acl-role.type';
-import { OrganizationResourceType } from './types/org-resource-type';
+} from '../models/organizations/types/org-access-decorator-metadata';
+import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
+import { OrganizationResourceType } from '../models/organizations/types/org-resource-type';
 
 export interface BasicOrganizationAccessDecoratorOptions {
 	target: object;
 	key: string | symbol;
 	resource: OrganizationResourceType;
-	role?: OrganizationACLRole;
+	role?: OrganizationAclRole;
 }
 
 export function organizationAccessDecoratorHelper(
@@ -24,7 +24,7 @@ export function organizationAccessDecoratorHelper(
 
 	const metadata: OrganizationAccessDecoratorMetadata = {
 		resource,
-		role: role || OrganizationACLRole.MEMBER,
+		role: role || OrganizationAclRole.MEMBER,
 	};
 
 	Reflect.defineMetadata(ORGANIZATION_ACCESS_DECORATOR_KEY, metadata, target, key);

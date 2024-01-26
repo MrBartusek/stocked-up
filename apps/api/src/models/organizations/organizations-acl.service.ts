@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { OrganizationRepository } from './organizations.repository';
 import { Types } from 'mongoose';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { OrganizationACLRole } from './types/org-acl-role.type';
+import { OrganizationAclRole } from './types/org-acl-role.type';
 
 export interface AccessRule {
 	user: Types.ObjectId;
-	role: OrganizationACLRole;
+	role: OrganizationAclRole;
 }
 
 @Injectable()
