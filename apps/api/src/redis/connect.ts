@@ -1,6 +1,10 @@
 import { Logger } from '@nestjs/common';
+import Utils from '../helpers/utils';
 
-jest.mock('ioredis', () => jest.requireActual('ioredis-mock'));
+if (Utils.isTest()) {
+	jest.mock('ioredis', () => jest.requireActual('ioredis-mock'));
+}
+
 import Redis from 'ioredis';
 
 const host = process.env.REDIS_HOST;
