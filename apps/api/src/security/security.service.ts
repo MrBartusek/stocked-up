@@ -11,11 +11,14 @@ export class SecurityService {
 		organization: Types.ObjectId,
 		user: Types.ObjectId,
 	): Promise<boolean> {
-		const role = await this.getRole(organization, user);
+		const role = await this.getUserRole(organization, user);
 		return role != null;
 	}
 
-	async getRole(organization: Types.ObjectId, user: Types.ObjectId): Promise<OrganizationAclRole> {
+	async getUserRole(
+		organization: Types.ObjectId,
+		user: Types.ObjectId,
+	): Promise<OrganizationAclRole> {
 		const rule = await this.organizationAclService.getRule(organization, user);
 		return rule ? rule.role : null;
 	}
