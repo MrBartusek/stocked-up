@@ -2,6 +2,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { useContainer } from 'class-validator';
 import RedisStore from 'connect-redis';
 import { json } from 'express';
 import * as session from 'express-session';
@@ -10,7 +11,6 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis/connect';
-import { useContainer } from 'class-validator';
 
 async function bootstrapNestApp() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);

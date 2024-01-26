@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
-import { OrganizationsAccessService } from './organizations-access.service';
+import { OrganizationsRolesService } from './organizations-roles.service';
 import { OrganizationRepository } from './organizations.repository';
 
-describe('OrganizationsAccessService', () => {
-	let service: OrganizationsAccessService;
+describe('OrganizationsRolesService', () => {
+	let service: OrganizationsRolesService;
 
 	const mockOrgRepository = new MockOrganizationsRepository();
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
-				OrganizationsAccessService,
+				OrganizationsRolesService,
 				{
 					provide: OrganizationRepository,
 					useValue: mockOrgRepository,
@@ -19,7 +19,7 @@ describe('OrganizationsAccessService', () => {
 			],
 		}).compile();
 
-		service = module.get<OrganizationsAccessService>(OrganizationsAccessService);
+		service = module.get<OrganizationsRolesService>(OrganizationsRolesService);
 	});
 
 	afterEach(() => {

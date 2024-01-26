@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { OrganizationACLRole } from './org-acl-role';
+import { OrganizationACLRole } from '../types/org-acl-role.type';
 
 export type OrgAclDocument = HydratedDocument<OrgAcl>;
 

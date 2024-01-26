@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OrganizationRepository } from './organizations.repository';
 import { Types } from 'mongoose';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { OrganizationACLRole } from './schemas/org-acl-role';
+import { OrganizationACLRole } from './types/org-acl-role.type';
 
 export interface AccessRule {
 	user: Types.ObjectId;
@@ -10,7 +10,7 @@ export interface AccessRule {
 }
 
 @Injectable()
-export class OrganizationsAccessService {
+export class OrganizationsRolesService {
 	constructor(private readonly organizationRepository: OrganizationRepository) {}
 
 	async getRole(
