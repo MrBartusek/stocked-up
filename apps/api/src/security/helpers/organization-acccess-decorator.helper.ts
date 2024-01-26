@@ -1,9 +1,9 @@
 import {
 	ORGANIZATION_ACCESS_DECORATOR_KEY,
 	OrganizationAccessDecoratorMetadata,
-} from '../models/organizations/types/org-access-decorator-metadata';
-import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
-import { OrganizationResourceType } from './decorators/org-resource-type';
+} from '../../models/organizations/types/org-access-decorator-metadata';
+import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
+import { OrganizationResourceType } from './org-resource-type';
 
 export interface BasicOrganizationAccessDecoratorOptions {
 	target: object;
