@@ -11,7 +11,7 @@ export class SecurityService {
 		organization: Types.ObjectId,
 		user: Types.ObjectId,
 	): Promise<boolean> {
-		const role = this.getRole(organization, user);
+		const role = await this.getRole(organization, user);
 		return role != null;
 	}
 

@@ -20,14 +20,15 @@ import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
+import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationAclRole } from './types/org-acl-role.type';
 
 @ApiTags('organizations')
@@ -81,7 +82,7 @@ export class OrganizationsController {
 
 	@Put(':id')
 	async update(
-		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.update(id, dto);
@@ -92,7 +93,9 @@ export class OrganizationsController {
 	}
 
 	@Delete(':id')
-	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
+	async delete(
+		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
+	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.delete(id);
 		if (!org) {
 			throw new NotFoundException();
@@ -101,7 +104,9 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
-	async findById(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<OrganizationDto> {
+	async findById(
+		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
+	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.findById(id);
 		if (!org) {
 			throw new NotFoundException();
@@ -111,7 +116,7 @@ export class OrganizationsController {
 
 	@Patch(':id/settings')
 	async updateSettings(
-		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
 	): Promise<OrgSettings> {
 		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);

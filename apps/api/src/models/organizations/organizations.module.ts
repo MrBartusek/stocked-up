@@ -9,12 +9,14 @@ import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
 import { OrganizationNameNotTakenRule } from '../../rules/org-name-not-taken.rule';
 import { OrganizationsAclService } from './organizations-acl.service';
+import { SecurityModule } from '../../security/security.module';
 
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Organization, OrganizationSchema),
 		forwardRef(() => WarehousesModule),
 		forwardRef(() => ProductsModule),
+		SecurityModule,
 	],
 	controllers: [OrganizationsController],
 	providers: [

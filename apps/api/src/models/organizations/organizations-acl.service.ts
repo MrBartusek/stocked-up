@@ -15,7 +15,7 @@ export class OrganizationsAclService {
 
 	async getRule(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<AccessRule | null> {
 		const organization = await this.organizationRepository.findById(organizationId, { acls: 1 });
-		const rule = organization.acls.find((rule) => rule.user == user);
+		const rule = organization.acls.find((rule) => rule.user.equals(user));
 		return rule;
 	}
 
