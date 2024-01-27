@@ -27,6 +27,7 @@ export class InventoryItem {
 		if (document.product instanceof Types.ObjectId) {
 			throw new Error(`Inventory item without aggregated product can't be converted to DTO`);
 		}
+
 		return {
 			id: document._id,
 			quantity: document.quantity,
@@ -39,7 +40,7 @@ export class InventoryItem {
 
 	public static toDto(document: InventoryItemDocument): InventoryItemDto {
 		if (document.product instanceof Types.ObjectId) {
-			throw new Error(`Inventory item without aggregated product can't b converted to DTO`);
+			throw new Error(`Inventory item without aggregated product can't be converted to DTO`);
 		}
 
 		return {

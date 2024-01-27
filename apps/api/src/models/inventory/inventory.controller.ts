@@ -4,6 +4,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	HttpCode,
 	NotFoundException,
 	Param,
 	Post,
@@ -38,6 +39,7 @@ export class InventoryController {
 	) {}
 
 	@Post()
+	@HttpCode(201)
 	async create(@Body(SecurityValidationPipe) dto: CreateInventoryItemDto) {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
 		const productId = new Types.ObjectId(dto.productId);
@@ -51,24 +53,23 @@ export class InventoryController {
 
 		const item = await this.inventoryService.create(dto);
 		await this.organizationStatsService.recalculateTotalValue(item.organization);
-		return InventoryItem.toBasicDto(item);
 	}
 
 	@Put(':id')
+	@HttpCode(200)
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(SecurityValidationPipe) dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
 		await this.organizationStatsService.recalculateTotalValue(item.organization);
-		return InventoryItem.toBasicDto(item);
 	}
 
 	@Delete(':id')
+	@HttpCode(200)
 	async delete(@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId) {
 		const item = await this.inventoryService.delete(id);
 		await this.organizationStatsService.recalculateTotalValue(item.organization);
-		return InventoryItem.toBasicDto(item);
 	}
 
 	@Get('by-product')
