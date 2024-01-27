@@ -3,7 +3,7 @@ import {
 	OrganizationAccessDecoratorMetadata,
 } from '../../models/organizations/types/org-access-decorator-metadata';
 import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
-import { OrganizationResourceType } from '../types/org-resource-type';
+import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
 
 export interface BasicOrganizationAccessDecoratorOptions {
 	target: object;
