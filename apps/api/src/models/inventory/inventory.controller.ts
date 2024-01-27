@@ -60,12 +60,7 @@ export class InventoryController {
 		@Body(SecurityValidationPipe) dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
-		if (!item) {
-			throw new NotFoundException();
-		}
-
 		await this.organizationStatsService.recalculateTotalValue(item.organization);
-
 		return InventoryItem.toBasicDto(item);
 	}
 
