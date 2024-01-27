@@ -37,7 +37,7 @@ import { OrganizationAclRole } from './types/org-acl-role.type';
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsRolesService: OrganizationsAclService,
+		private readonly organizationsAclService: OrganizationsAclService,
 		private readonly warehousesService: WarehousesService,
 	) {}
 
@@ -51,7 +51,7 @@ export class OrganizationsController {
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 
-		await this.organizationsRolesService.addRule(org.id, {
+		await this.organizationsAclService.addRule(org.id, {
 			user,
 			role: OrganizationAclRole.OWNER,
 		});
@@ -109,9 +109,6 @@ export class OrganizationsController {
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.findById(id);
-		if (!org) {
-			throw new NotFoundException();
-		}
 		return Organization.toDto(org);
 	}
 
