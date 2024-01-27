@@ -5,6 +5,7 @@ import { OrganizationResourceType } from './types/organization-resource.type';
 import { ResolverStrategy } from './types/resolver-strategy.type';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
 import { OrganizationStrategy } from './strategy/organization.strategy';
+import { InventoryStrategy } from './strategy/inventory.strategy';
 
 @Injectable()
 export class OrganizationResolverService {
@@ -12,6 +13,7 @@ export class OrganizationResolverService {
 		private readonly productStrategy: ProductsStrategy,
 		private readonly warehouseStrategy: WarehouseStrategy,
 		private readonly organizationStrategy: OrganizationStrategy,
+		private readonly inventoryStrategy: InventoryStrategy,
 	) {}
 
 	private strategy: ResolverStrategy;
@@ -22,16 +24,17 @@ export class OrganizationResolverService {
 	}
 
 	private setStrategy(type: OrganizationResourceType): ResolverStrategy {
-		if (type == OrganizationResourceType.ORGANIZATION) {
-			this.strategy = this.organizationStrategy;
-		} else if (type == OrganizationResourceType.PRODUCT) {
-			this.strategy = this.productStrategy;
-		} else if (type == OrganizationResourceType.WAREHOUSE) {
-			this.strategy = this.warehouseStrategy;
-		} else {
-			throw new Error(`Strategy for ${type} is not implemented`);
+		switch (type) {
+			case OrganizationResourceType.ORGANIZATION:
+				return (this.strategy = this.organizationStrategy);
+			case OrganizationResourceType.PRODUCT:
+				return (this.strategy = this.productStrategy);
+			case OrganizationResourceType.WAREHOUSE:
+				return (this.strategy = this.warehouseStrategy);
+			case OrganizationResourceType.INVENTORY:
+				return (this.strategy = this.inventoryStrategy);
+			default:
+				throw new Error(`Strategy for ${type} is not implemented`);
 		}
-
-		return this.strategy;
 	}
 }

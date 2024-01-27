@@ -4,6 +4,8 @@ import { ProductsStrategy } from './strategy/products.strategy';
 import { Types } from 'mongoose';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
 import { OrganizationResourceType } from './types/organization-resource.type';
+import { OrganizationStrategy } from './strategy/organization.strategy';
+import { InventoryStrategy } from './strategy/inventory.strategy';
 
 const MOCK_ORG_ID = new Types.ObjectId();
 
@@ -25,6 +27,14 @@ describe('OrganizationResolverService', () => {
 				},
 				{
 					provide: WarehouseStrategy,
+					useValue: mockStrategy,
+				},
+				{
+					provide: OrganizationStrategy,
+					useValue: mockStrategy,
+				},
+				{
+					provide: InventoryStrategy,
 					useValue: mockStrategy,
 				},
 			],
@@ -53,7 +63,7 @@ describe('OrganizationResolverService', () => {
 		);
 	});
 
-	it.skip('should resolve from inventory', () => {
+	it('should resolve from inventory', () => {
 		expect(service.resolve(new Types.ObjectId(), OrganizationResourceType.INVENTORY)).toBe(
 			MOCK_ORG_ID,
 		);
