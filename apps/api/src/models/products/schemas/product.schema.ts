@@ -1,15 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { BasicProductDto, ProductDto } from 'shared-types';
 import DtoHelper from '../../../helpers/dto.helper';
-import { Organization } from '../../organizations/schemas/organization.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
 
 @Schema()
 export class Product {
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' })
-	organization: Organization;
+	@Prop({ ref: 'Organization', index: true })
+	organization: Types.ObjectId;
 
 	@Prop({ required: true, index: 'text' })
 	name: string;

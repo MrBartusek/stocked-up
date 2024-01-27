@@ -1,19 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
 import DtoHelper from '../../../helpers/dto.helper';
-import { ProductDocument } from '../../products/schemas/product.schema';
-import { Warehouse } from '../../warehouses/schemas/warehouse.schema';
+import { Product, ProductDocument } from '../../products/schemas/product.schema';
 
 export type InventoryItemDocument = HydratedDocument<InventoryItem>;
 
 @Schema()
 export class InventoryItem {
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Warehouse' })
-	warehouse: Warehouse;
+	@Prop({ ref: 'Warehouse', index: true })
+	warehouse: Types.ObjectId;
 
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Product' })
-	product: ProductDocument;
+	@Prop({ type: Types.ObjectId, ref: 'Product', index: true })
+	product: Types.ObjectId | ProductDocument;
 
 	@Prop({ default: 0 })
 	quantity: number;
@@ -22,19 +21,24 @@ export class InventoryItem {
 	location: string;
 
 	public static toBasicDto(document: InventoryItemDocument): BasicInventoryItemDto {
-		const isProductMongoId = mongoose.isValidObjectId(document.product);
-
+		if (document.product instanceof Types.ObjectId) {
+			throw new Error(`Inventory item without aggregated product can't be converted to DTO`);
+		}
 		return {
 			id: document._id,
-			productId: isProductMongoId ? (document.product as any) : document.product._id.toString(),
-			image: DtoHelper.getImageDto(document.product.imageKey),
-			name: document.product.name,
 			quantity: document.quantity,
+			productId: document.product._id.toString(),
+			image: DtoHelper.getImageDto(document.product.imageKey),
 			unit: document.product.unit,
+			name: document.product.name,
 		};
 	}
 
 	public static toDto(document: InventoryItemDocument): InventoryItemDto {
+		if (document.product instanceof Types.ObjectId) {
+			throw new Error(`Inventory item without aggregated product can't b converted to DTO`);
+		}
+
 		return {
 			...InventoryItem.toBasicDto(document),
 			description: document.product.description,

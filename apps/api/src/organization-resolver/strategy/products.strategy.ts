@@ -10,6 +10,6 @@ export class ProductsStrategy implements ResolverStrategy {
 	async resolve(id: Types.ObjectId): Promise<Types.ObjectId> {
 		const product = await this.productsService.findOne(id);
 		if (!product) return null;
-		return product.organization as any as Types.ObjectId;
+		return product.organization;
 	}
 }

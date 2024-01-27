@@ -82,8 +82,7 @@ export class ProductsController {
 			throw new NotFoundException();
 		}
 
-		const orgId = new Types.ObjectId(product.organization as any);
-		await this.organizationStatsService.recalculateTotalValue(orgId);
+		await this.organizationStatsService.recalculateTotalValue(product.organization);
 
 		return Product.toDto(product);
 	}
@@ -95,10 +94,8 @@ export class ProductsController {
 			throw new NotFoundException();
 		}
 
-		const orgId = product.organization as any as Types.ObjectId;
-
-		await this.updateTotalProductsCount(orgId);
-		await this.organizationStatsService.recalculateTotalValue(orgId);
+		await this.updateTotalProductsCount(product.organization);
+		await this.organizationStatsService.recalculateTotalValue(product.organization);
 
 		return Product.toDto(product);
 	}
