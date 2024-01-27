@@ -2,12 +2,12 @@ import { addSecurityMetadata } from '../helpers/organization-acccess-decorator.h
 import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
 import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
 
-export function HasOrganizationAccess(role?: OrganizationAclRole): PropertyDecorator {
+export function HasWarehouseAccess(role?: OrganizationAclRole): PropertyDecorator {
 	return (target, key) => {
 		addSecurityMetadata({
 			target,
 			key,
-			resource: OrganizationResourceType.ORGANIZATION,
+			resource: OrganizationResourceType.WAREHOUSE,
 			role,
 		});
 	};

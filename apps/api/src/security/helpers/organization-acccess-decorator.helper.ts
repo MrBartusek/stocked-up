@@ -5,16 +5,14 @@ import {
 import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
 import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
 
-export interface BasicOrganizationAccessDecoratorOptions {
+export interface AddSecurityMetadataOptions {
 	target: object;
 	key: string | symbol;
 	resource: OrganizationResourceType;
 	role?: OrganizationAclRole;
 }
 
-export function organizationAccessDecoratorHelper(
-	options: BasicOrganizationAccessDecoratorOptions,
-) {
+export function addSecurityMetadata(options: AddSecurityMetadataOptions) {
 	const { target, key, resource, role } = options;
 
 	const fields = Reflect.getOwnMetadata(ORGANIZATION_ACCESS_DECORATOR_KEY, target) || [];
