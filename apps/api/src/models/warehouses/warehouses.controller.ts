@@ -13,6 +13,7 @@ import { CreateWarehouseInOrgDto } from './dto/create-warehouse-in-org.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { Warehouse } from './schemas/warehouse.schema';
 import { WarehousesService } from './warehouses.service';
+import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 
 @ApiTags('warehouses')
 @Controller('warehouses')
@@ -24,7 +25,7 @@ export class WarehousesController {
 	) {}
 
 	@Post()
-	async create(@Body() dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
+	async create(@Body(SecurityValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
 		const orgId = new Types.ObjectId(dto.organizationId);
 
 		const warehouse = await this.warehousesService.create(orgId, dto.warehouse);
@@ -63,7 +64,7 @@ export class WarehousesController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
-		@Body() dto: UpdateWarehouseDto,
+		@Body(SecurityValidationPipe) dto: UpdateWarehouseDto,
 	): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.update(id, dto);
 		await this.organizationsService.updateWarehouseReference(warehouse);

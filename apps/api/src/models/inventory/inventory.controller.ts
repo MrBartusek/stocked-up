@@ -57,7 +57,7 @@ export class InventoryController {
 	@Put(':id')
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body() dto: UpdateInventoryItemDto,
+		@Body(SecurityValidationPipe) dto: UpdateInventoryItemDto,
 	) {
 		const item = await this.inventoryService.update(id, dto);
 		if (!item) {
