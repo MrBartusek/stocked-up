@@ -1,8 +1,10 @@
 import { IsMongoId, IsNumber, Length, MaxLength } from 'class-validator';
 import { ICreateProductDto } from 'shared-types';
+import { HasOrganizationAccess } from '../../../security/decorators/has-organization-access.decorator';
 
 export class CreateProductDto implements ICreateProductDto {
 	@IsMongoId()
+	@HasOrganizationAccess()
 	organization: string;
 
 	@Length(2, 32)

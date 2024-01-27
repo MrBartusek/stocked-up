@@ -23,6 +23,9 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
+import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
+import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
+import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 
 @ApiTags('products')
 @Controller('products')
@@ -35,7 +38,7 @@ export class ProductsController {
 	) {}
 
 	@Post()
-	async create(@Body() dto: CreateProductDto): Promise<ProductDto> {
+	async create(@Body(SecurityValidationPipe) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 
 		const orgId = new Types.ObjectId(dto.organization);
@@ -45,17 +48,16 @@ export class ProductsController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<ProductDto> {
+	async findOne(
+		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
+	): Promise<ProductDto> {
 		const product = await this.productsService.findOne(id);
-		if (!product) {
-			throw new NotFoundException();
-		}
 		return Product.toDto(product);
 	}
 
 	@Get('list/:id')
 	async list(
-		@Param('id', ParseObjectIdPipe) orgId: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) orgId: Types.ObjectId,
 		@Query(
 			new PageQueryValidationPipe<ProductDto>({
 				allowedFilters: ['name', 'buyPrice', 'sellPrice', 'unit'],
@@ -74,25 +76,19 @@ export class ProductsController {
 
 	@Put(':id')
 	async update(
-		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-		@Body() dto: UpdateProductDto,
+		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
+		@Body(SecurityValidationPipe) dto: UpdateProductDto,
 	): Promise<ProductDto> {
 		const product = await this.productsService.update(id, dto);
-		if (!product) {
-			throw new NotFoundException();
-		}
-
 		await this.organizationStatsService.recalculateTotalValue(product.organization);
-
 		return Product.toDto(product);
 	}
 
 	@Delete(':id')
-	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<ProductDto> {
+	async delete(
+		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
+	): Promise<ProductDto> {
 		const product = await this.productsService.delete(id);
-		if (!product) {
-			throw new NotFoundException();
-		}
 
 		await this.updateTotalProductsCount(product.organization);
 		await this.organizationStatsService.recalculateTotalValue(product.organization);

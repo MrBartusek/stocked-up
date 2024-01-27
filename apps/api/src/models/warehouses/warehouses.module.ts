@@ -16,7 +16,7 @@ import { OrganizationResolverModule } from '../../organization-resolver/organiza
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
 		SecurityModule,
-		OrganizationResolverModule,
+		forwardRef(() => OrganizationResolverModule),
 	],
 	controllers: [WarehousesController],
 	providers: [WarehousesService, WarehouseRepository, WarehouseStatsService],
