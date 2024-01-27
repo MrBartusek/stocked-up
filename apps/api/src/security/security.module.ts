@@ -1,11 +1,10 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { SecurityService } from './security.service';
 import { OrganizationsModule } from '../models/organizations/organizations.module';
-import { ResourceAccessService } from './resouce-access.service';
 
 @Module({
-	providers: [SecurityService, ResourceAccessService, ResourceAccessService],
+	providers: [SecurityService],
 	imports: [forwardRef(() => OrganizationsModule)],
-	exports: [SecurityService, ResourceAccessService],
+	exports: [SecurityService],
 })
 export class SecurityModule {}
