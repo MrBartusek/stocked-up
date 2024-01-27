@@ -34,6 +34,7 @@ function InventoryAddForm() {
 		setError(null);
 
 		const dto: ICreateInventoryItemDto = {
+			organizationId: appContext.organization.id,
 			warehouseId: appContext.currentWarehouse.id,
 			...inputs,
 		};
