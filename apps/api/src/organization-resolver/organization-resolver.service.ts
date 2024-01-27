@@ -4,12 +4,14 @@ import { Types } from 'mongoose';
 import { OrganizationResourceType } from './types/organization-resource.type';
 import { ResolverStrategy } from './types/resolver-strategy.type';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
+import { OrganizationStrategy } from './strategy/organization.strategy';
 
 @Injectable()
 export class OrganizationResolverService {
 	constructor(
 		private readonly productStrategy: ProductsStrategy,
 		private readonly warehouseStrategy: WarehouseStrategy,
+		private readonly organizationStrategy: OrganizationStrategy,
 	) {}
 
 	private strategy: ResolverStrategy;
@@ -20,7 +22,9 @@ export class OrganizationResolverService {
 	}
 
 	private setStrategy(type: OrganizationResourceType): ResolverStrategy {
-		if (type == OrganizationResourceType.PRODUCT) {
+		if (type == OrganizationResourceType.ORGANIZATION) {
+			this.strategy = this.organizationStrategy;
+		} else if (type == OrganizationResourceType.PRODUCT) {
 			this.strategy = this.productStrategy;
 		} else if (type == OrganizationResourceType.WAREHOUSE) {
 			this.strategy = this.warehouseStrategy;

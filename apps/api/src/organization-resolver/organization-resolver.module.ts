@@ -5,9 +5,15 @@ import { WarehousesModule } from '../models/warehouses/warehouses.module';
 import { OrganizationResolverService } from './organization-resolver.service';
 import { ProductsStrategy } from './strategy/products.strategy';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
+import { OrganizationStrategy } from './strategy/organization.strategy';
 
 @Module({
-	providers: [OrganizationResolverService, ProductsStrategy, WarehouseStrategy],
+	providers: [
+		OrganizationResolverService,
+		ProductsStrategy,
+		WarehouseStrategy,
+		OrganizationStrategy,
+	],
 	imports: [
 		forwardRef(() => ProductsModule),
 		forwardRef(() => InventoryModule),
