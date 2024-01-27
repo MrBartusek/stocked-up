@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { FilterQuery, Model, Types } from 'mongoose';
 import { EntityRepository } from '../../database/entity.repository';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { InventoryItem, InventoryItemDocument } from './schemas/inventory-item.schema';
-import { PageQueryDto } from '../../dto/page-query.dto';
 
 @Injectable()
 export class InventoryRepository extends EntityRepository<InventoryItemDocument> {

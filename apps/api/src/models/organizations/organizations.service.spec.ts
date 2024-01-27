@@ -3,9 +3,9 @@ import { Types } from 'mongoose';
 import { ProductsService } from '../products/products.service';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
+import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
-import { OrganizationsStatsService } from './organizations-stats.service';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;

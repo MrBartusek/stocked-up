@@ -4,17 +4,17 @@ import { Types } from 'mongoose';
 import * as crypto from 'node:crypto';
 import Utils from '../helpers/utils';
 import { InventoryService } from '../models/inventory/inventory.service';
+import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
 import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
+import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 import { ProductsService } from '../models/products/products.service';
 import { ProductDocument } from '../models/products/schemas/product.schema';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
-import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 
 @Injectable()
 export class DemoService {

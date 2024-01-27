@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { InventoryService } from '../models/inventory/inventory.service';
+import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
 import { ProductsService } from '../models/products/products.service';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import { DemoService } from './demo.service';
-import { Types } from 'mongoose';
-import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 
 describe('DemoService', () => {
 	let service: DemoService;

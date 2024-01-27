@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto } from 'shared-types';
 import DtoHelper from '../../../helpers/dto.helper';
-import { Product, ProductDocument } from '../../products/schemas/product.schema';
+import { ProductDocument } from '../../products/schemas/product.schema';
 
 export type InventoryItemDocument = HydratedDocument<InventoryItem>;
 

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
 import { PageDto } from 'shared-types';
-import { InventoryRepository } from './inventory.repository';
-import { InventoryItemDocument } from './schemas/inventory-item.schema';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
+import { InventoryRepository } from './inventory.repository';
+import { InventoryItemDocument } from './schemas/inventory-item.schema';
 
 @Injectable()
 export class InventoryService {

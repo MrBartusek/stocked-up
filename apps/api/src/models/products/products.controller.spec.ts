@@ -2,9 +2,9 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
+import { MockProductsRepository } from './mocks/mock-products-repository';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
-import { MockProductsRepository } from './mocks/mock-products-repository';
 
 const MOCK_TAKEN_PRODUCT_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
 const MOCK_FREE_PRODUCT_ID = new Types.ObjectId('657047c4e0cecd73abbad627');

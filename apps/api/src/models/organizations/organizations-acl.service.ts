@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { OrganizationRepository } from './organizations.repository';
 import { Types } from 'mongoose';
+import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
 import { OrganizationAclRole } from './types/org-acl-role.type';
 

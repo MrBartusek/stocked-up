@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ImageDto } from '../models/users/dto/image.dto';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
 import { DocumentWithImage, ImagesService } from './images.service';
-import { ImageDto } from '../models/users/dto/image.dto';
 
 const MOCK_IMAGE =
 	'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/9+C3QAAAABJRU5ErkJggg==';

@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
+import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { PageQueryDto } from '../../dto/page-query.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { OrganizationsStatsService } from './organizations-stats.service';
 
 @Injectable()
 export class OrganizationsService {

@@ -13,11 +13,11 @@ import { OrganizationsModule } from './models/organizations/organizations.module
 import { ProductsModule } from './models/products/products.module';
 import { UsersModule } from './models/users/users.module';
 import { WarehousesModule } from './models/warehouses/warehouses.module';
+import { OrganizationResolverModule } from './organization-resolver/organization-resolver.module';
 import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
 import { SecurityModule } from './security/security.module';
-import { OrganizationResolverModule } from './organization-resolver/organization-resolver.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),

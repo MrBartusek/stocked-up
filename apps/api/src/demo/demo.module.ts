@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DemoService } from './demo.service';
-import { UsersModule } from '../models/users/users.module';
-import { OrganizationsModule } from '../models/organizations/organizations.module';
-import { WarehousesModule } from '../models/warehouses/warehouses.module';
-import { ProductsModule } from '../models/products/products.module';
-import { InventoryModule } from '../models/inventory/inventory.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { InventoryModule } from '../models/inventory/inventory.module';
+import { OrganizationsModule } from '../models/organizations/organizations.module';
+import { ProductsModule } from '../models/products/products.module';
+import { UsersModule } from '../models/users/users.module';
+import { WarehousesModule } from '../models/warehouses/warehouses.module';
+import { DemoService } from './demo.service';
 
 @Module({
 	providers: [DemoService],
