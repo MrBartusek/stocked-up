@@ -1,6 +1,8 @@
-import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
+import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
+import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
@@ -8,11 +10,7 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-
-const MOCK_TAKEN_ORG_ID = new Types.ObjectId('62a23958e5a9e9b88f853a67');
-const MOCK_FREE_ORG_ID = new Types.ObjectId('657047c4e0cecd73abbad627');
-const MOCK_TAKEN_WAREHOUSE_ID = new Types.ObjectId('65704ab7cb27dac5067d1b8f');
-const MOCK_FREE_WAREHOUSE_ID = new Types.ObjectId('65704abb8346be3d278a806f');
+import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
@@ -20,36 +18,27 @@ describe('WarehousesController', () => {
 	const mockWarehousesRepository = new MockWarehousesRepository();
 
 	const mockWarehouseService = {
-		findById: jest.fn((id) => {
-			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return mockWarehousesRepository.findById(id);
-		}),
-		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
-			return mockWarehousesRepository.create({ ...organization, ...dto });
-		}),
-		update: jest.fn((id, dto: UpdateWarehouseDto) => {
-			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return mockWarehousesRepository.findOneByIdAndUpdate(id, dto);
-		}),
-		delete: jest.fn((id) => {
-			if (id.toString() != MOCK_TAKEN_WAREHOUSE_ID.toString()) return undefined;
-			return mockWarehousesRepository.deleteOneById(id);
-		}),
+		findById: jest.fn((id) => mockWarehousesRepository.findById(id)),
+		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) =>
+			mockWarehousesRepository.create({ ...organization, ...dto }),
+		),
+		update: jest.fn((id, dto: UpdateWarehouseDto) =>
+			mockWarehousesRepository.findOneByIdAndUpdate(id, dto),
+		),
+		delete: jest.fn((id) => mockWarehousesRepository.deleteOneById(id)),
 	};
 
 	const mockOrgService = {
-		addWarehouseReference: jest.fn(() => ({
-			_id: MOCK_TAKEN_ORG_ID,
+		addWarehouseReference: jest.fn((id) => ({
+			_id: id,
 		})),
-		deleteWarehouseReference: jest.fn(() => ({
-			_id: MOCK_TAKEN_ORG_ID,
+		deleteWarehouseReference: jest.fn((id) => ({
+			_id: id,
 		})),
-		updateWarehouseReference: jest.fn(() => ({
-			_id: MOCK_TAKEN_ORG_ID,
+		updateWarehouseReference: jest.fn((id) => ({
+			_id: id,
 		})),
-		exist: jest.fn((id: Types.ObjectId) => {
-			return id.toString() == MOCK_TAKEN_ORG_ID.toString();
-		}),
+		exist: jest.fn(() => true),
 	};
 
 	const mockOrgStatService = {
@@ -72,6 +61,12 @@ describe('WarehousesController', () => {
 			.useValue(mockOrgService)
 			.overrideProvider(OrganizationsStatsService)
 			.useValue(mockOrgStatService)
+			.overridePipe(HasWarehouseAccessPipe)
+			.useValue(MockSecurityPipe)
+			.overridePipe(HasOrganizationAccessPipe)
+			.useValue(MockSecurityPipe)
+			.overridePipe(SecurityValidationPipe)
+			.useValue(MockSecurityPipe)
 			.compile();
 
 		controller = module.get<WarehousesController>(WarehousesController);
@@ -85,107 +80,73 @@ describe('WarehousesController', () => {
 		expect(controller).toBeDefined();
 	});
 
-	describe('findOne', () => {
-		it('should find warehouse by id', async () => {
-			const warehouse = await controller.findOne(MOCK_TAKEN_WAREHOUSE_ID);
+	it('should find warehouse by id', async () => {
+		const warehouse = await controller.findOne(new Types.ObjectId());
 
-			expect(warehouse).toEqual(
-				expect.objectContaining({
-					name: expect.any(String),
-					address: expect.any(String),
-				}),
-			);
-		});
-
-		it('should not find warehouse that does not exist', () => {
-			const warehouse = controller.findOne(MOCK_FREE_WAREHOUSE_ID);
-
-			expect(warehouse).rejects.toThrow(NotFoundException);
-		});
+		expect(warehouse).toEqual(
+			expect.objectContaining({
+				name: expect.any(String),
+				address: expect.any(String),
+			}),
+		);
 	});
 
-	describe('create', () => {
-		it('should create warehouse', async () => {
-			const warehouse = await controller.create({
-				organizationId: MOCK_TAKEN_ORG_ID.toString(),
-				warehouse: {
-					name: 'test-name',
-					address: 'test-address',
-				},
-			});
+	it('should create warehouse', async () => {
+		const organizationId = new Types.ObjectId();
 
-			expect(warehouse).toEqual(
-				expect.objectContaining({
-					name: 'test-name',
-					address: 'test-address',
-				}),
-			);
-			expect(addWarehouseRefSpy).toHaveBeenCalledWith(
-				MOCK_TAKEN_ORG_ID,
-				expect.objectContaining({
-					name: 'test-name',
-					address: 'test-address',
-				}),
-			);
+		const warehouse = await controller.create({
+			organizationId: organizationId.toString(),
+			warehouse: {
+				name: 'test-name',
+				address: 'test-address',
+			},
 		});
 
-		it('should not create warehouse in org that does not exist', () => {
-			const warehouse = controller.create({
-				organizationId: MOCK_FREE_ORG_ID.toString(),
-				warehouse: {
-					name: 'test-name',
-					address: 'test-address',
-				},
-			});
-
-			expect(warehouse).rejects.toThrow(NotFoundException);
-		});
+		expect(warehouse).toEqual(
+			expect.objectContaining({
+				name: 'test-name',
+				address: 'test-address',
+			}),
+		);
+		expect(addWarehouseRefSpy).toHaveBeenCalledWith(
+			organizationId,
+			expect.objectContaining({
+				name: 'test-name',
+				address: 'test-address',
+			}),
+		);
 	});
 
-	describe('update', () => {
-		it('should update warehouse', async () => {
-			const warehouse = await controller.update(MOCK_TAKEN_WAREHOUSE_ID, {
+	it('should update warehouse', async () => {
+		const warehouse = await controller.update(new Types.ObjectId(), {
+			name: 'updated-name',
+			address: 'updated-address',
+		});
+
+		expect(warehouse).toEqual(
+			expect.objectContaining({
 				name: 'updated-name',
 				address: 'updated-address',
-			});
-
-			expect(warehouse).toEqual(
-				expect.objectContaining({
-					name: 'updated-name',
-					address: 'updated-address',
-				}),
-			);
-			expect(updateWarehouseRefSpy).toHaveBeenCalledWith(
-				expect.objectContaining({
-					name: 'updated-name',
-				}),
-			);
-		});
-
-		it('should not update warehouse that does not exist', () => {
-			const warehouse = controller.update(MOCK_FREE_WAREHOUSE_ID, {} as any);
-
-			expect(warehouse).rejects.toThrow(NotFoundException);
-		});
+			}),
+		);
+		expect(updateWarehouseRefSpy).toHaveBeenCalledWith(
+			expect.objectContaining({
+				name: 'updated-name',
+			}),
+		);
 	});
 
-	describe('delete', () => {
-		it('should delete warehouse', async () => {
-			const warehouse = await controller.delete(MOCK_TAKEN_WAREHOUSE_ID);
+	it('should delete warehouse', async () => {
+		const warehouseId = new Types.ObjectId();
+		const warehouse = await controller.delete(warehouseId);
 
-			expect(warehouse).toEqual(
-				expect.objectContaining({
-					name: 'test-name',
-				}),
-			);
-			expect(deleteWarehouseRefSpy).toHaveBeenCalledWith(MOCK_TAKEN_WAREHOUSE_ID);
-			expect(recalculateTotalValueSpy).toHaveBeenCalledWith(MOCK_TAKEN_ORG_ID);
-		});
-
-		it('should not delete warehouse that does not exist', () => {
-			const warehouse = controller.delete(MOCK_FREE_WAREHOUSE_ID);
-
-			expect(warehouse).rejects.toThrow(NotFoundException);
-		});
+		expect(warehouse).toEqual(
+			expect.objectContaining({
+				id: warehouseId,
+				name: 'test-name',
+			}),
+		);
+		expect(deleteWarehouseRefSpy).toHaveBeenCalledWith(warehouseId);
+		expect(recalculateTotalValueSpy).toHaveBeenCalledWith(warehouseId);
 	});
 });
