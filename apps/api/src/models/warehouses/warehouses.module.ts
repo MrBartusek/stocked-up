@@ -7,12 +7,16 @@ import { WarehouseRepository } from './warehouse.repository';
 import { WarehouseStatsService } from './warehouses-stats.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { SecurityModule } from '../../security/security.module';
+import { OrganizationResolverModule } from '../../organization-resolver/organization-resolver.module';
 
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Warehouse, WarehouseSchema),
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
+		SecurityModule,
+		OrganizationResolverModule,
 	],
 	controllers: [WarehousesController],
 	providers: [WarehousesService, WarehouseRepository, WarehouseStatsService],

@@ -47,6 +47,7 @@ export class OrganizationsController {
 		@Req() request: Request,
 	): Promise<OrganizationDto> {
 		const user = new Types.ObjectId(request.user.id);
+
 		const org = await this.organizationsService.create(createOrganizationDto);
 		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 

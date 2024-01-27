@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { InventoryModule } from '../models/inventory/inventory.module';
 import { ProductsModule } from '../models/products/products.module';
 import { WarehousesModule } from '../models/warehouses/warehouses.module';
@@ -8,7 +8,11 @@ import { WarehouseStrategy } from './strategy/warehouse.strategy';
 
 @Module({
 	providers: [OrganizationResolverService, ProductsStrategy, WarehouseStrategy],
-	imports: [ProductsModule, InventoryModule, WarehousesModule],
+	imports: [
+		forwardRef(() => ProductsModule),
+		forwardRef(() => InventoryModule),
+		forwardRef(() => WarehousesModule),
+	],
 	exports: [OrganizationResolverService],
 })
 export class OrganizationResolverModule {}
