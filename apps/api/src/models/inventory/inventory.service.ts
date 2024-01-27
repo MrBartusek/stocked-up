@@ -12,10 +12,11 @@ export class InventoryService {
 	constructor(private readonly inventoryRepository: InventoryRepository) {}
 
 	create(dto: CreateInventoryItemDto) {
-		const { warehouseId, productId, ...rest } = dto;
+		const { organizationId, warehouseId, productId, ...rest } = dto;
 		return this.inventoryRepository.create({
-			warehouse: warehouseId as any,
-			product: productId as any,
+			organization: new Types.ObjectId(organizationId),
+			warehouse: new Types.ObjectId(warehouseId),
+			product: new Types.ObjectId(productId),
 			...rest,
 		});
 	}

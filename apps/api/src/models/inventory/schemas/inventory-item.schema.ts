@@ -8,6 +8,9 @@ export type InventoryItemDocument = HydratedDocument<InventoryItem>;
 
 @Schema()
 export class InventoryItem {
+	@Prop({ ref: 'Organization' })
+	organization: Types.ObjectId;
+
 	@Prop({ ref: 'Warehouse', index: true })
 	warehouse: Types.ObjectId;
 

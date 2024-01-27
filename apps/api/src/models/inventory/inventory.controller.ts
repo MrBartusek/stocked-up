@@ -18,13 +18,15 @@ import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
+import { HasInventoryAccessPipe } from '../../security/pipes/has-inventory-access.pipe';
+import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { ProductsService } from '../products/products.service';
-import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
+import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
+import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)
@@ -32,25 +34,13 @@ import { InventoryItem } from './schemas/inventory-item.schema';
 export class InventoryController {
 	constructor(
 		private readonly inventoryService: InventoryService,
-		private readonly warehousesService: WarehousesService,
 		private readonly organizationStatsService: OrganizationsStatsService,
-		private readonly productService: ProductsService,
 	) {}
 
 	@Post()
-	async create(@Body() dto: CreateInventoryItemDto) {
+	async create(@Body(SecurityValidationPipe) dto: CreateInventoryItemDto) {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
 		const productId = new Types.ObjectId(dto.productId);
-
-		const warehouse = await this.warehousesService.findById(warehouseId);
-		if (!warehouse) {
-			throw new BadRequestException("This warehouse doesn't exist");
-		}
-
-		const productExist = await this.productService.exist(productId);
-		if (!productExist) {
-			throw new BadRequestException("This product doesn't exist");
-		}
 
 		const itemExist = await this.inventoryService.findByProduct(warehouseId, productId);
 		if (itemExist) {
@@ -60,8 +50,7 @@ export class InventoryController {
 		}
 
 		const item = await this.inventoryService.create(dto);
-		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
-
+		await this.organizationStatsService.recalculateTotalValue(item.organization);
 		return InventoryItem.toBasicDto(item);
 	}
 
@@ -75,31 +64,22 @@ export class InventoryController {
 			throw new NotFoundException();
 		}
 
-		const warehouseId = new Types.ObjectId(item.warehouse as any);
-		const warehouse = await this.warehousesService.findById(warehouseId);
-		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
+		await this.organizationStatsService.recalculateTotalValue(item.organization);
 
 		return InventoryItem.toBasicDto(item);
 	}
 
 	@Delete(':id')
-	async delete(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
+	async delete(@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId) {
 		const item = await this.inventoryService.delete(id);
-		if (!item) {
-			throw new NotFoundException();
-		}
-
-		const warehouseId = new Types.ObjectId(item.warehouse as any);
-		const warehouse = await this.warehousesService.findById(warehouseId);
-		await this.organizationStatsService.recalculateTotalValue(warehouse.organization);
-
+		await this.organizationStatsService.recalculateTotalValue(item.organization);
 		return InventoryItem.toBasicDto(item);
 	}
 
 	@Get('by-product')
 	async findByProduct(
-		@Query('warehouseId', ParseObjectIdPipe) warehouseId: Types.ObjectId,
-		@Query('productId', ParseObjectIdPipe) productId: Types.ObjectId,
+		@Query('warehouseId', ParseObjectIdPipe, HasWarehouseAccessPipe) warehouseId: Types.ObjectId,
+		@Query('productId', ParseObjectIdPipe, HasProductAccessPipe) productId: Types.ObjectId,
 	): Promise<InventoryItemDto> {
 		const item = await this.inventoryService.findByProduct(warehouseId, productId);
 
@@ -112,7 +92,7 @@ export class InventoryController {
 
 	@Get('by-warehouse/:id')
 	async list(
-		@Param('id', ParseObjectIdPipe) warehouseId: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) warehouseId: Types.ObjectId,
 		@Query(
 			new PageQueryValidationPipe<BasicInventoryItemDto>({
 				allowedFilters: ['quantity'],
@@ -131,13 +111,10 @@ export class InventoryController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<InventoryItemDto> {
+	async findOne(
+		@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId,
+	): Promise<InventoryItemDto> {
 		const item = await this.inventoryService.findOne(id);
-
-		if (!item) {
-			throw new NotFoundException();
-		}
-
 		return InventoryItem.toDto(item);
 	}
 }

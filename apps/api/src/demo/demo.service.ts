@@ -113,6 +113,7 @@ export class DemoService {
 
 			for await (const randomProduct of randomProducts) {
 				await this.inventoryService.create({
+					organizationId: organization._id.toString(),
 					warehouseId: warehouseReference.id.toString(),
 					productId: randomProduct._id.toString(),
 					quantity: Utils.randomRange(0, 200),
