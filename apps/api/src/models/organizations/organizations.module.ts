@@ -14,9 +14,9 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Organization, OrganizationSchema),
+		forwardRef(() => SecurityModule),
 		forwardRef(() => WarehousesModule),
 		forwardRef(() => ProductsModule),
-		SecurityModule,
 	],
 	controllers: [OrganizationsController],
 	providers: [

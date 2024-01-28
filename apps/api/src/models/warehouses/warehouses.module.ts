@@ -15,7 +15,7 @@ import { WarehousesService } from './warehouses.service';
 		MongooseModuleHelper.forFeature(Warehouse, WarehouseSchema),
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
-		SecurityModule,
+		forwardRef(() => SecurityModule),
 		forwardRef(() => OrganizationResolverModule),
 	],
 	controllers: [WarehousesController],
