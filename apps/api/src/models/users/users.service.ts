@@ -38,9 +38,14 @@ export class UsersService {
 	}
 
 	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto): Promise<UserDocument> {
-		const { image, ...rest } = dto;
+		const { image, username, email } = dto;
 
-		const user = await this.userRepository.findOneByIdAndUpdate(id, { $set: { profile: rest } });
+		const user = await this.userRepository.findOneByIdAndUpdate(id, {
+			$set: {
+				'profile.username': username,
+				'profile.email': email,
+			},
+		});
 
 		if (!user) {
 			throw new NotFoundException();
