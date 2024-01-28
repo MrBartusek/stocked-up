@@ -12,6 +12,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import FormRelativeInput from '../Form/FormRelativeInput';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;
@@ -24,7 +25,7 @@ type Inputs = {
 
 function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps) {
 	const appContext = useContext(CurrentAppContext);
-	const { register, handleSubmit } = useForm<Inputs>({
+	const { register, handleSubmit, control } = useForm<Inputs>({
 		defaultValues: {
 			quantity: inventoryItem.quantity,
 			location: inventoryItem.location,
@@ -67,10 +68,9 @@ function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps
 			</FormField>
 
 			<FormField label="Quantity">
-				<FormInput
-					placeholder="0"
-					type="number"
-					{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
+				<FormRelativeInput
+					name={'quantity'}
+					control={control}
 				/>
 			</FormField>
 

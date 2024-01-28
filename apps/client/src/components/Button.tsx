@@ -27,14 +27,14 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 	}
 
 	const colorVariants: { [key in buttonVariant]: string } = {
-		primary: 'bg-primary hover:bg-primary-hover',
+		primary: 'bg-primary hover:bg-primary-hover text-light',
 		'primary-outline': 'border border-primary text-primary hover:bg-primary hover:text-light',
-		secondary: 'bg-secondary hover:bg-secondary-hover',
+		secondary: 'bg-secondary hover:bg-secondary-hover text-light',
 		'secondary-outline':
 			'border border-secondary text-secondary hover:bg-secondary hover:text-light',
-		danger: 'bg-danger hover:bg-danger-hover',
+		danger: 'bg-danger hover:bg-danger-hover text-light',
 		'danger-outline': 'border border-danger text-danger hover:bg-danger hover:text-light',
-		success: 'bg-success hover:bg-success-hover',
+		success: 'bg-success hover:bg-success-hover text-light',
 		'success-outline': 'border border-success text-success hover:bg-success hover:text-light',
 	};
 
@@ -42,7 +42,7 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 		<button
 			{...props}
 			className={classNames(
-				'rounded-md px-3.5 py-2.5 text-light transition-all',
+				'rounded-md px-3.5 py-2.5 transition-all',
 				colorVariants[variant],
 				{ 'pointer-events-none opacity-75': props.disabled },
 				props.className,
