@@ -4,15 +4,15 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { InventoryItemDto, ProductDto, IUpdateInventoryItemDto } from 'shared-types';
+import { IUpdateInventoryItemDto, InventoryItemDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
+import FormRelativeInput from '../Form/FormRelativeInput/FormRelativeInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import FormRelativeInput from '../Form/FormRelativeInput';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;

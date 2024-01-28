@@ -1,9 +1,8 @@
-import React, { forwardRef, useContext, useState, MouseEvent } from 'react';
-import { FormContext } from '../Form';
-import { REGULAR_INPUT_CLASSNAMES } from '../regularInputClassnames';
-import { BsArrowLeftRight } from 'react-icons/bs';
-import { RelativeInputElement } from './RelativeInputElement';
+import { MouseEvent, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
+import FormInput from '../FormInput';
+import { RelativeInputElement } from './RelativeInputElement';
+import RelativeInputModeSwitcher from './RelativeInputModeSwitcher';
 
 export interface FormRelativeInputProps {
 	name: string;
@@ -12,7 +11,6 @@ export interface FormRelativeInputProps {
 
 function FormRelativeInput({ name, control }: FormRelativeInputProps) {
 	const [relativeMode, setRelativeMode] = useState(false);
-	const { formLoading: formDisabled } = useContext(FormContext);
 
 	function switchMode(event: MouseEvent) {
 		event.preventDefault();
@@ -32,23 +30,18 @@ function FormRelativeInput({ name, control }: FormRelativeInputProps) {
 							setValue={onChange}
 						/>
 					) : (
-						<input
+						<FormInput
 							placeholder="0"
 							type="number"
-							value={value}
 							ref={ref}
+							value={value}
 							onChange={(event) => onChange(+event.target.value)}
-							disabled={formDisabled}
-							className={REGULAR_INPUT_CLASSNAMES}
 						/>
 					)}
-
-					<button
-						className="flex items-center gap-2 text-primary hover:underline"
-						onClick={switchMode}
-					>
-						<BsArrowLeftRight /> Change to {relativeMode ? 'manual' : 'relative'} mode
-					</button>
+					<RelativeInputModeSwitcher
+						switchMode={switchMode}
+						isRelativeMode={relativeMode}
+					/>
 				</div>
 			)}
 		/>
