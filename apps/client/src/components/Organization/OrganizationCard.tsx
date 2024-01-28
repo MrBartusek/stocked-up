@@ -1,7 +1,9 @@
-import { BsBoxes, BsBuilding, BsTag } from 'react-icons/bs';
+import { BsBoxes, BsBuilding, BsTag, BsWallet } from 'react-icons/bs';
 import { OrganizationDto } from 'shared-types';
+import { Utils } from '../../utils';
 import WarehousesList from '../Warehouse/WarehousesList';
 import OrganizationSettingsButton from './OrganizationActions';
+import OrganizationStatsChip from './OrganizationStatsChip';
 
 export interface OrganizationCardProps {
 	organization: OrganizationDto;
@@ -17,14 +19,15 @@ function OrganizationCard({ organization }: OrganizationCardProps) {
 				</span>
 				<div className="flex items-center gap-4">
 					<div className="flex items-center gap-3">
-						<div className="flex items-center gap-1 text-muted">
-							<BsTag />
-							<span>{organization.stats.totalProducts}</span>
-						</div>
-						<div className="flex items-center gap-1 text-muted">
-							<BsBoxes />
-							<span>{organization.warehouses.length}</span>
-						</div>
+						<OrganizationStatsChip icon={BsWallet}>
+							{Utils.humanizeCurrency(organization.stats.totalValue)}
+						</OrganizationStatsChip>
+						<OrganizationStatsChip icon={BsTag}>
+							{organization.stats.totalProducts}
+						</OrganizationStatsChip>
+						<OrganizationStatsChip icon={BsBoxes}>
+							{organization.warehouses.length}
+						</OrganizationStatsChip>
 					</div>
 
 					<OrganizationSettingsButton organization={organization} />
