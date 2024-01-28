@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsTagFill } from 'react-icons/bs';
 import useProductsDetails from '../../hooks/useProductsDetails';
 import Button from '../Button';
 import ProductSelectorModal from './ProductsSelectorModal';
-import toast from 'react-hot-toast';
 
 export interface ProductSelectorButtonProp {
 	onChange?: (productId: string | null) => void;

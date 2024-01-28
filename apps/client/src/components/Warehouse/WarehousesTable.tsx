@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { IPageQueryDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
+import SortingChangeHandler from '../../types/sortingChangeHandler';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table/Table';
-import WarehouseActions from './WarehouseActions';
 import TableIndex from '../Helpers/Table/TableIndex';
-import SortingChangeHandler from '../../types/sortingChangeHandler';
+import WarehouseActions from './WarehouseActions';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 

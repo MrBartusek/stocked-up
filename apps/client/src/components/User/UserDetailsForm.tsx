@@ -1,18 +1,17 @@
+import axios from 'axios';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
-import { IUpdateUserDto, UserDto } from 'shared-types';
+import { IImageDto, IUpdateUserDto, UserDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
+import FormImageInput from '../Form/FormImageInput';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import { IImageDto } from 'shared-types';
-import FormImageInput from '../Form/FormImageInput';
-import axios from 'axios';
 
 type Inputs = {
 	username: string;

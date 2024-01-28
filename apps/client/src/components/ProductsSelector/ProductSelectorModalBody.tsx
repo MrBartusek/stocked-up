@@ -1,8 +1,8 @@
+import { useContext } from 'react';
 import { BasicProductDto } from 'shared-types';
 import ModalBody, { ModalBodyProps } from '../Modal/ModalBody';
-import ProductsSelectorView from './ProductsSelectorView';
-import { useContext } from 'react';
 import { ModalContext } from '../Modal/ModalContext';
+import ProductsSelectorView from './ProductsSelectorView';
 
 export interface ProductSelectModalProps extends ModalBodyProps {
 	onSelectProduct?: (product: BasicProductDto) => void;

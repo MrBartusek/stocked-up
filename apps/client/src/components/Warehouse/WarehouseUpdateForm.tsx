@@ -1,9 +1,10 @@
+import axios from 'axios';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { ProductDto, IUpdateWarehouseDto, WarehouseDto } from 'shared-types';
+import { IUpdateWarehouseDto, ProductDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
@@ -11,7 +12,6 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import axios from 'axios';
 
 export interface WarehouseUpdateFormProps {
 	warehouse: WarehouseDto;

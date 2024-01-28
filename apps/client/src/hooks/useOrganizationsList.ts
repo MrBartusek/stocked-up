@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useInfiniteQuery } from 'react-query';
-import { OrganizationDto, PageDto, IPageQueryDto } from 'shared-types';
+import { IPageQueryDto, OrganizationDto, PageDto } from 'shared-types';
 
 function useInfiniteOrganizationsList() {
 	const fetchOrganizations = async (query: IPageQueryDto) => {

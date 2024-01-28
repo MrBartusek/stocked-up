@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Types, UpdateQuery, FilterQuery } from 'mongoose';
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
-import { InventoryItem } from '../schemas/inventory-item.schema';
-import { MockProductsRepository } from '../../products/mocks/mock-products-repository';
-import { Product, ProductDocument } from '../../products/schemas/product.schema';
+import { FilterQuery, Types } from 'mongoose';
 import { PageQueryDto } from '../../../dto/page-query.dto';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { ProductDocument } from '../../products/schemas/product.schema';
+import { InventoryItem } from '../schemas/inventory-item.schema';
 
 @Injectable()
 export class MockInventoryRepository extends MockEntityRepository<InventoryItem> {

@@ -20,14 +20,14 @@ import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { HasInventoryAccessPipe } from '../../security/pipes/has-inventory-access.pipe';
+import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
+import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
-import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
 
 @ApiTags('inventory')
 @UseGuards(AuthenticatedGuard)

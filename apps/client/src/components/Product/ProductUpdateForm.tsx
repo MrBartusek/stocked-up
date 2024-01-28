@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { IImageDto, ProductDto, IUpdateProductDto } from 'shared-types';
+import { IImageDto, IUpdateProductDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';

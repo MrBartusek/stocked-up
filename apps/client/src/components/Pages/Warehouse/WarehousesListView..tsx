@@ -3,10 +3,10 @@ import { WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../../context/CurrentAppContext';
 import usePageQueryState from '../../../hooks/usePageQueryState';
 import useWarehousesList from '../../../hooks/useWarehouseList';
+import SearchBar from '../../Helpers/SearchBar';
 import Loader from '../../Loader';
 import Pagination from '../../Pagination';
 import WarehousesTable from '../../Warehouse/WarehousesTable';
-import SearchBar from '../../Helpers/SearchBar';
 
 function WarehousesListView() {
 	const appContext = useContext(CurrentAppContext);

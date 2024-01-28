@@ -7,8 +7,8 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import SortingChangeHandler from '../types/sortingChangeHandler';
 import { IPageQueryDto } from 'shared-types';
+import SortingChangeHandler from '../types/sortingChangeHandler';
 
 /**
  * For some reason Rollup doesn't want to import SortDirection from shared-types

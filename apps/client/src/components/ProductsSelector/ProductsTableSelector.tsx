@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { BasicProductDto, IPageQueryDto } from 'shared-types';
-import TableIndex from '../Helpers/Table/TableIndex';
-import TableImage from '../Helpers/Table/TableImage';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import Table from '../Helpers/Table/Table';
+import TableImage from '../Helpers/Table/TableImage';
+import TableIndex from '../Helpers/Table/TableIndex';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 

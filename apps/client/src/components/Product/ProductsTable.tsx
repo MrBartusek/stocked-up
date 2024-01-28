@@ -8,8 +8,8 @@ import SortingChangeHandler from '../../types/sortingChangeHandler';
 import { Utils } from '../../utils';
 import Table from '../Helpers/Table/Table';
 import TableImage from '../Helpers/Table/TableImage';
-import ProductActions from './ProductActions';
 import TableIndex from '../Helpers/Table/TableIndex';
+import ProductActions from './ProductActions';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 

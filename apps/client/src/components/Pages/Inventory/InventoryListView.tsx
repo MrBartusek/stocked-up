@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import useInventoryList from '../../../hooks/useInventoryList';
+import { BasicInventoryItemDto } from 'shared-types';
 import { CurrentAppContext } from '../../../context/CurrentAppContext';
+import useInventoryList from '../../../hooks/useInventoryList';
 import usePageQueryState from '../../../hooks/usePageQueryState';
 import InventoryTable from '../../InventoryItem/InventoryTable';
 import Loader from '../../Loader';
 import Pagination from '../../Pagination';
-import { BasicInventoryItemDto } from 'shared-types';
 
 function InventoryListView() {
 	const appContext = useContext(CurrentAppContext);

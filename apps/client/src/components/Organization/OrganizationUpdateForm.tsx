@@ -1,16 +1,16 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { OrganizationDto, IUpdateOrganizationDto } from 'shared-types';
+import { IUpdateOrganizationDto, OrganizationDto } from 'shared-types';
 import { Utils } from '../../utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import axios from 'axios';
 
 export interface OrganizationUpdateFormProps {
 	organization: OrganizationDto;

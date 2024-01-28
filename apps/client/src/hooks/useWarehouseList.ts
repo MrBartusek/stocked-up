@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { PageDto, IPageQueryDto, WarehouseDto } from 'shared-types';
+import { IPageQueryDto, PageDto, WarehouseDto } from 'shared-types';
 
 function useWarehousesList(organizationId: string, query: IPageQueryDto<WarehouseDto>) {
 	const fetchWarehouses = async (organizationId: string, query: IPageQueryDto) => {

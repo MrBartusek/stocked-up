@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
+import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
@@ -10,7 +11,6 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
