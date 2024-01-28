@@ -10,6 +10,8 @@ export default {
 				'secondary-hover': '#4b5563',
 				danger: '#dc2626',
 				'danger-hover': '#b91c1c',
+				success: '#16a34a',
+				'success-hover': '#15803d',
 				dark: '#1d1506',
 				accent: '#fef2e3',
 				muted: '#475569',

@@ -11,7 +11,10 @@ export type buttonVariant =
 	| 'primary-outline'
 	| 'secondary'
 	| 'secondary-outline'
-	| 'danger';
+	| 'danger'
+	| 'danger-outline'
+	| 'success'
+	| 'success-outline';
 
 export interface ButtonProps extends HTMLButtonProps {
 	loading?: boolean;
@@ -25,11 +28,14 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 
 	const colorVariants: { [key in buttonVariant]: string } = {
 		primary: 'bg-primary hover:bg-primary-hover',
-		secondary: 'bg-secondary hover:bg-secondary-hover',
-		danger: 'bg-danger hover:bg-danger-hover',
 		'primary-outline': 'border border-primary text-primary hover:bg-primary hover:text-light',
+		secondary: 'bg-secondary hover:bg-secondary-hover',
 		'secondary-outline':
 			'border border-secondary text-secondary hover:bg-secondary hover:text-light',
+		danger: 'bg-danger hover:bg-danger-hover',
+		'danger-outline': 'border border-danger text-danger hover:bg-danger hover:text-light',
+		success: 'bg-success hover:bg-success-hover',
+		'success-outline': 'border border-success text-success hover:bg-success hover:text-light',
 	};
 
 	return (
