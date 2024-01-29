@@ -1,18 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../models/users/users.service';
 import { UsernameNotTakenRule } from './username-not-taken.rule copy';
+import { EmailNotTakenRule } from './email-not-taken.rule';
 
-describe('UsernameNotTakenRule', () => {
-	let rule: UsernameNotTakenRule;
+describe('EmailNotTakenRule', () => {
+	let rule: EmailNotTakenRule;
 
 	const usersServiceMock = {
-		isUsernameTaken: jest.fn(),
+		isEmailTaken: jest.fn(),
 	};
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
-				UsernameNotTakenRule,
+				EmailNotTakenRule,
 				{
 					provide: UsersService,
 					useValue: usersServiceMock,
@@ -20,25 +21,25 @@ describe('UsernameNotTakenRule', () => {
 			],
 		}).compile();
 
-		rule = module.get<UsernameNotTakenRule>(UsernameNotTakenRule);
+		rule = module.get<EmailNotTakenRule>(EmailNotTakenRule);
 	});
 
 	it('should be defined', () => {
 		expect(rule).toBeDefined();
 	});
 
-	it('should return true if username is not taken', async () => {
-		usersServiceMock.isUsernameTaken.mockResolvedValue(false);
+	it('should return true if email is not taken', async () => {
+		usersServiceMock.isEmailTaken.mockResolvedValue(false);
 
-		const result = await rule.validate('test');
+		const result = await rule.validate('new@example.com');
 
 		expect(result).toBe(true);
 	});
 
-	it('should return false if username is taken', async () => {
-		usersServiceMock.isUsernameTaken.mockResolvedValue(true);
+	it('should return false if email is taken', async () => {
+		usersServiceMock.isEmailTaken.mockResolvedValue(true);
 
-		const result = await rule.validate('test');
+		const result = await rule.validate('taken@example.com');
 
 		expect(result).toBe(false);
 	});
