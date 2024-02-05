@@ -18,7 +18,9 @@ function SettingsLayout({ children, sidebar }: SettingsLayoutProps) {
 					<div className="me-4 w-56">{sidebar}</div>
 				</div>
 			</div>
-			<div className="flex flex-[1_1_1160px] p-8">{children}</div>
+			<div className="mb-16 flex flex-[1_1_1160px] px-8">
+				<div className="max-w-4xl">{children}</div>
+			</div>
 		</div>
 	);
 }

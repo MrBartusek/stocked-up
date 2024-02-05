@@ -38,6 +38,7 @@ import OrganizationDetailsTab from './Pages/Organization/OrganizationDetailsTab'
 import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
 import OrganizationOptionsTab from './Pages/Organization/OrganizationOptionsTab';
 import OrganizationMembersTab from './Pages/Organization/OrganizationMembersTab';
+import OrganizationDeleteTab from './Pages/Organization/OrganizationDeleteTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -132,6 +133,10 @@ function Router() {
 						{
 							path: 'members',
 							element: <OrganizationMembersTab />,
+						},
+						{
+							path: 'delete',
+							element: <OrganizationDeleteTab />,
 						},
 					],
 				},

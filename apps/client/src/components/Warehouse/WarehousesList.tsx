@@ -4,9 +4,10 @@ import WarehouseInfoRow from './WarehouseInfoRow';
 
 export interface WarehousesListProps {
 	organization: OrganizationDto;
+	disableExpander: boolean;
 }
 
-function WarehousesList({ organization }: WarehousesListProps) {
+function WarehousesList({ organization, disableExpander }: WarehousesListProps) {
 	const warehouseElements = organization.warehouses.map((warehouse, i) => (
 		<WarehouseInfoRow
 			organizationId={organization.id}
@@ -20,7 +21,10 @@ function WarehousesList({ organization }: WarehousesListProps) {
 	return (
 		<div className="my-4">
 			{warehouseElements.slice(0, needExpander ? 3 : 4)}
-			{needExpander && <ExpandableList>{warehouseElements.slice(3)}</ExpandableList>}
+			{needExpander && !disableExpander && (
+				<ExpandableList>{warehouseElements.slice(3)}</ExpandableList>
+			)}
+			{disableExpander && warehouseElements}
 		</div>
 	);
 }
