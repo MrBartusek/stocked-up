@@ -1,12 +1,12 @@
 import { BsBuildingGear } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import useOrganizationDetails from '../../../hooks/useOrganisationDetails';
-import Container from '../../Container';
 import GoBackButton from '../../GoBackButton';
 import DashboardLayout from '../../Layout/DasboardLayout';
+import SettingsLayout from '../../Layout/SettingsLayout';
 import Loader from '../../Loader';
-import OrganizationSettings from '../../Organization/OrganizationSettings';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
+import OrganizationSettingsSidebar from './OrganizationSettingsSidebar';
 
 function OrganizationSettingsPage() {
 	const { id } = useParams();
@@ -16,17 +16,17 @@ function OrganizationSettingsPage() {
 		<DashboardLayout>
 			<SecondaryNavbar
 				icon={BsBuildingGear}
-				title={`${organization?.name} - settings`}
+				title="Organization Settings"
 			>
-				<GoBackButton to={`../view/${organization.id}`} />
+				<GoBackButton />
 			</SecondaryNavbar>
 			<Loader
 				isLoading={isLoading}
 				isError={error != undefined}
 			>
-				<Container>
-					<OrganizationSettings organization={organization} />
-				</Container>
+				<SettingsLayout sidebar={<OrganizationSettingsSidebar />}>
+					<Outlet context={organization} />
+				</SettingsLayout>
 			</Loader>
 		</DashboardLayout>
 	);

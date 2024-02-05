@@ -11,13 +11,10 @@ import InventoryListPage from './Pages/Inventory/InventoryListPage';
 import InventoryManagementPage from './Pages/Inventory/InventoryManagementPage';
 import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
 import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
-import OrganizationViewPage from './Pages/Inventory/OrganizationViewPage';
 import LoginPage from './Pages/LoginPage';
 import OrganizationCreatePage from './Pages/Organization/OrganizationCreatePage';
-import OrganizationDeletePage from './Pages/Organization/OrganizationDeletePage';
 import OrganizationSelectPage from './Pages/Organization/OrganizationSelectPage';
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
-import OrganizationUpdatePage from './Pages/Organization/OrganizationUpdatePage';
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
 import ProductViewPage from './Pages/Product/ProductViewPage';
@@ -36,6 +33,11 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import path from 'path';
+import OrganizationDetailsTab from './Pages/Organization/OrganizationDetailsTab';
+import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
+import OrganizationOptionsTab from './Pages/Organization/OrganizationOptionsTab';
+import OrganizationMembersTab from './Pages/Organization/OrganizationMembersTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -112,20 +114,26 @@ function Router() {
 					element: <OrganizationCreatePage />,
 				},
 				{
-					path: 'view/:id',
-					element: <OrganizationViewPage />,
-				},
-				{
 					path: 'settings/:id',
 					element: <OrganizationSettingsPage />,
-				},
-				{
-					path: 'update/:id',
-					element: <OrganizationUpdatePage />,
-				},
-				{
-					path: 'delete/:id',
-					element: <OrganizationDeletePage />,
+					children: [
+						{
+							path: '',
+							element: <OrganizationDetailsTab />,
+						},
+						{
+							path: 'warehouses',
+							element: <OrganizationWarehousesTab />,
+						},
+						{
+							path: 'options',
+							element: <OrganizationOptionsTab />,
+						},
+						{
+							path: 'members',
+							element: <OrganizationMembersTab />,
+						},
+					],
 				},
 				{
 					path: ':organization/:warehouse',

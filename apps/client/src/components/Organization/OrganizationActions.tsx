@@ -9,7 +9,7 @@ export interface OrganizationSettingsButtonProps {
 
 function OrganizationSettingsButton({ organization }: OrganizationSettingsButtonProps) {
 	return (
-		<Link to={`/dashboard/view/${organization.id}`}>
+		<Link to={`/dashboard/settings/${organization.id}`}>
 			<ActionButton icon={BsSliders} />
 		</Link>
 	);

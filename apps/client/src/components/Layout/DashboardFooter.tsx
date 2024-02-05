@@ -12,7 +12,7 @@ function DashboardFooter() {
 	);
 
 	return (
-		<footer className="mt-10 border-t border-gray-200  p-4">
+		<footer className="border-t border-gray-200  p-4">
 			<Container className="flex justify-between text-sm text-muted">
 				<div>{stockedUpLink}</div>
 				<div>

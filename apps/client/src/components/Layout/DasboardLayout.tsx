@@ -9,7 +9,7 @@ function DashboardLayout({ children }: LayoutProps) {
 	return (
 		<div className="flex h-full flex-col">
 			<DashboardNavbar />
-			<main className="flex-1">{children}</main>
+			<main className="flex flex-1 flex-col">{children}</main>
 			<DashboardFooter />
 		</div>
 	);

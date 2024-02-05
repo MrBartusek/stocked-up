@@ -3,13 +3,13 @@ import { IconType } from 'react-icons';
 import Container from './Container';
 
 export interface SecondaryNavbarProps {
-	icon: IconType;
-	title: string;
+	icon?: IconType;
+	title?: string;
 	children?: React.ReactNode;
 }
 
 export function SecondaryNavbar({ icon, title, children }: SecondaryNavbarProps) {
-	const iconElement = React.createElement(icon);
+	const iconElement = icon ? React.createElement(icon) : null;
 
 	return (
 		<div className="flex border-b border-gray-300 bg-gray-200 p-6">
