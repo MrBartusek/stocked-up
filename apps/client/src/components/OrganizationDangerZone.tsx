@@ -26,6 +26,7 @@ function OrganizationDangerZone({ organization }: OrganizationDangerZoneProps) {
 				icon={BsPersonXFill}
 				variant="danger"
 				className="mt-6"
+				disabled
 			>
 				Leave organization
 			</IconButton>
