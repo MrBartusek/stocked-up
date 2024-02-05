@@ -21,9 +21,9 @@ function OrganizationSettingsSidebar() {
 					text="Warehouses"
 				/>
 				<SidebarLink
-					to={`${baseUrl}/options`}
+					to={`${baseUrl}/preferences`}
 					icon={BsSliders}
-					text="Settings"
+					text="Preferences"
 				/>
 			</SidebarSection>
 			<SidebarSection name="Members">

@@ -1,13 +1,17 @@
 import { OrganizationDto } from 'shared-types';
-import RealtimeOrgSettingSelect from '../RealtimeOrgSettingSelect';
+import { useOutletContext } from 'react-router-dom';
+import RealtimeOrgSettingSelect from '../../RealtimeOrgSettingSelect';
 
-export interface OrganizationSettingsProps {
-	organization: OrganizationDto;
-}
+function OrganizationPreferencesTab() {
+	const organization = useOutletContext<OrganizationDto>();
 
-function OrganizationSettings({ organization }: OrganizationSettingsProps) {
 	return (
 		<div className="my-8">
+			<h2 className="mb-4 text-3xl">Organization Preferences</h2>
+			<p className="mb-4 text-muted">
+				Control how StockedUp will behave while working with this organization
+			</p>
+
 			<RealtimeOrgSettingSelect
 				name="Organization value calculation strategy"
 				description="How should total organization and warehouse value be calculated. Buy price - organization
@@ -23,4 +27,4 @@ function OrganizationSettings({ organization }: OrganizationSettingsProps) {
 		</div>
 	);
 }
-export default OrganizationSettings;
+export default OrganizationPreferencesTab;

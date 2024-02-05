@@ -13,8 +13,13 @@ import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
 import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
 import LoginPage from './Pages/LoginPage';
 import OrganizationCreatePage from './Pages/Organization/OrganizationCreatePage';
+import OrganizationDeleteTab from './Pages/Organization/OrganizationDeleteTab';
+import OrganizationDetailsTab from './Pages/Organization/OrganizationDetailsTab';
+import OrganizationMembersTab from './Pages/Organization/OrganizationMembersTab';
+import OrganizationPreferencesTab from './Pages/Organization/OrganizationPreferencesTab';
 import OrganizationSelectPage from './Pages/Organization/OrganizationSelectPage';
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
+import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
 import ProductViewPage from './Pages/Product/ProductViewPage';
@@ -33,12 +38,6 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import path from 'path';
-import OrganizationDetailsTab from './Pages/Organization/OrganizationDetailsTab';
-import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
-import OrganizationOptionsTab from './Pages/Organization/OrganizationOptionsTab';
-import OrganizationMembersTab from './Pages/Organization/OrganizationMembersTab';
-import OrganizationDeleteTab from './Pages/Organization/OrganizationDeleteTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -127,8 +126,8 @@ function Router() {
 							element: <OrganizationWarehousesTab />,
 						},
 						{
-							path: 'options',
-							element: <OrganizationOptionsTab />,
+							path: 'preferences',
+							element: <OrganizationPreferencesTab />,
 						},
 						{
 							path: 'members',

@@ -9,7 +9,7 @@ export interface OrganizationDangerZoneProps {
 
 function OrganizationDangerZone({ organization }: OrganizationDangerZoneProps) {
 	return (
-		<div className="my-8">
+		<div className="mt-8">
 			<h2 className="mb-4 text-2xl">Danger Zone</h2>
 			<p className="mb-4 text-muted">Potentially destructive actions, be cautious!</p>
 			<Link to="delete">

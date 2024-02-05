@@ -24,6 +24,7 @@ function OrganizationWarehousesTab() {
 				information about stock quantity and location for products. It is recommended to create a
 				StockedUp warehouse corresponding to each physical warehouse.
 			</p>
+
 			<WarehousesList
 				disableExpander
 				organization={organization}
