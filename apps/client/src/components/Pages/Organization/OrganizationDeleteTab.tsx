@@ -6,7 +6,7 @@ function OrganizationDeleteTab() {
 	const organization = useOutletContext<OrganizationDto>();
 
 	return (
-		<div className="mt-4">
+		<div className="mt-8">
 			<EntityDeleteDialog
 				entityName={organization.name}
 				entityId={organization.id}

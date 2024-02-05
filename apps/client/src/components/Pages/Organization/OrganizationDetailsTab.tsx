@@ -1,5 +1,5 @@
 import { BsPencil } from 'react-icons/bs';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
 import { Utils } from '../../../utils';
 import EntityInfoTable from '../../Entity/EntityInfoTable';
@@ -33,7 +33,9 @@ function OrganizationDetailsTab() {
 					}}
 				/>
 				<div className="py-6">
-					<IconButton icon={BsPencil}>Edit organization details</IconButton>
+					<Link to="update">
+						<IconButton icon={BsPencil}>Edit organization details</IconButton>
+					</Link>
 				</div>
 				<OrganizationDangerZone organization={organization} />
 			</div>

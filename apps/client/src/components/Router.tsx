@@ -38,6 +38,7 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -136,6 +137,10 @@ function Router() {
 						{
 							path: 'delete',
 							element: <OrganizationDeleteTab />,
+						},
+						{
+							path: 'update',
+							element: <OrganizationUpdateTab />,
 						},
 					],
 				},

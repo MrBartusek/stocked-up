@@ -40,7 +40,7 @@ function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
 			.then(() => {
 				queryClient.invalidateQueries(['organizations', organization.id]);
 				toast.success('Successfully updated organization');
-				navigate(`../view/${organization.id}`);
+				navigate(`..`);
 			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
