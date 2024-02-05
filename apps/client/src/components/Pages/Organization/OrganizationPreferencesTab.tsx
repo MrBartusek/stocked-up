@@ -1,5 +1,5 @@
-import { OrganizationDto } from 'shared-types';
 import { useOutletContext } from 'react-router-dom';
+import { OrganizationDto } from 'shared-types';
 import RealtimeOrgSettingSelect from '../../RealtimeOrgSettingSelect';
 
 function OrganizationPreferencesTab() {

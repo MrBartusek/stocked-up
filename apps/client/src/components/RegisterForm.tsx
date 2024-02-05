@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { UserLoginDto, IUserRegisterDto } from 'shared-types';
+import { IUserRegisterDto, UserLoginDto } from 'shared-types';
 import { UserContext } from '../context/UserContext';
 import { Utils } from '../utils';
 import Button from './Button';

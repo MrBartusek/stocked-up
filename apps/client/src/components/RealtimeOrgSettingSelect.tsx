@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BsXCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import { OrganizationDto, IPatchOrganizationSettingsDto } from 'shared-types';
+import { IPatchOrganizationSettingsDto, OrganizationDto } from 'shared-types';
 import FormSelect from './Form/FormSelect';
 
 export interface RealtimeOrgSettingSelectProps {

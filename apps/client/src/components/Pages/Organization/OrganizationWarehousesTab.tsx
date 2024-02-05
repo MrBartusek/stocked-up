@@ -1,7 +1,7 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
-import WarehousesList from '../../Warehouse/WarehousesList';
 import { Utils } from '../../../utils';
+import WarehousesList from '../../Warehouse/WarehousesList';
 
 function OrganizationWarehousesTab() {
 	const organization = useOutletContext<OrganizationDto>();

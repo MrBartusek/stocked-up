@@ -1,12 +1,10 @@
+import { BsPencil } from 'react-icons/bs';
 import { useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
+import { Utils } from '../../../utils';
 import EntityInfoTable from '../../Entity/EntityInfoTable';
 import HeaderWithHint from '../../HeaderWithHint';
-import { Utils } from '../../../utils';
-import EntityActionsRow from '../../Entity/EntityActionsRow';
-import Button from '../../Button';
 import IconButton from '../../IconButton';
-import { BsPenFill, BsPencil } from 'react-icons/bs';
 import OrganizationDangerZone from '../../OrganizationDangerZone';
 
 function OrganizationDetailsTab() {
