@@ -1,11 +1,8 @@
 import classNames from 'classnames';
-import { BsPersonXFill } from 'react-icons/bs';
-import useUserData from '../../hooks/useUserData';
-import ActionButton from '../ActionButton';
-import Select from '../Helpers/Select';
-import UserAvatar from '../UserAvatar';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
+import useUserData from '../../hooks/useUserData';
 import RealtimeOrgRoleSelect from '../RealtimeOrgRoleSelect';
+import UserAvatar from '../UserAvatar';
 import DeleteMemberButton from './DeleteMemberButton';
 
 export interface OrganizationMemberRow {

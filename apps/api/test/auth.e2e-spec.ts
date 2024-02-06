@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { configureNestTestApp } from './configure-test-app';
-import client from '../src/redis/connect';
 
 describe('AuthController (e2e)', () => {
 	let app: INestApplication;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { IPatchOrganizationSettingsDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
+import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import RealtimeSelect from './RealtimeSelect';
 
 export interface RealtimeOrgSettingSelectProps {

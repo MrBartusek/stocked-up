@@ -4,7 +4,7 @@ import WarehouseInfoRow from './WarehouseInfoRow';
 
 export interface WarehousesListProps {
 	organization: OrganizationDto;
-	disableExpander: boolean;
+	disableExpander?: boolean;
 }
 
 function WarehousesList({ organization, disableExpander }: WarehousesListProps) {

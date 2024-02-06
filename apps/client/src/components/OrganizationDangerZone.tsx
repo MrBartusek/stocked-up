@@ -1,7 +1,7 @@
+import { BsPersonXFill, BsTrashFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
 import IconButton from './IconButton';
-import { BsPersonX, BsPersonXFill, BsTrashFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 
 export interface OrganizationDangerZoneProps {
 	organization: OrganizationDto;

@@ -1,8 +1,8 @@
+import { BsPersonPlus } from 'react-icons/bs';
 import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
-import OrganizationSecurityPanel from '../../Organization/OrganizationSecurityPanel';
 import IconButton from '../../IconButton';
-import { BsPersonPlus } from 'react-icons/bs';
+import OrganizationSecurityPanel from '../../Organization/OrganizationSecurityPanel';
 
 function OrganizationMembersTab() {
 	const organization = useOutletContext<OrganizationDto>();

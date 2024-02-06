@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { OrganizationsModule } from '../models/organizations/organizations.module';
-import { SecurityService } from './security.service';
 import { SecurityController } from './security.controller';
+import { SecurityService } from './security.service';
 
 @Module({
 	providers: [SecurityService],

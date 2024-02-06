@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../models/users/users.service';
-import { UsernameNotTakenRule } from './username-not-taken.rule copy';
 import { EmailNotTakenRule } from './email-not-taken.rule';
 
 describe('EmailNotTakenRule', () => {

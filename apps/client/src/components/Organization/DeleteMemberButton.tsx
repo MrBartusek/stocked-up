@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import { BsPersonXFill } from 'react-icons/bs';
+import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import ActionButton from '../ActionButton';
 import ConfirmMemberDeleteModal from '../ConfirmMemberDeleteModal';
-import { useState } from 'react';
-import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 
 export interface DeleteMemberButtonProps {
 	organization: OrganizationDto;

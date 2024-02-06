@@ -9,9 +9,9 @@ import {
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { SecurityService } from '../security.service';
 import { OrganizationResolverService } from '../../organization-resolver/organization-resolver.service';
 import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
+import { SecurityService } from '../security.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class HasInventoryAccessPipe implements PipeTransform<Types.ObjectId> {
