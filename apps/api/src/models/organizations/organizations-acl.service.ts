@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
 import { OrganizationAclRole } from './types/org-acl-role.type';
+import { PageQueryDto } from '../../dto/page-query.dto';
 
 export interface AccessRule {
 	user: Types.ObjectId;
@@ -44,5 +45,9 @@ export class OrganizationsAclService {
 				},
 			},
 		);
+	}
+
+	async paginateMembers(organization: Types.ObjectId, pageQueryDto: PageQueryDto) {
+		return this.organizationRepository.paginateAcls({ _id: organization }, pageQueryDto);
 	}
 }

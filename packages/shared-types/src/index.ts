@@ -26,34 +26,37 @@ import { IUpdateWarehouseDto } from './warehouse/IUpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
 import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
 import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
+import { OrganizationSecurityRuleDto } from './organizations/OrganizationSecurityRuleDto';
 
 export {
     BasicInventoryItemDto,
     BasicProductDto,
     BasicWarehouseDto,
-    ICreateInventoryItemDto, 
+    ICreateInventoryItemDto,
     ICreateWarehouseDto,
-    ICreateWarehouseInOrgDto, 
+    ICreateWarehouseInOrgDto,
     ICreateOrganizationDto,
-    ICreateProductDto, 
-    IImageDto, 
-    IPageQueryDto, 
-    IPatchOrganizationSettingsDto, 
+    ICreateProductDto,
+    IImageDto,
+    IPageQueryDto,
+    IPatchOrganizationSettingsDto,
     IUpdateOrganizationDto,
     IUpdateProductDto,
-    IUpdateUserDto, 
-    IUserRegisterDto, 
+    IUpdateUserDto,
+    IUserRegisterDto,
     InventoryItemDto,
-    OrganizationDto, 
+    OrganizationDto,
     PageDto,
-    PageMeta, 
+    PageMeta,
     PrivateUserDto,
     ProductDto,
-    SimpleResponseDto, 
-    SortDirection, 
-    IUpdateInventoryItemDto, 
+    SimpleResponseDto,
+    SortDirection,
+    IUpdateInventoryItemDto,
     IUpdateWarehouseDto,
     UserDto,
-    UserLoginDto, WarehouseDto
+    UserLoginDto,
+    WarehouseDto,
+    OrganizationSecurityRuleDto
 };
 
