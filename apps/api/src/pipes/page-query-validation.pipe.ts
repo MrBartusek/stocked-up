@@ -1,4 +1,4 @@
-import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { PageQueryDto } from '../dto/page-query.dto';
 
 interface PageQueryValidationPipeOptions<T> {
@@ -11,7 +11,7 @@ interface PageQueryValidationPipeOptions<T> {
 export class PageQueryValidationPipe<T = any> implements PipeTransform<PageQueryDto, PageQueryDto> {
 	constructor(private readonly options: PageQueryValidationPipeOptions<T> = {}) {}
 
-	transform(value: PageQueryDto, metadata: ArgumentMetadata): PageQueryDto {
+	transform(value: PageQueryDto): PageQueryDto {
 		if (this.options.disableOrderBy == true) {
 			this.validateDisableOrderBy(value);
 		}
