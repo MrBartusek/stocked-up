@@ -1,14 +1,13 @@
 import classNames from 'classnames';
-import { BsInfoCircleFill, BsPersonXFill } from 'react-icons/bs';
-import { OrganizationSecurityRuleDto } from 'shared-types';
+import { BsPersonXFill } from 'react-icons/bs';
 import useUserData from '../../hooks/useUserData';
 import ActionButton from '../ActionButton';
 import Select from '../Helpers/Select';
-import TableActionsWrapper from '../Helpers/Table/TableActionsWrapper';
 import UserAvatar from '../UserAvatar';
+import { SecurityRuleDto } from 'shared-types';
 
 export interface OrganizationMemberRow {
-	rule: OrganizationSecurityRuleDto;
+	rule: SecurityRuleDto;
 }
 
 function OrganizationMemberRow({ rule }: OrganizationMemberRow) {

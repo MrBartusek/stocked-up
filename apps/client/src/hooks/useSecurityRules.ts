@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { IPageQueryDto, OrganizationSecurityRuleDto, PageDto } from 'shared-types';
+import { IPageQueryDto, PageDto, SecurityRuleDto } from 'shared-types';
 
-function useSecurityRules(organization: string, query: IPageQueryDto<OrganizationSecurityRuleDto>) {
+function useSecurityRules(organization: string, query: IPageQueryDto<SecurityRuleDto>) {
 	const fetchSecurityRules = async (id: string) => {
 		const { data } = await axios.get(`/api/security/${id}`, { params: query });
-		return data as PageDto<OrganizationSecurityRuleDto>;
+		return data as PageDto<SecurityRuleDto>;
 	};
 
 	const { data, error, isLoading } = useQuery(

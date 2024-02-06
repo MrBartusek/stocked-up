@@ -26,7 +26,7 @@ import { IUpdateWarehouseDto } from './warehouse/IUpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
 import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
 import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
-import { OrganizationSecurityRuleDto } from './organizations/OrganizationSecurityRuleDto';
+import { SecurityRuleDto } from './organizations/SecurityRuleDto';
 
 export {
     BasicInventoryItemDto,
@@ -57,6 +57,6 @@ export {
     UserDto,
     UserLoginDto,
     WarehouseDto,
-    OrganizationSecurityRuleDto
+    SecurityRuleDto
 };
 
