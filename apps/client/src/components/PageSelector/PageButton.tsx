@@ -1,22 +1,24 @@
 import classNames from 'classnames';
 
-export interface PageButtonProps {
+type ButtonProps = React.DetailedHTMLProps<
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
+	HTMLButtonElement
+>;
+
+export interface PageButtonProps extends ButtonProps {
 	children?: React.ReactNode;
 	active?: boolean;
-	onClick?: React.MouseEventHandler<HTMLButtonElement>;
-	disabled?: boolean;
 }
 
-function PageButton({ children, active, onClick, disabled }: PageButtonProps) {
+function PageButton({ children, active, ...props }: PageButtonProps) {
 	return (
 		<button
-			onClick={onClick}
-			disabled={disabled}
+			{...props}
 			className={classNames(
 				'flex h-9 min-w-[2.25rem] items-center justify-center px-1 transition-colors',
 				active ? 'bg-accent text-primary' : 'bg-gray-50 hover:bg-gray-100',
 				{
-					'pointer-events-none': active || disabled,
+					'pointer-events-none': active || props.disabled,
 				},
 				'disabled:text-gray-300 ',
 			)}

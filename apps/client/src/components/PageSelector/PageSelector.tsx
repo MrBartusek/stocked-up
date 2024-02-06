@@ -45,6 +45,7 @@ function PageSelector({ meta, handlePageChange, maxButtons = 5 }: PageSelectorPr
 			<PageButton
 				onClick={() => changePage(meta.page - 1)}
 				disabled={!meta.hasPreviousPage}
+				title="Previous page"
 			>
 				<BsChevronLeft />
 			</PageButton>
@@ -53,6 +54,7 @@ function PageSelector({ meta, handlePageChange, maxButtons = 5 }: PageSelectorPr
 					key={value}
 					active={value == meta.page}
 					onClick={() => changePage(value)}
+					title={`Change to page: ${value}`}
 				>
 					{value}
 				</PageButton>
@@ -60,6 +62,7 @@ function PageSelector({ meta, handlePageChange, maxButtons = 5 }: PageSelectorPr
 			<PageButton
 				onClick={() => changePage(meta.page + 1)}
 				disabled={!meta.hasNextPage}
+				title="Next page"
 			>
 				<BsChevronRight />
 			</PageButton>
