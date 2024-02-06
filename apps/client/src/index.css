@@ -9,7 +9,7 @@
 
   color-scheme: light;
   color: #1d1506;
-  background-color: #f3f4f6;
+  background-color: #f4f5f7;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,24 +18,26 @@
   -webkit-text-size-adjust: 100%;
 }
 
-html,body,#root {
+html,
+body,
+#root {
   margin: 0;
   width: 100%;
   height: 100%;
 }
 
 .custom-button-simple {
-  @apply cursor-pointer hover:bg-gray-200 py-2 px-3 rounded-md
+  @apply cursor-pointer hover:bg-gray-200 py-2 px-3 rounded-md;
 }
 
 .link-primary {
-  @apply text-primary hover:underline
+  @apply text-primary hover:underline;
 }
 
 .link-muted {
-  @apply text-muted hover:underline
+  @apply text-muted hover:underline;
 }
 
 code {
-    @apply bg-gray-150 px-1.5 py-1 rounded-md text-pink-600
+  @apply bg-gray-150 px-1.5 py-1 rounded-md text-pink-600;
 }

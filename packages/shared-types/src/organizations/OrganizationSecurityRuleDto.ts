@@ -1,5 +1,5 @@
 export class OrganizationSecurityRuleDto {
-    userId: string;
+    user: string;
     role: "owner" | "admin" | "member";
 }
  

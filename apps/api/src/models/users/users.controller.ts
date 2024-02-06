@@ -49,6 +49,6 @@ export class UsersController {
 			throw new NotFoundException();
 		}
 
-		return User.toPrivateDto(user);
+		return User.toDto(user);
 	}
 }
