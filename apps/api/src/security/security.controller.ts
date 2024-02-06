@@ -95,11 +95,15 @@ export class SecurityController {
 		const org = new Types.ObjectId(dto.organization);
 		const requester = new Types.ObjectId(request.user.id);
 		const requesterRole = await this.securityService.getUserRole(org, requester);
+		const target = new Types.ObjectId(dto.user);
+
+		if (requester.equals(target)) {
+			throw new BadRequestException('You cannot change your own security rules');
+		}
 
 		let currentRole = (dto as CreateSecurityRuleDto | UpdateSecurityRuleDto).role;
 		if (!currentRole) {
-			const user = new Types.ObjectId(dto.user);
-			currentRole = await this.securityService.getUserRole(org, user);
+			currentRole = await this.securityService.getUserRole(org, target);
 		}
 
 		const canCreate = SecurityUtils.canManageRole(requesterRole, currentRole);

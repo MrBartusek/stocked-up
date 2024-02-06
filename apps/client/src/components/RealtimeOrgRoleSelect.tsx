@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { OrganizationDto, SecurityRuleDto } from 'shared-types';
+import { IUpdateSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
 import RealtimeSelect from './RealtimeSelect';
 
 export interface RealtimeOrgSettingSelectProps {
@@ -18,8 +18,14 @@ function RealtimeOrgRoleSelect({ organization, rule }: RealtimeOrgSettingSelectP
 		setLoading(true);
 		setError(false);
 
+		const dto: IUpdateSecurityRuleDto = {
+			organization: organization.id,
+			user: rule.user,
+			role: newValue.value,
+		};
+
 		axios
-			.post(`/api/security/${organization.id}/update/${rule.user}?role=${newValue.value}`)
+			.put('/api/security', dto)
 			.then(() => setError(false))
 			.catch(() => setError(true))
 			.finally(() => {

@@ -1,4 +1,4 @@
-import { OrganizationDto, SecurityRuleDto } from 'shared-types';
+import { IDeleteSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
 import Button from './Button';
 import ModalBody from './Modal/ModalBody';
 import ModalTitle from './Modal/ModalTitle';
@@ -29,8 +29,13 @@ function ConfirmMemberDeleteModal({ organization, rule, ...props }: ConfirmMembe
 		setLoading(true);
 		setError(null);
 
+		const dto: IDeleteSecurityRuleDto = {
+			organization: organization.id,
+			user: rule.user,
+		};
+
 		axios
-			.delete(`/api/security/${organization.id}/${rule.user}`)
+			.delete(`/api/security`, { data: dto })
 			.then(() => {
 				queryClient.invalidateQueries(['security', organization.id]);
 				if (!props.handleClose) return;
