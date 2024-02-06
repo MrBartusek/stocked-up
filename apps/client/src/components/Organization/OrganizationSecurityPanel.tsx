@@ -11,7 +11,7 @@ export interface OrganizationSecurityPanelProps {
 }
 
 function OrganizationSecurityPanel({ organization }: OrganizationSecurityPanelProps) {
-	const { query, handleSearch, handlePageSizeChange, handlePageChange } =
+	const { query, handlePageSizeChange, handlePageChange } =
 		usePageQueryState<OrganizationSecurityRuleDto>();
 	const { rules, isLoading, error } = useSecurityRules(organization.id, query);
 
@@ -22,11 +22,6 @@ function OrganizationSecurityPanel({ organization }: OrganizationSecurityPanelPr
 		>
 			{rules && (
 				<>
-					<SearchBar
-						value={query.search}
-						onSearch={handleSearch}
-						placeholder="Search for members"
-					/>
 					{rules.items.map((rule, i) => (
 						<OrganizationMemberRow
 							key={i}

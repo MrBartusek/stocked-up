@@ -17,7 +17,7 @@ function OrganizationMemberRow({ rule }: OrganizationMemberRow) {
 		<div
 			className={classNames(
 				'flex items-center justify-between border-b border-gray-200',
-				'my-4 px-6 py-4 hover:bg-gray-150',
+				'my-4 px-6 py-4',
 			)}
 		>
 			<div className="flex items-center gap-3">
@@ -29,17 +29,13 @@ function OrganizationMemberRow({ rule }: OrganizationMemberRow) {
 				{user?.username || 'Loading...'}
 			</div>
 			<div className="flex gap-2">
-				<TableActionsWrapper>
-					<ActionButton
-						icon={BsInfoCircleFill}
-						className="text-blue-600"
-					/>
-					<ActionButton
-						icon={BsPersonXFill}
-						className=" text-danger"
-					/>
-				</TableActionsWrapper>
+				<ActionButton
+					icon={BsPersonXFill}
+					className=" text-danger"
+					title="Remove from organization"
+				/>
 				<Select
+					className="w-32"
 					options={[
 						{ label: 'Admin', value: 'Admin' },
 						{ label: 'Member', value: 'Member' },

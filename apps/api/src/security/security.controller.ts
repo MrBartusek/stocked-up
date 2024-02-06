@@ -6,22 +6,23 @@ import { OrganizationsAclService } from '../models/organizations/organizations-a
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { Types } from 'mongoose';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
+import { SecurityService } from './security.service';
 
 @Controller('security')
 export class SecurityController {
-	constructor(private readonly organizationsAclService: OrganizationsAclService) {}
+	constructor(private readonly securityService: SecurityService) {}
 
 	@Get(':id')
 	async listRules(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) organization: Types.ObjectId,
-		@Query(new PageQueryValidationPipe<OrganizationSecurityRuleDto>({}))
+		@Query(
+			new PageQueryValidationPipe<OrganizationSecurityRuleDto>({
+				allowedFilters: ['role'],
+				disableTextSearch: true,
+			}),
+		)
 		pageQuery: PageQueryDto<OrganizationSecurityRuleDto>,
 	): Promise<PageDto<any>> {
-		const { items, meta } = await this.organizationsAclService.paginateMembers(
-			organization,
-			pageQuery,
-		);
-
-		return { items, meta };
+		return this.securityService.paginateMembers(organization, pageQuery);
 	}
 }

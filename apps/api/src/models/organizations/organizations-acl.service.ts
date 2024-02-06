@@ -47,7 +47,7 @@ export class OrganizationsAclService {
 		);
 	}
 
-	async paginateMembers(organization: Types.ObjectId, pageQueryDto: PageQueryDto) {
+	async paginateRules(organization: Types.ObjectId, pageQueryDto: PageQueryDto) {
 		return this.organizationRepository.paginateAcls({ _id: organization }, pageQueryDto);
 	}
 }
