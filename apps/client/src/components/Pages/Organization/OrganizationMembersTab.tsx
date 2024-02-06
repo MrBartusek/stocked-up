@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
+import OrganizationSecurityPanel from '../../Organization/OrganizationSecurityPanel';
 
 function OrganizationMembersTab() {
 	const organization = useOutletContext<OrganizationDto>();
@@ -11,7 +12,7 @@ function OrganizationMembersTab() {
 				Organization members are all StockedUp users with access to specific organization.
 			</p>
 
-			<div>[ MISSING ACL PANEL ]</div>
+			<OrganizationSecurityPanel organization={organization} />
 		</div>
 	);
 }
