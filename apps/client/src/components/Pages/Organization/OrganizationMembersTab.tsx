@@ -16,7 +16,10 @@ function OrganizationMembersTab() {
 
 			<OrganizationSecurityPanel organization={organization} />
 
-			<Link to="invite">
+			<Link
+				to="invite"
+				className="inline-block"
+			>
 				<IconButton
 					icon={BsPersonPlus}
 					variant="secondary-outline"

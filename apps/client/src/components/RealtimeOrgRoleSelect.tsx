@@ -2,14 +2,14 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { IUpdateSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
-import RealtimeSelect from './RealtimeSelect';
+import RealtimeSelect, { RealtimeSelectProps } from './RealtimeSelect';
 
-export interface RealtimeOrgSettingSelectProps {
+export interface RealtimeOrgSettingSelectProps extends Omit<RealtimeSelectProps, 'options'> {
 	organization: OrganizationDto;
 	rule: SecurityRuleDto;
 }
 
-function RealtimeOrgRoleSelect({ organization, rule }: RealtimeOrgSettingSelectProps) {
+function RealtimeOrgRoleSelect({ organization, rule, ...props }: RealtimeOrgSettingSelectProps) {
 	const [loading, setLoading] = useState(false);
 	const [isError, setError] = useState<boolean>(false);
 	const queryClient = useQueryClient();
@@ -42,6 +42,7 @@ function RealtimeOrgRoleSelect({ organization, rule }: RealtimeOrgSettingSelectP
 
 	return (
 		<RealtimeSelect
+			{...props}
 			onChange={handleChange}
 			isError={isError}
 			loading={loading}

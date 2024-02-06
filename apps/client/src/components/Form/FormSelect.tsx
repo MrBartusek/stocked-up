@@ -1,6 +1,6 @@
 import Select, { SelectProps } from '../Helpers/Select';
 
-interface FormSelectProps extends SelectProps {
+export interface FormSelectProps extends SelectProps {
 	label?: string;
 }
 

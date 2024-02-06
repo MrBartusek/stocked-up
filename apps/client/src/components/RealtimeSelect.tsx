@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import FormSelect from './Form/FormSelect';
+import FormSelect, { FormSelectProps } from './Form/FormSelect';
 import { BsXCircle } from 'react-icons/bs';
 import classNames from 'classnames';
 
 type SelectOption = { value: string; label: string };
 
-export interface RealtimeSelectProps {
+export interface RealtimeSelectProps extends FormSelectProps {
 	onChange?: (value: any) => void;
 	loading?: boolean;
 	isError?: boolean;
@@ -21,6 +21,7 @@ function RealtimeSelect({
 	options,
 	value,
 	className,
+	...props
 }: RealtimeSelectProps) {
 	const [temporaryValue, setTemporaryValue] = useState<{ value: string; label: string } | null>(
 		null,
@@ -41,7 +42,8 @@ function RealtimeSelect({
 	return (
 		<div className="flex items-center gap-3">
 			<FormSelect
-				isDisabled={loading}
+				{...props}
+				isDisabled={props.isDisabled || loading}
 				className={classNames({ 'rounded-md border border-red-600': isError }, className)}
 				value={temporaryValue || value}
 				options={options}
