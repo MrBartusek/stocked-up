@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FormSelect from './Form/FormSelect';
 import { BsXCircle } from 'react-icons/bs';
+import classNames from 'classnames';
 
 type SelectOption = { value: string; label: string };
 
@@ -41,7 +42,7 @@ function RealtimeSelect({
 		<div className="flex items-center gap-3">
 			<FormSelect
 				isDisabled={loading}
-				className={className}
+				className={classNames({ 'rounded-md border border-red-600': isError }, className)}
 				value={temporaryValue || value}
 				options={options}
 				onChange={handleChange}

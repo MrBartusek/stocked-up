@@ -23,6 +23,7 @@ function OrganizationSecurityPanel({ organization }: OrganizationSecurityPanelPr
 					{rules.items.map((rule, i) => (
 						<OrganizationMemberRow
 							key={i}
+							organization={organization}
 							rule={rule}
 						/>
 					))}

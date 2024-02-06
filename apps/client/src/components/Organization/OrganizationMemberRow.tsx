@@ -4,13 +4,15 @@ import useUserData from '../../hooks/useUserData';
 import ActionButton from '../ActionButton';
 import Select from '../Helpers/Select';
 import UserAvatar from '../UserAvatar';
-import { SecurityRuleDto } from 'shared-types';
+import { OrganizationDto, SecurityRuleDto } from 'shared-types';
+import RealtimeOrgRoleSelect from '../RealtimeOrgRoleSelect';
 
 export interface OrganizationMemberRow {
+	organization: OrganizationDto;
 	rule: SecurityRuleDto;
 }
 
-function OrganizationMemberRow({ rule }: OrganizationMemberRow) {
+function OrganizationMemberRow({ organization, rule }: OrganizationMemberRow) {
 	const { user } = useUserData(rule.user);
 	return (
 		<div
@@ -33,13 +35,10 @@ function OrganizationMemberRow({ rule }: OrganizationMemberRow) {
 					className=" text-danger"
 					title="Remove from organization"
 				/>
-				<Select
-					className="w-32"
-					options={[
-						{ label: 'Admin', value: 'Admin' },
-						{ label: 'Member', value: 'Member' },
-					]}
-				></Select>
+				<RealtimeOrgRoleSelect
+					organization={organization}
+					rule={rule}
+				/>
 			</div>
 		</div>
 	);
