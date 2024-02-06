@@ -20,11 +20,10 @@ function WarehousesList({ organization, disableExpander }: WarehousesListProps) 
 
 	return (
 		<div className="my-4">
-			{warehouseElements.slice(0, needExpander ? 3 : 4)}
+			{disableExpander ? warehouseElements : warehouseElements.slice(0, needExpander ? 3 : 4)}
 			{needExpander && !disableExpander && (
 				<ExpandableList>{warehouseElements.slice(3)}</ExpandableList>
 			)}
-			{disableExpander && warehouseElements}
 		</div>
 	);
 }
