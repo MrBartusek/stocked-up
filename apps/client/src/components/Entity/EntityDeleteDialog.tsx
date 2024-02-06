@@ -82,11 +82,15 @@ function EntityDeleteDialog({
 			</ul>
 
 			{confirmBeforeDelete && (
-				<Form loading={loading}>
+				<Form
+					loading={loading}
+					className="mt-8"
+				>
 					<FormField label={`Confirm ${identifier} name to delete`}>
 						<FormInput
 							autoComplete="off"
 							{...register('name')}
+							placeholder={`Type exact ${identifier} name`}
 						/>
 					</FormField>
 
