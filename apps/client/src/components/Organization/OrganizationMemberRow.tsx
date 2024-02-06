@@ -16,12 +16,7 @@ export interface OrganizationMemberRow {
 function OrganizationMemberRow({ organization, rule }: OrganizationMemberRow) {
 	const { user } = useUserData(rule.user);
 	return (
-		<div
-			className={classNames(
-				'flex items-center justify-between border-b border-gray-200',
-				'my-4 px-6 py-4',
-			)}
-		>
+		<div className={classNames('flex items-center justify-between', 'px-6 py-4')}>
 			<div className="flex items-center gap-3">
 				<UserAvatar
 					user={user}

@@ -39,6 +39,7 @@ import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
+import OrganizationAddMemberTab from './Pages/Organization/OrganizationAddMemberTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -133,6 +134,10 @@ function Router() {
 						{
 							path: 'members',
 							element: <OrganizationMembersTab />,
+						},
+						{
+							path: 'members/invite',
+							element: <OrganizationAddMemberTab />,
 						},
 						{
 							path: 'delete',

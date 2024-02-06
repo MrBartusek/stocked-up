@@ -1,6 +1,8 @@
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
 import OrganizationSecurityPanel from '../../Organization/OrganizationSecurityPanel';
+import IconButton from '../../IconButton';
+import { BsPersonPlus } from 'react-icons/bs';
 
 function OrganizationMembersTab() {
 	const organization = useOutletContext<OrganizationDto>();
@@ -13,6 +15,16 @@ function OrganizationMembersTab() {
 			</p>
 
 			<OrganizationSecurityPanel organization={organization} />
+
+			<Link to="invite">
+				<IconButton
+					icon={BsPersonPlus}
+					variant="secondary-outline"
+					className="mt-12"
+				>
+					Invite new member
+				</IconButton>
+			</Link>
 		</div>
 	);
 }

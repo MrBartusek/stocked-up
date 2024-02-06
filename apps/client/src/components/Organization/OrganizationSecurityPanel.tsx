@@ -20,13 +20,16 @@ function OrganizationSecurityPanel({ organization }: OrganizationSecurityPanelPr
 		>
 			{rules && (
 				<>
-					{rules.items.map((rule, i) => (
-						<OrganizationMemberRow
-							key={i}
-							organization={organization}
-							rule={rule}
-						/>
-					))}
+					<div className="mt- mb-2 rounded-lg border">
+						{rules.items.map((rule, i) => (
+							<OrganizationMemberRow
+								key={i}
+								organization={organization}
+								rule={rule}
+							/>
+						))}
+					</div>
+
 					<Pagination
 						meta={rules.meta}
 						handlePageChange={handlePageChange}
