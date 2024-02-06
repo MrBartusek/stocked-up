@@ -85,6 +85,7 @@ function EntityDeleteDialog({
 				<Form
 					loading={loading}
 					className="mt-8"
+					onSubmit={(e) => e.preventDefault()}
 				>
 					<FormField label={`Confirm ${identifier} name to delete`}>
 						<FormInput
