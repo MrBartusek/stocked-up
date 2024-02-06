@@ -14,8 +14,8 @@ import {
 	OrganizationAccessDecoratorMetadata,
 } from '../../models/organizations/types/org-access-decorator-metadata';
 import { OrganizationResolverService } from '../../organization-resolver/organization-resolver.service';
-import { compareAclRoles } from '../helpers/compare-acl-roles.helper';
 import { SecurityService } from '../security.service';
+import { SecurityUtils } from '../helpers/security.utils';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SecurityValidationPipe<T> implements PipeTransform<T> {
@@ -45,7 +45,7 @@ export class SecurityValidationPipe<T> implements PipeTransform<T> {
 			if (!role) {
 				throw new ForbiddenException(`${propertyKey} - access denied`);
 			}
-			const hasAccess = compareAclRoles(role, metadata.role);
+			const hasAccess = SecurityUtils.isRoleEnough(role, metadata.role);
 			if (!hasAccess) {
 				throw new ForbiddenException(`${propertyKey} - access denied by organization ACL rules`);
 			}

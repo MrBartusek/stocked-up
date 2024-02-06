@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { PageQueryDto } from '../../dto/page-query.dto';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
 import { OrganizationAclRole } from './types/org-acl-role.type';
-import { PageQueryDto } from '../../dto/page-query.dto';
 
 export interface AccessRule {
 	user: Types.ObjectId;
@@ -21,6 +21,10 @@ export class OrganizationsAclService {
 		return rule;
 	}
 
+	async ruleExist(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<boolean> {
+		return this.organizationRepository.exist({ _id: organizationId, 'acls.user': user });
+	}
+
 	async addRule(organization: Types.ObjectId, rule: AccessRule): Promise<OrganizationDocument> {
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: organization },
@@ -32,16 +36,31 @@ export class OrganizationsAclService {
 		);
 	}
 
-	async removeRule(
+	async updateRule(
+		organization: Types.ObjectId,
+		user: Types.ObjectId,
+		role: OrganizationAclRole,
+	): Promise<OrganizationDocument | null> {
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: organization, 'acls.user': user },
+			{
+				$set: {
+					'acls.$.role': role,
+				},
+			},
+		);
+	}
+
+	async deleteRule(
 		organization: Types.ObjectId,
 		user: Types.ObjectId,
 	): Promise<OrganizationDocument> {
 		return this.organizationRepository.findOneAndUpdate(
-			{ _id: organization },
+			{ _id: organization, 'acls.user': user },
 			{
 				$pull: {
 					acls: {
-						id: user,
+						user,
 					},
 				},
 			},

@@ -27,6 +27,10 @@ import { WarehouseDto } from './warehouse/WarehouseDto';
 import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
 import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
 import { SecurityRuleDto } from './organizations/SecurityRuleDto';
+import { ICreateSecurityRuleDto } from './security/ICreateSecurityRuleDto';
+import { IUpdateSecurityRuleDto } from './security/IUpdateSecurityRuleDto';
+import { SecurityRole } from './SecurityRole';
+import { IDeleteSecurityRuleDto } from './security/IDeleteSecurityRoleDto';
 
 export {
     BasicInventoryItemDto,
@@ -57,6 +61,10 @@ export {
     UserDto,
     UserLoginDto,
     WarehouseDto,
-    SecurityRuleDto
+    SecurityRuleDto,
+    SecurityRole,
+    ICreateSecurityRuleDto,
+    IUpdateSecurityRuleDto,
+    IDeleteSecurityRuleDto,
 };
 

@@ -1,7 +1,7 @@
 import { SecurityRole } from "../SecurityRole";
 
-export class SecurityRuleDto {
+export interface ICreateSecurityRuleDto {
+    organization: string;
     user: string;
     role: SecurityRole;
 }
- 
