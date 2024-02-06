@@ -6,6 +6,7 @@ import Select from '../Helpers/Select';
 import UserAvatar from '../UserAvatar';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import RealtimeOrgRoleSelect from '../RealtimeOrgRoleSelect';
+import DeleteMemberButton from './DeleteMemberButton';
 
 export interface OrganizationMemberRow {
 	organization: OrganizationDto;
@@ -30,10 +31,9 @@ function OrganizationMemberRow({ organization, rule }: OrganizationMemberRow) {
 				{user?.username || 'Loading...'}
 			</div>
 			<div className="flex gap-2">
-				<ActionButton
-					icon={BsPersonXFill}
-					className=" text-danger"
-					title="Remove from organization"
+				<DeleteMemberButton
+					organization={organization}
+					rule={rule}
 				/>
 				<RealtimeOrgRoleSelect
 					organization={organization}
