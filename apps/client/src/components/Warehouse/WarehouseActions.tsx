@@ -39,20 +39,24 @@ function WarehouseActions({ warehouse }: WarehouseActionsProps) {
 				onClick={onClickSelect}
 				disabled={isCurrentWarehouse}
 				className={isCurrentWarehouse ? 'text-gray-400' : 'text-green-600'}
+				title="Switch to this warehouse"
 			/>
 			<ActionButton
 				icon={BsInfoCircleFill}
 				className="text-blue-600"
+				title="View details"
 			/>
 			<ActionButton
 				icon={BsPencilFill}
 				onClick={onClickEdit}
 				className="text-primary"
+				title="Edit"
 			/>
 			<ActionButton
 				icon={BsTrashFill}
 				onClick={onClickDelete}
 				className="text-red-600"
+				title="Delete"
 			/>
 		</TableActionsWrapper>
 	);
