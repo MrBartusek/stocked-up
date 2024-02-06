@@ -4,6 +4,7 @@ import { BsXCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { IPatchOrganizationSettingsDto, OrganizationDto } from 'shared-types';
 import FormSelect from './Form/FormSelect';
+import RealtimeSelect from './RealtimeSelect';
 
 export interface RealtimeOrgSettingSelectProps {
 	name: React.ReactNode;
@@ -21,16 +22,12 @@ function RealtimeOrgSettingSelect({
 	options,
 }: RealtimeOrgSettingSelectProps) {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<boolean>(false);
-	const [temporaryValue, setTemporaryValue] = useState<{ value: string; label: string } | null>(
-		null,
-	);
+	const [isError, setError] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 
-	function onChange(newValue: any) {
+	function handleChange(newValue: any) {
 		setLoading(true);
 		setError(false);
-		setTemporaryValue(newValue);
 
 		const dto: IPatchOrganizationSettingsDto = { [property as string]: newValue.value };
 		axios
@@ -41,30 +38,22 @@ function RealtimeOrgSettingSelect({
 			.catch(() => setError(true))
 			.finally(() => {
 				queryClient.invalidateQueries(['organizations', organization.id]);
+				setLoading(false);
 			});
 	}
-
-	useEffect(() => {
-		if (loading && temporaryValue && temporaryValue.value == organization.settings[property]) {
-			setTemporaryValue(null);
-			setLoading(false);
-		}
-	}, [loading, temporaryValue, organization.settings, property]);
 
 	return (
 		<div className="my-8">
 			<h3 className="mb-1 text-lg">{name}</h3>
 			<p className="mb-4 text-muted">{description}</p>
-			<div className="flex items-center gap-3">
-				<FormSelect
-					isDisabled={loading}
-					className="mt-0 w-96"
-					value={temporaryValue || options.find((v) => v.value == organization.settings[property])}
-					options={options}
-					onChange={onChange}
-				/>
-				{error && <BsXCircle className="text-xl text-red-600" />}
-			</div>
+			<RealtimeSelect
+				onChange={handleChange}
+				isError={isError}
+				loading={loading}
+				options={options}
+				value={options.find((v) => v.value == organization.settings[property])}
+				className="w-96"
+			/>
 		</div>
 	);
 }
