@@ -1,15 +1,15 @@
+import { OrganizationSecurityRole } from 'shared-types';
 import {
 	ORGANIZATION_ACCESS_DECORATOR_KEY,
 	OrganizationAccessDecoratorMetadata,
 } from '../../models/organizations/types/org-access-decorator-metadata';
-import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
 import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
 
 export interface AddSecurityMetadataOptions {
 	target: object;
 	key: string | symbol;
 	resource: OrganizationResourceType;
-	role?: OrganizationAclRole;
+	role?: OrganizationSecurityRole;
 }
 
 export function addSecurityMetadata(options: AddSecurityMetadataOptions) {
@@ -22,7 +22,7 @@ export function addSecurityMetadata(options: AddSecurityMetadataOptions) {
 
 	const metadata: OrganizationAccessDecoratorMetadata = {
 		resource,
-		role: role || OrganizationAclRole.MEMBER,
+		role: role || OrganizationSecurityRole.MEMBER,
 	};
 
 	Reflect.defineMetadata(ORGANIZATION_ACCESS_DECORATOR_KEY, metadata, target, key);

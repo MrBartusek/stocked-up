@@ -1,15 +1,14 @@
 import { IsEnum, IsMongoId } from 'class-validator';
-import { IUpdateSecurityRuleDto } from 'shared-types';
-import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
+import { IUpdateSecurityRuleDto, OrganizationSecurityRole } from 'shared-types';
 import { HasOrganizationAccess } from '../decorators/has-organization-access.decorator';
 
 export class UpdateSecurityRuleDto implements IUpdateSecurityRuleDto {
 	@IsMongoId()
-	@HasOrganizationAccess(OrganizationAclRole.ADMIN)
+	@HasOrganizationAccess(OrganizationSecurityRole.ADMIN)
 	organization: string;
 
 	user: string;
 
-	@IsEnum(OrganizationAclRole)
-	role: OrganizationAclRole;
+	@IsEnum(OrganizationSecurityRole)
+	role: OrganizationSecurityRole;
 }

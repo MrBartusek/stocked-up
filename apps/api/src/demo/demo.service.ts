@@ -8,13 +8,13 @@ import { OrganizationsAclService } from '../models/organizations/organizations-a
 import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
 import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
-import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 import { ProductsService } from '../models/products/products.service';
 import { ProductDocument } from '../models/products/schemas/product.schema';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
+import { OrganizationSecurityRole } from 'shared-types';
 
 @Injectable()
 export class DemoService {
@@ -60,7 +60,7 @@ export class DemoService {
 
 		await this.organizationsRolesService.addRule(org._id, {
 			user: user._id,
-			role: OrganizationAclRole.OWNER,
+			role: OrganizationSecurityRole.OWNER,
 		});
 
 		this.logger.log(`Created demo account - ${user.profile.email}`);

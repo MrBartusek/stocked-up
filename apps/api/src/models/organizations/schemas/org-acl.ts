@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { OrganizationAclRole } from '../types/org-acl-role.type';
+import { OrganizationSecurityRole } from 'shared-types';
 
 export type OrgAclDocument = HydratedDocument<OrgAcl>;
 
@@ -10,7 +10,7 @@ export class OrgAcl {
 	user: Types.ObjectId;
 
 	@Prop({ required: true })
-	role: OrganizationAclRole;
+	role: OrganizationSecurityRole;
 }
 
 export const OrgAclSchema = SchemaFactory.createForClass(OrgAcl);

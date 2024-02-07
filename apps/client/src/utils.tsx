@@ -78,4 +78,8 @@ export class Utils {
 			'#ec4899',
 		];
 	}
+
+	public static title(input: string): string {
+		return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+	}
 }

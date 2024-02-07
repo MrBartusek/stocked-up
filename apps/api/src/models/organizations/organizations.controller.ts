@@ -15,7 +15,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { OrganizationDto, PageDto } from 'shared-types';
+import { OrganizationDto, OrganizationSecurityRole, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
@@ -29,7 +29,6 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { OrganizationAclRole } from './types/org-acl-role.type';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -53,7 +52,7 @@ export class OrganizationsController {
 
 		await this.organizationsAclService.addRule(org.id, {
 			user,
-			role: OrganizationAclRole.OWNER,
+			role: OrganizationSecurityRole.OWNER,
 		});
 		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 

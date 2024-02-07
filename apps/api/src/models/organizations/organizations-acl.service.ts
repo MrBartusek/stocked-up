@@ -3,11 +3,11 @@ import { Types } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { OrganizationAclRole } from './types/org-acl-role.type';
+import { OrganizationSecurityRole } from 'shared-types';
 
 export interface AccessRule {
 	user: Types.ObjectId;
-	role: OrganizationAclRole;
+	role: OrganizationSecurityRole;
 }
 
 @Injectable()
@@ -39,7 +39,7 @@ export class OrganizationsAclService {
 	async updateRule(
 		organization: Types.ObjectId,
 		user: Types.ObjectId,
-		role: OrganizationAclRole,
+		role: OrganizationSecurityRole,
 	): Promise<OrganizationDocument | null> {
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: organization, 'acls.user': user },

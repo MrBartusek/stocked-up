@@ -1,11 +1,10 @@
-import { IDeleteSecurityRuleDto } from 'shared-types';
-import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
+import { IDeleteSecurityRuleDto, OrganizationSecurityRole } from 'shared-types';
 import { HasOrganizationAccess } from '../decorators/has-organization-access.decorator';
 import { IsMongoId } from 'class-validator';
 
 export class DeleteSecurityRuleDto implements IDeleteSecurityRuleDto {
 	@IsMongoId()
-	@HasOrganizationAccess(OrganizationAclRole.ADMIN)
+	@HasOrganizationAccess(OrganizationSecurityRole.ADMIN)
 	organization: string;
 
 	@IsMongoId()

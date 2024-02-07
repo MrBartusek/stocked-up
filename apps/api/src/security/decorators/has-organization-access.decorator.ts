@@ -1,8 +1,8 @@
-import { OrganizationAclRole } from '../../models/organizations/types/org-acl-role.type';
+import { OrganizationSecurityRole } from 'shared-types';
 import { OrganizationResourceType } from '../../organization-resolver/types/organization-resource.type';
 import { addSecurityMetadata } from '../helpers/organization-acccess-decorator.helper';
 
-export function HasOrganizationAccess(role?: OrganizationAclRole): PropertyDecorator {
+export function HasOrganizationAccess(role?: OrganizationSecurityRole): PropertyDecorator {
 	return (target, key) => {
 		addSecurityMetadata({
 			target,

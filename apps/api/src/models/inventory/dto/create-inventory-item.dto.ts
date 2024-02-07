@@ -1,7 +1,7 @@
 import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
 import { ICreateInventoryItemDto } from 'shared-types';
 import { HasOrganizationAccess } from '../../../security/decorators/has-organization-access.decorator';
-import { HasProductAccess } from '../../../security/decorators/has-product-access.decorator copy';
+import { HasProductAccess } from '../../../security/decorators/has-product-access.decorator';
 import { HasWarehouseAccess } from '../../../security/decorators/has-warehouse-access.decorator';
 
 export class CreateInventoryItemDto implements ICreateInventoryItemDto {

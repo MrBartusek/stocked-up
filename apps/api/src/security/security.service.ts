@@ -2,11 +2,11 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { Types } from 'mongoose';
 import { PageQueryDto } from '../dto/page-query.dto';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 import { UsersService } from '../models/users/users.service';
 import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
 import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
 import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
+import { OrganizationSecurityRole } from 'shared-types';
 
 @Injectable()
 export class SecurityService {
@@ -26,7 +26,7 @@ export class SecurityService {
 	async getUserRole(
 		organization: Types.ObjectId,
 		user: Types.ObjectId,
-	): Promise<OrganizationAclRole> {
+	): Promise<OrganizationSecurityRole> {
 		const rule = await this.organizationAclService.getRule(organization, user);
 		return rule ? rule.role : null;
 	}
@@ -46,7 +46,7 @@ export class SecurityService {
 
 		return this.organizationAclService.addRule(org, {
 			user: user._id,
-			role: OrganizationAclRole.MEMBER,
+			role: OrganizationSecurityRole.MEMBER,
 		});
 	}
 

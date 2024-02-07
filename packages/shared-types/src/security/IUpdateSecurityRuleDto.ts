@@ -1,4 +1,4 @@
-import { SecurityRole } from "../SecurityRole";
+import { SecurityRole } from "../OrganizationSecurityRole";
 
 export interface IUpdateSecurityRuleDto {
     organization: string;
