@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import BigNumberCard from '../BigNumberCard';
 import Card from '../Card';
 import ChartCard from '../ChartCard';

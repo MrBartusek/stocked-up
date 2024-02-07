@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { BasicWarehouseDto, OrganizationDto } from 'shared-types';
-import { Utils } from '../utils';
+import { Utils } from '../utils/utils';
 import useOrganizationDetails from './useOrganisationDetails';
 
 export interface CurrentAppContextType {

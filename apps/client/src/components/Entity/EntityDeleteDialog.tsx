@@ -6,7 +6,7 @@ import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IImageDto } from 'shared-types';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import Button from '../Button';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';

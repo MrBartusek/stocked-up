@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { IImageDto, IUpdateUserDto, UserDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormImageInput from '../Form/FormImageInput';

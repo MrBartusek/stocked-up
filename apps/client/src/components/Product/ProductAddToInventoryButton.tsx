@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import IconButton from '../IconButton';
 
 export interface ProductAddToInventoryButtonProps {

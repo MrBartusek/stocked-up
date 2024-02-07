@@ -8,7 +8,7 @@ import {
 	YAxis,
 } from 'recharts';
 import { OrganizationDto } from 'shared-types';
-import { Utils } from '../utils';
+import { Utils } from '../utils/utils';
 import Loader from './Loader';
 
 export interface TotalSalesChartProps {

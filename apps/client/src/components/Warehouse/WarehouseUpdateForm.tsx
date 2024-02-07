@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IUpdateWarehouseDto, ProductDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';

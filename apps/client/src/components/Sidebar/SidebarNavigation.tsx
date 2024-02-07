@@ -9,7 +9,7 @@ import {
 	BsTagFill,
 } from 'react-icons/bs';
 import usePageInfo from '../../hooks/usePageInfo';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import SidebarLink from './SidebarLink';
 import SidebarSection from './SidebarSection';
 

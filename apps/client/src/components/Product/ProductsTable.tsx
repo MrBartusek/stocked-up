@@ -5,7 +5,7 @@ import { BasicProductDto, IPageQueryDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import Table from '../Helpers/Table/Table';
 import TableImage from '../Helpers/Table/TableImage';
 import TableIndex from '../Helpers/Table/TableIndex';

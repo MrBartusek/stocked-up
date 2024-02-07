@@ -5,7 +5,7 @@ import { BsPerson, BsShieldLock } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { UserLoginDto } from 'shared-types';
 import { UserContext } from '../context/UserContext';
-import { Utils } from '../utils';
+import { Utils } from '../utils/utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';

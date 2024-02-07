@@ -6,7 +6,7 @@ import { BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { IUserRegisterDto, UserLoginDto } from 'shared-types';
 import { UserContext } from '../context/UserContext';
-import { Utils } from '../utils';
+import { Utils } from '../utils/utils';
 import Button from './Button';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';

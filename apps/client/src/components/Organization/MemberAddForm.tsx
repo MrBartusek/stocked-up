@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ICreateSecurityRuleDto, OrganizationDto } from 'shared-types';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import { useQueryClient } from 'react-query';
 import Alert from '../Helpers/Alert';
 import FormField from '../Form/FormField';

@@ -3,7 +3,7 @@ import { BsFillCheckCircleFill, BsInfoCircleFill, BsPencilFill, BsTrashFill } fr
 import { useNavigate } from 'react-router-dom';
 import { WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import ActionButton from '../ActionButton';
 import TableActionsWrapper from '../Helpers/Table/TableActionsWrapper';
 

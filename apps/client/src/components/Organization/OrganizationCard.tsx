@@ -1,6 +1,6 @@
 import { BsBoxes, BsBuilding, BsTag, BsWallet } from 'react-icons/bs';
 import { OrganizationDto } from 'shared-types';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import WarehousesList from '../Warehouse/WarehousesList';
 import OrganizationSettingsButton from './OrganizationActions';
 import OrganizationStatsChip from './OrganizationStatsChip';

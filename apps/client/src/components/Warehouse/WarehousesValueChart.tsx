@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Cell, Label, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { OrganizationDto } from 'shared-types';
 import useWarehousesList from '../../hooks/useWarehouseList';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import Loader from '../Loader';
 
 export interface WarehousesValueChartProps {

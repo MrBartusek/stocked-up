@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { BasicWarehouseDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useInventoryItemByProduct from '../../hooks/useInventoryItemByProduct';
-import { Utils } from '../../utils';
+import { Utils } from '../../utils/utils';
 import EntityInfoTable from '../Entity/EntityInfoTable';
 import Loader from '../Loader';
 

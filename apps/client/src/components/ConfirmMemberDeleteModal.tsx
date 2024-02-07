@@ -10,7 +10,7 @@ import useUserData from '../hooks/useUserData';
 import axios from 'axios';
 import { useQueryClient } from 'react-query';
 import { useState } from 'react';
-import { Utils } from '../utils';
+import { Utils } from '../utils/utils';
 import Alert from './Helpers/Alert';
 
 export interface ConfirmMemberDeleteModalProps extends ModalDialogProps {

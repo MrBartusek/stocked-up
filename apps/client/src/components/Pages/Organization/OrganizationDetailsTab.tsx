@@ -1,7 +1,7 @@
 import { BsPencil } from 'react-icons/bs';
 import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
-import { Utils } from '../../../utils';
+import { Utils } from '../../../utils/utils';
 import EntityInfoTable from '../../Entity/EntityInfoTable';
 import HeaderWithHint from '../../HeaderWithHint';
 import IconButton from '../../IconButton';
