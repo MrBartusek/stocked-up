@@ -1,11 +1,11 @@
 import { OrganizationSecurityRole } from 'shared-types';
 
 export class SecurityUtils {
-	static canManageRole(requester: OrganizationSecurityRole, target: OrganizationSecurityRole) {
+	static canManageRole(requester: OrganizationSecurityRole, target: string) {
 		return this.aclRoleToNumber(requester) > this.aclRoleToNumber(target);
 	}
 
-	static isRoleEnough(current: OrganizationSecurityRole, required: OrganizationSecurityRole) {
+	static isRoleEnough(current: OrganizationSecurityRole, required: string) {
 		return this.aclRoleToNumber(current) >= this.aclRoleToNumber(required);
 	}
 

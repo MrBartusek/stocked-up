@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { ICreateSecurityRuleDto, OrganizationDto } from 'shared-types';
+import { ICreateSecurityRuleDto, OrganizationDto, OrganizationSecurityRole } from 'shared-types';
 import { Utils } from '../../utils/utils';
 import { useQueryClient } from 'react-query';
 import Alert from '../Helpers/Alert';
@@ -11,6 +11,10 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Form from '../Form/Form';
+import useUserRole from '../../hooks/useUserRole';
+import { SecurityUtils } from '../../utils/secuirtyUtils';
+import { BsLockFill, BsShieldLock } from 'react-icons/bs';
+import NoPermissionsAlert from '../NoPermisionsAlert';
 
 export interface MemberAddFormProps {
 	organization: OrganizationDto;
@@ -24,6 +28,8 @@ function MemberAddForm({ organization }: MemberAddFormProps) {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+
+	const { role } = useUserRole(organization.id);
 
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
@@ -48,10 +54,16 @@ function MemberAddForm({ organization }: MemberAddFormProps) {
 			.finally(() => setLoading(false));
 	}
 
+	const canInvite = role && SecurityUtils.isRoleEnough(role, 'admin');
+
+	if (role && !canInvite) {
+		return <NoPermissionsAlert />;
+	}
+
 	return (
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
-			loading={loading}
+			loading={loading || !role}
 		>
 			{error && <Alert className="mb-2">{error}</Alert>}
 
