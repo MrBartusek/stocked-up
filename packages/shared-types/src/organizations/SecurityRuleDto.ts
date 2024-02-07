@@ -1,7 +1,7 @@
-import { SecurityRole } from "../OrganizationSecurityRole";
+import { OrganizationSecurityRole } from "../OrganizationSecurityRole";
 
 export class SecurityRuleDto {
     user: string;
-    role: SecurityRole;
+    role: OrganizationSecurityRole;
 }
  

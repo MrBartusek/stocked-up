@@ -79,6 +79,17 @@ export class SecurityController {
 		return this.securityService.paginateMembers(organization, pageQuery);
 	}
 
+	@Get(':org/me')
+	async getMeRule(
+		@Req() request: Request,
+		@Param('org', ParseObjectIdPipe, HasOrganizationAccessPipe) organization: Types.ObjectId,
+	): Promise<SecurityRuleDto> {
+		const requester = new Types.ObjectId(request.user.id);
+		const role = await this.securityService.getUserRole(organization, requester);
+
+		return { user: requester.toString(), role };
+	}
+
 	private async validateIfCanManageRole(
 		dto: UpdateSecurityRuleDto | DeleteSecurityRuleDto,
 		request: Request,
