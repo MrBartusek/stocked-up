@@ -1,18 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { PageQueryDto } from '../dto/page-query.dto';
-import {
-	AccessRule,
-	OrganizationsAclService,
-} from '../models/organizations/organizations-acl.service';
+import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
+import { UsersService } from '../models/users/users.service';
 import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
-import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
 import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
+import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
 
 @Injectable()
 export class SecurityService {
-	constructor(private readonly organizationAclService: OrganizationsAclService) {}
+	constructor(
+		private readonly organizationAclService: OrganizationsAclService,
+		private readonly usersService: UsersService,
+	) {}
 
 	async hasOrganizationAccess(
 		organization: Types.ObjectId,
@@ -32,19 +33,33 @@ export class SecurityService {
 
 	async addRule(dto: CreateSecurityRuleDto) {
 		const org = new Types.ObjectId(dto.organization);
-		const user = new Types.ObjectId(dto.user);
+		const user = await this.usersService.findOne(dto.email);
+
+		if (!user) {
+			throw new BadRequestException('User with provided email was not found');
+		}
+
+		const ruleExist = await this.ruleExist(org, user._id);
+		if (ruleExist) {
+			throw new BadRequestException('This user is already a member of this organization');
+		}
 
 		return this.organizationAclService.addRule(org, {
-			user,
-			role: dto.role,
+			user: user._id,
+			role: OrganizationAclRole.MEMBER,
 		});
 	}
 
 	async updateRule(dto: UpdateSecurityRuleDto) {
 		const org = new Types.ObjectId(dto.organization);
-		const user = new Types.ObjectId(dto.user);
+		const userId = new Types.ObjectId(dto.user);
+		const userExist = await this.usersService.exist(userId);
 
-		return this.organizationAclService.updateRule(org, user, dto.role);
+		if (!userExist) {
+			throw new NotFoundException('This user was not found');
+		}
+
+		return this.organizationAclService.updateRule(org, userId, dto.role);
 	}
 
 	async deleteRule(dto: DeleteSecurityRuleDto) {
@@ -58,10 +73,7 @@ export class SecurityService {
 		return this.organizationAclService.paginateRules(org, pageQueryDto);
 	}
 
-	async ruleExist(dto: CreateSecurityRuleDto) {
-		const org = new Types.ObjectId(dto.organization);
-		const user = new Types.ObjectId(dto.user);
-
+	private async ruleExist(org: Types.ObjectId, user: Types.ObjectId) {
 		return this.organizationAclService.ruleExist(org, user);
 	}
 }

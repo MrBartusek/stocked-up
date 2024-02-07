@@ -83,6 +83,10 @@ export class UsersService {
 		return this.userRepository.exist({ 'profile.username': username });
 	}
 
+	exist(id: Types.ObjectId) {
+		return this.userRepository.exist({ _id: id });
+	}
+
 	private async importDefaultAvatar(email: string): Promise<string | null> {
 		const gravatar = await this.gravatarService.getGravatarBuffer(email);
 		if (!gravatar) return null;

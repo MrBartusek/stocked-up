@@ -26,24 +26,12 @@ import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe'
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
 
-type SecurityDtoLike = CreateSecurityRuleDto | UpdateSecurityRuleDto | DeleteSecurityRuleDto;
-
 @Controller('security')
 export class SecurityController {
 	constructor(private readonly securityService: SecurityService) {}
 
 	@Post()
-	async create(
-		@Req() request: Request,
-		@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto,
-	): Promise<any> {
-		await this.validateIfCanManageRole(dto, request);
-
-		const exist = await this.securityService.ruleExist(dto);
-		if (exist) {
-			throw new BadRequestException('This user is already member of this organization');
-		}
-
+	async create(@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto): Promise<any> {
 		const resultOrg = await this.securityService.addRule(dto);
 		if (!resultOrg) {
 			throw new NotFoundException();
@@ -91,7 +79,10 @@ export class SecurityController {
 		return this.securityService.paginateMembers(organization, pageQuery);
 	}
 
-	private async validateIfCanManageRole(dto: SecurityDtoLike, request: Request) {
+	private async validateIfCanManageRole(
+		dto: UpdateSecurityRuleDto | DeleteSecurityRuleDto,
+		request: Request,
+	) {
 		const org = new Types.ObjectId(dto.organization);
 		const requester = new Types.ObjectId(request.user.id);
 		const requesterRole = await this.securityService.getUserRole(org, requester);
@@ -101,7 +92,7 @@ export class SecurityController {
 			throw new BadRequestException('You cannot change your own security rules');
 		}
 
-		let currentRole = (dto as CreateSecurityRuleDto | UpdateSecurityRuleDto).role;
+		let currentRole = (dto as UpdateSecurityRuleDto).role;
 		if (!currentRole) {
 			currentRole = await this.securityService.getUserRole(org, target);
 		}
