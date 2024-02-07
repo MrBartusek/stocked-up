@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
+import MemberAddForm from '../../Organization/MemberAddForm';
 
 function OrganizationAddMemberTab() {
 	const organization = useOutletContext<OrganizationDto>();
@@ -9,7 +10,7 @@ function OrganizationAddMemberTab() {
 			<h2 className="mb-4 text-3xl">Add Organization Member</h2>
 			<p className="mb-4 text-muted">Invite a new user to join {organization?.name}</p>
 
-			<div>[ PLACEHOLDER ]</div>
+			<MemberAddForm organization={organization} />
 		</div>
 	);
 }

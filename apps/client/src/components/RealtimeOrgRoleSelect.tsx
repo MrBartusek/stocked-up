@@ -47,6 +47,7 @@ function RealtimeOrgRoleSelect({ organization, rule, ...props }: RealtimeOrgSett
 			isError={isError}
 			loading={loading}
 			options={options}
+			isOptionDisabled={(option: any) => option.value == 'owner'}
 			value={options.find((v) => v.value == rule.role)}
 			className="w-32"
 		/>

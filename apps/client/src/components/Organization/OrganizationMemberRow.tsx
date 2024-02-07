@@ -38,7 +38,7 @@ function OrganizationMemberRow({ organization, rule }: OrganizationMemberRow) {
 					rule={rule}
 				/>
 				<RealtimeOrgRoleSelect
-					isDisabled={isOwnRow}
+					isDisabled={isOwnRow || !user}
 					organization={organization}
 					rule={rule}
 				/>

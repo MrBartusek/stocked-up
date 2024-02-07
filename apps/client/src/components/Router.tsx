@@ -1,4 +1,10 @@
-import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+	Navigate,
+	Outlet,
+	RouterProvider,
+	createBrowserRouter,
+	useOutletContext,
+} from 'react-router-dom';
 import DashboardContainer from './DashboardContainer';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
@@ -40,6 +46,7 @@ import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
 import OrganizationAddMemberTab from './Pages/Organization/OrganizationAddMemberTab';
+import PassContextOutlet from './Helpers/PassContextOutlet';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -133,12 +140,19 @@ function Router() {
 						},
 						{
 							path: 'members',
-							element: <OrganizationMembersTab />,
+							element: <PassContextOutlet />,
+							children: [
+								{
+									path: '',
+									element: <OrganizationMembersTab />,
+								},
+								{
+									path: 'invite',
+									element: <OrganizationAddMemberTab />,
+								},
+							],
 						},
-						{
-							path: 'members/invite',
-							element: <OrganizationAddMemberTab />,
-						},
+
 						{
 							path: 'delete',
 							element: <OrganizationDeleteTab />,
