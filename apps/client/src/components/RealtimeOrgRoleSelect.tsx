@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { IUpdateSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
+import useUserRole from '../hooks/useUserRole';
 import RealtimeSelect, { RealtimeSelectProps } from './RealtimeSelect';
+import { SecurityUtils } from '../utils/secuirtyUtils';
 
 export interface RealtimeOrgSettingSelectProps extends Omit<RealtimeSelectProps, 'options'> {
 	organization: OrganizationDto;
@@ -12,6 +14,9 @@ export interface RealtimeOrgSettingSelectProps extends Omit<RealtimeSelectProps,
 function RealtimeOrgRoleSelect({ organization, rule, ...props }: RealtimeOrgSettingSelectProps) {
 	const [loading, setLoading] = useState(false);
 	const [isError, setError] = useState<boolean>(false);
+
+	const { role } = useUserRole(organization.id);
+
 	const queryClient = useQueryClient();
 
 	function handleChange(newValue: any) {
@@ -40,14 +45,17 @@ function RealtimeOrgRoleSelect({ organization, rule, ...props }: RealtimeOrgSett
 		{ value: 'member', label: 'Member' },
 	];
 
+	const canManage = role && SecurityUtils.canManageRole(role, rule.role);
+
 	return (
 		<RealtimeSelect
 			{...props}
 			onChange={handleChange}
 			isError={isError}
+			isDisabled={props.isDisabled || !canManage}
 			loading={loading}
 			options={options}
-			isOptionDisabled={(option: any) => option.value == 'owner'}
+			isOptionDisabled={(option: any) => !role || !SecurityUtils.canManageRole(role, option.value)}
 			value={options.find((v) => v.value == rule.role)}
 			className="w-32"
 		/>

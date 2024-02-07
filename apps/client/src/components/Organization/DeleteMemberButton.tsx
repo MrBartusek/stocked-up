@@ -3,6 +3,8 @@ import { BsPersonXFill } from 'react-icons/bs';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import ActionButton, { ActionButtonProps } from '../ActionButton';
 import ConfirmMemberDeleteModal from '../ConfirmMemberDeleteModal';
+import useUserRole from '../../hooks/useUserRole';
+import { SecurityUtils } from '../../utils/secuirtyUtils';
 
 export interface DeleteMemberButtonProps extends Omit<ActionButtonProps, 'icon' | 'onClick'> {
 	organization: OrganizationDto;
@@ -12,6 +14,9 @@ export interface DeleteMemberButtonProps extends Omit<ActionButtonProps, 'icon' 
 function DeleteMemberButton({ rule, organization, ...props }: DeleteMemberButtonProps) {
 	const [open, setOpen] = useState(false);
 
+	const { role } = useUserRole(organization.id);
+	const canManage = role && SecurityUtils.canManageRole(role, rule.role);
+
 	return (
 		<>
 			<ActionButton
@@ -19,6 +24,7 @@ function DeleteMemberButton({ rule, organization, ...props }: DeleteMemberButton
 				icon={BsPersonXFill}
 				className="text-danger"
 				title="Remove from organization"
+				disabled={!canManage || props.disabled}
 				onClick={() => setOpen(true)}
 			/>
 			<ConfirmMemberDeleteModal
