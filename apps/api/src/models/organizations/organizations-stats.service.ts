@@ -31,12 +31,8 @@ export class OrganizationsStatsService {
 
 		const organization = await this.organizationRepository.findById(orgId);
 		if (!organization) {
-			throw new Error('Organization with provide id was not found');
+			throw new Error('Organization with provided id was not found');
 		}
-
-		this.logger.log(
-			`Triggered organization value recalculation for org ${organization.name} (${orgId})`,
-		);
 
 		let totalOrgValue = 0;
 		for await (const warehouseRef of organization.warehouses) {
@@ -47,9 +43,7 @@ export class OrganizationsStatsService {
 		}
 
 		const end = performance.now();
-		this.logger.log(
-			`Calculated total value $${totalOrgValue} for org ${orgId} took ${Math.round(end - start)}ms`,
-		);
+		this.logger.log(`Recalculated org {${orgId}, $${totalOrgValue}} +${Math.round(end - start)}ms`);
 
 		return this.organizationRepository.findOneAndUpdate(
 			{ _id: orgId },
