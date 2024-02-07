@@ -27,7 +27,9 @@ function useCurrentAppContext(organizationId: string, warehouseId: string): Curr
 
 	useEffect(() => {
 		if (currentWarehouse) {
-			toast(`You are now using "${currentWarehouse.name}" warehouse`);
+			toast(`You are now using "${currentWarehouse.name}" warehouse`, {
+				id: `warehouse-change-${currentWarehouse.id}`,
+			});
 		}
 	}, [currentWarehouse]);
 
