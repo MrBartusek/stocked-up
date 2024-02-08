@@ -5,7 +5,7 @@ import { Utils } from '../../../utils/utils';
 import EntityInfoTable from '../../Entity/EntityInfoTable';
 import HeaderWithHint from '../../HeaderWithHint';
 import IconButton from '../../IconButton';
-import OrganizationDangerZone from '../../OrganizationDangerZone';
+import OrganizationDangerZone from '../../Organization/OrganizationDangerZone';
 
 function OrganizationDetailsTab() {
 	const organization = useOutletContext<OrganizationDto>();
@@ -33,7 +33,10 @@ function OrganizationDetailsTab() {
 					}}
 				/>
 				<div className="py-6">
-					<Link to="update">
+					<Link
+						to="update"
+						className="inline-block"
+					>
 						<IconButton icon={BsPencil}>Edit organization details</IconButton>
 					</Link>
 				</div>

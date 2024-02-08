@@ -1,17 +1,17 @@
 import { IDeleteSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
-import Button from './Button';
-import ModalBody from './Modal/ModalBody';
-import ModalTitle from './Modal/ModalTitle';
-import ModalHeader from './Modal/ModalHeader';
-import ModalDialog, { ModalDialogProps } from './Modal/ModalDialog';
-import ModelFooter from './Modal/ModelFooter';
-import ModalCloseButton from './Modal/ModalCloseButton';
-import useUserData from '../hooks/useUserData';
+import Button from '../Button';
+import ModalBody from '../Modal/ModalBody';
+import ModalTitle from '../Modal/ModalTitle';
+import ModalHeader from '../Modal/ModalHeader';
+import ModalDialog, { ModalDialogProps } from '../Modal/ModalDialog';
+import ModelFooter from '../Modal/ModelFooter';
+import ModalCloseButton from '../Modal/ModalCloseButton';
+import useUserData from '../../hooks/useUserData';
 import axios from 'axios';
 import { useQueryClient } from 'react-query';
 import { useState } from 'react';
-import { Utils } from '../utils/utils';
-import Alert from './Helpers/Alert';
+import { Utils } from '../../utils/utils';
+import Alert from '../Helpers/Alert';
 
 export interface ConfirmMemberDeleteModalProps extends ModalDialogProps {
 	organization: OrganizationDto;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsPersonXFill } from 'react-icons/bs';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import ActionButton, { ActionButtonProps } from '../ActionButton';
-import ConfirmMemberDeleteModal from '../ConfirmMemberDeleteModal';
+import ConfirmMemberDeleteModal from './ConfirmMemberDeleteModal';
 import useUserRole from '../../hooks/useUserRole';
 import { SecurityUtils } from '../../utils/secuirtyUtils';
 
