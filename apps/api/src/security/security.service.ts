@@ -1,19 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
 import { PageQueryDto } from '../dto/page-query.dto';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { UsersService } from '../models/users/users.service';
-import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
-import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
-import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
-import { OrganizationSecurityRole } from 'shared-types';
 
 @Injectable()
 export class SecurityService {
-	constructor(
-		private readonly organizationAclService: OrganizationsAclService,
-		private readonly usersService: UsersService,
-	) {}
+	constructor(private readonly organizationAclService: OrganizationsAclService) {}
 
 	async hasOrganizationAccess(
 		organization: Types.ObjectId,
@@ -31,14 +24,7 @@ export class SecurityService {
 		return rule ? rule.role : null;
 	}
 
-	async addRule(dto: CreateSecurityRuleDto) {
-		const org = new Types.ObjectId(dto.organization);
-		const user = await this.usersService.findOne(dto.email);
-
-		if (!user) {
-			throw new BadRequestException('User with provided email was not found');
-		}
-
+	async addRule(org: Types.ObjectId, user: Types.ObjectId) {
 		const ruleExist = await this.ruleExist(org, user._id);
 		if (ruleExist) {
 			throw new BadRequestException('This user is already a member of this organization');
@@ -50,22 +36,11 @@ export class SecurityService {
 		});
 	}
 
-	async updateRule(dto: UpdateSecurityRuleDto) {
-		const org = new Types.ObjectId(dto.organization);
-		const userId = new Types.ObjectId(dto.user);
-		const userExist = await this.usersService.exist(userId);
-
-		if (!userExist) {
-			throw new NotFoundException('This user was not found');
-		}
-
-		return this.organizationAclService.updateRule(org, userId, dto.role);
+	async updateRule(org: Types.ObjectId, user: Types.ObjectId, newRole: OrganizationSecurityRole) {
+		return this.organizationAclService.updateRule(org, user, newRole);
 	}
 
-	async deleteRule(dto: DeleteSecurityRuleDto) {
-		const org = new Types.ObjectId(dto.organization);
-		const user = new Types.ObjectId(dto.user);
-
+	async deleteRule(org: Types.ObjectId, user: Types.ObjectId) {
 		return this.organizationAclService.deleteRule(org, user);
 	}
 

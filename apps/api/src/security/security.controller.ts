@@ -25,17 +25,29 @@ import { SecurityUtils } from './helpers/security.utils';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
+import { UsersService } from '../models/users/users.service';
 
 @Controller('security')
 export class SecurityController {
-	constructor(private readonly securityService: SecurityService) {}
+	constructor(
+		private readonly securityService: SecurityService,
+		private readonly usersService: UsersService,
+	) {}
 
 	@Post()
 	async create(@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto): Promise<any> {
-		const resultOrg = await this.securityService.addRule(dto);
-		if (!resultOrg) {
-			throw new NotFoundException();
+		const org = new Types.ObjectId(dto.organization);
+
+		const user = await this.usersService.findOne(dto.email);
+		if (!user) {
+			throw new NotFoundException('This user does not exist');
 		}
+
+		const resultOrg = await this.securityService.addRule(org, user._id);
+		if (!resultOrg) {
+			throw new NotFoundException('This organization does not exist');
+		}
+
 		return { statusCode: 201 };
 	}
 
@@ -44,9 +56,13 @@ export class SecurityController {
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: UpdateSecurityRuleDto,
 	): Promise<any> {
-		await this.validateIfCanManageRole(dto, request);
-		const org = await this.securityService.updateRule(dto);
-		if (!org) {
+		const org = new Types.ObjectId(dto.organization);
+		const target = new Types.ObjectId(dto.user);
+
+		await this.validateIfCanManage(dto, request);
+
+		const resultOrg = await this.securityService.updateRule(org, target, dto.role);
+		if (!resultOrg) {
 			throw new NotFoundException();
 		}
 		return { statusCode: 200 };
@@ -57,9 +73,13 @@ export class SecurityController {
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: DeleteSecurityRuleDto,
 	): Promise<any> {
-		await this.validateIfCanManageRole(dto, request);
-		const org = await this.securityService.deleteRule(dto);
-		if (!org) {
+		const org = new Types.ObjectId(dto.organization);
+		const target = new Types.ObjectId(dto.user);
+
+		await this.validateIfCanManage(dto, request);
+
+		const resultOrg = await this.securityService.deleteRule(org, target);
+		if (!resultOrg) {
 			throw new NotFoundException();
 		}
 		return { statusCode: 200 };
@@ -80,10 +100,7 @@ export class SecurityController {
 			);
 		}
 
-		await this.securityService.deleteRule({
-			organization: org.toString(),
-			user: requester.toString(),
-		});
+		await this.securityService.deleteRule(org, requester);
 
 		return { statusCode: 200 };
 	}
@@ -113,27 +130,33 @@ export class SecurityController {
 		return { user: requester.toString(), role };
 	}
 
-	private async validateIfCanManageRole(
+	private async validateIfCanManage(
 		dto: UpdateSecurityRuleDto | DeleteSecurityRuleDto,
 		request: Request,
 	) {
 		const org = new Types.ObjectId(dto.organization);
 		const requester = new Types.ObjectId(request.user.id);
-		const requesterRole = await this.securityService.getUserRole(org, requester);
 		const target = new Types.ObjectId(dto.user);
 
 		if (requester.equals(target)) {
 			throw new BadRequestException('You cannot change your own security rules');
 		}
 
-		let currentRole = (dto as UpdateSecurityRuleDto).role;
-		if (!currentRole) {
-			currentRole = await this.securityService.getUserRole(org, target);
+		const targetRole = await this.securityService.getUserRole(org, target);
+		const requesterRole = await this.securityService.getUserRole(org, requester);
+
+		if (!requesterRole) {
+			throw new BadRequestException('This user is not a part of this organization');
 		}
 
-		const canCreate = SecurityUtils.canManageRole(requesterRole, currentRole);
-		if (!canCreate) {
-			throw new ForbiddenException('Your security role is not enough to manage this role');
+		const canManageUser = SecurityUtils.canManageRole(requesterRole, targetRole);
+		const canManageRole = SecurityUtils.canManageRole(
+			requesterRole,
+			(dto as any).role || OrganizationSecurityRole.MEMBER,
+		);
+
+		if (!canManageUser || !canManageRole) {
+			throw new ForbiddenException('Your security role is not enough to manage this user');
 		}
 	}
 }
