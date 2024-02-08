@@ -41,6 +41,10 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import path from 'path';
+import UserDetailsForm from './User/UserDetailsForm';
+import UserDetailsTab from './Pages/User/UserDetailsTab';
+import UserSecurityTab from './Pages/User/UserSecurityTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -105,6 +109,16 @@ function Router() {
 						{
 							path: 'settings',
 							element: <UserSettingsPage />,
+							children: [
+								{
+									path: '',
+									element: <UserDetailsTab />,
+								},
+								{
+									path: 'security',
+									element: <UserSecurityTab />,
+								},
+							],
 						},
 					],
 				},

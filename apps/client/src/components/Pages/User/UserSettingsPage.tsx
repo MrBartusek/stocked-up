@@ -1,19 +1,23 @@
-import { BsPersonGear } from 'react-icons/bs';
-import Container from '../../Container';
+import { BsSliders } from 'react-icons/bs';
+import { Outlet } from 'react-router-dom';
+import GoBackButton from '../../GoBackButton';
 import DashboardLayout from '../../Layout/DasboardLayout';
+import SettingsLayout from '../../Layout/SettingsLayout';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
-import UserDetailsForm from '../../User/UserDetailsForm';
+import UserSettingsSidebar from './UserSettingsSidebar';
 
 function UserSettingsPage() {
 	return (
 		<DashboardLayout>
 			<SecondaryNavbar
-				icon={BsPersonGear}
+				icon={BsSliders}
 				title="User Settings"
-			/>
-			<Container className="pt-8">
-				<UserDetailsForm />
-			</Container>
+			>
+				<GoBackButton />
+			</SecondaryNavbar>
+			<SettingsLayout sidebar={<UserSettingsSidebar />}>
+				<Outlet />
+			</SettingsLayout>
 		</DashboardLayout>
 	);
 }

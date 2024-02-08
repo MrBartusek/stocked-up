@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { PrivateUserDto } from 'shared-types';
 
 export interface UseUserType {
