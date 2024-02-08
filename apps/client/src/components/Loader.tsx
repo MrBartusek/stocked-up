@@ -5,16 +5,20 @@ import { BsBoxSeam } from 'react-icons/bs';
 export interface LoaderProps {
 	height?: string;
 	children?: React.ReactNode;
+	className?: string;
 	isLoading: boolean;
 	isError?: boolean;
 }
 
-function Loader({ height = 'inherit', children, isLoading, isError }: LoaderProps) {
+function Loader({ height = 'inherit', children, isLoading, isError, className }: LoaderProps) {
 	if (isLoading || isError) {
 		return (
 			<div
 				style={{ height }}
-				className="flex w-full flex-col items-center justify-center gap-3 py-12"
+				className={classNames(
+					'flex w-full flex-col items-center justify-center gap-3 py-12',
+					className,
+				)}
 			>
 				<BsBoxSeam
 					className={classNames(

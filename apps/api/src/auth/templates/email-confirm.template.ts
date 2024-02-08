@@ -16,7 +16,7 @@ export class EmailConfirmTemplate implements EmailTemplate {
 			`Thanks for singing up! ` +
 			`To confirm this e-mail address, please follow this link:` +
 			`\r\n\r\n` +
-			`${BASE_URL}/email-confirm/${this.token}`
+			`${BASE_URL}confirm-email/${this.token}`
 		);
 	}
 }

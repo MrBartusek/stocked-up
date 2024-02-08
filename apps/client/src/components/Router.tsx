@@ -43,6 +43,7 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import EmailConfirmPage from './Pages/EmailConfirmPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -82,6 +83,11 @@ function Router() {
 					element: <DemoCreator />,
 				},
 			],
+		},
+		{
+			path: 'confirm-email/:token',
+			element: <EmailConfirmPage />,
+			errorElement: <ApplicationError />,
 		},
 		{
 			path: 'dashboard',

@@ -35,7 +35,6 @@ import { ActiveGuard } from '../users/guards/active.guard';
 @ApiTags('organizations')
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
-@UseGuards(ActiveGuard)
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,
@@ -44,6 +43,7 @@ export class OrganizationsController {
 	) {}
 
 	@Post()
+	@UseGuards(ActiveGuard)
 	async create(
 		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
@@ -84,6 +84,7 @@ export class OrganizationsController {
 	}
 
 	@Put(':id')
+	@UseGuards(ActiveGuard)
 	async update(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
@@ -96,6 +97,7 @@ export class OrganizationsController {
 	}
 
 	@Delete(':id')
+	@UseGuards(ActiveGuard)
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasOwnerAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -107,6 +109,7 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
+	@UseGuards(ActiveGuard)
 	async findById(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -115,6 +118,7 @@ export class OrganizationsController {
 	}
 
 	@Patch(':id/settings')
+	@UseGuards(ActiveGuard)
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
