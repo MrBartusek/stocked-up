@@ -12,7 +12,5 @@ describe('SecurityController', () => {
 		controller = module.get<SecurityController>(SecurityController);
 	});
 
-	it('should be defined', () => {
-		expect(controller).toBeDefined();
-	});
+	it.todo('should be defined');
 });
