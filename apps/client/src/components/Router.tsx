@@ -31,6 +31,8 @@ import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
 import UnderConstructionPage from './Pages/UnderConstructionPage';
+import UserDetailsTab from './Pages/User/UserDetailsTab';
+import UserSecurityTab from './Pages/User/UserSecurityTab';
 import UserSettingsPage from './Pages/User/UserSettingsPage';
 import WarehouseDeletePage from './Pages/Warehouse/WarehouseDeletePage';
 import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
@@ -41,10 +43,6 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import path from 'path';
-import UserDetailsForm from './User/UserDetailsForm';
-import UserDetailsTab from './Pages/User/UserDetailsTab';
-import UserSecurityTab from './Pages/User/UserSecurityTab';
 
 function Router() {
 	const router = createBrowserRouter([
