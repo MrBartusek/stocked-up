@@ -1,13 +1,8 @@
-import {
-	Navigate,
-	Outlet,
-	RouterProvider,
-	createBrowserRouter,
-	useOutletContext,
-} from 'react-router-dom';
+import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DashboardContainer from './DashboardContainer';
 import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
+import PassContextOutlet from './Helpers/PassContextOutlet';
 import DashboardHomePage from './Pages/DashboardHomePage';
 import DashboardPage from './Pages/DashboardPage';
 import HomePage from './Pages/HomePage';
@@ -18,6 +13,7 @@ import InventoryManagementPage from './Pages/Inventory/InventoryManagementPage';
 import InventoryUpdatePage from './Pages/Inventory/InventoryUpdatePage';
 import InventoryViewPage from './Pages/Inventory/InventoryViewPage';
 import LoginPage from './Pages/LoginPage';
+import OrganizationAddMemberTab from './Pages/Organization/OrganizationAddMemberTab';
 import OrganizationCreatePage from './Pages/Organization/OrganizationCreatePage';
 import OrganizationDeleteTab from './Pages/Organization/OrganizationDeleteTab';
 import OrganizationDetailsTab from './Pages/Organization/OrganizationDetailsTab';
@@ -25,6 +21,7 @@ import OrganizationMembersTab from './Pages/Organization/OrganizationMembersTab'
 import OrganizationPreferencesTab from './Pages/Organization/OrganizationPreferencesTab';
 import OrganizationSelectPage from './Pages/Organization/OrganizationSelectPage';
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
+import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
 import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
@@ -44,9 +41,6 @@ import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
-import OrganizationAddMemberTab from './Pages/Organization/OrganizationAddMemberTab';
-import PassContextOutlet from './Helpers/PassContextOutlet';
 
 function Router() {
 	const router = createBrowserRouter([
