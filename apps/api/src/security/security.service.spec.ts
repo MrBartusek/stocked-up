@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationAclRole } from '../models/organizations/types/org-acl-role.type';
 import { SecurityService } from './security.service';
+import { OrganizationSecurityRole } from 'shared-types';
 
 const PRIVILEGED_USER_ID = new Types.ObjectId();
 
@@ -14,7 +14,7 @@ describe('SecurityService', () => {
 			if (PRIVILEGED_USER_ID.equals(user)) {
 				return {
 					user,
-					role: OrganizationAclRole.ADMIN,
+					role: OrganizationSecurityRole.ADMIN,
 				};
 			}
 			return null;
@@ -41,7 +41,7 @@ describe('SecurityService', () => {
 
 	it('should get role of user with access to organization', () => {
 		expect(service.getUserRole(new Types.ObjectId(), PRIVILEGED_USER_ID)).resolves.toBe(
-			OrganizationAclRole.ADMIN,
+			OrganizationSecurityRole.ADMIN,
 		);
 	});
 
