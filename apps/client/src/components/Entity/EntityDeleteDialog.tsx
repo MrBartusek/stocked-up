@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { To, useNavigate } from 'react-router-dom';
 import { IImageDto } from 'shared-types';
 import { Utils } from '../../utils/utils';
 import Button from '../Button';
@@ -22,6 +22,7 @@ export interface EntityDeleteDialogProps {
 	deletedItems?: string[];
 	confirmBeforeDelete?: boolean;
 	image?: IImageDto;
+	navigateTo?: To;
 }
 
 function EntityDeleteDialog({
@@ -31,6 +32,7 @@ function EntityDeleteDialog({
 	identifier,
 	deletedItems = [],
 	confirmBeforeDelete = false,
+	navigateTo = '..',
 	image,
 }: EntityDeleteDialogProps) {
 	const [loading, setLoading] = useState(false);
@@ -47,9 +49,11 @@ function EntityDeleteDialog({
 
 		axios
 			.delete(`/api/${resourceName}/${entityId}`)
-			.then(() => navigate(`..`))
-			.then(() => queryClient.invalidateQueries([resourceName]))
-			.then(() => toast.success(`Successfully deleted ${identifier}`))
+			.then(() => {
+				navigate(navigateTo);
+				toast.success(`Successfully deleted ${identifier}`);
+				queryClient.invalidateQueries([resourceName]);
+			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
 			.finally(() => setLoading(false));
 	}

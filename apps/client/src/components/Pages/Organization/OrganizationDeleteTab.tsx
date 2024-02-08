@@ -19,6 +19,7 @@ function OrganizationDeleteTab() {
 					'Any StockedUp user will be able to create new organization with this name',
 				]}
 				confirmBeforeDelete
+				navigateTo="/dashboard"
 			/>
 		</div>
 	);
