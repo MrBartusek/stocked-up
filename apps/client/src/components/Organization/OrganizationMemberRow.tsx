@@ -1,11 +1,11 @@
 import classNames from 'classnames';
+import { useMemo } from 'react';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
+import useUser from '../../hooks/useUser';
 import useUserData from '../../hooks/useUserData';
 import RealtimeOrgRoleSelect from '../RealtimeOrgRoleSelect';
 import UserAvatar from '../UserAvatar';
 import DeleteMemberButton from './DeleteMemberButton';
-import useUser from '../../hooks/useUser';
-import { useMemo } from 'react';
 
 export interface OrganizationMemberRow {
 	organization: OrganizationDto;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BsPersonDash, BsPersonDashFill, BsPersonXFill } from 'react-icons/bs';
+import { BsPersonDash } from 'react-icons/bs';
 import { OrganizationDto } from 'shared-types';
 import IconButton from '../IconButton';
 import ConfirmOrganizationLeaveModal from './ConfirmOrganizationLeaveModal';

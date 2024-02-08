@@ -1,7 +1,4 @@
-import { BsPersonXFill, BsTrashFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
-import IconButton from '../IconButton';
 import OrganizationDeleteButton from './OrganizationDeleteButton';
 import OrganizationLeaveButton from './OrganizationLeaveButton';
 
