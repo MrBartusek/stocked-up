@@ -29,6 +29,7 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
+import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -94,7 +95,7 @@ export class OrganizationsController {
 
 	@Delete(':id')
 	async delete(
-		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasOwnerAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.delete(id);
 		if (!org) {
