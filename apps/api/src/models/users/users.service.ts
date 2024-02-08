@@ -5,6 +5,7 @@ import { ImagesService } from '../../images/images.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
+import { CryptoUtils } from '../../security/helpers/crypto.utils';
 
 export interface UserCreateData {
 	username: string;
@@ -91,6 +92,16 @@ export class UsersService {
 
 	setActive(id: Types.ObjectId, isActive: boolean) {
 		return this.userRepository.findOneByIdAndUpdate(id, { isActive });
+	}
+
+	async generateEmailConfirmationToken(id: Types.ObjectId): Promise<string> {
+		const token = CryptoUtils.generateSafeToken(64);
+
+		await this.userRepository.findOneByIdAndUpdate(id, {
+			'profile.emailConfirmationToken': token,
+		});
+
+		return token;
 	}
 
 	private async importDefaultAvatar(email: string): Promise<string | null> {

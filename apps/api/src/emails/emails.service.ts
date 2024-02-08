@@ -1,9 +1,17 @@
 import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { Resend } from 'resend';
 
-const DEFAULT_EMAIL_SENDER = 'stockedup@dokurno.dev';
+const DEFAULT_EMAIL_SENDER = 'noreply@dokurno.dev';
 
-const { RESEND_API_KEY, EMAIL_SENDER } = process.env;
+const { EMAIL_SENDER } = process.env;
+
+const EMAIL_FOOTER = `
+Thanks,
+StockedUp Team
+
+---
+This is automated message sent by StockedUp. Please do not reply to this email.
+If you received this email by mistake or believe it is a spam, please forward it to bartosz@dokurno.dev`;
 
 export interface SendEmailOptions {
 	to: string;
@@ -19,8 +27,9 @@ export class EmailsService {
 
 	async sendEmail(options: SendEmailOptions): Promise<string> {
 		const result = await this.resend.emails.send({
-			from: `StockedUp <${EMAIL_SENDER || DEFAULT_EMAIL_SENDER}>`,
 			...options,
+			from: `StockedUp <${EMAIL_SENDER || DEFAULT_EMAIL_SENDER}>`,
+			text: options.text + EMAIL_FOOTER,
 		});
 
 		if (result.error) {

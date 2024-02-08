@@ -3,19 +3,28 @@ import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { UserRegisterDto } from './dto/user-register.dto';
+import { EmailsService } from '../emails/emails.service';
+import { Types } from 'mongoose';
+import { EmailConfirmTemplate } from './templates/email-confirm.template';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService) {}
+	constructor(
+		private usersService: UsersService,
+		private emailService: EmailsService,
+	) {}
 
 	async registerUser(data: UserRegisterDto): Promise<UserDocument> {
 		const hash = await bcrypt.hash(data.password, 12);
 
-		return this.usersService.create({
+		const user = await this.usersService.create({
 			username: data.username,
 			email: data.email,
 			passwordHash: hash,
 		});
+
+		await this.sendEmailConfirmation(user);
+		return user;
 	}
 
 	async validateUser(username: string, password: string): Promise<UserDocument> {
@@ -32,5 +41,16 @@ export class AuthService {
 		if (user && passwordValid) {
 			return user;
 		}
+	}
+
+	async sendEmailConfirmation(user: UserDocument) {
+		const token = await this.usersService.generateEmailConfirmationToken(user._id);
+		const content = new EmailConfirmTemplate(user.profile.username, token);
+
+		return this.emailService.sendEmail({
+			to: user.profile.email,
+			subject: '[StockedUp] Confirm E-mail address',
+			text: content.toString(),
+		});
 	}
 }

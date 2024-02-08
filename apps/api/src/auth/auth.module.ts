@@ -8,9 +8,10 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
+import { EmailsModule } from '../emails/emails.module';
 
 @Module({
-	imports: [UsersModule, DemoModule, PassportModule.register({ session: true })],
+	imports: [UsersModule, DemoModule, PassportModule.register({ session: true }), EmailsModule],
 	controllers: [AuthController],
 	providers: [
 		AuthService,
