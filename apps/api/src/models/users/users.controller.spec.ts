@@ -41,7 +41,6 @@ describe('UsersController', () => {
 		expect(controller.findOne('123')).resolves.toEqual({
 			id: expect.any(String),
 			username: expect.any(String),
-			email: expect.any(String),
 			image: {
 				hasImage: expect.any(Boolean),
 				url: expect.any(String),
