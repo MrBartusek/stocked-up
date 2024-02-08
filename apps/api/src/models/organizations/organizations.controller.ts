@@ -30,10 +30,12 @@ import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
 import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
+import { ActiveGuard } from '../users/guards/active.guard';
 
 @ApiTags('organizations')
 @Controller('organizations')
 @UseGuards(AuthenticatedGuard)
+@UseGuards(ActiveGuard)
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,

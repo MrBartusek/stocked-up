@@ -25,10 +25,12 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
+import { ActiveGuard } from '../users/guards/active.guard';
 
 @ApiTags('products')
 @Controller('products')
 @UseGuards(AuthenticatedGuard)
+@UseGuards(ActiveGuard)
 @Injectable()
 export class ProductsController {
 	constructor(

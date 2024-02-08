@@ -11,6 +11,7 @@ export interface UserCreateData {
 	email: string;
 	passwordHash?: string;
 	isDemo?: boolean;
+	isActive?: boolean;
 }
 
 @Injectable()
@@ -31,7 +32,8 @@ export class UsersService {
 				username: data.username,
 				email: data.email,
 				imageKey: avatarKey,
-				isDemo: data.isDemo,
+				isDemo: data.isDemo || false,
+				isActive: data.isActive || false,
 			},
 			auth: { password: data.passwordHash || null },
 		});
@@ -85,6 +87,10 @@ export class UsersService {
 
 	exist(id: Types.ObjectId) {
 		return this.userRepository.exist({ _id: id });
+	}
+
+	setActive(id: Types.ObjectId, isActive: boolean) {
+		return this.userRepository.findOneByIdAndUpdate(id, { isActive });
 	}
 
 	private async importDefaultAvatar(email: string): Promise<string | null> {

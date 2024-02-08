@@ -15,6 +15,12 @@ export class UserProfile {
 
 	@Prop({ default: false })
 	isDemo?: boolean;
+
+	@Prop({ default: false })
+	isActive?: boolean;
+
+	@Prop()
+	emailConfirmationToken?: string;
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
