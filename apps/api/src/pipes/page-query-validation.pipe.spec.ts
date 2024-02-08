@@ -10,7 +10,7 @@ describe('PageQueryValidationPipe', () => {
 
 	it('should pass on valid unrestricted DTO', () => {
 		const pipe = new PageQueryValidationPipe();
-		const result = pipe.transform({ page: 1, orderBy: 'name' }, null);
+		const result = pipe.transform({ page: 1, orderBy: 'name' });
 		expect(result.page).toBe(1);
 	});
 
@@ -19,7 +19,7 @@ describe('PageQueryValidationPipe', () => {
 			disableTextSearch: true,
 			allowedFilters: ['name'],
 		});
-		const result = pipe.transform({ page: 1, orderBy: 'name' }, null);
+		const result = pipe.transform({ page: 1, orderBy: 'name' });
 		expect(result.page).toBe(1);
 	});
 
@@ -27,20 +27,20 @@ describe('PageQueryValidationPipe', () => {
 		const pipe = new PageQueryValidationPipe({
 			allowedFilters: ['name'],
 		});
-		expect(() => pipe.transform({ page: 1, orderBy: 'price' }, null)).toThrow(BadRequestException);
+		expect(() => pipe.transform({ page: 1, orderBy: 'price' })).toThrow(BadRequestException);
 	});
 
 	it('should fail on disabled orderBy', () => {
 		const pipe = new PageQueryValidationPipe({
 			disableOrderBy: true,
 		});
-		expect(() => pipe.transform({ page: 1, orderBy: 'name' }, null)).toThrow(BadRequestException);
+		expect(() => pipe.transform({ page: 1, orderBy: 'name' })).toThrow(BadRequestException);
 	});
 
 	it('should fail on disabled text search', () => {
 		const pipe = new PageQueryValidationPipe({
 			disableTextSearch: true,
 		});
-		expect(() => pipe.transform({ page: 1, search: 'test' }, null)).toThrow(BadRequestException);
+		expect(() => pipe.transform({ page: 1, search: 'test' })).toThrow(BadRequestException);
 	});
 });
