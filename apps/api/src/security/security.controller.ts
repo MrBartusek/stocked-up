@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { PageDto, SecurityRuleDto } from 'shared-types';
+import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
 import { PageQueryDto } from '../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
@@ -62,6 +62,29 @@ export class SecurityController {
 		if (!org) {
 			throw new NotFoundException();
 		}
+		return { statusCode: 200 };
+	}
+
+	@Delete(':org/leave')
+	async leave(
+		@Req() request: Request,
+		@Param('org', ParseObjectIdPipe, HasOrganizationAccessPipe) org: Types.ObjectId,
+	): Promise<any> {
+		const requester = new Types.ObjectId(request.user.id);
+		const role = await this.securityService.getUserRole(org, requester);
+
+		if (role == OrganizationSecurityRole.OWNER) {
+			throw new BadRequestException(
+				'You cannot leave an organization of which you are the owner. ' +
+					'Please transfer the ownership or delete the organization.',
+			);
+		}
+
+		await this.securityService.deleteRule({
+			organization: org.toString(),
+			user: requester.toString(),
+		});
+
 		return { statusCode: 200 };
 	}
 
