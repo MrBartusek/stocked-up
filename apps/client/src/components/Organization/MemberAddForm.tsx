@@ -2,18 +2,17 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { ICreateSecurityRuleDto, OrganizationDto, OrganizationSecurityRole } from 'shared-types';
-import { Utils } from '../../utils/utils';
 import { useQueryClient } from 'react-query';
-import Alert from '../Helpers/Alert';
+import { useNavigate } from 'react-router-dom';
+import { ICreateSecurityRuleDto, OrganizationDto } from 'shared-types';
+import useUserRole from '../../hooks/useUserRole';
+import { SecurityUtils } from '../../utils/secuirtyUtils';
+import { Utils } from '../../utils/utils';
+import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import Form from '../Form/Form';
-import useUserRole from '../../hooks/useUserRole';
-import { SecurityUtils } from '../../utils/secuirtyUtils';
-import { BsLockFill, BsShieldLock } from 'react-icons/bs';
+import Alert from '../Helpers/Alert';
 import NoPermissionsAlert from '../NoPermisionsAlert';
 
 export interface MemberAddFormProps {
