@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
@@ -41,6 +41,19 @@ export class AuthService {
 		if (user && passwordValid) {
 			return user;
 		}
+	}
+
+	async confirmUserEmail(token: string): Promise<any> {
+		const user = await this.usersService.findByEmailToken(token);
+
+		if (!user) {
+			throw new BadRequestException('Provided token is invalid');
+		}
+		if (user.profile.isActive) {
+			throw new BadRequestException('This token is already used');
+		}
+
+		return this.usersService.setActive(user._id, true);
 	}
 
 	async sendEmailConfirmation(user: UserDocument) {

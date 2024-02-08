@@ -3,6 +3,7 @@ import {
 	Body,
 	Controller,
 	HttpCode,
+	Param,
 	Post,
 	Req,
 	UseGuards,
@@ -59,5 +60,11 @@ export class AuthController {
 		const user = await this.demoService.setupDemoAccount();
 		const dto = User.toPrivateDto(user);
 		return dto;
+	}
+
+	@Post('confirm-email/:token')
+	async confirmEmail(@Param('token') token: string): Promise<PrivateUserDto> {
+		const user = await this.authService.confirmUserEmail(token);
+		return User.toPrivateDto(user);
 	}
 }

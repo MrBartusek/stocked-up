@@ -78,6 +78,12 @@ export class UsersService {
 		return this.userRepository.findById(id);
 	}
 
+	findByEmailToken(token: string): Promise<UserDocument | null> {
+		return this.userRepository.findOne({
+			'profile.emailConfirmationToken': token,
+		});
+	}
+
 	isEmailTaken(email: string) {
 		return this.userRepository.exist({ 'profile.email': email });
 	}
@@ -91,7 +97,7 @@ export class UsersService {
 	}
 
 	setActive(id: Types.ObjectId, isActive: boolean) {
-		return this.userRepository.findOneByIdAndUpdate(id, { isActive });
+		return this.userRepository.findOneByIdAndUpdate(id, { 'profile.isActive': isActive });
 	}
 
 	async generateEmailConfirmationToken(id: Types.ObjectId): Promise<string> {
