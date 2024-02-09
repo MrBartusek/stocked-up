@@ -1,48 +1,53 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { BsCheck } from 'react-icons/bs';
+import { BsCheck, BsCheckCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Utils } from '../utils/utils';
 import Button from './Button';
 import Alert from './Helpers/Alert';
 import Loader from './Loader';
+import useEmailConfirm from '../hooks/useEmailConfirm';
 
 export interface EmailConfirmFormProps {
 	token: string;
 }
 
 function EmailConfirmForm({ token }: EmailConfirmFormProps) {
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const { confirmed, isLoading, error } = useEmailConfirm(token);
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		setLoading(true);
-		setError(null);
-
-		axios
-			.post(`/api/auth/confirm-email/${token}`)
-			.then(() => {
-				queryClient.invalidateQueries(['users', 'me']);
-			})
-			.catch((err) => setError(Utils.requestErrorToString(err)))
-			.finally(() => setLoading(false));
-	}, [queryClient, token]);
+		if (!confirmed) return;
+		queryClient.invalidateQueries(['users', 'me']);
+		setTimeout(() => navigate('/dashboard'), 3000);
+	}, [navigate, confirmed, queryClient]);
 
 	return (
 		<div className="my-12">
 			{error ? (
-				<Alert className="text-center">{error}</Alert>
+				<div>
+					<Alert className="mb-8 text-center">{Utils.requestErrorToString(error)}</Alert>
+					<Link
+						to="/dashboard"
+						className="grid"
+					>
+						<Button>Back to dashboard</Button>
+					</Link>
+				</div>
 			) : (
-				<Loader isLoading={loading}>
-					<div className="flex flex-col items-center gap-4">
-						<div className="flex items-center justify-center gap-1">
-							<BsCheck className="text-4xl text-success" /> Successfully confirmed email address
+				<Loader isLoading={isLoading}>
+					<div className="flex flex-col items-center gap-6 rounded-xl border border-gray-300 px-8 py-12">
+						<div className="flex flex-col items-center justify-center gap-6 text-center text-xl">
+							<BsCheckCircle className="text-5xl text-success" /> Successfully confirmed email
+							address
 						</div>
-
-						<Link to="/dashboard">
-							<Button variant="success">Navigate to dashboard</Button>
+						<Link
+							to="/dashboard"
+							className="link-muted text-center"
+						>
+							You are being redirected to the dashboard...
 						</Link>
 					</div>
 				</Loader>
