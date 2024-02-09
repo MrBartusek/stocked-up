@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { Types } from 'mongoose';
 
 describe('UsersController', () => {
 	let controller: UsersController;
@@ -38,8 +39,8 @@ describe('UsersController', () => {
 	});
 
 	it('should get user by id', () => {
-		expect(controller.findOne('123')).resolves.toEqual({
-			id: expect.any(String),
+		expect(controller.findOne(new Types.ObjectId())).resolves.toEqual({
+			id: expect.any(Types.ObjectId),
 			username: expect.any(String),
 			image: {
 				hasImage: expect.any(Boolean),
@@ -49,10 +50,10 @@ describe('UsersController', () => {
 	});
 
 	it('should get authenticated user', () => {
-		const mockRequest = { user: { id: '123' } } as Request;
+		const mockRequest = { user: { id: new Types.ObjectId().toString() } } as Request;
 
 		expect(controller.findAuthenticated(mockRequest)).resolves.toEqual({
-			id: expect.any(String),
+			id: expect.any(Types.ObjectId),
 			username: expect.any(String),
 			email: expect.any(String),
 			image: {
