@@ -35,7 +35,9 @@ describe('EmailsService', () => {
 		const result = service.sendEmail(sendOptions);
 
 		expect(result).resolves.toStrictEqual(expect.any(String));
-		expect(emailSendMock).toHaveBeenCalledWith(expect.objectContaining(sendOptions));
+		expect(emailSendMock).toHaveBeenCalledWith(
+			expect.objectContaining({ ...sendOptions, text: expect.any(String) }),
+		);
 	});
 
 	it('should handle email errors', () => {
