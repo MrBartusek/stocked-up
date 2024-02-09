@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { SecurityService } from './security.service';
-import { OrganizationSecurityRole } from 'shared-types';
 
 const PRIVILEGED_USER_ID = new Types.ObjectId();
 

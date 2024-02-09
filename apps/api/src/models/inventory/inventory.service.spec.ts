@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryService } from './inventory.service';
-import { Types } from 'mongoose';
 import { MockInventoryRepository } from './mocks/mock-inventory-repository';
 
 describe('InventoryService', () => {

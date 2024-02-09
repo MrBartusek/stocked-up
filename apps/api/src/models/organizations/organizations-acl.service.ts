@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { OrganizationSecurityRole } from 'shared-types';
 
 export interface AccessRule {
 	user: Types.ObjectId;

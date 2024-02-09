@@ -1,6 +1,6 @@
+import { Types } from 'mongoose';
 import { EmailTemplate } from '../../emails/types/email-template.type';
 import Utils from '../../helpers/utils';
-import { Types } from 'mongoose';
 
 const BASE_URL = Utils.isProduction() ? 'https://stockedup.dokurno.dev/' : 'http://localhost:5173/';
 

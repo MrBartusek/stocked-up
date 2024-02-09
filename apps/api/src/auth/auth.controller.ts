@@ -3,7 +3,6 @@ import {
 	Body,
 	Controller,
 	HttpCode,
-	Param,
 	Post,
 	Query,
 	Req,
@@ -11,15 +10,15 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { Types } from 'mongoose';
 import { PrivateUserDto } from 'shared-types';
 import { DemoService } from '../demo/demo.service';
 import { User } from '../models/users/schemas/user.schema';
+import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
-import { Types } from 'mongoose';
 
 @Controller('auth')
 @ApiTags('auth')

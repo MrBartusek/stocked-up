@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, Logger, PayloadTooLargeException } from '@nestjs/common';
 import * as sharp from 'sharp';
+import { ImageDto } from '../models/users/dto/image.dto';
 import { S3CacheService } from '../s3-cache/s3-cache.service';
 import { S3Service } from '../s3/s3.service';
-import { ImageDto } from '../models/users/dto/image.dto';
 
 export interface DocumentWithImage {
 	imageKey: string;

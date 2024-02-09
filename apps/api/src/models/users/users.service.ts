@@ -2,10 +2,10 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
+import { CryptoUtils } from '../../security/helpers/crypto.utils';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
-import { CryptoUtils } from '../../security/helpers/crypto.utils';
 
 export interface UserCreateData {
 	username: string;

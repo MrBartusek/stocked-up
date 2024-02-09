@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrganizationResolverService } from './organization-resolver.service';
-import { ProductsStrategy } from './strategy/products.strategy';
 import { Types } from 'mongoose';
+import { OrganizationResolverService } from './organization-resolver.service';
+import { InventoryStrategy } from './strategy/inventory.strategy';
+import { OrganizationStrategy } from './strategy/organization.strategy';
+import { ProductsStrategy } from './strategy/products.strategy';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
 import { OrganizationResourceType } from './types/organization-resource.type';
-import { OrganizationStrategy } from './strategy/organization.strategy';
-import { InventoryStrategy } from './strategy/inventory.strategy';
 
 const MOCK_ORG_ID = new Types.ObjectId();
 

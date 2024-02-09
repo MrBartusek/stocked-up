@@ -14,8 +14,8 @@ import {
 	OrganizationAccessDecoratorMetadata,
 } from '../../models/organizations/types/org-access-decorator-metadata';
 import { OrganizationResolverService } from '../../organization-resolver/organization-resolver.service';
-import { SecurityService } from '../security.service';
 import { SecurityUtils } from '../helpers/security.utils';
+import { SecurityService } from '../security.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SecurityValidationPipe<T> implements PipeTransform<T> {

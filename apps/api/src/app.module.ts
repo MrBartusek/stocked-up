@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DemoModule } from './demo/demo.module';
+import { EmailsModule } from './emails/emails.module';
 import { GravatarModule } from './gravatar/gravatar.module';
 import { ImagesModule } from './images/images.module';
 import { InventoryModule } from './models/inventory/inventory.module';
@@ -18,7 +19,6 @@ import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
 import { SecurityModule } from './security/security.module';
-import { EmailsModule } from './emails/emails.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),

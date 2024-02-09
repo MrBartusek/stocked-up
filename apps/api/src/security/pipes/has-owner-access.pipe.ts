@@ -2,9 +2,9 @@ import { ForbiddenException, Inject, Injectable, PipeTransform, Scope } from '@n
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { SecurityService } from '../security.service';
-import { SecurityUtils } from '../helpers/security.utils';
 import { OrganizationSecurityRole } from 'shared-types';
+import { SecurityUtils } from '../helpers/security.utils';
+import { SecurityService } from '../security.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class HasOwnerAccessPipe implements PipeTransform<Types.ObjectId> {

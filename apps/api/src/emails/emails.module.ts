@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { EmailsService } from './emails.service';
 import { Resend } from 'resend';
+import { EmailsService } from './emails.service';
 
 const { RESEND_API_KEY } = process.env;
 

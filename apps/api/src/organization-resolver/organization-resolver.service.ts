@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ProductsStrategy } from './strategy/products.strategy';
 import { Types } from 'mongoose';
+import { InventoryStrategy } from './strategy/inventory.strategy';
+import { OrganizationStrategy } from './strategy/organization.strategy';
+import { ProductsStrategy } from './strategy/products.strategy';
+import { WarehouseStrategy } from './strategy/warehouse.strategy';
 import { OrganizationResourceType } from './types/organization-resource.type';
 import { ResolverStrategy } from './types/resolver-strategy.type';
-import { WarehouseStrategy } from './strategy/warehouse.strategy';
-import { OrganizationStrategy } from './strategy/organization.strategy';
-import { InventoryStrategy } from './strategy/inventory.strategy';
 
 @Injectable()
 export class OrganizationResolverService {

@@ -17,6 +17,8 @@ import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
 import { PageQueryDto } from '../dto/page-query.dto';
+import { ConfirmedGuard } from '../models/users/guards/confirmed.guard';
+import { UsersService } from '../models/users/users.service';
 import { PageQueryValidationPipe } from '../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
@@ -26,8 +28,6 @@ import { SecurityUtils } from './helpers/security.utils';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
-import { UsersService } from '../models/users/users.service';
-import { ConfirmedGuard } from '../models/users/guards/confirmed.guard';
 
 @Controller('security')
 export class SecurityController {

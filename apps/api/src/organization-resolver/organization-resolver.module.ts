@@ -3,10 +3,10 @@ import { InventoryModule } from '../models/inventory/inventory.module';
 import { ProductsModule } from '../models/products/products.module';
 import { WarehousesModule } from '../models/warehouses/warehouses.module';
 import { OrganizationResolverService } from './organization-resolver.service';
+import { InventoryStrategy } from './strategy/inventory.strategy';
+import { OrganizationStrategy } from './strategy/organization.strategy';
 import { ProductsStrategy } from './strategy/products.strategy';
 import { WarehouseStrategy } from './strategy/warehouse.strategy';
-import { OrganizationStrategy } from './strategy/organization.strategy';
-import { InventoryStrategy } from './strategy/inventory.strategy';
 
 const STRATEGY_LIST: Provider[] = [
 	ProductsStrategy,

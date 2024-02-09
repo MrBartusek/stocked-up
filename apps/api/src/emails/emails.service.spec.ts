@@ -1,6 +1,6 @@
+import { InternalServerErrorException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { EmailsService, SendEmailOptions } from './emails.service';
-import { InternalServerErrorException } from '@nestjs/common';
 
 describe('EmailsService', () => {
 	let service: EmailsService;

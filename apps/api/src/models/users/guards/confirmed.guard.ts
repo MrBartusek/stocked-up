@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Request } from 'express';
-import { UsersService } from '../users.service';
 import { Types } from 'mongoose';
+import { UsersService } from '../users.service';
 
 @Injectable()
 export class ConfirmedGuard implements CanActivate {

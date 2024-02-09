@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
 import { mockUserRequest } from '../../mocks/mock-user-request';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
+import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
 import { CreateWarehouseDto } from '../warehouses/dto/create-warehouse.dto';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
@@ -11,7 +12,6 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
-import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
 
 describe('OrganizationsController', () => {
 	let controller: OrganizationsController;

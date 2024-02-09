@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Types } from 'mongoose';
+import { EmailsService } from '../emails/emails.service';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { EmailsService } from '../emails/emails.service';
-import { Types } from 'mongoose';
 import { EmailConfirmTemplate } from './templates/email-confirm.template';
 
 @Injectable()
