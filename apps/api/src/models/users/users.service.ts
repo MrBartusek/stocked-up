@@ -96,7 +96,7 @@ export class UsersService {
 		return this.userRepository.exist({ _id: id });
 	}
 
-	setActive(id: Types.ObjectId, isConfirmed: boolean) {
+	setConfirmed(id: Types.ObjectId, isConfirmed: boolean) {
 		return this.userRepository.findOneByIdAndUpdate(id, { 'profile.isConfirmed': isConfirmed });
 	}
 

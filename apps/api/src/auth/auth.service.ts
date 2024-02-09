@@ -53,7 +53,7 @@ export class AuthService {
 			throw new BadRequestException('This token is already used');
 		}
 
-		return this.usersService.setActive(user._id, true);
+		return this.usersService.setConfirmed(user._id, true);
 	}
 
 	async sendEmailConfirmation(user: UserDocument) {
