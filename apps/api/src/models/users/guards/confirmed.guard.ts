@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { UsersService } from '../users.service';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class ConfirmedGuard implements CanActivate {
@@ -14,7 +15,8 @@ export class ConfirmedGuard implements CanActivate {
 			return true;
 		}
 
-		const user = await this.userService.findById(request.user.id);
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.userService.findById(userId);
 		const dbDataConfirmed = user.profile.isConfirmed;
 		if (!dbDataConfirmed) {
 			throw new ForbiddenException(

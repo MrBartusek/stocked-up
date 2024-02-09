@@ -1,27 +1,30 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { BsCheck, BsCheckCircle } from 'react-icons/bs';
+import { useEffect } from 'react';
+import { BsCheckCircle } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useEmailConfirm from '../hooks/useEmailConfirm';
 import { Utils } from '../utils/utils';
 import Button from './Button';
 import Alert from './Helpers/Alert';
 import Loader from './Loader';
-import useEmailConfirm from '../hooks/useEmailConfirm';
 
 export interface EmailConfirmFormProps {
 	token: string;
+	user: string;
 }
 
-function EmailConfirmForm({ token }: EmailConfirmFormProps) {
-	const { confirmed, isLoading, error } = useEmailConfirm(token);
+function EmailConfirmForm({ token, user }: EmailConfirmFormProps) {
+	const { confirmed, isLoading, error } = useEmailConfirm(token, user);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!confirmed) return;
+
 		queryClient.invalidateQueries(['users', 'me']);
-		setTimeout(() => navigate('/dashboard'), 3000);
+
+		const timeout = setTimeout(() => navigate('/dashboard'), 3000);
+		return () => clearTimeout(timeout);
 	}, [navigate, confirmed, queryClient]);
 
 	return (

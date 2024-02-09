@@ -85,7 +85,7 @@ function Router() {
 			],
 		},
 		{
-			path: 'confirm-email/:token',
+			path: 'confirm-email',
 			element: <EmailConfirmPage />,
 			errorElement: <ApplicationError />,
 		},

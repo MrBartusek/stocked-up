@@ -16,6 +16,7 @@ import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
+import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 
 @Controller('users')
 @ApiTags('users')
@@ -32,7 +33,8 @@ export class UsersController {
 
 	@Get('me')
 	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
-		const user = await this.usersService.findById(request.user.id);
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.usersService.findById(userId);
 
 		if (!user) {
 			throw new NotFoundException();
@@ -42,7 +44,7 @@ export class UsersController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id') id: string): Promise<UserDto> {
+	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<UserDto> {
 		const user = await this.usersService.findById(id);
 
 		if (!user) {

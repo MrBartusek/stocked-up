@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import UndrawEmailConfirm from '../../assets/undraw_email_confirm.svg';
+import EmailConfirmForm from '../EmailConfirmForm';
 import FullFocusContainer from '../FullFocusContainer';
 import SideBySideImage from '../SideBySideImage';
-import EmailConfirmForm from '../EmailConfirmForm';
 
 function EmailConfirmPage() {
-	const { token } = useParams();
+	const [searchParams] = useSearchParams();
 
 	return (
 		<FullFocusContainer>
@@ -14,7 +14,10 @@ function EmailConfirmPage() {
 				className="flex-1"
 			>
 				<h2 className="mb-2 text-center text-4xl">Confirm Your Email</h2>
-				<EmailConfirmForm token={token} />
+				<EmailConfirmForm
+					token={searchParams.get('token')!}
+					user={searchParams.get('user')!}
+				/>
 			</SideBySideImage>
 		</FullFocusContainer>
 	);

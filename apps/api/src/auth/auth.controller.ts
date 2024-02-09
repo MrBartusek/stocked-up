@@ -5,6 +5,7 @@ import {
 	HttpCode,
 	Param,
 	Post,
+	Query,
 	Req,
 	UseGuards,
 } from '@nestjs/common';
@@ -17,6 +18,8 @@ import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
+import { Types } from 'mongoose';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -62,9 +65,12 @@ export class AuthController {
 		return dto;
 	}
 
-	@Post('confirm-email/:token')
-	async confirmEmail(@Param('token') token: string): Promise<PrivateUserDto> {
-		const user = await this.authService.confirmUserEmail(token);
+	@Post('confirm-email/confirm')
+	async confirmEmail(
+		@Query('user', ParseObjectIdPipe) userId: Types.ObjectId,
+		@Query('token') token: string,
+	): Promise<PrivateUserDto> {
+		const user = await this.authService.confirmUserEmail(userId, token);
 		return User.toPrivateDto(user);
 	}
 }

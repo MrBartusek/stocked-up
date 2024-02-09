@@ -1,17 +1,17 @@
 import axios, { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 
-function useEmailConfirm(token: string) {
-	const confirmEmail = async (token: string) => {
-		await axios.post(`/api/auth/confirm-email/${token}`);
+function useEmailConfirm(token?: string, user?: string) {
+	const confirmEmail = async (token?: string, user?: string) => {
+		await axios.post(`/api/auth/confirm-email/confirm?token=${token}&user=${user}`);
 		return true;
 	};
 
 	const { data, error, isLoading } = useQuery(
-		['auth', 'email-confirm', token],
-		() => confirmEmail(token),
+		['auth', 'email-confirm', token, user],
+		() => confirmEmail(token, user),
 		{
-			enabled: token != undefined,
+			enabled: token != undefined || user != undefined,
 			refetchOnWindowFocus: false,
 			refetchOnReconnect: false,
 			refetchOnMount: false,

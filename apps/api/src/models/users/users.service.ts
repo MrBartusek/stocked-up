@@ -74,14 +74,8 @@ export class UsersService {
 		return this.userRepository.find(entityFilterQuery);
 	}
 
-	findById(id: string): Promise<UserDocument | null> {
+	findById(id: Types.ObjectId): Promise<UserDocument | null> {
 		return this.userRepository.findById(id);
-	}
-
-	findByEmailToken(token: string): Promise<UserDocument | null> {
-		return this.userRepository.findOne({
-			'profile.emailConfirmationToken': token,
-		});
 	}
 
 	isEmailTaken(email: string) {

@@ -43,11 +43,14 @@ export class AuthService {
 		}
 	}
 
-	async confirmUserEmail(token: string): Promise<any> {
-		const user = await this.usersService.findByEmailToken(token);
+	async confirmUserEmail(userId: Types.ObjectId, token: string): Promise<any> {
+		const user = await this.usersService.findById(userId);
 
-		if (!user) {
-			throw new BadRequestException('Provided token is invalid');
+		if (!userId) {
+			throw new BadRequestException('This user does not exist');
+		}
+		if (user.profile.emailConfirmationToken != token) {
+			throw new BadRequestException('This token not valid');
 		}
 		if (user.profile.isConfirmed) {
 			throw new BadRequestException('This token is already used');
@@ -58,7 +61,7 @@ export class AuthService {
 
 	async sendEmailConfirmation(user: UserDocument) {
 		const token = await this.usersService.generateEmailConfirmationToken(user._id);
-		const content = new EmailConfirmTemplate(user.profile.username, token);
+		const content = new EmailConfirmTemplate(user._id, user.profile.username, token);
 
 		return this.emailService.sendEmail({
 			to: user.profile.email,
