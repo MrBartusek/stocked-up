@@ -21,6 +21,7 @@ import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
+import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
@@ -29,8 +30,6 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
-import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
-import { ConfirmedGuard } from '../users/guards/confirmed.guard';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -43,7 +42,6 @@ export class OrganizationsController {
 	) {}
 
 	@Post()
-	@UseGuards(ConfirmedGuard)
 	async create(
 		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
@@ -84,7 +82,6 @@ export class OrganizationsController {
 	}
 
 	@Put(':id')
-	@UseGuards(ConfirmedGuard)
 	async update(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
@@ -97,7 +94,6 @@ export class OrganizationsController {
 	}
 
 	@Delete(':id')
-	@UseGuards(ConfirmedGuard)
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasOwnerAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -109,7 +105,6 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
-	@UseGuards(ConfirmedGuard)
 	async findById(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -118,7 +113,6 @@ export class OrganizationsController {
 	}
 
 	@Patch(':id/settings')
-	@UseGuards(ConfirmedGuard)
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,

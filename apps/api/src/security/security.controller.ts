@@ -11,6 +11,7 @@ import {
 	Put,
 	Query,
 	Req,
+	UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Types } from 'mongoose';
@@ -26,6 +27,7 @@ import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe'
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
 import { UsersService } from '../models/users/users.service';
+import { ConfirmedGuard } from '../models/users/guards/confirmed.guard';
 
 @Controller('security')
 export class SecurityController {
@@ -35,6 +37,7 @@ export class SecurityController {
 	) {}
 
 	@Post()
+	@UseGuards(ConfirmedGuard)
 	async create(@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto): Promise<any> {
 		const org = new Types.ObjectId(dto.organization);
 

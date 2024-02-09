@@ -28,12 +28,10 @@ import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 import { InventoryService } from './inventory.service';
 import { InventoryItem } from './schemas/inventory-item.schema';
-import { ConfirmedGuard } from '../users/guards/confirmed.guard';
 
 @ApiTags('inventory')
 @Controller('inventory')
 @UseGuards(AuthenticatedGuard)
-@UseGuards(ConfirmedGuard)
 export class InventoryController {
 	constructor(
 		private readonly inventoryService: InventoryService,
