@@ -6,6 +6,7 @@ import { CryptoUtils } from '../../security/helpers/crypto.utils';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
+import { UpdateQuery } from 'mongoose';
 
 export interface UserCreateData {
 	username: string;
@@ -76,6 +77,13 @@ export class UsersService {
 
 	findById(id: Types.ObjectId): Promise<UserDocument | null> {
 		return this.userRepository.findById(id);
+	}
+
+	findOneByIdAndUpdate(
+		id: Types.ObjectId,
+		query: UpdateQuery<UserDocument>,
+	): Promise<UserDocument | null> {
+		return this.userRepository.findOneByIdAndUpdate(id, query);
 	}
 
 	isEmailTaken(email: string) {

@@ -4,6 +4,7 @@ import { PrivateUserDto, UserDto } from 'shared-types';
 import DtoHelper from '../../../helpers/dto.helper';
 import { UserAuth } from './user-auth.schema';
 import { UserProfile } from './user-profile.schema';
+import { UserToken } from './user-token';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -14,6 +15,9 @@ export class User {
 
 	@Prop({ type: UserAuth, required: true })
 	auth: UserAuth;
+
+	@Prop({ type: Array<UserToken>, required: true, default: [] })
+	tokens: UserToken[];
 
 	@Prop()
 	createdAt?: Date;
