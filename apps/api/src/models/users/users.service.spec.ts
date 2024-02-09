@@ -3,17 +3,18 @@ import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
+import { Types } from 'mongoose';
 
 describe('UsersService', () => {
 	let service: UsersService;
 
 	const mockUserRepository = {
 		create: jest.fn((dto) => ({
-			id: '123',
+			id: new Types.ObjectId(),
 			...dto,
 		})),
 		findOne: jest.fn(() => ({
-			id: '123',
+			id: new Types.ObjectId(),
 			profile: {
 				username: 'test',
 			},
@@ -59,11 +60,17 @@ describe('UsersService', () => {
 		it('without gravatar', () => {
 			expect(
 				service.create({ username: 'test', email: 'test@dokurno.dev', passwordHash: 'test' }),
-			).resolves.toEqual({
-				id: expect.any(String),
-				profile: { username: expect.any(String), email: expect.any(String), imageKey: null },
-				auth: { password: expect.any(String) },
-			});
+			).resolves.toEqual(
+				expect.objectContaining({
+					id: expect.any(Types.ObjectId),
+					profile: expect.objectContaining({
+						username: expect.any(String),
+						email: expect.any(String),
+						imageKey: null,
+					}),
+					auth: expect.objectContaining({ password: expect.any(String) }),
+				}),
+			);
 		});
 
 		it('with gravatar', () => {
@@ -86,16 +93,16 @@ describe('UsersService', () => {
 	it('should find by username', () => {
 		expect(service.findOne('test')).toEqual(
 			expect.objectContaining({
-				id: expect.any(String),
+				id: expect.any(Types.ObjectId),
 				profile: { username: 'test' },
 			}),
 		);
 	});
 
 	it('should find by id', () => {
-		expect(service.findById('123')).toEqual(
+		expect(service.findById(new Types.ObjectId())).toEqual(
 			expect.objectContaining({
-				id: '123',
+				id: expect.any(Types.ObjectId),
 			}),
 		);
 	});
