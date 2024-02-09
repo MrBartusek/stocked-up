@@ -15,17 +15,17 @@ export interface EmailConfirmFormProps {
 
 function EmailConfirmForm({ token, user }: EmailConfirmFormProps) {
 	const { confirmed, isLoading, error } = useEmailConfirm(token, user);
-	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!confirmed) return;
 
-		queryClient.invalidateQueries(['users', 'me']);
-
-		const timeout = setTimeout(() => navigate('/dashboard'), 3000);
+		const timeout = setTimeout(() => {
+			navigate('/dashboard');
+			navigate(0);
+		}, 3000);
 		return () => clearTimeout(timeout);
-	}, [navigate, confirmed, queryClient]);
+	}, [confirmed]);
 
 	return (
 		<div className="my-12">
@@ -50,7 +50,7 @@ function EmailConfirmForm({ token, user }: EmailConfirmFormProps) {
 							to="/dashboard"
 							className="link-muted text-center"
 						>
-							You are being redirected to the dashboard...
+							Redirecting you to dashboard...
 						</Link>
 					</div>
 				</Loader>

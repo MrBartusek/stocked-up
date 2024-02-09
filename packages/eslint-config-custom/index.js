@@ -35,6 +35,7 @@ module.exports = {
 		'react-hooks/exhaustive-deps': 'warn',
 		'react/react-in-jsx-scope': 'off',
 		'react/prop-types': 'off',
+        'react-hooks/exhaustive-deps': 'off',
 		'prettier/prettier': [
 			'error',
 			{
