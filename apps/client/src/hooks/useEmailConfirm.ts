@@ -15,8 +15,8 @@ function useEmailConfirm(token?: string, user?: string) {
 			refetchOnWindowFocus: false,
 			refetchOnReconnect: false,
 			refetchOnMount: false,
-			retry(failureCount, error: AxiosError) {
-				return error.response?.status != 400;
+			retry(failureCount: number, error: AxiosError) {
+				return error.response?.status != 400 && failureCount < 2;
 			},
 		},
 	);
