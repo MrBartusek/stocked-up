@@ -6,6 +6,7 @@ const DEFAULT_EMAIL_SENDER = 'noreply@dokurno.dev';
 const { EMAIL_SENDER } = process.env;
 
 const EMAIL_FOOTER = `
+
 Thanks,
 StockedUp Team
 
