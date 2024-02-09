@@ -30,7 +30,7 @@ import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
 import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
-import { ActiveGuard } from '../users/guards/active.guard';
+import { ConfirmedGuard } from '../users/guards/confirmed.guard';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -43,7 +43,7 @@ export class OrganizationsController {
 	) {}
 
 	@Post()
-	@UseGuards(ActiveGuard)
+	@UseGuards(ConfirmedGuard)
 	async create(
 		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
@@ -84,7 +84,7 @@ export class OrganizationsController {
 	}
 
 	@Put(':id')
-	@UseGuards(ActiveGuard)
+	@UseGuards(ConfirmedGuard)
 	async update(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
@@ -97,7 +97,7 @@ export class OrganizationsController {
 	}
 
 	@Delete(':id')
-	@UseGuards(ActiveGuard)
+	@UseGuards(ConfirmedGuard)
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasOwnerAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -109,7 +109,7 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
-	@UseGuards(ActiveGuard)
+	@UseGuards(ConfirmedGuard)
 	async findById(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -118,7 +118,7 @@ export class OrganizationsController {
 	}
 
 	@Patch(':id/settings')
-	@UseGuards(ActiveGuard)
+	@UseGuards(ConfirmedGuard)
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,

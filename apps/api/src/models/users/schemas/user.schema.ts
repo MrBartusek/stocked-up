@@ -34,7 +34,7 @@ export class User {
 			...User.toDto(document),
 			email: document.profile.email,
 			isDemo: document.profile.isDemo,
-			isActive: document.profile.isActive,
+			isConfirmed: document.profile.isConfirmed,
 		};
 	}
 }

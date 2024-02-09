@@ -17,7 +17,7 @@ export class UserProfile {
 	isDemo?: boolean;
 
 	@Prop({ default: false })
-	isActive?: boolean;
+	isConfirmed?: boolean;
 
 	@Prop()
 	emailConfirmationToken?: string;

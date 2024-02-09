@@ -72,7 +72,7 @@ export class DemoService {
 			username: `Demo-${key}`,
 			email: `demo-${key}@dokurno.dev`,
 			isDemo: true,
-			isActive: true,
+			isConfirmed: true,
 		});
 	}
 

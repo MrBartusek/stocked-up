@@ -12,7 +12,7 @@ export interface UserCreateData {
 	email: string;
 	passwordHash?: string;
 	isDemo?: boolean;
-	isActive?: boolean;
+	isConfirmed?: boolean;
 }
 
 @Injectable()
@@ -34,7 +34,7 @@ export class UsersService {
 				email: data.email,
 				imageKey: avatarKey,
 				isDemo: data.isDemo || false,
-				isActive: data.isActive || false,
+				isConfirmed: data.isConfirmed || false,
 			},
 			auth: { password: data.passwordHash || null },
 		});
@@ -96,8 +96,8 @@ export class UsersService {
 		return this.userRepository.exist({ _id: id });
 	}
 
-	setActive(id: Types.ObjectId, isActive: boolean) {
-		return this.userRepository.findOneByIdAndUpdate(id, { 'profile.isActive': isActive });
+	setActive(id: Types.ObjectId, isConfirmed: boolean) {
+		return this.userRepository.findOneByIdAndUpdate(id, { 'profile.isConfirmed': isConfirmed });
 	}
 
 	async generateEmailConfirmationToken(id: Types.ObjectId): Promise<string> {

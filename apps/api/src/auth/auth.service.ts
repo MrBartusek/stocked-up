@@ -49,7 +49,7 @@ export class AuthService {
 		if (!user) {
 			throw new BadRequestException('Provided token is invalid');
 		}
-		if (user.profile.isActive) {
+		if (user.profile.isConfirmed) {
 			throw new BadRequestException('This token is already used');
 		}
 
