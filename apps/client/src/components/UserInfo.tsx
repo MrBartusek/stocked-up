@@ -1,5 +1,11 @@
 import { useContext } from 'react';
-import { BsBoxArrowLeft, BsChevronDown, BsExclamationOctagon, BsPerson } from 'react-icons/bs';
+import {
+	BsBoxArrowLeft,
+	BsChevronDown,
+	BsEnvelopeExclamation,
+	BsExclamationOctagon,
+	BsPerson,
+} from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import Badge from '../Badge';
 import { UserContext } from '../context/UserContext';
@@ -31,6 +37,12 @@ function UserInfo() {
 					<Badge>
 						<BsPerson />
 						Demo
+					</Badge>
+				)}
+				{!user.isConfirmed && (
+					<Badge>
+						<BsEnvelopeExclamation />
+						Unconfirmed
 					</Badge>
 				)}
 				<BsChevronDown />
