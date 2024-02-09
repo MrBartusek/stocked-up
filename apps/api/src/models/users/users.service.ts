@@ -102,16 +102,6 @@ export class UsersService {
 		return this.userRepository.findOneByIdAndUpdate(id, { 'profile.isConfirmed': isConfirmed });
 	}
 
-	async generateEmailConfirmationToken(id: Types.ObjectId): Promise<string> {
-		const token = CryptoUtils.generateSafeToken(64);
-
-		await this.userRepository.findOneByIdAndUpdate(id, {
-			'profile.emailConfirmationToken': token,
-		});
-
-		return token;
-	}
-
 	private async importDefaultAvatar(email: string): Promise<string | null> {
 		const gravatar = await this.gravatarService.getGravatarBuffer(email);
 		if (!gravatar) return null;

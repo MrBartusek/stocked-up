@@ -64,4 +64,12 @@ export class UsersTokenService {
 
 		return !invalidType && !expired;
 	}
+
+	async invalidateToken(userId: Types.ObjectId, token: string): Promise<void> {
+		const user = await this.usersService.findById(userId);
+		if (!user) return;
+
+		const newTokenList = user.tokens.filter((tokenObj) => tokenObj.token != token);
+		await this.usersService.findOneByIdAndUpdate(user._id, { tokens: newTokenList });
+	}
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { Types } from 'mongoose';
 import { EmailsService } from '../emails/emails.service';
@@ -6,13 +6,19 @@ import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { EmailConfirmTemplate } from './templates/email-confirm.template';
+import { UsersTokenService } from '../models/users/users-token.service';
+import { EMAIL_CONFIRM_TOKEN } from './types/emailTokenTypes';
+import { log } from 'console';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private usersService: UsersService,
+		private usersTokenService: UsersTokenService,
 		private emailService: EmailsService,
 	) {}
+
+	private readonly logger = new Logger(AuthService.name);
 
 	async registerUser(data: UserRegisterDto): Promise<UserDocument> {
 		const hash = await bcrypt.hash(data.password, 12);
@@ -23,7 +29,10 @@ export class AuthService {
 			passwordHash: hash,
 		});
 
-		await this.sendEmailConfirmation(user);
+		await this.sendEmailConfirmation(user).catch((error) => {
+			this.logger.error(`Failed to send initial confirmation E-mail ${error}`);
+		});
+
 		return user;
 	}
 
@@ -44,23 +53,25 @@ export class AuthService {
 	}
 
 	async confirmUserEmail(userId: Types.ObjectId, token: string): Promise<any> {
-		const user = await this.usersService.findById(userId);
+		const tokenValid = await this.usersTokenService.validateToken({
+			userId,
+			token,
+			type: EMAIL_CONFIRM_TOKEN,
+		});
 
-		if (!userId) {
-			throw new BadRequestException('This user does not exist');
-		}
-		if (user.profile.emailConfirmationToken != token) {
-			throw new BadRequestException('This token not valid');
-		}
-		if (user.profile.isConfirmed) {
-			throw new BadRequestException('This token is already used');
+		if (!tokenValid) {
+			throw new BadRequestException('This email confirmation link is invalid or expired');
 		}
 
-		return this.usersService.setConfirmed(user._id, true);
+		await this.usersTokenService.invalidateToken(userId, token);
+		return this.usersService.setConfirmed(userId, true);
 	}
 
 	async sendEmailConfirmation(user: UserDocument) {
-		const token = await this.usersService.generateEmailConfirmationToken(user._id);
+		const token = await this.usersTokenService.generateAndSaveToken({
+			userId: user._id,
+			type: EMAIL_CONFIRM_TOKEN,
+		});
 		const content = new EmailConfirmTemplate(user._id, user.profile.username, token);
 
 		return this.emailService.sendEmail({
