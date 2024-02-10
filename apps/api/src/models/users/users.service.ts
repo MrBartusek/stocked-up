@@ -71,6 +71,10 @@ export class UsersService {
 		});
 	}
 
+	findByEmail(email: string): Promise<UserDocument | undefined> {
+		return this.userRepository.findOne({ 'profile.email': email });
+	}
+
 	find(entityFilterQuery: FilterQuery<UserDocument>): Promise<UserDocument[]> {
 		return this.userRepository.find(entityFilterQuery);
 	}

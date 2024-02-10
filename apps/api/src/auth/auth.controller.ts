@@ -19,6 +19,7 @@ import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -68,7 +69,7 @@ export class AuthController {
 	@UseGuards(AuthenticatedGuard)
 	async startEmailConfirmation(@Req() request: Request): Promise<any> {
 		const userId = new Types.ObjectId(request.user.id);
-		await this.authService.retryConfirmationEmail(userId);
+		await this.authService.sendEmailConfirmation(userId);
 		return { statusCode: 200 };
 	}
 
@@ -79,5 +80,20 @@ export class AuthController {
 	): Promise<PrivateUserDto> {
 		const user = await this.authService.confirmUserEmail(userId, token);
 		return User.toPrivateDto(user);
+	}
+
+	@Post('reset-password/start')
+	@UseGuards(AuthenticatedGuard)
+	async startPasswordReset(@Query('email') email: string): Promise<any> {
+		await this.authService.sendPasswordResetEmail(email);
+		return { statusCode: 200 };
+	}
+
+	@Post('reset-password/reset')
+	@UseGuards(AuthenticatedGuard)
+	async resetPassword(@Body() dto: ResetPasswordDto): Promise<any> {
+		const userId = new Types.ObjectId(dto.user);
+		await this.authService.resetUserPassword(userId, dto.token, dto.password);
+		return { statusCode: 200 };
 	}
 }

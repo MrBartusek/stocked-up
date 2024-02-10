@@ -1,6 +1,7 @@
 import { IImageDto } from './ImageDto';
 import { OrganizationSecurityRole } from './OrganizationSecurityRole';
 import { SimpleResponseDto } from './SimpleResponseDto';
+import { IResetPasswordDto } from './auth/IResetPasswordDto';
 import { IUserRegisterDto } from './auth/IUserRegisterDto';
 import { UserLoginDto } from './auth/UserLoginDto';
 import { BasicInventoryItemDto } from './inventory/BasicInventoryItemDto';
@@ -65,6 +66,7 @@ export {
     SortDirection,
     UserDto,
     UserLoginDto,
-    WarehouseDto
+    WarehouseDto,
+    IResetPasswordDto
 };
 

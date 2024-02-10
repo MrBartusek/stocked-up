@@ -9,7 +9,6 @@ const EMAIL_FOOTER = `
 
 Thanks,
 StockedUp Team
-
 ---
 This is automated message sent by StockedUp. Please do not reply to this email.
 If you received this email by mistake or believe it is a spam, please forward it to bartosz@dokurno.dev`;
