@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { Types } from 'mongoose';
 import { EmailsService } from '../emails/emails.service';
@@ -9,6 +9,7 @@ import { EmailConfirmTemplate } from './templates/email-confirm.template';
 import { UsersTokenService } from '../models/users/users-token.service';
 import { EMAIL_CONFIRM_TOKEN } from './types/emailTokenTypes';
 import { log } from 'console';
+import { differenceInDays, differenceInMinutes } from 'date-fns';
 
 @Injectable()
 export class AuthService {
@@ -65,6 +66,25 @@ export class AuthService {
 
 		await this.usersTokenService.invalidateToken(userId, token);
 		return this.usersService.setConfirmed(userId, true);
+	}
+
+	async retryConfirmationEmail(userId: Types.ObjectId) {
+		const user = await this.usersService.findById(userId);
+		if (!user) throw new NotFoundException('User not found');
+
+		if (user.profile.isConfirmed) {
+			throw new BadRequestException('This user E-mail address is already confirmed');
+		}
+
+		const lastRetry = await this.usersTokenService.getLastRetry(userId, EMAIL_CONFIRM_TOKEN);
+		if (lastRetry) {
+			const minutesDiff = differenceInMinutes(new Date(), lastRetry);
+			if (minutesDiff < 5) {
+				throw new BadRequestException('Please wait before sending next confirmation email');
+			}
+		}
+
+		return this.sendEmailConfirmation(user);
 	}
 
 	async sendEmailConfirmation(user: UserDocument) {

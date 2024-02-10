@@ -64,6 +64,14 @@ export class AuthController {
 		return dto;
 	}
 
+	@Post('confirm-email/start')
+	@UseGuards(AuthenticatedGuard)
+	async startEmailConfirmation(@Req() request: Request): Promise<any> {
+		const userId = new Types.ObjectId(request.user.id);
+		await this.authService.retryConfirmationEmail(userId);
+		return { statusCode: 200 };
+	}
+
 	@Post('confirm-email/confirm')
 	async confirmEmail(
 		@Query('user', ParseObjectIdPipe) userId: Types.ObjectId,
