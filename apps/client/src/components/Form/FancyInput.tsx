@@ -12,7 +12,7 @@ export interface FancyInputProps extends InputProps {
 	icon: IconType;
 }
 
-const FancyInput = forwardRef(function TextInput(
+const FancyInput = forwardRef(function FancyInput(
 	{ label, icon, ...props }: FancyInputProps,
 	ref: any,
 ) {

@@ -44,6 +44,7 @@ import RegisterForm from './RegisterForm';
 import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import EmailConfirmPage from './Pages/EmailConfirmPage';
+import PasswordResetPage from './Pages/PasswordResetPage';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -87,6 +88,11 @@ function Router() {
 		{
 			path: 'confirm-email',
 			element: <EmailConfirmPage />,
+			errorElement: <ApplicationError />,
+		},
+		{
+			path: 'password-reset',
+			element: <PasswordResetPage />,
 			errorElement: <ApplicationError />,
 		},
 		{

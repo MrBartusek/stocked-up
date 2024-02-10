@@ -83,14 +83,12 @@ export class AuthController {
 	}
 
 	@Post('reset-password/start')
-	@UseGuards(AuthenticatedGuard)
 	async startPasswordReset(@Query('email') email: string): Promise<any> {
 		await this.authService.sendPasswordResetEmail(email);
 		return { statusCode: 200 };
 	}
 
 	@Post('reset-password/reset')
-	@UseGuards(AuthenticatedGuard)
 	async resetPassword(@Body() dto: ResetPasswordDto): Promise<any> {
 		const userId = new Types.ObjectId(dto.user);
 		await this.authService.resetUserPassword(userId, dto.token, dto.password);

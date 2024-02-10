@@ -65,7 +65,7 @@ function LoginForm() {
 				autoComplete="on"
 			/>
 			<Link
-				to="password-reset"
+				to="/password-reset"
 				className="block text-right text-sm text-muted"
 			>
 				Forgot Password?

@@ -11,7 +11,7 @@ export class PasswordRestTemplate implements EmailTemplate {
 	) {}
 
 	toString(): string {
-		const url = `${BASE_URL}reset-password?user=${this.userId.toString()}&token=${this.token}`;
+		const url = `${BASE_URL}password-reset?user=${this.userId.toString()}&token=${this.token}`;
 		return (
 			`Hello,` +
 			`\r\n` +
