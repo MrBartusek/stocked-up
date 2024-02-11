@@ -19,41 +19,6 @@ export class AuthEmailsService {
 		private authService: AuthService,
 	) {}
 
-	async confirmUserEmail(userId: Types.ObjectId, token: string): Promise<UserDocument> {
-		const tokenValid = await this.usersTokenService.validateToken({
-			userId,
-			token,
-			type: EMAIL_CONFIRM_TOKEN,
-		});
-
-		if (!tokenValid) {
-			throw new BadRequestException('This email confirmation link is invalid or expired');
-		}
-
-		await this.usersTokenService.invalidateToken(userId, token);
-		return this.usersService.setConfirmed(userId, true);
-	}
-
-	async resetUserPassword(
-		userId: Types.ObjectId,
-		token: string,
-		password: string,
-	): Promise<UserDocument> {
-		const tokenValid = await this.usersTokenService.validateToken({
-			userId,
-			token,
-			type: PASSWORD_RESET_TOKEN,
-		});
-
-		if (!tokenValid) {
-			throw new BadRequestException('This password reset token is invalid or expired');
-		}
-
-		await this.usersTokenService.invalidateToken(userId, token);
-		await this.usersService.setConfirmed(userId, true);
-		return this.authService.updateUserPassword(userId, password);
-	}
-
 	async sendEmailConfirmation(userId: Types.ObjectId) {
 		const user = await this.usersService.findById(userId);
 		if (!user) throw new NotFoundException('User not found');
@@ -94,6 +59,41 @@ export class AuthEmailsService {
 			subject: '[StockedUp] Password reset request',
 			text: content.toString(),
 		});
+	}
+
+	async confirmEmailWithToken(userId: Types.ObjectId, token: string): Promise<UserDocument> {
+		const tokenValid = await this.usersTokenService.validateToken({
+			userId,
+			token,
+			type: EMAIL_CONFIRM_TOKEN,
+		});
+
+		if (!tokenValid) {
+			throw new BadRequestException('This email confirmation link is invalid or expired');
+		}
+
+		await this.usersTokenService.invalidateToken(userId, token);
+		return this.usersService.setConfirmed(userId, true);
+	}
+
+	async resetPasswordWithToken(
+		userId: Types.ObjectId,
+		token: string,
+		password: string,
+	): Promise<UserDocument> {
+		const tokenValid = await this.usersTokenService.validateToken({
+			userId,
+			token,
+			type: PASSWORD_RESET_TOKEN,
+		});
+
+		if (!tokenValid) {
+			throw new BadRequestException('This password reset token is invalid or expired');
+		}
+
+		await this.usersTokenService.invalidateToken(userId, token);
+		await this.usersService.setConfirmed(userId, true);
+		return this.authService.updateUserPassword(userId, password);
 	}
 
 	private async validateIfCanSendEmail(userId: Types.ObjectId, token: string): Promise<boolean> {

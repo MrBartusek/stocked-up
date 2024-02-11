@@ -25,7 +25,7 @@ export class AuthEmailsController {
 		@Query('user', ParseObjectIdPipe) userId: Types.ObjectId,
 		@Query('token') token: string,
 	): Promise<PrivateUserDto> {
-		const user = await this.authEmailsService.confirmUserEmail(userId, token);
+		const user = await this.authEmailsService.confirmEmailWithToken(userId, token);
 		return User.toPrivateDto(user);
 	}
 
@@ -38,7 +38,7 @@ export class AuthEmailsController {
 	@Post('reset-password/reset')
 	async resetPassword(@Body() dto: ResetPasswordDto): Promise<any> {
 		const userId = new Types.ObjectId(dto.user);
-		await this.authEmailsService.resetUserPassword(userId, dto.token, dto.password);
+		await this.authEmailsService.resetPasswordWithToken(userId, dto.token, dto.password);
 		return { statusCode: 200 };
 	}
 }
