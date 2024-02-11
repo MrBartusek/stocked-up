@@ -35,7 +35,7 @@ export class AuthEmailsService {
 		});
 		const content = new EmailConfirmTemplate(user._id, user.profile.username, token);
 
-		return this.emailService.sendEmail({
+		return await this.emailService.sendEmail({
 			to: user.profile.email,
 			subject: '[StockedUp] Confirm E-mail address',
 			text: content.toString(),

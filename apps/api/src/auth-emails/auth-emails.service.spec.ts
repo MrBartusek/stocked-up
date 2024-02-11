@@ -1,18 +1,120 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthEmailsService } from './auth-emails.service';
+import { AuthService } from '../auth/auth.service';
+import { EmailsService } from '../emails/emails.service';
+import { UsersTokenService } from '../models/users/users-token.service';
+import { UsersService } from '../models/users/users.service';
+import { Types } from 'mongoose';
+import { NotFoundException } from '@nestjs/common';
 
 describe('AuthEmailsService', () => {
-  let service: AuthEmailsService;
+	let service: AuthEmailsService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthEmailsService],
-    }).compile();
+	const mockUsersService = {
+		setConfirmed: jest.fn(),
+		findById: jest.fn(),
+		findByEmail: jest.fn(),
+	};
 
-    service = module.get<AuthEmailsService>(AuthEmailsService);
-  });
+	const mockUsersTokenService = {
+		generateAndSaveToken: jest.fn(),
+		validateToken: jest.fn(),
+		invalidateToken: jest.fn(),
+		getLastRetry: jest.fn(),
+	};
+	const mockEmailService = {
+		sendEmail: jest.fn(() => {
+			console.log('mock called');
+			return 'email-id';
+		}),
+	};
+	const mockAuthService = {
+		updateUserPassword: jest.fn(),
+	};
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+	const sendEmailSpy = jest.spyOn(mockEmailService, 'sendEmail');
+
+	beforeEach(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			providers: [
+				AuthEmailsService,
+				{
+					provide: UsersService,
+					useValue: mockUsersService,
+				},
+				{
+					provide: UsersTokenService,
+					useValue: mockUsersTokenService,
+				},
+				{
+					provide: EmailsService,
+					useValue: mockEmailService,
+				},
+				{
+					provide: AuthService,
+					useValue: mockAuthService,
+				},
+			],
+		}).compile();
+
+		service = module.get<AuthEmailsService>(AuthEmailsService);
+	});
+
+	it('should be defined', () => {
+		expect(service).toBeDefined();
+	});
+
+	describe('sendEmailConfirmation', () => {
+		it('should fail if user does not exist', () => {
+			mockUsersService.findById.mockResolvedValue(null);
+
+			expect(service.sendEmailConfirmation(new Types.ObjectId())).rejects.toThrowError(
+				NotFoundException,
+			);
+		});
+
+		it('should fail on confirmed email', () => {
+			mockUsersService.findById.mockResolvedValue({ profile: { isConfirmed: true } });
+
+			expect(service.sendEmailConfirmation(new Types.ObjectId())).rejects.toThrowError(
+				'This user E-mail address is already confirmed',
+			);
+		});
+
+		it('should send email confirmation', async () => {
+			const user = {
+				_id: new Types.ObjectId(),
+				profile: {
+					isConfirmed: false,
+					username: 'test',
+					email: 'test@dokurno.dev',
+				},
+			};
+			mockUsersService.findById.mockResolvedValue(user);
+			mockUsersTokenService.generateAndSaveToken.mockResolvedValue('TEST_TOKEN');
+
+			const emailId = await service.sendEmailConfirmation(new Types.ObjectId());
+
+			expect(emailId).toBe('email-id');
+			expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+			expect(sendEmailSpy).toHaveBeenCalledWith(
+				expect.objectContaining({
+					to: 'test@dokurno.dev',
+					subject: '[StockedUp] Confirm E-mail address',
+					text: expect.stringContaining('TEST_TOKEN'),
+				}),
+			);
+		});
+	});
+
+	describe('Throttling', () => {
+		it('should throttle requests', () => {
+			mockUsersService.findById.mockResolvedValue({ profile: { isConfirmed: false } });
+			mockUsersTokenService.getLastRetry.mockResolvedValue(new Date());
+
+			expect(service.sendEmailConfirmation(new Types.ObjectId())).rejects.toThrowError(
+				'The confirmation email was sent recently, please check your inbox',
+			);
+		});
+	});
 });
