@@ -40,7 +40,7 @@ function ResetPasswordForm({ user, token }: ResetPasswordFormProps) {
 			password: inputs.password,
 		};
 		axios
-			.post(`/api/auth/reset-password/reset`, dto)
+			.post(`/api/auth-emails/reset-password/reset`, dto)
 			.then(() => {
 				toast.success('Your password have been changed, you can login now');
 				if (isAuthenticated) {

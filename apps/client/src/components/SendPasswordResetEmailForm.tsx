@@ -27,7 +27,7 @@ function SendPasswordResetEmailForm() {
 		setError(null);
 
 		axios
-			.post(`/api/auth/reset-password/start?email=${inputs.email}`)
+			.post(`/api/auth-emails/reset-password/start?email=${inputs.email}`)
 			.then(() => setSuccess(true))
 			.catch((error: AxiosError) => {
 				setError(Utils.requestErrorToString(error));

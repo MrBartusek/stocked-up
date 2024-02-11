@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 function useEmailConfirm(token?: string, user?: string) {
 	const confirmEmail = async (token?: string, user?: string) => {
-		await axios.post(`/api/auth/confirm-email/confirm?token=${token}&user=${user}`);
+		await axios.post(`/api/auth-emails/confirm-email/confirm?token=${token}&user=${user}`);
 		return true;
 	};
 
