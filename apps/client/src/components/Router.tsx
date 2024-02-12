@@ -117,7 +117,7 @@ function Router() {
 					element: <Outlet />,
 					children: [
 						{
-							path: 'settings',
+							path: 'me',
 							element: <UserSettingsPage />,
 							children: [
 								{

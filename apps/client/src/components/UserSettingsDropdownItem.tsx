@@ -4,10 +4,10 @@ import DropdownItem from './Dropdown/DropdownItem';
 
 function UserSettingsDropdownItem() {
 	const location = useLocation();
-	const isCurrent = location.pathname == '/dashboard/user/settings';
+	const isCurrent = location.pathname == '/dashboard/user/me';
 
 	return (
-		<Link to="/dashboard/user/settings">
+		<Link to="/dashboard/user/me">
 			<DropdownItem
 				active={isCurrent}
 				icon={BsSliders}

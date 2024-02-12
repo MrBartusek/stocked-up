@@ -7,7 +7,7 @@ import SidebarSection from '../../Sidebar/SidebarSection';
 function UserSettingsSidebar() {
 	const { logout } = useContext(UserContext);
 
-	const baseUrl = `/dashboard/user/settings`;
+	const baseUrl = `/dashboard/user/me`;
 
 	return (
 		<nav className="my-3 flex flex-1 flex-col gap-5">
