@@ -6,7 +6,7 @@ import { AuthEmailsController } from './auth-emails.controller';
 import { AuthEmailsService } from './auth-emails.service';
 
 @Module({
-	imports: [EmailsModule, forwardRef(() => AuthModule), UsersModule],
+	imports: [EmailsModule, UsersModule, forwardRef(() => AuthModule)],
 	providers: [AuthEmailsService],
 	controllers: [AuthEmailsController],
 	exports: [AuthEmailsService],

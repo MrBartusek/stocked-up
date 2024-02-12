@@ -41,12 +41,6 @@ describe('AuthService', () => {
 		}),
 	};
 
-	const mockAuthEmailService = {
-		sendEmailConfirmation: jest.fn(() => Promise.resolve()),
-	};
-
-	const sendEmailConfirmationSpy = jest.spyOn(mockAuthEmailService, 'sendEmailConfirmation');
-
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
@@ -54,10 +48,6 @@ describe('AuthService', () => {
 				{
 					provide: UsersService,
 					useValue: mockAuthService,
-				},
-				{
-					provide: AuthEmailsService,
-					useValue: mockAuthEmailService,
 				},
 			],
 		}).compile();
@@ -83,8 +73,6 @@ describe('AuthService', () => {
 		expect(user).toEqual(
 			expect.objectContaining({ profile: expect.objectContaining({ username: 'username' }) }),
 		);
-		expect(sendEmailConfirmationSpy).toBeCalledTimes(1);
-		expect(sendEmailConfirmationSpy).toBeCalledWith(user._id);
 	});
 
 	describe('User validation', () => {

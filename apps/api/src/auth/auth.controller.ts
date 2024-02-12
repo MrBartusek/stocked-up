@@ -3,6 +3,7 @@ import {
 	Body,
 	Controller,
 	HttpCode,
+	Logger,
 	Post,
 	Req,
 	UseGuards,
@@ -16,6 +17,7 @@ import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -23,7 +25,10 @@ export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly demoService: DemoService,
+		private readonly authEmailsService: AuthEmailsService,
 	) {}
+
+	private readonly logger = new Logger(AuthController.name);
 
 	@UseGuards(LocalAuthGuard)
 	@HttpCode(200)
@@ -50,6 +55,11 @@ export class AuthController {
 	@Post('register')
 	async register(@Body() body: UserRegisterDto): Promise<PrivateUserDto> {
 		const user = await this.authService.registerUser(body);
+
+		await this.authEmailsService.sendEmailConfirmation(user._id).catch((error) => {
+			this.logger.error(`Failed to send initial confirmation email for ${user._id} - ${error}`);
+		});
+
 		return User.toPrivateDto(user);
 	}
 
