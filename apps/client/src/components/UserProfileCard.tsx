@@ -27,9 +27,9 @@ function UserProfileCard() {
 					<div className="text-muted">{user.username}</div>
 				</div>
 				<div>
-					<div>
-						<span className="font-medium">E-mail</span>{' '}
-						<button className="link-primary">[Confirm]</button>
+					<div className="flex gap-1">
+						<span className="font-medium">E-mail</span>
+						{!user.isConfirmed && <button className="link-primary">[Confirm]</button>}
 					</div>
 					<div className="text-muted">{user.email}</div>
 				</div>
