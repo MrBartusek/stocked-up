@@ -16,7 +16,6 @@ import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -24,7 +23,6 @@ export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly demoService: DemoService,
-		private readonly authEmailsService: AuthEmailsService,
 	) {}
 
 	@UseGuards(LocalAuthGuard)
@@ -52,7 +50,6 @@ export class AuthController {
 	@Post('register')
 	async register(@Body() body: UserRegisterDto): Promise<PrivateUserDto> {
 		const user = await this.authService.registerUser(body);
-		await this.authEmailsService.sendEmailConfirmation(user._id);
 		return User.toPrivateDto(user);
 	}
 

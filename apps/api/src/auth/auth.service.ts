@@ -1,13 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { Types } from 'mongoose';
+import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService) {}
+	constructor(
+		private usersService: UsersService,
+		private authEmailService: AuthEmailsService,
+	) {}
+
+	private readonly logger = new Logger(AuthService.name);
 
 	async registerUser(data: UserRegisterDto): Promise<UserDocument> {
 		const hash = await this.hashPassword(data.password);
@@ -16,6 +22,10 @@ export class AuthService {
 			username: data.username,
 			email: data.email,
 			passwordHash: hash,
+		});
+
+		await this.authEmailService.sendEmailConfirmation(user._id).catch((error) => {
+			this.logger.error(`Failed to send initial confirmation email for ${user._id} - ${error}`);
 		});
 
 		return user;

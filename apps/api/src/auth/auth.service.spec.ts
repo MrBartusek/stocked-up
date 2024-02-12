@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../models/users/users.service';
 import { AuthService } from './auth.service';
+import { AuthEmailsService } from '../auth-emails/auth-emails.service';
+import { Types } from 'mongoose';
 
 const MOCK_PASSWORD = 'test-password';
 
@@ -27,6 +29,7 @@ describe('AuthService', () => {
 
 		create: jest.fn((data) => {
 			return {
+				_id: new Types.ObjectId(),
 				profile: {
 					email: data.email,
 					username: data.username,
@@ -38,10 +41,11 @@ describe('AuthService', () => {
 		}),
 	};
 
-	beforeAll(async () => {
-		mockPassword = MOCK_PASSWORD;
-		mockPasswordHashed = await bcrypt.hash(mockPassword, 4);
-	});
+	const mockAuthEmailService = {
+		sendEmailConfirmation: jest.fn(() => Promise.resolve()),
+	};
+
+	const sendEmailConfirmationSpy = jest.spyOn(mockAuthEmailService, 'sendEmailConfirmation');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -51,26 +55,36 @@ describe('AuthService', () => {
 					provide: UsersService,
 					useValue: mockAuthService,
 				},
+				{
+					provide: AuthEmailsService,
+					useValue: mockAuthEmailService,
+				},
 			],
 		}).compile();
 
 		service = module.get<AuthService>(AuthService);
 	});
 
+	beforeAll(async () => {
+		mockPassword = MOCK_PASSWORD;
+		mockPasswordHashed = await bcrypt.hash(mockPassword, 4);
+	});
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});
 
-	it('should register user', () => {
-		expect(
-			service.registerUser({
-				email: 'test@dokurno.dev',
-				username: 'username',
-				password: 'password',
-			}),
-		).resolves.toEqual(
+	it('should register user', async () => {
+		const user = await service.registerUser({
+			email: 'test@dokurno.dev',
+			username: 'username',
+			password: 'password',
+		});
+		expect(user).toEqual(
 			expect.objectContaining({ profile: expect.objectContaining({ username: 'username' }) }),
 		);
+		expect(sendEmailConfirmationSpy).toBeCalledTimes(1);
+		expect(sendEmailConfirmationSpy).toBeCalledWith(user._id);
 	});
 
 	describe('User validation', () => {

@@ -11,12 +11,7 @@ import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
-	imports: [
-		UsersModule,
-		DemoModule,
-		PassportModule.register({ session: true }),
-		forwardRef(() => AuthEmailsModule),
-	],
+	imports: [UsersModule, DemoModule, PassportModule.register({ session: true })],
 	controllers: [AuthController],
 	providers: [
 		AuthService,
