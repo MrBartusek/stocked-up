@@ -38,3 +38,4 @@ lerna-debug.log*
 .env
 globalConfig
 **/**/coverage
+apps/api/test/globalConfig.json
