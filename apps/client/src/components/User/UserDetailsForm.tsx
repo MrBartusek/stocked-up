@@ -12,6 +12,7 @@ import FormImageInput from '../Form/FormImageInput';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
 	username: string;
@@ -25,10 +26,12 @@ function UserDetailsForm() {
 	const { register, handleSubmit, control } = useForm<Inputs>({
 		defaultValues: { username: user.username, email: user.email, image: user.image },
 	});
-	const queryClient = useQueryClient();
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
@@ -47,6 +50,7 @@ function UserDetailsForm() {
 			.put<UserDto>(`/api/users`, dto)
 			.then(() => {
 				queryClient.invalidateQueries(['users', 'me']);
+				navigate('..');
 				toast.success(`Successfully updated user details!`);
 			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
@@ -88,7 +92,7 @@ function UserDetailsForm() {
 				/>
 			</FormField>
 
-			<FormSubmitButton>Update details</FormSubmitButton>
+			<FormSubmitButton>Update profile</FormSubmitButton>
 		</Form>
 	);
 }
