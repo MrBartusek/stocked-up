@@ -5,7 +5,7 @@ import { EmailsService } from '../emails/emails.service';
 import { UsersTokenService } from '../models/users/users-token.service';
 import { UsersService } from '../models/users/users.service';
 import { Types } from 'mongoose';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('AuthEmailsService', () => {
 	let service: AuthEmailsService;
@@ -30,6 +30,9 @@ describe('AuthEmailsService', () => {
 	};
 
 	const sendEmailSpy = jest.spyOn(mockEmailService, 'sendEmail');
+	const invalidateTokenSpy = jest.spyOn(mockUsersTokenService, 'invalidateToken');
+	const setConfirmedSpy = jest.spyOn(mockUsersService, 'setConfirmed');
+	const updatePasswordSpy = jest.spyOn(mockAuthService, 'updateUserPassword');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -102,6 +105,81 @@ describe('AuthEmailsService', () => {
 					text: expect.stringContaining('TEST_TOKEN'),
 				}),
 			);
+		});
+	});
+
+	describe('sendPasswordResetEmail', () => {
+		it('should fail on invalid email', () => {
+			mockUsersService.findByEmail.mockResolvedValue(null);
+
+			expect(service.sendPasswordResetEmail('invalid@dokurno.dev')).rejects.toThrowError(
+				NotFoundException,
+			);
+		});
+
+		it('should send password reset email', async () => {
+			const user = {
+				_id: new Types.ObjectId(),
+				profile: {
+					isConfirmed: true,
+					username: 'test',
+					email: 'test@dokurno.dev',
+				},
+			};
+			mockUsersService.findByEmail.mockResolvedValue(user);
+
+			const emailId = await service.sendPasswordResetEmail('test@dokurno.dev');
+
+			expect(emailId).toBe('email-id');
+			expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+			expect(sendEmailSpy).toHaveBeenCalledWith(
+				expect.objectContaining({
+					to: 'test@dokurno.dev',
+					subject: '[StockedUp] Password reset request',
+					text: expect.stringContaining('TEST_TOKEN'),
+				}),
+			);
+		});
+	});
+
+	describe('confirmEmailWithToken', () => {
+		it('should fail on invalid token', () => {
+			mockUsersTokenService.validateToken.mockResolvedValue(false);
+
+			expect(
+				service.confirmEmailWithToken(new Types.ObjectId(), 'EMAIL_TOKEN'),
+			).rejects.toThrowError(BadRequestException);
+		});
+
+		it('should confirm email on valid token', async () => {
+			const userId = new Types.ObjectId();
+			mockUsersTokenService.validateToken.mockResolvedValue(true);
+
+			await service.confirmEmailWithToken(userId, 'EMAIL_TOKEN');
+
+			expect(invalidateTokenSpy).toHaveBeenCalledWith(userId, 'EMAIL_TOKEN');
+			expect(setConfirmedSpy).toBeCalledWith(userId, true);
+		});
+	});
+
+	describe('resetPasswordWithToken', () => {
+		it('should fail on invalid token', () => {
+			mockUsersTokenService.validateToken.mockResolvedValue(false);
+
+			expect(
+				service.resetPasswordWithToken(new Types.ObjectId(), 'EMAIL_TOKEN', 'password'),
+			).rejects.toThrowError(BadRequestException);
+		});
+
+		it('should confirm email on valid token', async () => {
+			const userId = new Types.ObjectId();
+			mockUsersTokenService.validateToken.mockResolvedValue(true);
+
+			await service.resetPasswordWithToken(userId, 'EMAIL_TOKEN', 'password');
+
+			expect(invalidateTokenSpy).toHaveBeenCalledWith(userId, 'EMAIL_TOKEN');
+			expect(setConfirmedSpy).toBeCalledWith(userId, true);
+			expect(updatePasswordSpy).toBeCalledWith(userId, 'password');
 		});
 	});
 
