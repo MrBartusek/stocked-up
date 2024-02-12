@@ -17,16 +17,13 @@ describe('AuthEmailsService', () => {
 	};
 
 	const mockUsersTokenService = {
-		generateAndSaveToken: jest.fn(),
+		generateAndSaveToken: jest.fn(() => 'TEST_TOKEN'),
 		validateToken: jest.fn(),
 		invalidateToken: jest.fn(),
 		getLastRetry: jest.fn(),
 	};
 	const mockEmailService = {
-		sendEmail: jest.fn(() => {
-			console.log('mock called');
-			return 'email-id';
-		}),
+		sendEmail: jest.fn(() => 'email-id'),
 	};
 	const mockAuthService = {
 		updateUserPassword: jest.fn(),
@@ -60,6 +57,8 @@ describe('AuthEmailsService', () => {
 		service = module.get<AuthEmailsService>(AuthEmailsService);
 	});
 
+	afterEach(() => jest.clearAllMocks());
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});
@@ -91,7 +90,6 @@ describe('AuthEmailsService', () => {
 				},
 			};
 			mockUsersService.findById.mockResolvedValue(user);
-			mockUsersTokenService.generateAndSaveToken.mockResolvedValue('TEST_TOKEN');
 
 			const emailId = await service.sendEmailConfirmation(new Types.ObjectId());
 
