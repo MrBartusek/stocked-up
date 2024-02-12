@@ -5,6 +5,9 @@ ignore:
   - "**/*.repository.*"
   - "**/mongoose-module-helper.ts"
   - "**/redis/connect.ts"
+  - "**/redis.factory.ts"
+  - "**/*.serializer.*"
+  - "**/*.dto.*"
 
 coverage:
   status:
