@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { BsCheckCircle } from 'react-icons/bs';
-import { useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import useEmailConfirm from '../hooks/useEmailConfirm';
 import { Utils } from '../utils/utils';

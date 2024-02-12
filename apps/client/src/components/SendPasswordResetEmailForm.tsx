@@ -1,15 +1,13 @@
 import axios, { AxiosError } from 'axios';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BsCheckCircle, BsEnvelopeAt, BsPerson, BsShieldLock } from 'react-icons/bs';
+import { BsEnvelopeAt } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { IResetPasswordDto, UserLoginDto } from 'shared-types';
-import { UserContext } from '../context/UserContext';
+import PasswordResetSuccessAlert from '../PasswordResetSuccessAlert';
 import { Utils } from '../utils/utils';
 import Button from './Button';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
-import PasswordResetSuccessAlert from '../PasswordResetSuccessAlert';
 
 type Inputs = {
 	email: string;
