@@ -45,6 +45,7 @@ import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import EmailConfirmPage from './Pages/EmailConfirmPage';
 import PasswordResetPage from './Pages/PasswordResetPage';
+import UserUpdateTab from './Pages/User/UserUpdateTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -123,6 +124,10 @@ function Router() {
 								{
 									path: '',
 									element: <UserDetailsTab />,
+								},
+								{
+									path: 'update',
+									element: <UserUpdateTab />,
 								},
 								{
 									path: 'security',

@@ -11,8 +11,8 @@ function UserAvatar({ user, variant = 'square', size = 6 }: UserAvatarProps) {
 	return (
 		<div style={{ width: `${size / 4}rem` }}>
 			<img
-				height={64}
-				width={64}
+				height={size * 4}
+				width={size * 4}
 				className={classNames(
 					'w-100',
 					{

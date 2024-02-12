@@ -13,7 +13,7 @@ function UserSettingsPage() {
 				icon={BsSliders}
 				title="User Settings"
 			>
-				<GoBackButton />
+				<GoBackButton to="/dashboard" />
 			</SecondaryNavbar>
 			<SettingsLayout sidebar={<UserSettingsSidebar />}>
 				<Outlet />

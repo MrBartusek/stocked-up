@@ -32,7 +32,7 @@ function UserInfo() {
 					user={user}
 					variant="circle"
 				/>
-				<div>{user.email}</div>
+				<div>{user.username}</div>
 				{user.isDemo && (
 					<Badge>
 						<BsPerson />
