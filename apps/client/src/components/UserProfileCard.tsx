@@ -27,7 +27,10 @@ function UserProfileCard() {
 					<div className="text-muted">{user.username}</div>
 				</div>
 				<div>
-					<div className="font-medium">E-mail</div>
+					<div>
+						<span className="font-medium">E-mail</span>{' '}
+						<button className="link-primary">[Confirm]</button>
+					</div>
 					<div className="text-muted">{user.email}</div>
 				</div>
 				<div>
