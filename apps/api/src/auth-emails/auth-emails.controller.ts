@@ -24,9 +24,9 @@ export class AuthEmailsController {
 	async confirmEmail(
 		@Query('user', ParseObjectIdPipe) userId: Types.ObjectId,
 		@Query('token') token: string,
-	): Promise<PrivateUserDto> {
-		const user = await this.authEmailsService.confirmEmailWithToken(userId, token);
-		return User.toPrivateDto(user);
+	): Promise<any> {
+		await this.authEmailsService.confirmEmailWithToken(userId, token);
+		return { statusCode: 200 };
 	}
 
 	@Post('reset-password/start')
