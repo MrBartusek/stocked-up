@@ -5,26 +5,27 @@
 
 [![cover](https://i.imgur.com/2xOyilY.png)](https://stockedup.dokurno.dev)
 
-[**StockedUp**](https://stockedup.dokurno.dev) is a complete Inventory Management System that focuses on managing distributed stock for large organizations.
+[**StockedUp**](https://stockedup.dokurno.dev) is a complete Inventory Management System
+that focuses on managing distributed stock for large organizations.
 
 ## Quick Start
 
 If you want to start using StockedUp, I host fully fledged [live demo](https://stockedup.dokurno.dev).
-For simplicity sake, you can also create [a demo account](https://stockedup.dokurno.dev/register/demo) and
-skip registration process.
+For simplicity sake, you can also create
+[a demo account](https://stockedup.dokurno.dev/register/demo) and skip registration process.
 
 ## About
 
-StockedUp is a easy to use interface that allows for managing wast amounts of inventory data
+StockedUp is a easy to use service that allows for managing wast amounts of inventory data
 for logistical companies. The design philosophy is to separate product definitions from
-actual stock data in warehouses. This allow for global changes of product details (such as price, or description)
-to be reflected across all warehouses.
+actual stock data. This allow for separation between global changes of product details
+(such as price, or description) and stock values.
 
 The general ideas used in StockedUp are:
 
-- **Organization** - You can think of organization as your company. It hosts all of the information about it.
+- **Organization** - You can think of organization as your company.
 - **Product Definition** - Information about an product. It's name, price, description, SKU.
-- **Warehouse** - Representation of physical location where your company stores products. Like warehouse, port or a shop.
+- **Warehouse** - Representation of physical location where your company stores products. Like warehouse or a store.
 - **Inventory** - A product inside a warehouses with quantity and it's location.
 
 ## Tech Stack
