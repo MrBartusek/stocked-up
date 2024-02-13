@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BsBoxArrowLeft, BsTrash, BsTrash3, BsTrashFill } from 'react-icons/bs';
+import { BsBoxArrowLeft, BsTrash3 } from 'react-icons/bs';
 import { UserContext } from '../context/UserContext';
 import IconButton from './IconButton';
 import ModalBody from './Modal/ModalBody';
