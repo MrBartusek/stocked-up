@@ -1,6 +1,9 @@
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { BsBoxArrowLeft, BsTrash3 } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import Alert from './Helpers/Alert';
 import IconButton from './IconButton';
 import ModalBody from './Modal/ModalBody';
 import ModalCloseButton from './Modal/ModalCloseButton';
@@ -8,9 +11,6 @@ import ModalDialog, { ModalDialogProps } from './Modal/ModalDialog';
 import ModalHeader from './Modal/ModalHeader';
 import ModalTitle from './Modal/ModalTitle';
 import ModelFooter from './Modal/ModelFooter';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import Alert from './Helpers/Alert';
 
 export interface ConfirmLogoutModalProps extends ModalDialogProps {}
 
