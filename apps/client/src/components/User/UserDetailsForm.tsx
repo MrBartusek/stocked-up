@@ -74,9 +74,11 @@ function UserDetailsForm() {
 			<FormField
 				label="Username"
 				required
+				demoLocked
 			>
 				<FormInput
 					required
+					demoLocked
 					{...register('username', { required: true })}
 				/>
 			</FormField>
@@ -84,9 +86,11 @@ function UserDetailsForm() {
 			<FormField
 				label="E-mail"
 				required
+				demoLocked
 			>
 				<FormInput
 					required
+					demoLocked
 					type="email"
 					{...register('email', { required: true })}
 				/>

@@ -1,5 +1,7 @@
 import classNames from 'classnames';
+import { useContext } from 'react';
 import { FieldError } from 'react-hook-form';
+import { UserContext } from '../../context/UserContext';
 
 export interface FormFieldProps {
 	label?: string;
@@ -8,9 +10,14 @@ export interface FormFieldProps {
 	className?: string;
 	children?: React.ReactNode;
 	errors?: FieldError;
+	demoLocked?: boolean;
 }
 
-function FormField({ label, hint, required, className, children }: FormFieldProps) {
+function FormField({ label, hint, required, className, children, demoLocked }: FormFieldProps) {
+	const { user } = useContext(UserContext);
+
+	const disabledByDemo = demoLocked && user.isDemo;
+
 	return (
 		<div className={classNames(className, 'relative mb-6')}>
 			<div className="mb-2 ms-1">
@@ -18,6 +25,7 @@ function FormField({ label, hint, required, className, children }: FormFieldProp
 					{label ? <label>{label}</label> : null}
 					{hint ? <span className="text-muted">({hint})</span> : null}
 					{required ? <span>*</span> : null}
+					{disabledByDemo ? <span className="text-danger">(Disabled in demo)</span> : null}
 				</span>
 			</div>
 

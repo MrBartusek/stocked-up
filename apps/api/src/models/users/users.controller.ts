@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	ForbiddenException,
 	Get,
 	NotFoundException,
 	Param,
@@ -35,6 +36,10 @@ export class UsersController {
 		}
 
 		if (dto.email != user.profile.email) {
+			if (user.profile.isDemo) {
+				throw new ForbiddenException('This action is not available for demo accounts');
+			}
+
 			const emailTaken = await this.usersService.isEmailTaken(dto.email);
 			if (emailTaken) {
 				throw new BadRequestException('This E-Mail is already taken');
@@ -42,6 +47,10 @@ export class UsersController {
 		}
 
 		if (dto.username != user.profile.username) {
+			if (user.profile.isDemo) {
+				throw new ForbiddenException('This action is not available for demo accounts');
+			}
+
 			const usernameTaken = await this.usersService.isUsernameTaken(dto.username);
 			if (usernameTaken) {
 				throw new BadRequestException('This username is already taken');
