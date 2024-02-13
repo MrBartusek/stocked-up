@@ -38,8 +38,8 @@ export class AuthService {
 	}
 
 	async updateUserPassword(userId: Types.ObjectId, rawPassword: string): Promise<UserDocument> {
-		const hash = this.hashPassword(rawPassword);
-		return this.usersService.findOneByIdAndUpdate(userId, { 'profile.password': hash });
+		const hash = await this.hashPassword(rawPassword);
+		return this.usersService.findOneByIdAndUpdate(userId, { 'auth.password': hash });
 	}
 
 	private hashPassword(input: string): Promise<string> {
