@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import UserAvatar from './UserAvatar';
 import { Link } from 'react-router-dom';
+import UserProfileRow from '../UserProfileRow';
 
 function UserProfileCard() {
 	const { user } = useContext(UserContext);
@@ -23,28 +24,25 @@ function UserProfileCard() {
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 px-8 py-6">
-				<div>
-					<div className="font-medium">Username</div>
-					<div className="text-muted">{user.username}</div>
-				</div>
-				<div>
-					<div className="flex gap-1">
-						<span className="font-medium">E-mail</span>
-						{!user.isConfirmed && (
+				<UserProfileRow title="Username">{user.username}</UserProfileRow>
+				<UserProfileRow
+					title="E-mail"
+					action={
+						!user.isConfirmed && (
 							<Link
 								to="confirm-email"
 								className="link-primary"
 							>
 								[Confirm]
 							</Link>
-						)}
-					</div>
-					<div className="text-muted">{user.email}</div>
-				</div>
-				<div>
-					<div className="font-medium">Internal ID</div>
+						)
+					}
+				>
+					{user.email}
+				</UserProfileRow>
+				<UserProfileRow title="Internal ID">
 					<code>{user.id}</code>
-				</div>
+				</UserProfileRow>
 			</div>
 		</div>
 	);
