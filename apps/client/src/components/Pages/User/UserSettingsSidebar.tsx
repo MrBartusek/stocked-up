@@ -1,12 +1,9 @@
-import { useContext } from 'react';
 import { BsBoxArrowLeft, BsPersonFill, BsShieldLockFill } from 'react-icons/bs';
-import { UserContext } from '../../../context/UserContext';
+import ConfirmLogoutButton from '../../ConfirmLogoutButton';
 import SidebarLink from '../../Sidebar/SidebarLink';
 import SidebarSection from '../../Sidebar/SidebarSection';
 
 function UserSettingsSidebar() {
-	const { logout } = useContext(UserContext);
-
 	const baseUrl = `/dashboard/user/me`;
 
 	return (
@@ -24,12 +21,13 @@ function UserSettingsSidebar() {
 				/>
 			</SidebarSection>
 			<SidebarSection name="Actions">
-				<SidebarLink
-					to="/"
-					onClick={logout}
-					icon={BsBoxArrowLeft}
-					text="Logout"
-				/>
+				<ConfirmLogoutButton>
+					<SidebarLink
+						to="."
+						icon={BsBoxArrowLeft}
+						text="Logout"
+					/>
+				</ConfirmLogoutButton>
 			</SidebarSection>
 		</nav>
 	);

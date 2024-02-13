@@ -12,6 +12,7 @@ function Alert({ children, ...props }: AlertProps) {
 			{...props}
 			className={classNames(
 				'overflow-hidden break-words rounded-sm border border-red-300 bg-red-200 p-4',
+				'flex items-center gap-2',
 				props.className,
 			)}
 		>
