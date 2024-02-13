@@ -46,6 +46,7 @@ import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
 import EmailConfirmPage from './Pages/EmailConfirmPage';
 import PasswordResetPage from './Pages/PasswordResetPage';
 import UserUpdateTab from './Pages/User/UserUpdateTab';
+import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -132,6 +133,10 @@ function Router() {
 								{
 									path: 'security',
 									element: <UserSecurityTab />,
+								},
+								{
+									path: 'confirm-email',
+									element: <UserConfirmEmailTab />,
 								},
 							],
 						},

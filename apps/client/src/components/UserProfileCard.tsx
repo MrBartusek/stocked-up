@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import UserAvatar from './UserAvatar';
+import { Link } from 'react-router-dom';
 
 function UserProfileCard() {
 	const { user } = useContext(UserContext);
@@ -29,7 +30,14 @@ function UserProfileCard() {
 				<div>
 					<div className="flex gap-1">
 						<span className="font-medium">E-mail</span>
-						{!user.isConfirmed && <button className="link-primary">[Confirm]</button>}
+						{!user.isConfirmed && (
+							<Link
+								to="confirm-email"
+								className="link-primary"
+							>
+								[Confirm]
+							</Link>
+						)}
 					</div>
 					<div className="text-muted">{user.email}</div>
 				</div>
