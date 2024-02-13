@@ -49,6 +49,7 @@ import UserUpdateTab from './Pages/User/UserUpdateTab';
 import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
 import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
 import UserDeleteTab from './Pages/User/UserDeleteTab';
+import UserPasswordChangeTab from './Pages/User/UserPasswordChangeTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -147,6 +148,10 @@ function Router() {
 								{
 									path: 'change-email',
 									element: <UserEmailChangeTab />,
+								},
+								{
+									path: 'change-password',
+									element: <UserPasswordChangeTab />,
 								},
 							],
 						},

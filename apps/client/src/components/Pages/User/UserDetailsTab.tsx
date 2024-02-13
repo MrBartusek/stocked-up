@@ -2,7 +2,6 @@ import { BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import IconButton from '../../IconButton';
 import UserProfileCard from '../../UserProfileCard';
-import UserDangerZone from '../../User/UserDangerZone';
 
 function UserDetailsTab() {
 	return (
@@ -15,7 +14,6 @@ function UserDetailsTab() {
 			>
 				<IconButton icon={BsPencil}>Edit profile</IconButton>
 			</Link>
-			<UserDangerZone />
 		</div>
 	);
 }
