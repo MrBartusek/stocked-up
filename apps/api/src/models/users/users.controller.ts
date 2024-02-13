@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	Get,
@@ -27,8 +28,29 @@ export class UsersController {
 	@Put()
 	async updateProfile(@Req() request: Request, @Body() dto: UpdateUserDto) {
 		const userId = new Types.ObjectId(request.user.id);
-		const user = await this.usersService.updateProfile(userId, dto);
-		return User.toPrivateDto(user);
+
+		const user = await this.usersService.findById(userId);
+		if (!user) {
+			throw new NotFoundException();
+		}
+
+		if (dto.email != user.profile.email) {
+			const emailTaken = await this.usersService.isEmailTaken(dto.email);
+			if (emailTaken) {
+				throw new BadRequestException('This E-Mail is already taken');
+			}
+		}
+
+		if (dto.username != user.profile.username) {
+			const usernameTaken = await this.usersService.isUsernameTaken(dto.username);
+			if (usernameTaken) {
+				throw new BadRequestException('This username is already taken');
+			}
+		}
+
+		const updatedUser = await this.usersService.updateProfile(userId, dto);
+		await this.usersService.setConfirmed(userId, false);
+		return User.toPrivateDto(updatedUser);
 	}
 
 	@Get('me')
