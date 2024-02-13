@@ -35,17 +35,6 @@ export class UsersController {
 			throw new NotFoundException();
 		}
 
-		if (dto.email != user.profile.email) {
-			if (user.profile.isDemo) {
-				throw new ForbiddenException('This action is not available for demo accounts');
-			}
-
-			const emailTaken = await this.usersService.isEmailTaken(dto.email);
-			if (emailTaken) {
-				throw new BadRequestException('This E-Mail is already taken');
-			}
-		}
-
 		if (dto.username != user.profile.username) {
 			if (user.profile.isDemo) {
 				throw new ForbiddenException('This action is not available for demo accounts');
@@ -58,7 +47,6 @@ export class UsersController {
 		}
 
 		const updatedUser = await this.usersService.updateProfile(userId, dto);
-		await this.usersService.setConfirmed(userId, false);
 		return User.toPrivateDto(updatedUser);
 	}
 

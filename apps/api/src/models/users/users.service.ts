@@ -1,12 +1,10 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { FilterQuery, Types } from 'mongoose';
+import { FilterQuery, Types, UpdateQuery } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
-import { CryptoUtils } from '../../security/helpers/crypto.utils';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
-import { UpdateQuery } from 'mongoose';
 
 export interface UserCreateData {
 	username: string;
@@ -42,12 +40,11 @@ export class UsersService {
 	}
 
 	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto): Promise<UserDocument> {
-		const { image, username, email } = dto;
+		const { image, username } = dto;
 
 		const user = await this.userRepository.findOneByIdAndUpdate(id, {
 			$set: {
 				'profile.username': username,
-				'profile.email': email,
 			},
 		});
 

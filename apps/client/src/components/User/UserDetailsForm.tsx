@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
 	username: string;
-	email: string;
 	image: IImageDto;
 };
 
@@ -24,7 +23,7 @@ function UserDetailsForm() {
 	const { user } = useContext(UserContext);
 
 	const { register, handleSubmit, control } = useForm<Inputs>({
-		defaultValues: { username: user.username, email: user.email, image: user.image },
+		defaultValues: { username: user.username, image: user.image },
 	});
 
 	const [loading, setLoading] = useState(false);
@@ -80,19 +79,6 @@ function UserDetailsForm() {
 					required
 					demoLocked
 					{...register('username', { required: true })}
-				/>
-			</FormField>
-
-			<FormField
-				label="E-mail"
-				required
-				demoLocked
-			>
-				<FormInput
-					required
-					demoLocked
-					type="email"
-					{...register('email', { required: true })}
 				/>
 			</FormField>
 
