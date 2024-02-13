@@ -10,35 +10,35 @@ that focuses on managing distributed stock for large organizations.
 
 ## Quick Start
 
-If you want to start using StockedUp, I host fully fledged [live demo](https://stockedup.dokurno.dev).
-For simplicity sake, you can also create
-[a demo account](https://stockedup.dokurno.dev/register/demo) and skip registration process.
+If you want to start using StockedUp, I host a fully-fledged [live demo](https://stockedup.dokurno.dev).
+For simplicity's sake, you can also create
+[a demo account](https://stockedup.dokurno.dev/register/demo) and skip the registration process.
 
 ## About
 
-StockedUp is a easy to use service that allows for managing wast amounts of inventory data
+StockedUp is an easy-to-use service that allows for managing vast amounts of inventory data
 for logistical companies. The design philosophy is to separate product definitions from
-actual stock data. This allow for separation between global changes of product details
-(such as price, or description) and stock values.
+actual stock data. This allows for separation between global changes of product details
+(such as price or description) and stock values.
 
 The general ideas used in StockedUp are:
 
-- **Organization** - You can think of organization as your company.
-- **Product Definition** - Information about an product. It's name, price, description, SKU.
-- **Warehouse** - Representation of physical location where your company stores products. Like warehouse or a store.
-- **Inventory** - A product inside a warehouses with quantity and it's location.
+- **Organization** - You can think of an organization as your company.
+- **Product Definition** - Information about a product. Its name, price, description, SKU.
+- **Warehouse** - Representation of the physical location where your company stores products, like a warehouse or a store.
+- **Inventory** - A product inside a warehouse with quantity and its location.
 
 ## Tech Stack
 
-- [Nest.js](https://nestjs.com) - Nest.js, Typescript-based Node.js framework is used as main backend.
-- [React](https://react.dev) - React.js alongside with Tailwind CSS and other client-side libraries is used as frontend library.
-- [Amazon AWS](https://aws.amazon.com) - AWS is used as primary hosting provider that handles server hosting with [EC2](https://aws.amazon.com/ec2/) and images hosting with [S3](https://aws.amazon.com/s3/)
-- [MongoDB](https://www.mongodb.com) - MongoDB (with [mongose ODM](https://mongoosejs.com)) is primary database used to optimize access to wast amount of organization data.
-- [Redis](https://redis.io) - Redis is used as secondary database for sessions and caching.
+- [Nest.js](https://nestjs.com) - Nest.js, a TypeScript-based Node.js framework, is used as the main backend.
+- [React](https://react.dev) - React.js alongside Tailwind CSS and other client-side libraries is used as the frontend library.
+- [Amazon AWS](https://aws.amazon.com) - AWS is used as the primary hosting provider that handles server hosting with [EC2](https://aws.amazon.com/ec2/) and image hosting with [S3](https://aws.amazon.com/s3/).
+- [MongoDB](https://www.mongodb.com) - MongoDB (with [Mongoose ODM](https://mongoosejs.com)) is the primary database used to optimize access to vast amounts of organizational data.
+- [Redis](https://redis.io) - Redis is used as a secondary database for sessions and caching.
 
 ## API
 
-StockedUp uses Rest API authenticated using session cookies. You can explore this API
+StockedUp uses a REST API authenticated using session cookies. You can explore this API
 using [Swagger](https://stockedup.dokurno.dev/api) or [Postman](https://app.getpostman.com):
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/7055992-d02d47d4-a08a-4d91-99c0-1cbe6f5b2ab7?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D7055992-d02d47d4-a08a-4d91-99c0-1cbe6f5b2ab7%26entityType%3Dcollection%26workspaceId%3D264913a4-bcdd-4e43-847c-1e8cbca3334b)
@@ -47,6 +47,6 @@ using [Swagger](https://stockedup.dokurno.dev/api) or [Postman](https://app.getp
 
 Want to contribute to the project?
 
-First of all, thanks! If you find and problems with the project or want to suggest a feature
+First of all, thanks! If you find any problems with the project or want to suggest a feature,
 don't hesitate to create [an issue](https://github.com/MrBartusek/stocked-up/issues). If you want
-to contribute code changes, please create a [Pull Requests](https://github.com/MrBartusek/stocked-up/pulls).
+to contribute code changes, please create [Pull Requests](https://github.com/MrBartusek/stocked-up/pulls).
