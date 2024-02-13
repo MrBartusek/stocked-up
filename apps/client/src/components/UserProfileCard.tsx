@@ -24,7 +24,12 @@ function UserProfileCard() {
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 px-8 py-6">
-				<UserProfileRow title="Username">{user.username}</UserProfileRow>
+				<UserProfileRow
+					title="Username"
+					editButtonTo="update"
+				>
+					{user.username}
+				</UserProfileRow>
 				<UserProfileRow
 					title="E-mail"
 					action={
