@@ -48,6 +48,7 @@ import PasswordResetPage from './Pages/PasswordResetPage';
 import UserUpdateTab from './Pages/User/UserUpdateTab';
 import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
 import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
+import UserDeleteTab from './Pages/User/UserDeleteTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -128,12 +129,16 @@ function Router() {
 									element: <UserDetailsTab />,
 								},
 								{
+									path: 'security',
+									element: <UserSecurityTab />,
+								},
+								{
 									path: 'update',
 									element: <UserUpdateTab />,
 								},
 								{
-									path: 'security',
-									element: <UserSecurityTab />,
+									path: 'delete',
+									element: <UserDeleteTab />,
 								},
 								{
 									path: 'confirm-email',
