@@ -47,6 +47,7 @@ import EmailConfirmPage from './Pages/EmailConfirmPage';
 import PasswordResetPage from './Pages/PasswordResetPage';
 import UserUpdateTab from './Pages/User/UserUpdateTab';
 import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
+import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -137,6 +138,10 @@ function Router() {
 								{
 									path: 'confirm-email',
 									element: <UserConfirmEmailTab />,
+								},
+								{
+									path: 'change-email',
+									element: <UserEmailChangeTab />,
 								},
 							],
 						},

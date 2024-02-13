@@ -32,6 +32,7 @@ function UserProfileCard() {
 				</UserProfileRow>
 				<UserProfileRow
 					title="E-mail"
+					editButtonTo="change-email"
 					action={
 						!user.isConfirmed && (
 							<Link
