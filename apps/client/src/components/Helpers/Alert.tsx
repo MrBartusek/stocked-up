@@ -19,7 +19,7 @@ function Alert({ children, variant = 'danger', ...props }: AlertProps) {
 		<div
 			{...props}
 			className={classNames(
-				'overflow-hidden break-words rounded-sm border  p-4',
+				'mb-4 overflow-hidden break-words rounded-sm border p-4',
 				'flex items-center gap-2',
 				colorVariants[variant],
 				props.className,
