@@ -1,32 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
+import { Types } from 'mongoose';
 import { UsersService } from '../models/users/users.service';
 import { AuthService } from './auth.service';
-import { AuthEmailsService } from '../auth-emails/auth-emails.service';
-import { Types } from 'mongoose';
-
-const MOCK_PASSWORD = 'test-password';
+import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
 	let service: AuthService;
 
-	let mockPassword: string;
-	let mockPasswordHashed: string;
-
-	const mockAuthService = {
-		findOne: jest.fn((username: string) => {
-			if (username != 'taken') return null;
-			return {
-				profile: {
-					email: 'test@dokurno.dev',
-					username: username,
-				},
-				auth: {
-					password: mockPasswordHashed,
-				},
-			};
-		}),
-
+	const mockUsersService = {
+		findOne: jest.fn(),
+		findById: jest.fn(),
+		findOneByIdAndUpdate: jest.fn(),
 		create: jest.fn((data) => {
 			return {
 				_id: new Types.ObjectId(),
@@ -35,11 +20,13 @@ describe('AuthService', () => {
 					username: data.username,
 				},
 				auth: {
-					password: mockPasswordHashed,
+					password: 'password',
 				},
 			};
 		}),
 	};
+
+	const userUpdateSpy = jest.spyOn(mockUsersService, 'findOneByIdAndUpdate');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -47,17 +34,12 @@ describe('AuthService', () => {
 				AuthService,
 				{
 					provide: UsersService,
-					useValue: mockAuthService,
+					useValue: mockUsersService,
 				},
 			],
 		}).compile();
 
 		service = module.get<AuthService>(AuthService);
-	});
-
-	beforeAll(async () => {
-		mockPassword = MOCK_PASSWORD;
-		mockPasswordHashed = await bcrypt.hash(mockPassword, 4);
 	});
 
 	it('should be defined', () => {
@@ -75,19 +57,81 @@ describe('AuthService', () => {
 		);
 	});
 
-	describe('User validation', () => {
-		it('should validate a valid user', () => {
-			expect(service.validateUser('taken', mockPassword)).resolves.toEqual(
-				expect.objectContaining({ profile: expect.objectContaining({ username: 'taken' }) }),
+	describe('validateUserByUsername', () => {
+		it('should validate a valid user', async () => {
+			const password = 'password';
+			const hashed = await bcrypt.hash(password, 4);
+
+			mockUsersService.findOne.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: hashed,
+				},
+			});
+
+			expect(service.validateUserByUsername('test', password)).resolves.toEqual(
+				expect.objectContaining({ profile: expect.objectContaining({ username: 'test' }) }),
 			);
 		});
 
-		it('should not validate user that does not exist', () => {
-			expect(service.validateUser('doesnt-exist', mockPassword)).resolves.toBe(undefined);
+		it('should not validate a user that does not exist', async () => {
+			mockUsersService.findOne.mockResolvedValue(null);
+
+			expect(service.validateUserByUsername('test', 'password')).rejects.toThrowError(
+				BadRequestException,
+			);
 		});
 
-		it('should not validate user with invalid password', () => {
-			expect(service.validateUser('taken', 'invalid')).resolves.toBe(undefined);
+		it('should validate a user with invalid credentials', async () => {
+			const invalidPassword = 'other-password';
+			const hashedValidPassword = await bcrypt.hash('password', 4);
+
+			mockUsersService.findOne.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: hashedValidPassword,
+				},
+			});
+
+			expect(service.validateUserByUsername('test', invalidPassword)).rejects.toThrowError(
+				BadRequestException,
+			);
+		});
+	});
+
+	describe('validateUserByUserId', () => {
+		it('should validate a valid user', async () => {
+			const password = 'password';
+			const hashed = await bcrypt.hash(password, 4);
+
+			mockUsersService.findById.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: hashed,
+				},
+			});
+
+			expect(service.validateUserByUserId(new Types.ObjectId(), password)).resolves.toEqual(
+				expect.objectContaining({ profile: expect.objectContaining({ username: 'test' }) }),
+			);
+		});
+	});
+
+	describe('updateUserPassword', () => {
+		it('should update user password', async () => {
+			const userId = new Types.ObjectId();
+			const hash = await bcrypt.hash('password', 4);
+
+			await service.updateUserPassword(userId, hash);
+
+			expect(userUpdateSpy).toBeCalledTimes(1);
+			expect(userUpdateSpy).toBeCalledWith(userId, { 'auth.password': expect.any(String) });
 		});
 	});
 });
