@@ -1,4 +1,4 @@
-import { BsShieldLock } from 'react-icons/bs';
+import { BsEnvelopeAt, BsShieldLock } from 'react-icons/bs';
 import IconButton from '../../IconButton';
 import UserDangerZone from '../../User/UserDangerZone';
 import { Link } from 'react-router-dom';
@@ -10,9 +10,14 @@ function UserSecurityTab() {
 			<p className="mb-6 text-muted">
 				Manage options to secure your account and protect your privacy.
 			</p>
-			<Link to="../change-password">
-				<IconButton icon={BsShieldLock}>Change password</IconButton>
-			</Link>
+			<div className="flex gap-4">
+				<Link to="../change-password">
+					<IconButton icon={BsShieldLock}>Change password</IconButton>
+				</Link>
+				<Link to="../change-email">
+					<IconButton icon={BsEnvelopeAt}>Change E-mail</IconButton>
+				</Link>
+			</div>
 
 			<UserDangerZone />
 		</div>

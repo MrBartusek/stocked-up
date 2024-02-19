@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { FilterQuery, Types, UpdateQuery } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
@@ -54,6 +54,21 @@ export class UsersService {
 
 		user.profile.imageKey = await this.imagesService.handleImageDtoAndGetKey(user.profile, image);
 		return await this.userRepository.findOneByIdAndUpdate(id, user);
+	}
+
+	async updateEmail(id: Types.ObjectId, email: string): Promise<UserDocument | null> {
+		const user = await this.findById(id);
+		if (!user) return null;
+
+		if (user.profile.email == email) {
+			throw new BadRequestException('New email address is identical to the current one');
+		}
+
+		return this.userRepository.findOneByIdAndUpdate(id, {
+			$set: {
+				'profile.email': email,
+			},
+		});
 	}
 
 	async delete(id: Types.ObjectId): Promise<UserDocument> {

@@ -25,6 +25,7 @@ import { ProductDto } from './product/ProductDto';
 import { ICreateSecurityRuleDto } from './security/ICreateSecurityRuleDto';
 import { IDeleteSecurityRuleDto } from './security/IDeleteSecurityRoleDto';
 import { IUpdateSecurityRuleDto } from './security/IUpdateSecurityRuleDto';
+import { IUpdateEmailDto } from './user/IUpdateEmailDto';
 import { IUpdateUserDto } from './user/IUpdateUserDto';
 import { PrivateUserDto } from './user/PrivateUserDto';
 import { UserDto } from './user/UserDto';
@@ -69,6 +70,7 @@ export {
     UserLoginDto,
     WarehouseDto,
     IResetPasswordDto,
-    IChangePasswordDto
+    IChangePasswordDto,
+    IUpdateEmailDto
 };
 

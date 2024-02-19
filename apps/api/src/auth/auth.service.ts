@@ -64,6 +64,11 @@ export class AuthService {
 		return this.usersService.findOneByIdAndUpdate(userId, { 'auth.password': hash });
 	}
 
+	async updateUserEmail(userId: Types.ObjectId, email: string): Promise<UserDocument> {
+		await this.usersService.setConfirmed(userId, false);
+		return this.usersService.updateEmail(userId, email);
+	}
+
 	private hashPassword(input: string): Promise<string> {
 		return bcrypt.hash(input, 12);
 	}

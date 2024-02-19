@@ -4,6 +4,7 @@ import {
 	Controller,
 	HttpCode,
 	Logger,
+	NotFoundException,
 	Post,
 	Req,
 	UseGuards,
@@ -21,6 +22,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { UpdateEmailDto } from './dto/update-email.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -83,6 +85,17 @@ export class AuthController {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, body.oldPassword);
 		await this.authService.updateUserPassword(user._id, body.newPassword);
+		return User.toPrivateDto(user);
+	}
+
+	@Post('change-email')
+	async changeEmail(@Req() request: Request, @Body() dto: UpdateEmailDto) {
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.authService.validateUserByUserId(userId, dto.password);
+
+		await this.authService.updateUserEmail(user._id, dto.email);
+		await this.authEmailsService.sendEmailConfirmation(user._id);
+
 		return User.toPrivateDto(user);
 	}
 }
