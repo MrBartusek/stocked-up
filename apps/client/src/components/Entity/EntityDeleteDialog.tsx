@@ -13,6 +13,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
+import EntityCard from '../EntityCard';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -63,20 +64,11 @@ function EntityDeleteDialog({
 			<h1 className="mb-2 text-3xl">Confirm the action</h1>
 			<p className="text-muted">Do you really want to delete this entity:</p>
 
-			<div className="my-6 flex w-96 gap-4 rounded-md border border-gray-300 p-4">
-				<div>
-					<img
-						src={image?.url || '/api/images/default'}
-						className="w-16 rounded-md"
-						width={50}
-						height={50}
-					/>
-				</div>
-				<div className="flex flex-col justify-center">
-					<div className="text-lg">{entityName}</div>
-					<div className="text-sm text-muted">{identifier}</div>
-				</div>
-			</div>
+			<EntityCard
+				image={image}
+				identifier={identifier}
+				entityName={entityName}
+			/>
 
 			<p className="mb-2">This action is going to delete:</p>
 			<ul className="list-disc ps-6">
