@@ -10,14 +10,17 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { Types } from 'mongoose';
 import { PrivateUserDto } from 'shared-types';
+import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 import { DemoService } from '../demo/demo.service';
+import { NotDemoGuard } from '../models/users/guards/not-demo.guard';
 import { User } from '../models/users/schemas/user.schema';
 import { AuthService } from './auth.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -69,5 +72,17 @@ export class AuthController {
 		const user = await this.demoService.setupDemoAccount();
 		const dto = User.toPrivateDto(user);
 		return dto;
+	}
+
+	@Post('change-password')
+	@UseGuards(NotDemoGuard)
+	async changePassword(
+		@Req() request: Request,
+		@Body() body: ChangePasswordDto,
+	): Promise<PrivateUserDto> {
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.authService.validateUserByUserId(userId, body.oldPassword);
+		await this.authService.updateUserPassword(user._id, body.newPassword);
+		return User.toPrivateDto(user);
 	}
 }
