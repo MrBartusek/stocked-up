@@ -9,6 +9,7 @@ import { EmailConfirmTemplate } from './templates/email-confirm.template';
 import { PasswordRestTemplate } from './templates/password-reset.template';
 import { differenceInMinutes } from 'date-fns';
 import { AuthService } from '../auth/auth.service';
+import { DemoLockedException } from '../exceptions/demo-locked.exception';
 
 @Injectable()
 export class AuthEmailsService {
@@ -44,8 +45,9 @@ export class AuthEmailsService {
 
 	async sendPasswordResetEmail(email: string) {
 		const user = await this.usersService.findByEmail(email);
-		if (!user) throw new NotFoundException('This E-mail is not associated with any user account!');
 
+		if (!user) throw new NotFoundException('This E-mail is not associated with any user account!');
+		if (user.profile.isDemo) throw new DemoLockedException();
 		await this.validateIfCanSendEmail(user._id, PASSWORD_RESET_TOKEN);
 
 		const token = await this.usersTokenService.generateAndSaveToken({
