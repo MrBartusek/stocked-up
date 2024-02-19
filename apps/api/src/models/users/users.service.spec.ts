@@ -4,6 +4,8 @@ import { ImagesService } from '../../images/images.service';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
 import { Types } from 'mongoose';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { OrganizationsAclService } from '../organizations/organizations-acl.service';
 
 describe('UsersService', () => {
 	let service: UsersService;
@@ -30,6 +32,9 @@ describe('UsersService', () => {
 		getGravatarBuffer: jest.fn((email) => email == 'with-gravatar@dokurno.dev'),
 	};
 
+	const organizationsService = {};
+	const organizationsAclService = {};
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
@@ -45,6 +50,14 @@ describe('UsersService', () => {
 				{
 					provide: GravatarService,
 					useValue: mockGravatarService,
+				},
+				{
+					provide: OrganizationsService,
+					useValue: organizationsService,
+				},
+				{
+					provide: OrganizationsAclService,
+					useValue: organizationsAclService,
 				},
 			],
 		}).compile();
