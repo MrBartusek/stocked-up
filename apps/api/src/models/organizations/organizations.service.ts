@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
@@ -21,6 +21,8 @@ export class OrganizationsService {
 		private readonly productsService: ProductsService,
 	) {}
 
+	private readonly logger = new Logger(OrganizationsService.name);
+
 	async create(dto: CreateOrganizationDto): Promise<OrganizationDocument> {
 		return this.organizationRepository.create({
 			name: dto.name,
@@ -40,10 +42,17 @@ export class OrganizationsService {
 			await this.warehousesService.delete(reference.id as any);
 		}
 		await this.productsService.deleteAllByOrg(org._id);
-		return this.organizationRepository.deleteOneById(id);
+		const deletedOrg = await this.organizationRepository.deleteOneById(id);
+
+		this.logger.log(`Deleted organization {${deletedOrg.name},${id}}`);
+		return deletedOrg;
 	}
 
-	async listAllForUser(id: mongoose.Types.ObjectId, pageQueryDto: PageQueryDto) {
+	async listAllForUser(id: mongoose.Types.ObjectId) {
+		return this.organizationRepository.find({ 'acls.user': id });
+	}
+
+	async paginateAllForUser(id: mongoose.Types.ObjectId, pageQueryDto: PageQueryDto) {
 		return this.organizationRepository.paginate({ 'acls.user': id }, pageQueryDto);
 	}
 

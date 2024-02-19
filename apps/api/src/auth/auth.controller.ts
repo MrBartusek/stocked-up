@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	Delete,
 	HttpCode,
 	Logger,
 	NotFoundException,
@@ -23,6 +24,7 @@ import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { UpdateEmailDto } from './dto/update-email.dto';
+import { DeleteAccountDto } from './dto/delete-account.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -78,6 +80,7 @@ export class AuthController {
 
 	@Post('change-password')
 	@UseGuards(NotDemoGuard)
+	@UseGuards(AuthenticatedGuard)
 	async changePassword(
 		@Req() request: Request,
 		@Body() body: ChangePasswordDto,
@@ -89,6 +92,7 @@ export class AuthController {
 	}
 
 	@Post('change-email')
+	@UseGuards(AuthenticatedGuard)
 	async changeEmail(@Req() request: Request, @Body() dto: UpdateEmailDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);
@@ -97,5 +101,16 @@ export class AuthController {
 		await this.authEmailsService.sendEmailConfirmation(user._id);
 
 		return User.toPrivateDto(user);
+	}
+
+	@Delete('delete')
+	@UseGuards(AuthenticatedGuard)
+	async deleteAccount(@Req() request: Request, @Body() dto: DeleteAccountDto) {
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.authService.validateUserByUserId(userId, dto.password);
+
+		await this.authService.deleteUserAccount(user._id);
+
+		return { statusCode: 200 };
 	}
 }

@@ -10,7 +10,7 @@ import { SecurityService } from './security.service';
 	imports: [
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => OrganizationResolverModule),
-		UsersModule,
+		forwardRef(() => UsersModule),
 	],
 	exports: [SecurityService],
 	controllers: [SecurityController],

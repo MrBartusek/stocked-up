@@ -5,6 +5,9 @@ import { ImagesService } from '../../images/images.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { SecurityService } from '../../security/security.service';
+import { OrganizationsAclService } from '../organizations/organizations-acl.service';
 
 export interface UserCreateData {
 	username: string;
@@ -20,6 +23,8 @@ export class UsersService {
 		private readonly userRepository: UserRepository,
 		private readonly imagesService: ImagesService,
 		private readonly gravatarService: GravatarService,
+		private readonly organizationsAclService: OrganizationsAclService,
+		private readonly organizationsService: OrganizationsService,
 	) {}
 
 	private readonly logger = new Logger(UsersService.name);
@@ -27,7 +32,7 @@ export class UsersService {
 	async create(data: UserCreateData): Promise<UserDocument | undefined> {
 		const avatarKey = await this.importDefaultAvatar(data.email);
 
-		return this.userRepository.create({
+		const user = await this.userRepository.create({
 			profile: {
 				username: data.username,
 				email: data.email,
@@ -37,6 +42,9 @@ export class UsersService {
 			},
 			auth: { password: data.passwordHash || null },
 		});
+
+		this.logger.log(`Created new user {${user.profile.username},${user._id}}`);
+		return user;
 	}
 
 	async updateProfile(id: Types.ObjectId, dto: UpdateUserDto): Promise<UserDocument> {
@@ -73,7 +81,9 @@ export class UsersService {
 
 	async delete(id: Types.ObjectId): Promise<UserDocument> {
 		const user = await this.userRepository.deleteOneById(id);
-		this.imagesService.deleteImage(user.profile);
+		await this.imagesService.deleteImage(user.profile);
+		await this.removeUserFromAllOrgs(id);
+		this.logger.log(`Deleted user {${user.profile.username},${user._id}}`);
 		return user;
 	}
 
@@ -121,7 +131,17 @@ export class UsersService {
 	private async importDefaultAvatar(email: string): Promise<string | null> {
 		const gravatar = await this.gravatarService.getGravatarBuffer(email);
 		if (!gravatar) return null;
-		this.logger.log(`Saving default Gravatar as avatar for new user: ${email}`);
+		this.logger.log(`Saved default Gravatar as avatar for new user {${email}}`);
 		return this.imagesService.uploadImage(gravatar);
+	}
+
+	private async removeUserFromAllOrgs(userId: Types.ObjectId) {
+		const userOrgs = await this.organizationsService.listAllForUser(userId);
+		for await (const org of userOrgs) {
+			const updatedOrg = await this.organizationsAclService.deleteRule(org._id, userId);
+			if (updatedOrg.acls.length == 0) {
+				await this.organizationsService.delete(updatedOrg._id);
+			}
+		}
 	}
 }

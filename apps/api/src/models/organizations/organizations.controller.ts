@@ -72,7 +72,7 @@ export class OrganizationsController {
 		pageQuery: PageQueryDto<OrganizationDto>,
 	): Promise<PageDto<OrganizationDto>> {
 		const userId = new Types.ObjectId(request.user.id);
-		const { items, meta } = await this.organizationsService.listAllForUser(userId, pageQuery);
+		const { items, meta } = await this.organizationsService.paginateAllForUser(userId, pageQuery);
 
 		const orgDTOs = items.map((org) => Organization.toDto(org));
 		return {

@@ -69,6 +69,10 @@ export class AuthService {
 		return this.usersService.updateEmail(userId, email);
 	}
 
+	async deleteUserAccount(userId: Types.ObjectId): Promise<UserDocument> {
+		return this.usersService.delete(userId);
+	}
+
 	private hashPassword(input: string): Promise<string> {
 		return bcrypt.hash(input, 12);
 	}

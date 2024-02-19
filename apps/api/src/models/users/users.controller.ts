@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	Delete,
 	ForbiddenException,
 	Get,
 	NotFoundException,
