@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import Button, { ButtonProps } from '../Button';
 import { FormContext } from './Form';
+import classNames from 'classnames';
 
 export interface FormSubmitButtonProps extends ButtonProps {}
 
@@ -11,7 +12,7 @@ function FormSubmitButton(props: FormSubmitButtonProps) {
 		<Button
 			{...props}
 			role="submit"
-			className="mt-4"
+			className={classNames('mt-4', props.className)}
 			loading={formLoading}
 		/>
 	);

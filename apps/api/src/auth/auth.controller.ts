@@ -105,6 +105,7 @@ export class AuthController {
 
 	@Delete('delete')
 	@UseGuards(AuthenticatedGuard)
+	@UseGuards(NotDemoGuard)
 	async deleteAccount(@Req() request: Request, @Body() dto: DeleteAccountDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);
