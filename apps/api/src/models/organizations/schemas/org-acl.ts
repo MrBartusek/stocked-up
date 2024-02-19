@@ -6,7 +6,7 @@ export type OrgAclDocument = HydratedDocument<OrgAcl>;
 
 @Schema({ _id: false })
 export class OrgAcl {
-	@Prop({ ref: 'User', required: true })
+	@Prop({ ref: 'User', required: true, index: true })
 	user: Types.ObjectId;
 
 	@Prop({ required: true })
