@@ -26,6 +26,29 @@ import { UsersService } from './users.service';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
+	@Get('me')
+	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
+		const userId = new Types.ObjectId(request.user.id);
+		const user = await this.usersService.findById(userId);
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
+		return User.toPrivateDto(user);
+	}
+
+	@Get(':id')
+	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<UserDto> {
+		const user = await this.usersService.findById(id);
+
+		if (!user) {
+			throw new NotFoundException();
+		}
+
+		return User.toDto(user);
+	}
+
 	@Put()
 	async updateProfile(@Req() request: Request, @Body() dto: UpdateUserDto) {
 		const userId = new Types.ObjectId(request.user.id);
@@ -48,28 +71,5 @@ export class UsersController {
 
 		const updatedUser = await this.usersService.updateProfile(userId, dto);
 		return User.toPrivateDto(updatedUser);
-	}
-
-	@Get('me')
-	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
-		const userId = new Types.ObjectId(request.user.id);
-		const user = await this.usersService.findById(userId);
-
-		if (!user) {
-			throw new NotFoundException();
-		}
-
-		return User.toPrivateDto(user);
-	}
-
-	@Get(':id')
-	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<UserDto> {
-		const user = await this.usersService.findById(id);
-
-		if (!user) {
-			throw new NotFoundException();
-		}
-
-		return User.toDto(user);
 	}
 }
