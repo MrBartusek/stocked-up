@@ -4,8 +4,8 @@ import { useContext, useState } from 'react';
 import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
 import { UserContext } from '../../context/UserContext';
 import { Utils } from '../../utils/utils';
-import Alert from '../Helpers/Alert';
 import Button from '../Button';
+import Alert from '../Helpers/Alert';
 
 function UserEmailReconfirmForm() {
 	const { user } = useContext(UserContext);

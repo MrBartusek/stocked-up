@@ -6,13 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IDeleteAccountDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
 import { Utils } from '../../utils/utils';
+import Button from '../Button';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import GoBackButton from '../GoBackButton';
-import Button from '../Button';
 
 type Inputs = {
 	password: string;

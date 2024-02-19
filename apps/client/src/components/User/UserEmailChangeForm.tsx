@@ -1,16 +1,15 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { IChangePasswordDto, IUpdateEmailDto } from 'shared-types';
-import { UserContext } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { IUpdateEmailDto } from 'shared-types';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
 	password: string;

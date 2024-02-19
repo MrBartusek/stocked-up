@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { IImageDto, IUpdateUserDto, UserDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
 import { Utils } from '../../utils/utils';
@@ -12,7 +13,6 @@ import FormImageInput from '../Form/FormImageInput';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
 	username: string;
