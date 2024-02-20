@@ -30,7 +30,6 @@ import ProductsCreatePage from './Pages/Product/ProductsCreatePage';
 import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
-import UnderConstructionPage from './Pages/UnderConstructionPage';
 import UserDetailsTab from './Pages/User/UserDetailsTab';
 import UserSecurityTab from './Pages/User/UserSecurityTab';
 import UserSettingsPage from './Pages/User/UserSettingsPage';
@@ -277,10 +276,6 @@ function Router() {
 								{
 									path: 'add',
 									element: <InventoryAddPage />,
-								},
-								{
-									path: 'move',
-									element: <UnderConstructionPage />,
 								},
 								{
 									path: 'view/:id',

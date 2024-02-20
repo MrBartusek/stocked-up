@@ -2,6 +2,8 @@ import {
 	BsArrowLeftRight,
 	BsBoxFill,
 	BsBoxSeamFill,
+	BsBuilding,
+	BsBuildingFill,
 	BsClipboard2DataFill,
 	BsGeoAltFill,
 	BsPersonFill,
@@ -47,31 +49,7 @@ function SidebarNavigation() {
 					icon={BsPlusSquareFill}
 					text="Add inventory"
 				/>
-				<SidebarLink
-					to={`${baseUrl}/inventory/move`}
-					icon={BsArrowLeftRight}
-					text="Move inventory"
-				/>
 			</SidebarSection>
-			<div className="opacity-50">
-				<SidebarSection name="Orders">
-					<SidebarLink
-						to={`${baseUrl}/orders`}
-						icon={BsBoxSeamFill}
-						text="Orders"
-					/>
-					<SidebarLink
-						to={`${baseUrl}/orders/add`}
-						icon={BsPlusSquareFill}
-						text="Create order"
-					/>
-					<SidebarLink
-						to={`${baseUrl}/orders/customers`}
-						icon={BsPersonFill}
-						text="Customers"
-					/>
-				</SidebarSection>
-			</div>
 		</nav>
 	);
 }
