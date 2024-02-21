@@ -49,13 +49,12 @@ export class OrganizationsController {
 		const user = new Types.ObjectId(request.user.id);
 
 		const org = await this.organizationsService.create(createOrganizationDto);
-		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
+		await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
 
-		await this.organizationsAclService.addRule(org.id, {
+		const updatedOrg = await this.organizationsAclService.addRule(org.id, {
 			user,
 			role: OrganizationSecurityRole.OWNER,
 		});
-		const updatedOrg = await this.organizationsService.addWarehouseReference(org._id, warehouse);
 
 		return Organization.toDto(updatedOrg);
 	}

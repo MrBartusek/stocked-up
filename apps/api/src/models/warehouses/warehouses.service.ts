@@ -8,6 +8,8 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { WarehouseDeletedEvent } from './events/warehouse-deleted.event';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
+import { WarehouseCreatedEvent } from './events/warehouse-created.event';
+import { WarehouseUpdatedEvent } from './events/warehouse-updated.event';
 
 @Injectable()
 export class WarehousesService {
@@ -16,12 +18,23 @@ export class WarehousesService {
 		private readonly warehouseRepository: WarehouseRepository,
 	) {}
 
-	create(organization: Types.ObjectId, dto: CreateWarehouseDto): Promise<WarehouseDocument> {
-		return this.warehouseRepository.create({ organization, ...dto });
+	async create(organization: Types.ObjectId, dto: CreateWarehouseDto): Promise<WarehouseDocument> {
+		const warehouse = await this.warehouseRepository.create({ organization, ...dto });
+
+		const event = new WarehouseCreatedEvent(warehouse);
+		this.eventEmitter.emit('warehouse.created', event);
+
+		return warehouse;
 	}
 
-	update(id: Types.ObjectId, dto: UpdateWarehouseDto): Promise<WarehouseDocument | undefined> {
-		return this.warehouseRepository.findOneByIdAndUpdate(id, dto);
+	async update(id: Types.ObjectId, dto: UpdateWarehouseDto): Promise<WarehouseDocument | null> {
+		const warehouse = await this.warehouseRepository.findOneByIdAndUpdate(id, dto);
+		if (!warehouse) return null;
+
+		const event = new WarehouseUpdatedEvent(warehouse);
+		this.eventEmitter.emit('warehouse.updated', event);
+
+		return warehouse;
 	}
 
 	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {

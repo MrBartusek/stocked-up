@@ -3,7 +3,6 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
-import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationDeleteEvent } from './events/organization-deleted.event';
@@ -60,46 +59,6 @@ export class OrganizationsService {
 
 	async nameTaken(name: string) {
 		return this.organizationRepository.exist({ name });
-	}
-
-	async addWarehouseReference(
-		organizationId: mongoose.Types.ObjectId,
-		warehouse: WarehouseDocument,
-	): Promise<OrganizationDocument | undefined> {
-		return this.organizationRepository.findOneByIdAndUpdate(organizationId, {
-			$push: {
-				warehouses: {
-					id: warehouse._id,
-					name: warehouse.name,
-				},
-			},
-		});
-	}
-
-	async updateWarehouseReference(
-		warehouse: WarehouseDocument,
-	): Promise<OrganizationDocument | undefined> {
-		return this.organizationRepository.findOneAndUpdate(
-			{ 'warehouses.id': warehouse._id },
-			{
-				$set: {
-					'warehouses.$.name': warehouse.name,
-				},
-			},
-		);
-	}
-
-	async deleteWarehouseReference(
-		warehouseId: mongoose.Types.ObjectId,
-	): Promise<OrganizationDocument | undefined> {
-		return this.organizationRepository.findOneAndUpdate(
-			{ 'warehouses.id': warehouseId },
-			{
-				$pull: {
-					warehouses: { id: warehouseId },
-				},
-			},
-		);
 	}
 
 	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {

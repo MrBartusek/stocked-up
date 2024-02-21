@@ -9,6 +9,10 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
+import { OrganizationsWarehouseRefService } from './organizations-warehouse-ref.service';
+import { WarehouseCreatedListener } from './listeners/warehouse-created.listener';
+import { WarehouseUpdatedListener } from './listeners/warehouse-updated.listener';
+import { WarehouseDeletedListener } from './listeners/warehouse-deleted.listener';
 
 @Module({
 	imports: [
@@ -23,6 +27,10 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 		OrganizationsAclService,
 		OrganizationsStatsService,
 		OrganizationNameNotTakenRule,
+		OrganizationsWarehouseRefService,
+		WarehouseCreatedListener,
+		WarehouseUpdatedListener,
+		WarehouseDeletedListener,
 	],
 	exports: [OrganizationsService, OrganizationsStatsService, OrganizationsAclService],
 })

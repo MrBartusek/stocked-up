@@ -85,12 +85,10 @@ export class DemoService {
 			},
 		});
 
-		let finalOrg = organization;
 		for await (const name of warehouseNames) {
-			const warehouse = await this.warehousesService.create(organization._id, { name });
-			finalOrg = await this.organizationsService.addWarehouseReference(organization._id, warehouse);
+			await this.warehousesService.create(organization._id, { name });
 		}
-		return finalOrg;
+		return await this.organizationsService.findById(organization._id);
 	}
 
 	private async createProductDefinitions(organization: Types.ObjectId): Promise<ProductDocument[]> {

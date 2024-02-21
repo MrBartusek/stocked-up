@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+	Put,
+	Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, WarehouseDto } from 'shared-types';
@@ -9,7 +19,6 @@ import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization
 import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
 import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { OrganizationsService } from '../organizations/organizations.service';
 import { CreateWarehouseInOrgDto } from './dto/create-warehouse-in-org.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { Warehouse } from './schemas/warehouse.schema';
@@ -20,17 +29,13 @@ import { WarehousesService } from './warehouses.service';
 export class WarehousesController {
 	constructor(
 		private readonly warehousesService: WarehousesService,
-		private readonly organizationsService: OrganizationsService,
 		private readonly organizationsStatsService: OrganizationsStatsService,
 	) {}
 
 	@Post()
 	async create(@Body(SecurityValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
 		const orgId = new Types.ObjectId(dto.organizationId);
-
 		const warehouse = await this.warehousesService.create(orgId, dto.warehouse);
-		await this.organizationsService.addWarehouseReference(orgId, warehouse);
-
 		return Warehouse.toDto(warehouse);
 	}
 
@@ -39,6 +44,9 @@ export class WarehousesController {
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
 	): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.findById(id);
+
+		if (!warehouse) throw new NotFoundException();
+
 		return Warehouse.toDto(warehouse);
 	}
 
@@ -67,7 +75,9 @@ export class WarehousesController {
 		@Body(SecurityValidationPipe) dto: UpdateWarehouseDto,
 	): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.update(id, dto);
-		await this.organizationsService.updateWarehouseReference(warehouse);
+
+		if (!warehouse) throw new NotFoundException();
+
 		return Warehouse.toDto(warehouse);
 	}
 
@@ -77,8 +87,9 @@ export class WarehousesController {
 	): Promise<WarehouseDto> {
 		const warehouse = await this.warehousesService.delete(id);
 
-		const org = await this.organizationsService.deleteWarehouseReference(warehouse._id);
-		await this.organizationsStatsService.recalculateTotalValue(org._id);
+		if (!warehouse) throw new NotFoundException();
+
+		await this.organizationsStatsService.recalculateTotalValue(warehouse.organization._id);
 
 		return Warehouse.toDto(warehouse);
 	}
