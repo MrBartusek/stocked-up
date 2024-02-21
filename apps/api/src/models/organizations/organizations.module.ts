@@ -2,7 +2,6 @@ import { Module, forwardRef } from '@nestjs/common';
 import MongooseModuleHelper from '../../helpers/mongoose-module.helper';
 import { OrganizationNameNotTakenRule } from '../../rules/org-name-not-taken.rule';
 import { SecurityModule } from '../../security/security.module';
-import { ProductsModule } from '../products/products.module';
 import { WarehousesModule } from '../warehouses/warehouses.module';
 import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsStatsService } from './organizations-stats.service';
@@ -16,7 +15,6 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 		MongooseModuleHelper.forFeature(Organization, OrganizationSchema),
 		forwardRef(() => SecurityModule),
 		forwardRef(() => WarehousesModule),
-		forwardRef(() => ProductsModule),
 	],
 	controllers: [OrganizationsController],
 	providers: [

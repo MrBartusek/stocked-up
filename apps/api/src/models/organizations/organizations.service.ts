@@ -1,12 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
-import { ProductsService } from '../products/products.service';
 import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
-import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { OrganizationDeleteEvent } from './events/organization-deleted.event';
 import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
@@ -15,13 +15,10 @@ import { OrganizationDocument } from './schemas/organization.schema';
 @Injectable()
 export class OrganizationsService {
 	constructor(
+		private readonly eventEmitter: EventEmitter2,
 		private readonly organizationRepository: OrganizationRepository,
 		private readonly organizationsStatsService: OrganizationsStatsService,
-		private readonly warehousesService: WarehousesService,
-		private readonly productsService: ProductsService,
 	) {}
-
-	private readonly logger = new Logger(OrganizationsService.name);
 
 	async create(dto: CreateOrganizationDto): Promise<OrganizationDocument> {
 		return this.organizationRepository.create({
@@ -37,15 +34,12 @@ export class OrganizationsService {
 	}
 
 	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
-		const org = await this.findById(id);
-		for await (const reference of org.warehouses) {
-			await this.warehousesService.delete(reference.id as any);
-		}
-		await this.productsService.deleteAllByOrg(org._id);
-		const deletedOrg = await this.organizationRepository.deleteOneById(id);
+		const org = await this.organizationRepository.deleteOneById(id);
 
-		this.logger.log(`Deleted organization {${deletedOrg.name},${id}}`);
-		return deletedOrg;
+		const event = new OrganizationDeleteEvent(org);
+		this.eventEmitter.emit('organization.deleted', event);
+
+		return org;
 	}
 
 	async listAllForUser(id: mongoose.Types.ObjectId) {

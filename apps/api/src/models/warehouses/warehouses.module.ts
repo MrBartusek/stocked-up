@@ -9,6 +9,7 @@ import { WarehouseRepository } from './warehouse.repository';
 import { WarehouseStatsService } from './warehouses-stats.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 
 @Module({
 	imports: [
@@ -19,7 +20,12 @@ import { WarehousesService } from './warehouses.service';
 		forwardRef(() => OrganizationResolverModule),
 	],
 	controllers: [WarehousesController],
-	providers: [WarehousesService, WarehouseRepository, WarehouseStatsService],
+	providers: [
+		WarehousesService,
+		WarehouseRepository,
+		WarehouseStatsService,
+		OrganizationDeletedListener,
+	],
 	exports: [WarehousesService, WarehouseStatsService],
 })
 export class WarehousesModule {}

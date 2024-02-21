@@ -8,6 +8,7 @@ import { ProductsController } from './products.controller';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
 import { Product, ProductSchema } from './schemas/product.schema';
+import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 
 @Module({
 	imports: [
@@ -18,7 +19,7 @@ import { Product, ProductSchema } from './schemas/product.schema';
 		forwardRef(() => OrganizationResolverModule),
 	],
 	controllers: [ProductsController],
-	providers: [ProductsService, ProductsRepository],
+	providers: [ProductsService, ProductsRepository, OrganizationDeletedListener],
 	exports: [ProductsService],
 })
 export class ProductsModule {}

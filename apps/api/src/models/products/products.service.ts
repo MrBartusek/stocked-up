@@ -48,7 +48,7 @@ export class ProductsService {
 		return product;
 	}
 
-	async deleteAllByOrg(organizationId: mongoose.Types.ObjectId): Promise<number> {
+	async deleteManyByOrg(organizationId: mongoose.Types.ObjectId): Promise<number> {
 		const products = await this.productsRepository.find({ organization: organizationId });
 		for await (const product of products) {
 			await this.delete(product._id);
