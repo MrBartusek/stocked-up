@@ -1,12 +1,7 @@
 import {
-	BsArrowLeftRight,
 	BsBoxFill,
-	BsBoxSeamFill,
-	BsBuilding,
-	BsBuildingFill,
 	BsClipboard2DataFill,
 	BsGeoAltFill,
-	BsPersonFill,
 	BsPlusSquareFill,
 	BsTagFill,
 } from 'react-icons/bs';
