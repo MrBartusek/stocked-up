@@ -7,9 +7,9 @@ import { InventoryStatsService } from './inventory-stats.service';
 import { InventoryController } from './inventory.controller';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryService } from './inventory.service';
-import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.schema';
 import { ProductDeletedListener } from './listeners/product-deleted.listener';
 import { WarehouseDeletedListener } from './listeners/warehouse-deleted.listener';
+import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.schema';
 
 @Module({
 	imports: [

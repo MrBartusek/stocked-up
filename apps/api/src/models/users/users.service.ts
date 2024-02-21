@@ -2,12 +2,11 @@ import { BadRequestException, Injectable, Logger, NotFoundException } from '@nes
 import { FilterQuery, Types, UpdateQuery } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
+import { OrganizationsAclService } from '../organizations/organizations-acl.service';
+import { OrganizationsService } from '../organizations/organizations.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
-import { OrganizationsService } from '../organizations/organizations.service';
-import { SecurityService } from '../../security/security.service';
-import { OrganizationsAclService } from '../organizations/organizations-acl.service';
 
 export interface UserCreateData {
 	username: string;

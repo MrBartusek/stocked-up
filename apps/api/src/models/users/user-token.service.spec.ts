@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { addDays } from 'date-fns';
+import { Types } from 'mongoose';
 import { UsersTokenService } from './users-token.service';
 import { UsersService } from './users.service';
-import { Types } from 'mongoose';
-import { addDays } from 'date-fns';
 
 describe('UsersTokenService', () => {
 	let service: UsersTokenService;

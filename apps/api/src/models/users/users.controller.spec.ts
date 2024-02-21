@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
+import { Types } from 'mongoose';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { Types } from 'mongoose';
 
 describe('UsersController', () => {
 	let controller: UsersController;

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { ProductsService } from '../products.service';
 import { OrganizationDeleteEvent } from '../../organizations/events/organization-deleted.event';
+import { ProductsService } from '../products.service';
 
 @Injectable()
 export class OrganizationDeletedListener {

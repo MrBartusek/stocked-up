@@ -4,11 +4,11 @@ import { ImagesModule } from '../../images/images.module';
 import { OrganizationResolverModule } from '../../organization-resolver/organization-resolver.module';
 import { SecurityModule } from '../../security/security.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
+import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 import { ProductsController } from './products.controller';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
 import { Product, ProductSchema } from './schemas/product.schema';
-import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 
 @Module({
 	imports: [

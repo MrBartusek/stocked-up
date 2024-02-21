@@ -4,12 +4,12 @@ import { OrganizationResolverModule } from '../../organization-resolver/organiza
 import { SecurityModule } from '../../security/security.module';
 import { InventoryModule } from '../inventory/inventory.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
+import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 import { Warehouse, WarehouseSchema } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehouseStatsService } from './warehouses-stats.service';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 
 @Module({
 	imports: [

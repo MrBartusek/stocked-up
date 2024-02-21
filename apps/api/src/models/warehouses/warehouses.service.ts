@@ -5,11 +5,11 @@ import { PageDto, WarehouseDto } from 'shared-types';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { WarehouseCreatedEvent } from './events/warehouse-created.event';
 import { WarehouseDeletedEvent } from './events/warehouse-deleted.event';
+import { WarehouseUpdatedEvent } from './events/warehouse-updated.event';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
-import { WarehouseCreatedEvent } from './events/warehouse-created.event';
-import { WarehouseUpdatedEvent } from './events/warehouse-updated.event';
 
 @Injectable()
 export class WarehousesService {

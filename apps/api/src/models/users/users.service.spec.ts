@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
+import { OrganizationsAclService } from '../organizations/organizations-acl.service';
+import { OrganizationsService } from '../organizations/organizations.service';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
-import { Types } from 'mongoose';
-import { OrganizationsService } from '../organizations/organizations.service';
-import { OrganizationsAclService } from '../organizations/organizations-acl.service';
 
 describe('UsersService', () => {
 	let service: UsersService;
