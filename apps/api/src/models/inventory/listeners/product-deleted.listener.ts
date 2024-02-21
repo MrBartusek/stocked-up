@@ -7,8 +7,8 @@ import { InventoryService } from '../inventory.service';
 export class ProductDeletedListener {
 	constructor(private readonly inventoryService: InventoryService) {}
 
-	@OnEvent('product.deleted')
-	handleProductDelete(event: ProductDeletedEvent) {
-		this.inventoryService.deleteManyByProduct(event.id);
+	@OnEvent('product.deleted', { async: true })
+	async handleProductDelete(event: ProductDeletedEvent) {
+		await this.inventoryService.deleteManyByProduct(event.id);
 	}
 }
