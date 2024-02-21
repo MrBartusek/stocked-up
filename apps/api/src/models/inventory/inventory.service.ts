@@ -30,12 +30,10 @@ export class InventoryService {
 	}
 
 	deleteManyByProduct(productId: Types.ObjectId) {
-		console.log('delete by product');
 		return this.inventoryRepository.deleteMany({ product: productId });
 	}
 
 	deleteManyByWarehouse(warehouseId: Types.ObjectId) {
-		console.log('delete by warehouse');
 		return this.inventoryRepository.deleteMany({ warehouse: warehouseId });
 	}
 

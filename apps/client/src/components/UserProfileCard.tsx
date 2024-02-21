@@ -7,8 +7,6 @@ import UserProfileRow from '../UserProfileRow';
 function UserProfileCard() {
 	const { user } = useContext(UserContext);
 
-	console.log(user);
-
 	return (
 		<div className="my-4 flex flex-col overflow-hidden rounded-md border">
 			<div className="flex gap-5 bg-gray-150 p-6">
