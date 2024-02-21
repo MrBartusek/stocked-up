@@ -32,6 +32,11 @@ export class OrganizationsService {
 		return this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
 	}
 
+	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
+		this.organizationRepository.findOneAndUpdate({ _id: id }, { $set: { settings: settings } });
+		return this.organizationsStatsService.recalculateTotalValue(id);
+	}
+
 	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
 		const org = await this.organizationRepository.deleteOneById(id);
 
@@ -41,7 +46,7 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async listAllForUser(id: mongoose.Types.ObjectId) {
+	async listAllForUser(id: mongoose.Types.ObjectId): Promise<OrganizationDocument[]> {
 		return this.organizationRepository.find({ 'acls.user': id });
 	}
 
@@ -49,20 +54,15 @@ export class OrganizationsService {
 		return this.organizationRepository.paginate({ 'acls.user': id }, pageQueryDto);
 	}
 
-	async findById(id: mongoose.Types.ObjectId) {
+	async findById(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
 		return this.organizationRepository.findById(id);
 	}
 
-	async exist(id: mongoose.Types.ObjectId) {
+	async exist(id: mongoose.Types.ObjectId): Promise<boolean> {
 		return this.organizationRepository.exist({ _id: id });
 	}
 
-	async nameTaken(name: string) {
+	async nameTaken(name: string): Promise<boolean> {
 		return this.organizationRepository.exist({ name });
-	}
-
-	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
-		this.organizationRepository.findOneAndUpdate({ _id: id }, { $set: { settings: settings } });
-		return this.organizationsStatsService.recalculateTotalValue(id);
 	}
 }
