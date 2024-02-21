@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import mongoose, { Types } from 'mongoose';
 import { RepositoryPaginateResult } from '../../database/entity.repository';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { ImagesService } from '../../images/images.service';
-import { InventoryService } from '../inventory/inventory.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
+import { ProductDeletedEvent } from './events/product-deleted.event';
 
 @Injectable()
 export class ProductsService {
 	constructor(
+		private readonly eventEmitter: EventEmitter2,
 		private readonly productsRepository: ProductsRepository,
 		private readonly imagesService: ImagesService,
-		private readonly inventoryService: InventoryService,
 	) {}
 
 	create(dto: CreateProductDto): Promise<ProductDocument> {
@@ -38,8 +39,12 @@ export class ProductsService {
 	async delete(id: mongoose.Types.ObjectId): Promise<ProductDocument | null> {
 		const product = await this.productsRepository.deleteOneById(id);
 		if (!product) return null;
-		await this.inventoryService.deleteManyByProduct(id);
+
 		await this.imagesService.deleteImage(product);
+
+		const event = new ProductDeletedEvent(product);
+		this.eventEmitter.emit('product.deleted', event);
+
 		return product;
 	}
 

@@ -53,7 +53,7 @@ describe('InventoryService', () => {
 
 	it('should delete item', () => {
 		const itemId = new Types.ObjectId();
-		expect(service.delete(itemId)).resolves.toStrictEqual(
+		expect(service.deleteOneById(itemId)).resolves.toStrictEqual(
 			expect.objectContaining({
 				_id: itemId,
 			}),

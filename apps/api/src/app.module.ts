@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthEmailsModule } from './auth-emails/auth-emails.module';
 import { AuthModule } from './auth/auth.module';
 import { DemoModule } from './demo/demo.module';
 import { EmailsModule } from './emails/emails.module';
@@ -19,7 +21,6 @@ import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
 import { SecurityModule } from './security/security.module';
-import { AuthEmailsModule } from './auth-emails/auth-emails.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),
@@ -27,10 +28,11 @@ const FrontendModule = ServeStaticModule.forRoot({
 
 @Module({
 	imports: [
+		MongooseModule.forRoot(process.env.MONGO_URL),
+		EventEmitterModule.forRoot(),
 		FrontendModule,
 		ProductsModule,
 		WarehousesModule,
-		MongooseModule.forRoot(process.env.MONGO_URL),
 		UsersModule,
 		AuthModule,
 		OrganizationsModule,

@@ -3,7 +3,6 @@ import MongooseModuleHelper from '../../helpers/mongoose-module.helper';
 import { ImagesModule } from '../../images/images.module';
 import { OrganizationResolverModule } from '../../organization-resolver/organization-resolver.module';
 import { SecurityModule } from '../../security/security.module';
-import { InventoryModule } from '../inventory/inventory.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { ProductsController } from './products.controller';
 import { ProductsRepository } from './products.repository';
@@ -14,7 +13,6 @@ import { Product, ProductSchema } from './schemas/product.schema';
 	imports: [
 		MongooseModuleHelper.forFeature(Product, ProductSchema),
 		forwardRef(() => OrganizationsModule),
-		forwardRef(() => InventoryModule),
 		forwardRef(() => ImagesModule),
 		forwardRef(() => SecurityModule),
 		forwardRef(() => OrganizationResolverModule),

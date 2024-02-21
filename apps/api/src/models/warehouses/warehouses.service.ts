@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Types } from 'mongoose';
 import { PageDto, WarehouseDto } from 'shared-types';
 import { PageQueryDto } from '../../dto/page-query.dto';
-import { InventoryService } from '../inventory/inventory.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { WarehouseDeletedEvent } from './events/warehouse-deleted.event';
 import { WarehouseDocument } from './schemas/warehouse.schema';
 import { WarehouseRepository } from './warehouse.repository';
 
 @Injectable()
 export class WarehousesService {
 	constructor(
+		private readonly eventEmitter: EventEmitter2,
 		private readonly warehouseRepository: WarehouseRepository,
-		private readonly inventoryService: InventoryService,
 	) {}
 
 	create(organization: Types.ObjectId, dto: CreateWarehouseDto): Promise<WarehouseDocument> {
@@ -30,7 +31,10 @@ export class WarehousesService {
 	async delete(id: Types.ObjectId): Promise<WarehouseDocument | null> {
 		const warehouse = await this.warehouseRepository.deleteOneById(id);
 		if (!warehouse) return null;
-		await this.inventoryService.deleteManyByWarehouse(warehouse._id);
+
+		const event = new WarehouseDeletedEvent(warehouse);
+		this.eventEmitter.emit('warehouse.deleted', event);
+
 		return warehouse;
 	}
 
