@@ -7,6 +7,8 @@ import { OrganizationsService } from '../organizations/organizations.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './users.repository';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UserDeletedEvent } from './events/user-deleted.event';
 
 export interface UserCreateData {
 	username: string;
@@ -19,11 +21,10 @@ export interface UserCreateData {
 @Injectable()
 export class UsersService {
 	constructor(
+		private readonly eventEmitter: EventEmitter2,
 		private readonly userRepository: UserRepository,
 		private readonly imagesService: ImagesService,
 		private readonly gravatarService: GravatarService,
-		private readonly organizationsAclService: OrganizationsAclService,
-		private readonly organizationsService: OrganizationsService,
 	) {}
 
 	private readonly logger = new Logger(UsersService.name);
@@ -81,8 +82,10 @@ export class UsersService {
 	async delete(id: Types.ObjectId): Promise<UserDocument> {
 		const user = await this.userRepository.deleteOneById(id);
 		await this.imagesService.deleteImage(user.profile);
-		await this.removeUserFromAllOrgs(id);
-		this.logger.log(`Deleted user {${user.profile.username},${user._id}}`);
+
+		const event = new UserDeletedEvent(user);
+		this.eventEmitter.emit('user.deleted', event);
+
 		return user;
 	}
 
@@ -132,15 +135,5 @@ export class UsersService {
 		if (!gravatar) return null;
 		this.logger.log(`Saved default Gravatar as avatar for new user {${email}}`);
 		return this.imagesService.uploadImage(gravatar);
-	}
-
-	private async removeUserFromAllOrgs(userId: Types.ObjectId) {
-		const userOrgs = await this.organizationsService.listAllForUser(userId);
-		for await (const org of userOrgs) {
-			const updatedOrg = await this.organizationsAclService.deleteRule(org._id, userId);
-			if (updatedOrg.acls.length == 0) {
-				await this.organizationsService.delete(updatedOrg._id);
-			}
-		}
 	}
 }

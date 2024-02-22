@@ -14,15 +14,18 @@ export interface AccessRule {
 export class OrganizationsAclService {
 	constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-	async getRule(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<AccessRule | null> {
+	async getAllRules(organizationId: Types.ObjectId): Promise<AccessRule[] | null> {
 		const organization = await this.organizationRepository.findById(organizationId, { acls: 1 });
 		if (!organization) return null;
-		const rule = organization.acls.find((rule) => rule.user.equals(user));
-		return rule;
+		return organization.acls;
 	}
 
-	async ruleExist(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<boolean> {
-		return this.organizationRepository.exist({ _id: organizationId, 'acls.user': user });
+	async getRule(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<AccessRule | null> {
+		const allRules = await this.getAllRules(organizationId);
+		if (!allRules) return null;
+
+		const rule = allRules.find((rule) => rule.user.equals(user));
+		return rule;
 	}
 
 	async addRule(organization: Types.ObjectId, rule: AccessRule): Promise<OrganizationDocument> {
@@ -67,7 +70,44 @@ export class OrganizationsAclService {
 		);
 	}
 
+	async ruleExist(organizationId: Types.ObjectId, user: Types.ObjectId): Promise<boolean> {
+		return this.organizationRepository.exist({ _id: organizationId, 'acls.user': user });
+	}
+
 	async paginateRules(organization: Types.ObjectId, pageQueryDto: PageQueryDto) {
 		return this.organizationRepository.paginateAcls({ _id: organization }, pageQueryDto);
+	}
+
+	/**
+	 * Checks does specified organization has a designated owner.
+	 */
+	async hasOwner(organization: Types.ObjectId): Promise<boolean> {
+		const allRules = await this.getAllRules(organization);
+		if (!allRules) {
+			throw new Error('Organization not found');
+		}
+
+		const rule = allRules.find((rule) => rule.role == OrganizationSecurityRole.OWNER);
+		return rule != undefined;
+	}
+
+	/**
+	 * Randomly select one member of organization to become its new owner.
+	 * Useful when removing current owner user and replacing it with new one.
+	 * @returns access rule for new owner.
+	 */
+	async randomlySelectOwner(organization: Types.ObjectId): Promise<AccessRule> {
+		const hasOwner = await this.hasOwner(organization);
+		if (hasOwner) {
+			throw new Error('Cannot randomly select owner of organization, that already has owner');
+		}
+
+		const allRules = await this.getAllRules(organization);
+		if (allRules.length == 0) {
+			throw new Error('Cannot randomly select owner of organization, that has no members');
+		}
+		const selectedMember = allRules.at(0).user;
+		await this.updateRule(organization, selectedMember, OrganizationSecurityRole.OWNER);
+		return await this.getRule(organization, selectedMember);
 	}
 }

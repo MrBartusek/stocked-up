@@ -13,6 +13,7 @@ import { OrganizationsController } from './organizations.controller';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
+import { UserDeletedListener } from './listeners/user-deleted.listener';
 
 @Module({
 	imports: [
@@ -31,6 +32,7 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 		WarehouseCreatedListener,
 		WarehouseUpdatedListener,
 		WarehouseDeletedListener,
+		UserDeletedListener,
 	],
 	exports: [OrganizationsService, OrganizationsStatsService, OrganizationsAclService],
 })
