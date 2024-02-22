@@ -43,7 +43,7 @@ export class UsersService {
 			auth: { password: data.passwordHash || null },
 		});
 
-		this.logger.log(`Created new user {${user.profile.username},${user._id}}`);
+		this.logger.log(`User created {${user.profile.username},${user._id}}`);
 		return user;
 	}
 
@@ -85,6 +85,7 @@ export class UsersService {
 
 		const event = new UserDeletedEvent(user);
 		this.eventEmitter.emit('user.deleted', event);
+		this.logger.log(`User deleted {${user.profile.username}, ${user._id}}`);
 
 		return user;
 	}

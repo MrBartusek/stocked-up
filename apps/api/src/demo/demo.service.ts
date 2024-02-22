@@ -63,7 +63,7 @@ export class DemoService {
 			role: OrganizationSecurityRole.OWNER,
 		});
 
-		this.logger.log(`Created demo account - ${user.profile.email}`);
+		this.logger.log(`Demo account created {${user.profile.username}, ${user._id}}`);
 		return user;
 	}
 

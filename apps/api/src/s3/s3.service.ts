@@ -28,7 +28,7 @@ export class S3Service {
 
 		await this.s3.putObject(params);
 
-		this.logger.log(`Uploaded S3 object! Key: "${key}"`);
+		this.logger.log(`S3 object created {${key}}`);
 		return key;
 	}
 
@@ -56,7 +56,7 @@ export class S3Service {
 		};
 
 		await this.s3.deleteObject(params);
-		this.logger.log(`Deleted S3 object with key: ${key}`);
+		this.logger.log(`S3 object deleted {${key}}`);
 	}
 
 	private generateFileKey(bytes = 32) {

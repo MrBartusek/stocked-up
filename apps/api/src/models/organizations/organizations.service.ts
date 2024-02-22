@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mongoose from 'mongoose';
 import { FilterQuery } from 'mongoose';
@@ -18,6 +18,8 @@ export class OrganizationsService {
 		private readonly organizationRepository: OrganizationRepository,
 		private readonly organizationsStatsService: OrganizationsStatsService,
 	) {}
+
+	private readonly logger = new Logger(OrganizationsService.name);
 
 	async create(dto: CreateOrganizationDto): Promise<OrganizationDocument> {
 		return this.organizationRepository.create({
@@ -42,6 +44,7 @@ export class OrganizationsService {
 
 		const event = new OrganizationDeleteEvent(org);
 		this.eventEmitter.emit('organization.deleted', event);
+		this.logger.log(`Organization deleted {${id}}`);
 
 		return org;
 	}
