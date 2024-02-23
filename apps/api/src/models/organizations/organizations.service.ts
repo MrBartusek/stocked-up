@@ -9,6 +9,7 @@ import { OrganizationDeleteEvent } from './events/organization-deleted.event';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
+import { OrganizationUpdatedEvent } from './events/organization-updated.event';
 
 @Injectable()
 export class OrganizationsService {
@@ -29,14 +30,24 @@ export class OrganizationsService {
 		id: mongoose.Types.ObjectId,
 		dto: UpdateOrganizationDto,
 	): Promise<OrganizationDocument> {
-		return this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
+		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
+
+		const event = new OrganizationUpdatedEvent(org);
+		this.eventEmitter.emit('organization.updated', event);
+
+		return org;
 	}
 
 	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
-		return this.organizationRepository.findOneAndUpdate(
+		const org = await this.organizationRepository.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { settings: settings } },
 		);
+
+		const event = new OrganizationUpdatedEvent(org);
+		this.eventEmitter.emit('organization.settings.updated', event);
+
+		return org;
 	}
 
 	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {

@@ -11,6 +11,7 @@ import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
 import { ProductUpdatedListener } from './listeners/product-events.listener';
+import { OrganizationSettingsUpdatedListener } from './listeners/organization-settings-updated.listener';
 
 @Module({
 	imports: [
@@ -27,6 +28,7 @@ import { ProductUpdatedListener } from './listeners/product-events.listener';
 		OrganizationDeletedListener,
 		InventoryEventListener,
 		ProductUpdatedListener,
+		OrganizationSettingsUpdatedListener,
 	],
 	exports: [WarehousesService],
 })
