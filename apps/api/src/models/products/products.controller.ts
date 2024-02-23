@@ -31,17 +31,11 @@ import { Product } from './schemas/product.schema';
 @UseGuards(AuthenticatedGuard)
 @Injectable()
 export class ProductsController {
-	constructor(
-		private readonly productsService: ProductsService,
-		private readonly organizationStatsService: OrganizationsStatsService,
-	) {}
+	constructor(private readonly productsService: ProductsService) {}
 
 	@Post()
 	async create(@Body(SecurityValidationPipe) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
-
-		const orgId = new Types.ObjectId(dto.organization);
-		await this.updateTotalProductsCount(orgId);
 
 		return Product.toDto(product);
 	}
@@ -87,14 +81,6 @@ export class ProductsController {
 		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
 	): Promise<ProductDto> {
 		const product = await this.productsService.delete(id);
-
-		await this.updateTotalProductsCount(product.organization);
-
 		return Product.toDto(product);
-	}
-
-	private async updateTotalProductsCount(organizationId: Types.ObjectId) {
-		const newCount = await this.productsService.countAll(organizationId);
-		await this.organizationStatsService.updateProductsCount(organizationId, newCount);
 	}
 }
