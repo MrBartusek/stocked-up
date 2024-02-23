@@ -9,6 +9,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductDeletedEvent } from './events/product-deleted.event';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
+import { ProductCreatedEvent } from './events/product-created.event';
+import { ProductUpdatedEvent } from './events/product-updated.event';
 
 @Injectable()
 export class ProductsService {
@@ -18,11 +20,16 @@ export class ProductsService {
 		private readonly imagesService: ImagesService,
 	) {}
 
-	create(dto: CreateProductDto): Promise<ProductDocument> {
-		return this.productsRepository.create({
+	async create(dto: CreateProductDto): Promise<ProductDocument> {
+		const product = await this.productsRepository.create({
 			...dto,
 			organization: new Types.ObjectId(dto.organization) as any,
 		});
+
+		const event = new ProductCreatedEvent(product);
+		this.eventEmitter.emit('product.created', event);
+
+		return product;
 	}
 
 	async update(
@@ -32,7 +39,12 @@ export class ProductsService {
 		const { image, ...rest } = dto;
 		const product = await this.productsRepository.findOneByIdAndUpdate(id, rest);
 		if (!product) return null;
+
 		product.imageKey = await this.imagesService.handleImageDtoAndGetKey(product, image);
+
+		const event = new ProductUpdatedEvent(product);
+		this.eventEmitter.emit('product.updated', event);
+
 		return await this.productsRepository.findOneByIdAndUpdate(id, product);
 	}
 

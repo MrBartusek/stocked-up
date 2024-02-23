@@ -20,40 +20,6 @@ export class InventoryRepository extends EntityRepository<InventoryItemDocument>
 		return this.paginate(this.getAggregateQuery(match), pageQueryDto);
 	}
 
-	async calculateTotalWarehouseValue(
-		warehouseId: Types.ObjectId,
-		strategy: OrgValueCalculationStrategy,
-	): Promise<number> {
-		const result = await this.aggregate([
-			{
-				$match: { warehouse: warehouseId },
-			},
-			{
-				$lookup: {
-					from: 'products',
-					localField: 'product',
-					foreignField: '_id',
-					as: 'product',
-				},
-			},
-			{
-				$unwind: '$product',
-			},
-			{
-				$group: {
-					_id: null,
-					totalValue: { $sum: { $multiply: [`$product.${strategy}`, '$quantity'] } },
-				},
-			},
-		]);
-
-		if (result.length == 0) {
-			return 0;
-		}
-
-		return result[0].totalValue;
-	}
-
 	private getAggregateQuery(match: FilterQuery<any>): mongoose.PipelineStage[] {
 		return [
 			{

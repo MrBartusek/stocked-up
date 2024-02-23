@@ -6,7 +6,6 @@ import { OrganizationSecurityRole } from 'shared-types';
 import Utils from '../helpers/utils';
 import { InventoryService } from '../models/inventory/inventory.service';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
 import { OrganizationDocument } from '../models/organizations/schemas/organization.schema';
 import { ProductsService } from '../models/products/products.service';
@@ -21,7 +20,6 @@ export class DemoService {
 	constructor(
 		private readonly userService: UsersService,
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsStatsService: OrganizationsStatsService,
 		private readonly organizationsRolesService: OrganizationsAclService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productsService: ProductsService,
@@ -56,7 +54,6 @@ export class DemoService {
 
 		const products = await this.createProductDefinitions(org._id);
 		await this.randomlyDistributeInventory(org, products);
-		await this.updateStats(org._id);
 
 		await this.organizationsRolesService.addRule(org._id, {
 			user: user._id,
@@ -119,14 +116,6 @@ export class DemoService {
 				});
 			}
 		}
-	}
-
-	private async updateStats(organizationId: Types.ObjectId) {
-		await this.organizationsStatsService.updateProductsCount(
-			organizationId,
-			DEMO_CONFIG.products.length,
-		);
-		await this.organizationsStatsService.recalculateTotalValue(organizationId);
 	}
 
 	private pickRandomNProducts(products: ProductDocument[], count: number): ProductDocument[] {

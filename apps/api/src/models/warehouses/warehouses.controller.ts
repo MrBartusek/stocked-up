@@ -27,10 +27,7 @@ import { WarehousesService } from './warehouses.service';
 @ApiTags('warehouses')
 @Controller('warehouses')
 export class WarehousesController {
-	constructor(
-		private readonly warehousesService: WarehousesService,
-		private readonly organizationsStatsService: OrganizationsStatsService,
-	) {}
+	constructor(private readonly warehousesService: WarehousesService) {}
 
 	@Post()
 	async create(@Body(SecurityValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
@@ -88,8 +85,6 @@ export class WarehousesController {
 		const warehouse = await this.warehousesService.delete(id);
 
 		if (!warehouse) throw new NotFoundException();
-
-		await this.organizationsStatsService.recalculateTotalValue(warehouse.organization._id);
 
 		return Warehouse.toDto(warehouse);
 	}

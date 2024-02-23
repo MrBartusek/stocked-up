@@ -6,7 +6,6 @@ import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationDeleteEvent } from './events/organization-deleted.event';
-import { OrganizationsStatsService } from './organizations-stats.service';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
@@ -16,7 +15,6 @@ export class OrganizationsService {
 	constructor(
 		private readonly eventEmitter: EventEmitter2,
 		private readonly organizationRepository: OrganizationRepository,
-		private readonly organizationsStatsService: OrganizationsStatsService,
 	) {}
 
 	private readonly logger = new Logger(OrganizationsService.name);
@@ -35,8 +33,10 @@ export class OrganizationsService {
 	}
 
 	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
-		this.organizationRepository.findOneAndUpdate({ _id: id }, { $set: { settings: settings } });
-		return this.organizationsStatsService.recalculateTotalValue(id);
+		return this.organizationRepository.findOneAndUpdate(
+			{ _id: id },
+			{ $set: { settings: settings } },
+		);
 	}
 
 	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {

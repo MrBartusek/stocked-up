@@ -29,7 +29,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 @Module({
 	imports: [
 		MongooseModule.forRoot(process.env.MONGO_URL),
-		EventEmitterModule.forRoot(),
+		EventEmitterModule.forRoot({ wildcard: true }),
 		FrontendModule,
 		ProductsModule,
 		WarehousesModule,

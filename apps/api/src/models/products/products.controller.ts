@@ -79,7 +79,6 @@ export class ProductsController {
 		@Body(SecurityValidationPipe) dto: UpdateProductDto,
 	): Promise<ProductDto> {
 		const product = await this.productsService.update(id, dto);
-		await this.organizationStatsService.recalculateTotalValue(product.organization);
 		return Product.toDto(product);
 	}
 
@@ -90,7 +89,6 @@ export class ProductsController {
 		const product = await this.productsService.delete(id);
 
 		await this.updateTotalProductsCount(product.organization);
-		await this.organizationStatsService.recalculateTotalValue(product.organization);
 
 		return Product.toDto(product);
 	}

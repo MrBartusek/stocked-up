@@ -33,10 +33,7 @@ import { InventoryItem } from './schemas/inventory-item.schema';
 @Controller('inventory')
 @UseGuards(AuthenticatedGuard)
 export class InventoryController {
-	constructor(
-		private readonly inventoryService: InventoryService,
-		private readonly organizationStatsService: OrganizationsStatsService,
-	) {}
+	constructor(private readonly inventoryService: InventoryService) {}
 
 	@Post()
 	@HttpCode(201)
@@ -51,8 +48,7 @@ export class InventoryController {
 			);
 		}
 
-		const item = await this.inventoryService.create(dto);
-		await this.organizationStatsService.recalculateTotalValue(item.organization);
+		await this.inventoryService.create(dto);
 	}
 
 	@Put(':id')
@@ -61,15 +57,13 @@ export class InventoryController {
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(SecurityValidationPipe) dto: UpdateInventoryItemDto,
 	) {
-		const item = await this.inventoryService.update(id, dto);
-		await this.organizationStatsService.recalculateTotalValue(item.organization);
+		await this.inventoryService.update(id, dto);
 	}
 
 	@Delete(':id')
 	@HttpCode(200)
 	async delete(@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId) {
-		const item = await this.inventoryService.delete(id);
-		await this.organizationStatsService.recalculateTotalValue(item.organization);
+		await this.inventoryService.delete(id);
 	}
 
 	@Get('by-product')

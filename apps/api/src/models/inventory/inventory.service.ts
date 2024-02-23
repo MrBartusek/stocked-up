@@ -6,35 +6,64 @@ import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { InventoryCreatedEvent } from './events/inventory-created.event';
+import { InventoryUpdatedEvent } from './events/inventory-updated.event';
+import { InventoryDeletedEvent } from './events/inventory-deleted.event';
 
 @Injectable()
 export class InventoryService {
-	constructor(private readonly inventoryRepository: InventoryRepository) {}
+	constructor(
+		private readonly eventEmitter: EventEmitter2,
+		private readonly inventoryRepository: InventoryRepository,
+	) {}
 
-	create(dto: CreateInventoryItemDto) {
+	async create(dto: CreateInventoryItemDto) {
 		const { organizationId, warehouseId, productId, ...rest } = dto;
-		return this.inventoryRepository.create({
+
+		const item = await this.inventoryRepository.create({
 			organization: new Types.ObjectId(organizationId),
 			warehouse: new Types.ObjectId(warehouseId),
 			product: new Types.ObjectId(productId),
 			...rest,
 		});
+
+		const event = new InventoryCreatedEvent(item);
+		this.eventEmitter.emit('inventory.created', event);
+
+		return item;
 	}
 
-	update(id: Types.ObjectId, dto: UpdateInventoryItemDto) {
-		return this.inventoryRepository.findOneAndUpdate(id, { $set: dto });
+	async update(id: Types.ObjectId, dto: UpdateInventoryItemDto) {
+		const item = await this.inventoryRepository.findOneAndUpdate(id, { $set: dto });
+
+		const event = new InventoryUpdatedEvent(item);
+		this.eventEmitter.emit('inventory.updated', event);
+
+		return item;
 	}
 
-	delete(id: Types.ObjectId) {
-		return this.inventoryRepository.deleteOneById(id);
+	async delete(id: Types.ObjectId) {
+		const item = await this.inventoryRepository.deleteOneById(id);
+
+		const event = new InventoryDeletedEvent(item);
+		this.eventEmitter.emit('inventory.deleted', event);
+		return item;
 	}
 
-	deleteManyByProduct(productId: Types.ObjectId) {
-		return this.inventoryRepository.deleteMany({ product: productId });
+	async deleteManyByProduct(productId: Types.ObjectId) {
+		const itemsList = await this.inventoryRepository.find({ product: productId });
+		for await (const item of itemsList) {
+			await this.delete(item._id);
+		}
 	}
 
-	deleteManyByWarehouse(warehouseId: Types.ObjectId) {
-		return this.inventoryRepository.deleteMany({ warehouse: warehouseId });
+	async deleteManyByWarehouse(warehouseId: Types.ObjectId) {
+		const itemsList = await this.inventoryRepository.find({ warehouse: warehouseId });
+		for await (const item of itemsList) {
+			await this.delete(item._id);
+		}
 	}
 
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
@@ -74,5 +103,48 @@ export class InventoryService {
 			{ warehouse: warehouseId },
 			pageQueryDto,
 		);
+	}
+
+	/**
+	 * Calculates total value of all inventory items with specified
+	 * warehouse id by multiplying quality and buyPrice or sellPrice
+	 * of each item (depending on strategy)
+	 *
+	 * @param warehouseId Warehouse to check value of
+	 * @param strategy strategy to use
+	 * @returns total value in organization's currency
+	 */
+	async calculateStockValue(
+		warehouseId: Types.ObjectId,
+		strategy: OrgValueCalculationStrategy,
+	): Promise<number> {
+		const result = await this.inventoryRepository.aggregate([
+			{
+				$match: { warehouse: warehouseId },
+			},
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'product',
+					foreignField: '_id',
+					as: 'product',
+				},
+			},
+			{
+				$unwind: '$product',
+			},
+			{
+				$group: {
+					_id: null,
+					totalValue: { $sum: { $multiply: [`$product.${strategy}`, '$quantity'] } },
+				},
+			},
+		]);
+
+		if (result.length == 0) {
+			return 0;
+		}
+
+		return result[0].totalValue;
 	}
 }
