@@ -1,10 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mongoose from 'mongoose';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationDeleteEvent } from './events/organization-deleted.event';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
@@ -28,7 +27,7 @@ export class OrganizationsService {
 
 	async update(
 		id: mongoose.Types.ObjectId,
-		dto: UpdateOrganizationDto,
+		dto: UpdateQuery<OrganizationDocument>,
 	): Promise<OrganizationDocument> {
 		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
 

@@ -21,6 +21,7 @@ export class UserDeletedListener {
 
 		for await (const userOrg of userOrgList) {
 			const org = await this.organizationsAclService.deleteRule(userOrg._id, userId);
+			if (!org) continue;
 			const orgId = org._id;
 
 			const orgBecameEmpty = org.acls.length == 0;
