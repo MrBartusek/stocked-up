@@ -1,9 +1,9 @@
 import { Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
-import { OrgRecalculateJobData } from '../types/org-recalculate-job-data';
-import { OrganizationsService } from '../organizations.service';
 import { WarehousesService } from '../../warehouses/warehouses.service';
+import { OrganizationsService } from '../organizations.service';
+import { OrgRecalculateJobData } from '../types/org-recalculate-job-data';
 
 @Processor('org-recalculate')
 export class OrgRecalculateProcessor {

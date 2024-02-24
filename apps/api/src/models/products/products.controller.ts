@@ -20,7 +20,6 @@ import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';

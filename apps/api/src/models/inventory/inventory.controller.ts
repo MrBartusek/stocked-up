@@ -23,7 +23,6 @@ import { HasInventoryAccessPipe } from '../../security/pipes/has-inventory-acces
 import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
 import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
 import { InventoryService } from './inventory.service';

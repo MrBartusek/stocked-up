@@ -6,11 +6,11 @@ import { PageQueryDto } from '../../dto/page-query.dto';
 import { ImagesService } from '../../images/images.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductCreatedEvent } from './events/product-created.event';
 import { ProductDeletedEvent } from './events/product-deleted.event';
+import { ProductUpdatedEvent } from './events/product-updated.event';
 import { ProductsRepository } from './products.repository';
 import { ProductDocument } from './schemas/product.schema';
-import { ProductCreatedEvent } from './events/product-created.event';
-import { ProductUpdatedEvent } from './events/product-updated.event';
 
 @Injectable()
 export class ProductsService {

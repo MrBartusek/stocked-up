@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { WarehouseDeletedEvent } from '../../warehouses/events/warehouse-deleted.event';
-import { OrganizationsWarehouseRefService } from '../organizations-warehouse-ref.service';
 import { OrganizationsStatsService } from '../organizations-stats.service';
+import { OrganizationsWarehouseRefService } from '../organizations-warehouse-ref.service';
 
 @Injectable()
 export class WarehouseDeletedListener {

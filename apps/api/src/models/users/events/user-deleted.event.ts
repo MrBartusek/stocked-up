@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
-import { UserDocument } from '../schemas/user.schema';
 import { UserProfile } from '../schemas/user-profile.schema';
+import { UserDocument } from '../schemas/user.schema';
 
 export class UserDeletedEvent {
 	public readonly id: Types.ObjectId;

@@ -5,10 +5,10 @@ import { FilterQuery, UpdateQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { OrganizationDeleteEvent } from './events/organization-deleted.event';
+import { OrganizationUpdatedEvent } from './events/organization-updated.event';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
-import { OrganizationUpdatedEvent } from './events/organization-updated.event';
 
 @Injectable()
 export class OrganizationsService {

@@ -18,7 +18,6 @@ import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { CreateWarehouseInOrgDto } from './dto/create-warehouse-in-org.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { Warehouse } from './schemas/warehouse.schema';

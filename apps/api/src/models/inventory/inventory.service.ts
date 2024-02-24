@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { FilterQuery, Types } from 'mongoose';
 import { PageDto } from 'shared-types';
 import { PageQueryDto } from '../../dto/page-query.dto';
+import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
 import { CreateInventoryItemDto } from './dto/create-inventory-item.dto';
 import { UpdateInventoryItemDto } from './dto/update-inventory-item.dto';
+import { InventoryCreatedEvent } from './events/inventory-created.event';
+import { InventoryDeletedEvent } from './events/inventory-deleted.event';
+import { InventoryUpdatedEvent } from './events/inventory-updated.event';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryItemDocument } from './schemas/inventory-item.schema';
-import { OrgValueCalculationStrategy } from '../organizations/schemas/org-settings';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { InventoryCreatedEvent } from './events/inventory-created.event';
-import { InventoryUpdatedEvent } from './events/inventory-updated.event';
-import { InventoryDeletedEvent } from './events/inventory-deleted.event';
 
 @Injectable()
 export class InventoryService {
