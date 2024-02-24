@@ -12,10 +12,16 @@ import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
 import { ProductUpdatedListener } from './listeners/product-events.listener';
 import { OrganizationSettingsUpdatedListener } from './listeners/organization-settings-updated.listener';
+import { BullModule } from '@nestjs/bull';
+import { WarehouseStatsService } from './warehouse-stats.service';
+import { WarehouseRecalculateProcessor } from './processors/warehouse-recalculate.processor';
 
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Warehouse, WarehouseSchema),
+		BullModule.registerQueue({
+			name: 'warehouse-recalculate',
+		}),
 		forwardRef(() => OrganizationsModule),
 		forwardRef(() => InventoryModule),
 		forwardRef(() => SecurityModule),
@@ -29,6 +35,8 @@ import { OrganizationSettingsUpdatedListener } from './listeners/organization-se
 		InventoryEventListener,
 		ProductUpdatedListener,
 		OrganizationSettingsUpdatedListener,
+		WarehouseStatsService,
+		WarehouseRecalculateProcessor,
 	],
 	exports: [WarehousesService],
 })

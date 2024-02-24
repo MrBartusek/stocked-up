@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { InventoryCreatedEvent } from '../../inventory/events/inventory-created.event';
-import { WarehousesService } from '../warehouses.service';
-import { InventoryUpdatedEvent } from '../../inventory/events/inventory-updated.event';
 import { InventoryDeletedEvent } from '../../inventory/events/inventory-deleted.event';
+import { InventoryUpdatedEvent } from '../../inventory/events/inventory-updated.event';
+import { WarehouseStatsService } from '../warehouse-stats.service';
 
 type InventoryEvent = InventoryCreatedEvent | InventoryUpdatedEvent | InventoryDeletedEvent;
 
 @Injectable()
 export class InventoryEventListener {
-	constructor(private readonly warehousesService: WarehousesService) {}
+	constructor(private readonly warehouseStatsService: WarehouseStatsService) {}
 
 	@OnEvent('inventory.*', { async: true })
 	async handleInventoryEvent(event: InventoryEvent) {
 		const warehouse = event.payload.warehouse;
-		await this.warehousesService.recalculateTotalValue(warehouse);
+		await this.warehouseStatsService.recalculateTotalValue(warehouse);
 	}
 }

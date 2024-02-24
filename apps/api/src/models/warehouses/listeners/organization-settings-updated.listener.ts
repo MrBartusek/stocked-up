@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrganizationUpdatedEvent } from '../../organizations/events/organization-updated.event';
-import { WarehousesService } from '../warehouses.service';
+import { WarehouseStatsService } from '../warehouse-stats.service';
 
 @Injectable()
 export class OrganizationSettingsUpdatedListener {
-	constructor(private readonly warehousesService: WarehousesService) {}
+	constructor(private readonly warehouseStatsService: WarehouseStatsService) {}
 
 	@OnEvent('organization.settings.updated', { async: true })
 	async handleOrganizationUpdated(event: OrganizationUpdatedEvent) {
@@ -13,7 +13,7 @@ export class OrganizationSettingsUpdatedListener {
 		const warehouseList = organization.warehouses;
 
 		for await (const warehouse of warehouseList) {
-			await this.warehousesService.recalculateTotalValue(warehouse.id);
+			await this.warehouseStatsService.recalculateTotalValue(warehouse.id);
 		}
 	}
 }

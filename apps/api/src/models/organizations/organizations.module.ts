@@ -16,7 +16,7 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 import { UserDeletedListener } from './listeners/user-deleted.listener';
 import { WarehouseRecalculatedListener } from './listeners/warehouse-recalculated.listener';
 import { BullModule } from '@nestjs/bull';
-import { OrgRecalculateProcessor } from './org-recalculate.processor';
+import { OrgRecalculateProcessor } from './processors/org-recalculate.processor';
 
 @Module({
 	imports: [
