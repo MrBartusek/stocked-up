@@ -21,6 +21,8 @@ import { RedisModule } from './redis/redis.module';
 import { S3CacheModule } from './s3-cache/s3-cache.module';
 import { S3Module } from './s3/s3.module';
 import { SecurityModule } from './security/security.module';
+import client from './redis/connect';
+import { BullModule } from '@nestjs/bull';
 
 const FrontendModule = ServeStaticModule.forRoot({
 	rootPath: join(__dirname, '../../..', 'client', 'dist'),
@@ -30,6 +32,13 @@ const FrontendModule = ServeStaticModule.forRoot({
 	imports: [
 		MongooseModule.forRoot(process.env.MONGO_URL),
 		EventEmitterModule.forRoot({ wildcard: true }),
+		BullModule.forRoot({
+			redis: { ...client.options, maxRetriesPerRequest: null, enableReadyCheck: false },
+			defaultJobOptions: {
+				removeOnComplete: true,
+				removeOnFail: true,
+			},
+		}),
 		FrontendModule,
 		ProductsModule,
 		WarehousesModule,

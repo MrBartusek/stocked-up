@@ -15,12 +15,17 @@ import { OrganizationsService } from './organizations.service';
 import { Organization, OrganizationSchema } from './schemas/organization.schema';
 import { UserDeletedListener } from './listeners/user-deleted.listener';
 import { WarehouseRecalculatedListener } from './listeners/warehouse-recalculated.listener';
+import { BullModule } from '@nestjs/bull';
+import { OrgRecalculateProcessor } from './org-recalculate.processor';
 
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Organization, OrganizationSchema),
 		forwardRef(() => SecurityModule),
 		forwardRef(() => WarehousesModule),
+		BullModule.registerQueue({
+			name: 'org-recalculate',
+		}),
 	],
 	controllers: [OrganizationsController],
 	providers: [
@@ -35,6 +40,7 @@ import { WarehouseRecalculatedListener } from './listeners/warehouse-recalculate
 		WarehouseDeletedListener,
 		UserDeletedListener,
 		WarehouseRecalculatedListener,
+		OrgRecalculateProcessor,
 	],
 	exports: [OrganizationsService, OrganizationsStatsService, OrganizationsAclService],
 })
