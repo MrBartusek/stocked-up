@@ -1,11 +1,10 @@
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { ImagesService } from '../../images/images.service';
-import { InventoryService } from '../inventory/inventory.service';
 import { MockProductsRepository } from './mocks/mock-products-repository';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('ProductsService', () => {
 	let service: ProductsService;
