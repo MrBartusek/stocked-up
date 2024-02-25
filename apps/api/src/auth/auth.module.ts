@@ -12,7 +12,6 @@ import { LocalStrategy } from './strategies/local.strategy';
 @Module({
 	imports: [
 		PassportModule.register({ session: true }),
-
 		UsersModule,
 		forwardRef(() => AuthEmailsModule),
 	],
