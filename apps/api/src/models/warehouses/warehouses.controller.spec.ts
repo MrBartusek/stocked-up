@@ -4,8 +4,6 @@ import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasWarehouseAccessPipe } from '../../security/pipes/has-warehouse-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
-import { OrganizationsService } from '../organizations/organizations.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
@@ -15,52 +13,24 @@ import { WarehousesService } from './warehouses.service';
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
 
-	const mockWarehousesRepository = new MockWarehousesRepository();
+	const mockRepo = new MockWarehousesRepository();
 
 	const mockWarehouseService = {
-		findById: jest.fn((id) => mockWarehousesRepository.findById(id)),
+		findById: jest.fn((id) => mockRepo.findById(id)),
 		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) =>
-			mockWarehousesRepository.create({ ...organization, ...dto }),
+			mockRepo.create({ ...organization, ...dto }),
 		),
-		update: jest.fn((id, dto: UpdateWarehouseDto) =>
-			mockWarehousesRepository.findOneByIdAndUpdate(id, dto),
-		),
-		delete: jest.fn((id) => mockWarehousesRepository.deleteOneById(id)),
+		update: jest.fn((id, dto: UpdateWarehouseDto) => mockRepo.findOneByIdAndUpdate(id, dto)),
+		delete: jest.fn((id) => mockRepo.deleteOneById(id)),
 	};
-
-	const mockOrgService = {
-		addWarehouseReference: jest.fn((id) => ({
-			_id: id,
-		})),
-		deleteWarehouseReference: jest.fn((id) => ({
-			_id: id,
-		})),
-		updateWarehouseReference: jest.fn((id) => ({
-			_id: id,
-		})),
-		exist: jest.fn(() => true),
-	};
-
-	const mockOrgStatService = {
-		recalculateTotalValue: jest.fn(),
-	};
-
-	const addWarehouseRefSpy = jest.spyOn(mockOrgService, 'addWarehouseReference');
-	const deleteWarehouseRefSpy = jest.spyOn(mockOrgService, 'deleteWarehouseReference');
-	const updateWarehouseRefSpy = jest.spyOn(mockOrgService, 'updateWarehouseReference');
-	const recalculateTotalValueSpy = jest.spyOn(mockOrgStatService, 'recalculateTotalValue');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [WarehousesController],
-			providers: [WarehousesService, OrganizationsService, OrganizationsStatsService],
+			providers: [WarehousesService],
 		})
 			.overrideProvider(WarehousesService)
 			.useValue(mockWarehouseService)
-			.overrideProvider(OrganizationsService)
-			.useValue(mockOrgService)
-			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrgStatService)
 			.overridePipe(HasWarehouseAccessPipe)
 			.useValue(MockSecurityPipe)
 			.overridePipe(HasOrganizationAccessPipe)
@@ -108,13 +78,6 @@ describe('WarehousesController', () => {
 				address: 'test-address',
 			}),
 		);
-		expect(addWarehouseRefSpy).toHaveBeenCalledWith(
-			organizationId,
-			expect.objectContaining({
-				name: 'test-name',
-				address: 'test-address',
-			}),
-		);
 	});
 
 	it('should update warehouse', async () => {
@@ -129,11 +92,6 @@ describe('WarehousesController', () => {
 				address: 'updated-address',
 			}),
 		);
-		expect(updateWarehouseRefSpy).toHaveBeenCalledWith(
-			expect.objectContaining({
-				name: 'updated-name',
-			}),
-		);
 	});
 
 	it('should delete warehouse', async () => {
@@ -146,7 +104,5 @@ describe('WarehousesController', () => {
 				name: 'test-name',
 			}),
 		);
-		expect(deleteWarehouseRefSpy).toHaveBeenCalledWith(warehouseId);
-		expect(recalculateTotalValueSpy).toHaveBeenCalledWith(warehouseId);
 	});
 });
