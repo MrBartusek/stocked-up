@@ -15,15 +15,6 @@ describe('AuthController', () => {
 		}),
 	};
 
-	const mockDemoService = {
-		setupDemoAccount: jest.fn(() => {
-			return {
-				_id: new Types.ObjectId(),
-				profile: { email: 'demo@dokurno.dev', username: 'demo' },
-			};
-		}),
-	};
-
 	const mockAuthEmailService = {
 		sendEmailConfirmation: jest.fn(() => Promise.resolve()),
 	};
@@ -33,12 +24,10 @@ describe('AuthController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [AuthController],
-			providers: [AuthService, DemoService, AuthEmailsService],
+			providers: [AuthService, AuthEmailsService],
 		})
 			.overrideProvider(AuthService)
 			.useValue(mockAuthService)
-			.overrideProvider(DemoService)
-			.useValue(mockDemoService)
 			.overrideProvider(AuthEmailsService)
 			.useValue(mockAuthEmailService)
 			.compile();
@@ -64,11 +53,5 @@ describe('AuthController', () => {
 
 		expect(sendEmailConfirmationSpy).toBeCalledTimes(1);
 		expect(sendEmailConfirmationSpy).toBeCalledWith(user.id);
-	});
-
-	it('should create demo account', async () => {
-		const user = await controller.createDemo();
-
-		expect(user.username).toBe('demo');
 	});
 });
