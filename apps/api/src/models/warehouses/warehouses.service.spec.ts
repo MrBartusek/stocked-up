@@ -4,29 +4,30 @@ import { InventoryService } from '../inventory/inventory.service';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehouseRepository } from './warehouse.repository';
 import { WarehousesService } from './warehouses.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('WarehousesService', () => {
 	let service: WarehousesService;
 
 	const mockWarehousesRepository = new MockWarehousesRepository();
 
-	const mockInventoryService = {
-		deleteManyByWarehouse: jest.fn(),
+	const mockEventEmitter = {
+		emit: jest.fn(),
 	};
 
-	const deleteManyByWarehouseSpy = jest.spyOn(mockInventoryService, 'deleteManyByWarehouse');
+	const emitSpy = jest.spyOn(mockEventEmitter, 'emit');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				WarehousesService,
 				{
-					provide: WarehouseRepository,
-					useValue: mockWarehousesRepository,
+					provide: EventEmitter2,
+					useValue: mockEventEmitter,
 				},
 				{
-					provide: InventoryService,
-					useValue: mockInventoryService,
+					provide: WarehouseRepository,
+					useValue: mockWarehousesRepository,
 				},
 			],
 		}).compile();
@@ -52,11 +53,12 @@ describe('WarehousesService', () => {
 				address: 'test-address',
 			}),
 		);
+		expect(emitSpy).toHaveBeenCalledWith('warehouse.created', expect.anything());
 	});
 
 	it('should update warehouse', async () => {
 		const dto = { name: 'updated-name', address: 'updated-address' };
-		const warehouse = await service.create(new Types.ObjectId(), dto);
+		const warehouse = await service.update(new Types.ObjectId(), dto);
 
 		expect(warehouse).toEqual(
 			expect.objectContaining({
@@ -64,6 +66,7 @@ describe('WarehousesService', () => {
 				address: 'updated-address',
 			}),
 		);
+		expect(emitSpy).toHaveBeenCalledWith('warehouse.updated', expect.anything());
 	});
 
 	it('should delete warehouse', async () => {
@@ -75,7 +78,7 @@ describe('WarehousesService', () => {
 				address: 'test-address',
 			}),
 		);
-		expect(deleteManyByWarehouseSpy).toHaveBeenCalledWith(warehouse._id);
+		expect(emitSpy).toHaveBeenCalledWith('warehouse.deleted', expect.anything());
 	});
 
 	it('should check if warehouse exist', () => {
