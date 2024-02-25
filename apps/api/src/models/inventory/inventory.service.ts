@@ -52,18 +52,20 @@ export class InventoryService {
 		return item;
 	}
 
-	async deleteManyByProduct(productId: Types.ObjectId) {
+	async deleteManyByProduct(productId: Types.ObjectId): Promise<number> {
 		const itemsList = await this.inventoryRepository.find({ product: productId });
 		for await (const item of itemsList) {
 			await this.delete(item._id);
 		}
+		return itemsList.length;
 	}
 
-	async deleteManyByWarehouse(warehouseId: Types.ObjectId) {
+	async deleteManyByWarehouse(warehouseId: Types.ObjectId): Promise<number> {
 		const itemsList = await this.inventoryRepository.find({ warehouse: warehouseId });
 		for await (const item of itemsList) {
 			await this.delete(item._id);
 		}
+		return itemsList.length;
 	}
 
 	async findOne(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
