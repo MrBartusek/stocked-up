@@ -1,15 +1,15 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { UsersService } from '../models/users/users.service';
-import { UsersTokenService } from '../models/users/users-token.service';
-import { EmailsService } from '../emails/emails.service';
-import { EMAIL_CONFIRM_TOKEN, PASSWORD_RESET_TOKEN } from '../auth/types/emailTokenTypes';
+import { differenceInMinutes } from 'date-fns';
 import { Types } from 'mongoose';
+import { AuthService } from '../auth/auth.service';
+import { EMAIL_CONFIRM_TOKEN, PASSWORD_RESET_TOKEN } from '../auth/types/emailTokenTypes';
+import { EmailsService } from '../emails/emails.service';
+import { DemoLockedException } from '../exceptions/demo-locked.exception';
 import { UserDocument } from '../models/users/schemas/user.schema';
+import { UsersTokenService } from '../models/users/users-token.service';
+import { UsersService } from '../models/users/users.service';
 import { EmailConfirmTemplate } from './templates/email-confirm.template';
 import { PasswordRestTemplate } from './templates/password-reset.template';
-import { differenceInMinutes } from 'date-fns';
-import { AuthService } from '../auth/auth.service';
-import { DemoLockedException } from '../exceptions/demo-locked.exception';
 
 @Injectable()
 export class AuthEmailsService {

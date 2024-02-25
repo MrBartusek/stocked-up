@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { InventoryService } from '../models/inventory/inventory.service';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
-import { OrganizationsStatsService } from '../models/organizations/organizations-stats.service';
 import { OrganizationsService } from '../models/organizations/organizations.service';
 import { ProductsService } from '../models/products/products.service';
 import { UsersService } from '../models/users/users.service';

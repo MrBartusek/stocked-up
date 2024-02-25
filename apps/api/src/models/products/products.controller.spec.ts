@@ -4,7 +4,6 @@ import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasProductAccessPipe } from '../../security/pipes/has-product-access.pipe';
 import { SecurityValidationPipe } from '../../security/pipes/security-validation.pipe';
-import { OrganizationsStatsService } from '../organizations/organizations-stats.service';
 import { MockProductsRepository } from './mocks/mock-products-repository';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';

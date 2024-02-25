@@ -1,7 +1,7 @@
 import { getQueueToken } from '@nestjs/bull';
 import { Test, TestingModule } from '@nestjs/testing';
-import { WarehouseStatsService } from './warehouse-stats.service';
 import { Types } from 'mongoose';
+import { WarehouseStatsService } from './warehouse-stats.service';
 
 describe('WarehouseStatsService', () => {
 	let service: WarehouseStatsService;

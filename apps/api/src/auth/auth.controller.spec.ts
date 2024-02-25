@@ -1,10 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { DemoService } from '../demo/demo.service';
+import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 
 describe('AuthController', () => {
 	let controller: AuthController;

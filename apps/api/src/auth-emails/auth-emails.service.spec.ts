@@ -1,11 +1,11 @@
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthEmailsService } from './auth-emails.service';
+import { Types } from 'mongoose';
 import { AuthService } from '../auth/auth.service';
 import { EmailsService } from '../emails/emails.service';
 import { UsersTokenService } from '../models/users/users-token.service';
 import { UsersService } from '../models/users/users.service';
-import { Types } from 'mongoose';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { AuthEmailsService } from './auth-emails.service';
 
 describe('AuthEmailsService', () => {
 	let service: AuthEmailsService;

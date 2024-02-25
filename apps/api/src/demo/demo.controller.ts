@@ -1,8 +1,8 @@
 import { Controller, Post } from '@nestjs/common';
-import { DemoService } from './demo.service';
-import { User } from '../models/users/schemas/user.schema';
-import { PrivateUserDto } from 'shared-types';
 import { ApiTags } from '@nestjs/swagger';
+import { PrivateUserDto } from 'shared-types';
+import { User } from '../models/users/schemas/user.schema';
+import { DemoService } from './demo.service';
 
 @ApiTags('demo')
 @Controller('demo')
