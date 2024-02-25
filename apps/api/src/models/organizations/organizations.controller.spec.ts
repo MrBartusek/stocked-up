@@ -45,10 +45,9 @@ describe('OrganizationsController', () => {
 	};
 
 	const mockAclService = {
-		addRule: jest.fn(),
+		addRule: jest.fn((id) => mockOrganizationsService.findById(id)),
 	};
 
-	const addWarehouseReferenceSpy = jest.spyOn(mockOrganizationsService, 'addWarehouseReference');
 	const addAclRuleSpy = jest.spyOn(mockAclService, 'addRule');
 
 	beforeEach(async () => {
@@ -94,13 +93,6 @@ describe('OrganizationsController', () => {
 		expect(org).toEqual(
 			expect.objectContaining({
 				name: 'test-name',
-			}),
-		);
-		expect(addWarehouseReferenceSpy).toHaveBeenCalledWith(
-			expect.any(Types.ObjectId),
-			expect.objectContaining({
-				name: 'test-warehouse',
-				address: 'test-address',
 			}),
 		);
 		expect(addAclRuleSpy).toHaveBeenCalled();
