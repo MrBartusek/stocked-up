@@ -20,7 +20,7 @@ export class DemoService {
 	constructor(
 		private readonly userService: UsersService,
 		private readonly organizationsService: OrganizationsService,
-		private readonly organizationsRolesService: OrganizationsAclService,
+		private readonly organizationsAclService: OrganizationsAclService,
 		private readonly warehousesService: WarehousesService,
 		private readonly productsService: ProductsService,
 		private readonly inventoryService: InventoryService,
@@ -55,7 +55,7 @@ export class DemoService {
 		const products = await this.createProductDefinitions(org._id);
 		await this.randomlyDistributeInventory(org, products);
 
-		await this.organizationsRolesService.addRule(org._id, {
+		await this.organizationsAclService.addRule(org._id, {
 			user: user._id,
 			role: OrganizationSecurityRole.OWNER,
 		});

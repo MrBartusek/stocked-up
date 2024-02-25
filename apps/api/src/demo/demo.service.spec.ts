@@ -20,24 +20,19 @@ describe('DemoService', () => {
 			},
 		})),
 	};
+
 	const mockOrganizationsService = {
 		create: jest.fn(() => ({
 			_id: new Types.ObjectId(),
-			warehouses: Array(4).fill(() => ({ id: new Types.ObjectId() })),
-		})),
-		addWarehouseReference: jest.fn(() => ({
-			_id: new Types.ObjectId(),
 			warehouses: Array(4).fill({ id: new Types.ObjectId() }),
 		})),
-		updateAcl: jest.fn(),
+		findById: jest.fn((id) => ({
+			_id: id,
+			warehouses: Array(4).fill({ id: new Types.ObjectId() }),
+		})),
 	};
 
-	const mockOrganizationsStatsService = {
-		updateProductsCount: jest.fn(),
-		recalculateTotalValue: jest.fn(),
-	};
-
-	const mockOrgSecurityService = {
+	const mockAclsService = {
 		addRule: jest.fn(),
 	};
 
@@ -64,36 +59,39 @@ describe('DemoService', () => {
 	const createWarehouseSpy = jest.spyOn(mockWarehousesService, 'create');
 	const createProductsSpy = jest.spyOn(mockProductsService, 'create');
 	const createInventorySpy = jest.spyOn(mockInventoryService, 'create');
-	const addSecurityRuleSpy = jest.spyOn(mockOrgSecurityService, 'addRule');
+	const addSecurityRuleSpy = jest.spyOn(mockAclsService, 'addRule');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				DemoService,
-				UsersService,
-				OrganizationsService,
-				OrganizationsStatsService,
-				OrganizationsAclService,
-				WarehousesService,
-				ProductsService,
-				InventoryService,
+				DemoService,
+				{
+					provide: UsersService,
+					useValue: mockUsersService,
+				},
+				{
+					provide: OrganizationsService,
+					useValue: mockOrganizationsService,
+				},
+				{
+					provide: OrganizationsAclService,
+					useValue: mockAclsService,
+				},
+				{
+					provide: WarehousesService,
+					useValue: mockWarehousesService,
+				},
+				{
+					provide: ProductsService,
+					useValue: mockProductsService,
+				},
+				{
+					provide: InventoryService,
+					useValue: mockInventoryService,
+				},
 			],
-		})
-			.overrideProvider(UsersService)
-			.useValue(mockUsersService)
-			.overrideProvider(OrganizationsService)
-			.useValue(mockOrganizationsService)
-			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrganizationsStatsService)
-			.overrideProvider(WarehousesService)
-			.useValue(mockWarehousesService)
-			.overrideProvider(ProductsService)
-			.useValue(mockProductsService)
-			.overrideProvider(InventoryService)
-			.useValue(mockInventoryService)
-			.overrideProvider(OrganizationsAclService)
-			.useValue(mockOrgSecurityService)
-			.compile();
+		}).compile();
 
 		service = module.get<DemoService>(DemoService);
 	});
