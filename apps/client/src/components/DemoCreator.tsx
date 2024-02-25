@@ -18,7 +18,7 @@ function DemoCreator() {
 		setError(null);
 
 		axios
-			.post<PrivateUserDto>(`/api/auth/demo`)
+			.post<PrivateUserDto>(`/api/demo/register`)
 			.then((result) => {
 				const loginDto: UserLoginDto = { username: result.data.email, password: 'demo' };
 				return axios.post(`/api/auth/login`, loginDto);

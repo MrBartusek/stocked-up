@@ -5,7 +5,6 @@ import {
 	Delete,
 	HttpCode,
 	Logger,
-	NotFoundException,
 	Post,
 	Req,
 	UseGuards,
@@ -15,23 +14,21 @@ import { Request } from 'express';
 import { Types } from 'mongoose';
 import { PrivateUserDto } from 'shared-types';
 import { AuthEmailsService } from '../auth-emails/auth-emails.service';
-import { DemoService } from '../demo/demo.service';
 import { NotDemoGuard } from '../models/users/guards/not-demo.guard';
 import { User } from '../models/users/schemas/user.schema';
 import { AuthService } from './auth.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { DeleteAccountDto } from './dto/delete-account.dto';
+import { UpdateEmailDto } from './dto/update-email.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { UpdateEmailDto } from './dto/update-email.dto';
-import { DeleteAccountDto } from './dto/delete-account.dto';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
-		private readonly demoService: DemoService,
 		private readonly authEmailsService: AuthEmailsService,
 	) {}
 
@@ -68,14 +65,6 @@ export class AuthController {
 		});
 
 		return User.toPrivateDto(user);
-	}
-
-	@HttpCode(200)
-	@Post('demo')
-	async createDemo(): Promise<PrivateUserDto> {
-		const user = await this.demoService.setupDemoAccount();
-		const dto = User.toPrivateDto(user);
-		return dto;
 	}
 
 	@Post('change-password')

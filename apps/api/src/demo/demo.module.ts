@@ -6,6 +6,7 @@ import { ProductsModule } from '../models/products/products.module';
 import { UsersModule } from '../models/users/users.module';
 import { WarehousesModule } from '../models/warehouses/warehouses.module';
 import { DemoService } from './demo.service';
+import { DemoController } from './demo.controller';
 
 @Module({
 	providers: [DemoService],
@@ -18,5 +19,6 @@ import { DemoService } from './demo.service';
 		InventoryModule,
 	],
 	exports: [DemoService],
+	controllers: [DemoController],
 })
 export class DemoModule {}
