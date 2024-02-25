@@ -3,16 +3,24 @@ import { Types } from 'mongoose';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryService } from './inventory.service';
 import { MockInventoryRepository } from './mocks/mock-inventory-repository';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('InventoryService', () => {
 	let service: InventoryService;
 
 	const mockInventoryRepository = new MockInventoryRepository();
+	const mockEventEmitter = {
+		emit: jest.fn(),
+	};
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				InventoryService,
+				{
+					provide: EventEmitter2,
+					useValue: mockEventEmitter,
+				},
 				{
 					provide: InventoryRepository,
 					useValue: mockInventoryRepository,
@@ -23,11 +31,15 @@ describe('InventoryService', () => {
 		service = module.get<InventoryService>(InventoryService);
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});
 
-	it('should create item', () => {
+	it('should create item', async () => {
 		const itemDto = {
 			organizationId: new Types.ObjectId().toString(),
 			productId: new Types.ObjectId().toString(),
@@ -35,40 +47,63 @@ describe('InventoryService', () => {
 			quantity: 10,
 		};
 
-		expect(service.create(itemDto)).resolves.toStrictEqual(
+		const item = await service.create(itemDto);
+
+		expect(item).toStrictEqual(
 			expect.objectContaining({
 				quantity: 10,
 			}),
 		);
+		expect(mockEventEmitter.emit).toHaveBeenCalledWith('inventory.created', expect.anything());
 	});
 
-	it('should update item', () => {
+	it('should update item', async () => {
 		const itemId = new Types.ObjectId();
 		const updateDto = {
 			quantity: 20,
 		};
 
-		expect(service.update(itemId, updateDto)).resolves.toBeDefined();
+		const item = await service.update(itemId, updateDto);
+
+		expect(item).toStrictEqual(
+			expect.objectContaining({
+				quantity: expect.any(Number),
+			}),
+		);
+		expect(mockEventEmitter.emit).toHaveBeenCalledWith('inventory.updated', expect.anything());
 	});
 
-	it('should delete item', () => {
+	it('should delete item', async () => {
 		const itemId = new Types.ObjectId();
-		expect(service.deleteOneById(itemId)).resolves.toStrictEqual(
+
+		const item = await service.delete(itemId);
+
+		expect(item).toStrictEqual(
 			expect.objectContaining({
 				_id: itemId,
 			}),
 		);
+		expect(mockEventEmitter.emit).toHaveBeenCalledWith('inventory.deleted', expect.anything());
 	});
 
-	it('should delete items by product', () => {
+	it('should delete items by product', async () => {
 		const productId = new Types.ObjectId();
 
-		expect(service.deleteManyByProduct(productId)).resolves.toBeTruthy();
+		const count = await service.deleteManyByProduct(productId);
+
+		expect(count).toBe(10);
+		expect(mockEventEmitter.emit).toHaveBeenCalledWith('inventory.deleted', expect.anything());
+		expect(mockEventEmitter.emit).toHaveBeenCalledTimes(10);
 	});
 
-	it('should delete items by warehouse', () => {
+	it('should delete items by warehouse', async () => {
 		const warehouseId = new Types.ObjectId();
-		expect(service.deleteManyByWarehouse(warehouseId)).resolves.toBeTruthy();
+
+		const count = await service.deleteManyByWarehouse(warehouseId);
+
+		expect(count).toBe(10);
+		expect(mockEventEmitter.emit).toHaveBeenCalledWith('inventory.deleted', expect.anything());
+		expect(mockEventEmitter.emit).toHaveBeenCalledTimes(10);
 	});
 
 	it('should find item by ID', async () => {
@@ -81,7 +116,9 @@ describe('InventoryService', () => {
 		const warehouseId = new Types.ObjectId();
 		const productId = new Types.ObjectId();
 
-		expect(service.findByProduct(warehouseId, productId)).resolves.toStrictEqual(
+		const item = await service.findByProduct(warehouseId, productId);
+
+		expect(item).toStrictEqual(
 			expect.objectContaining({
 				warehouse: expect.any(Types.ObjectId),
 				product: expect.objectContaining({
@@ -94,6 +131,7 @@ describe('InventoryService', () => {
 	it('should find items with pagination', async () => {
 		const query = {};
 		const pageQueryDto = { page: 1, limit: 10 };
+
 		const result = await service.find(query, pageQueryDto);
 
 		expect(result.items.length).toBe(10);
@@ -107,6 +145,7 @@ describe('InventoryService', () => {
 	it('should list items by warehouse with pagination', async () => {
 		const warehouseId = new Types.ObjectId();
 		const pageQueryDto = { page: 1, limit: 10 };
+
 		const result = await service.listByWarehouse(warehouseId, pageQueryDto);
 
 		expect(result.items.length).toBe(10);
