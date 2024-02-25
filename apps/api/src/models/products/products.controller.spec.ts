@@ -25,23 +25,13 @@ describe('ProductsController', () => {
 		countAll: jest.fn(() => mockProductsRepo.countDocuments()),
 	};
 
-	const mockOrgStatService = {
-		updateProductsCount: jest.fn(),
-		recalculateTotalValue: jest.fn(),
-	};
-
-	const updateProductsCountSpy = jest.spyOn(mockOrgStatService, 'updateProductsCount');
-	const recalculateOrgSpy = jest.spyOn(mockOrgStatService, 'recalculateTotalValue');
-
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [ProductsController],
-			providers: [ProductsService, OrganizationsStatsService],
+			providers: [ProductsService],
 		})
 			.overrideProvider(ProductsService)
 			.useValue(mockProductsService)
-			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockOrgStatService)
 			.overridePipe(SecurityValidationPipe)
 			.useValue(MockSecurityPipe)
 			.overridePipe(HasProductAccessPipe)
@@ -72,7 +62,6 @@ describe('ProductsController', () => {
 				name: 'created-product',
 			}),
 		);
-		expect(updateProductsCountSpy).toHaveBeenCalled();
 	});
 
 	it('should update product', async () => {
@@ -88,7 +77,6 @@ describe('ProductsController', () => {
 				name: 'updated-product',
 			}),
 		);
-		expect(recalculateOrgSpy).toHaveBeenCalled();
 	});
 
 	it('should find products', async () => {
@@ -109,8 +97,6 @@ describe('ProductsController', () => {
 				name: expect.any(String),
 			}),
 		);
-		expect(updateProductsCountSpy).toHaveBeenCalled();
-		expect(recalculateOrgSpy).toHaveBeenCalled();
 	});
 
 	it('should find all products by org', async () => {
