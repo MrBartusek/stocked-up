@@ -1,44 +1,41 @@
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { GravatarService } from '../../gravatar/gravatar.service';
 import { ImagesService } from '../../images/images.service';
-import { OrganizationsAclService } from '../organizations/organizations-acl.service';
-import { OrganizationsService } from '../organizations/organizations.service';
+import { MockUserRepository } from './mocks/mock-user-repository';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
 	let service: UsersService;
 
-	const mockUserRepository = {
-		create: jest.fn((dto) => ({
-			id: new Types.ObjectId(),
-			...dto,
-		})),
-		findOne: jest.fn(() => ({
-			id: new Types.ObjectId(),
-			profile: {
-				username: 'test',
-			},
-		})),
-		findById: jest.fn((id) => ({ id })),
-	};
+	const mockUserRepository = new MockUserRepository();
 
 	const mockImagesService = {
 		uploadImage: jest.fn(() => 'key'),
+		deleteImage: jest.fn(),
 	};
 
 	const mockGravatarService = {
-		getGravatarBuffer: jest.fn((email) => email == 'with-gravatar@dokurno.dev'),
+		getGravatarBuffer: jest.fn(),
 	};
 
-	const organizationsService = {};
-	const organizationsAclService = {};
+	const mockEventEmitter = {
+		emit: jest.fn(),
+	};
+
+	const emitSpy = jest.spyOn(mockEventEmitter, 'emit');
+	const deleteImageSpy = jest.spyOn(mockImagesService, 'deleteImage');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				UsersService,
+				{
+					provide: EventEmitter2,
+					useValue: mockEventEmitter,
+				},
 				{
 					provide: UserRepository,
 					useValue: mockUserRepository,
@@ -51,14 +48,6 @@ describe('UsersService', () => {
 					provide: GravatarService,
 					useValue: mockGravatarService,
 				},
-				{
-					provide: OrganizationsService,
-					useValue: organizationsService,
-				},
-				{
-					provide: OrganizationsAclService,
-					useValue: organizationsAclService,
-				},
 			],
 		}).compile();
 
@@ -70,53 +59,51 @@ describe('UsersService', () => {
 	});
 
 	describe('should create user', () => {
-		it('without gravatar', () => {
-			expect(
-				service.create({ username: 'test', email: 'test@dokurno.dev', passwordHash: 'test' }),
-			).resolves.toEqual(
-				expect.objectContaining({
-					id: expect.any(Types.ObjectId),
-					profile: expect.objectContaining({
-						username: expect.any(String),
-						email: expect.any(String),
-						imageKey: null,
-					}),
-					auth: expect.objectContaining({ password: expect.any(String) }),
-				}),
-			);
+		it('without gravatar', async () => {
+			mockGravatarService.getGravatarBuffer.mockResolvedValue(null);
+
+			const user = await service.create({
+				username: 'test',
+				email: 'test@dokurno.dev',
+				passwordHash: 'test',
+			});
+
+			expect(user.profile.username).toStrictEqual('test');
+			expect(user.profile.imageKey).toStrictEqual(null);
 		});
 
-		it('with gravatar', () => {
-			expect(
-				service.create({
-					username: 'test',
-					email: 'with-gravatar@dokurno.dev',
-					passwordHash: 'test',
-				}),
-			).resolves.toEqual(
-				expect.objectContaining({
-					profile: expect.objectContaining({
-						imageKey: expect.any(String),
-					}),
-				}),
-			);
+		it('with gravatar', async () => {
+			mockGravatarService.getGravatarBuffer.mockResolvedValue(Buffer.from('xxx'));
+
+			const user = await service.create({
+				username: 'test',
+				email: 'wtest@dokurno.dev',
+				passwordHash: 'test',
+			});
+
+			expect(user.profile.imageKey).toStrictEqual(expect.any(String));
 		});
 	});
 
-	it('should find by username', () => {
-		expect(service.findOne('test')).toEqual(
-			expect.objectContaining({
-				id: expect.any(Types.ObjectId),
-				profile: { username: 'test' },
-			}),
-		);
+	it('should find by username', async () => {
+		const user = await service.findOne('test');
+
+		expect(user.profile.username).toStrictEqual('test');
 	});
 
-	it('should find by id', () => {
-		expect(service.findById(new Types.ObjectId())).toEqual(
-			expect.objectContaining({
-				id: expect.any(Types.ObjectId),
-			}),
+	it('should find by id', async () => {
+		const user = await service.findById(new Types.ObjectId());
+
+		expect(user.profile.username).toStrictEqual('test');
+	});
+
+	it('should delete user', async () => {
+		const user = await service.delete(new Types.ObjectId());
+
+		expect(user.profile.username).toStrictEqual(expect.any(String));
+		expect(deleteImageSpy).toHaveBeenCalledWith(
+			expect.objectContaining({ imageKey: 'test-image-key' }),
 		);
+		expect(emitSpy).toBeCalledWith('user.deleted', expect.anything());
 	});
 });
