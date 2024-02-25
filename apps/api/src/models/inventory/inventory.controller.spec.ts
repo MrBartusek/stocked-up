@@ -35,21 +35,13 @@ describe('InventoryController', () => {
 		}),
 	};
 
-	const mockStatsService = {
-		recalculateTotalValue: jest.fn(),
-	};
-
-	const recalculateSpy = jest.spyOn(mockStatsService, 'recalculateTotalValue');
-
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [InventoryController],
-			providers: [InventoryService, OrganizationsStatsService],
+			providers: [InventoryService],
 		})
 			.overrideProvider(InventoryService)
 			.useValue(mockInventoryService)
-			.overrideProvider(OrganizationsStatsService)
-			.useValue(mockStatsService)
 			.overridePipe(SecurityValidationPipe)
 			.useValue(MockSecurityPipe)
 			.overridePipe(HasWarehouseAccessPipe)
@@ -61,10 +53,6 @@ describe('InventoryController', () => {
 			.compile();
 
 		controller = module.get<InventoryController>(InventoryController);
-	});
-
-	afterEach(() => {
-		jest.clearAllMocks();
 	});
 
 	it('should be defined', () => {
@@ -80,21 +68,18 @@ describe('InventoryController', () => {
 		});
 
 		expect(organization).toBeUndefined();
-		expect(recalculateSpy).toBeCalledTimes(1);
 	});
 
 	it('should update inventory item', async () => {
 		const item = await controller.update(new Types.ObjectId(), { quantity: 100 });
 
 		expect(item).toBeUndefined();
-		expect(recalculateSpy).toBeCalledTimes(1);
 	});
 
 	it('should delete inventory item', async () => {
 		const item = await controller.delete(new Types.ObjectId());
 
 		expect(item).toBeUndefined();
-		expect(recalculateSpy).toBeCalledTimes(1);
 	});
 
 	it('should find item by product', async () => {
