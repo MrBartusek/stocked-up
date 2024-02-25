@@ -8,7 +8,7 @@ import { OrganizationsModule } from '../organizations/organizations.module';
 import { InventoryEventListener } from './listeners/inventory-events.listener';
 import { OrganizationDeletedListener } from './listeners/organization-deleted.listener';
 import { OrganizationSettingsUpdatedListener } from './listeners/organization-settings-updated.listener';
-import { ProductUpdatedListener } from './listeners/product-events.listener';
+import { ProductUpdatedListener } from './listeners/product-updated.listener';
 import { WarehouseRecalculateProcessor } from './processors/warehouse-recalculate.processor';
 import { Warehouse, WarehouseSchema } from './schemas/warehouse.schema';
 import { WarehouseStatsService } from './warehouse-stats.service';

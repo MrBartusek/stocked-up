@@ -14,7 +14,7 @@ export class WarehouseStatsService {
 	async recalculateTotalValue(id: Types.ObjectId): Promise<Job<WarehouseRecalculateJobData>> {
 		return await this.recalculateQueue.add(
 			{ warehouse: id },
-			{ jobId: `recalculate:warehouse:${id.toString()}`, delay: 3000 },
+			{ jobId: `recalculate:warehouse:${id.toString()}` },
 		);
 	}
 }

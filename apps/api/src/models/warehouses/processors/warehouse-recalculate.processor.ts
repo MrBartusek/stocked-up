@@ -35,6 +35,5 @@ export class WarehouseRecalculateProcessor {
 
 		const event = new WarehouseRecalculatedEvent(newWarehouse);
 		this.eventEmitter.emit('warehouse.recalculated', event);
-		this.logger.log(`Recalculated warehouse {${warehouse._id},${totalValue}$}`);
 	}
 }

@@ -21,9 +21,10 @@ export class ProductsService {
 	) {}
 
 	async create(dto: CreateProductDto): Promise<ProductDocument> {
+		const { organization, ...rest } = dto;
 		const product = await this.productsRepository.create({
-			...dto,
-			organization: new Types.ObjectId(dto.organization) as any,
+			organization: new Types.ObjectId(organization),
+			...rest,
 		});
 
 		const event = new ProductCreatedEvent(product);

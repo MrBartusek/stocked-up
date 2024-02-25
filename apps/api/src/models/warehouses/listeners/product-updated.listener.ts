@@ -12,7 +12,7 @@ export class ProductUpdatedListener {
 	) {}
 
 	@OnEvent('product.updated', { async: true })
-	async handleProductEvent(event: ProductUpdatedEvent) {
+	async handleProductUpdated(event: ProductUpdatedEvent) {
 		/**
 		 * Product price may have been changed so, recalculate all warehouses
 		 * in organization

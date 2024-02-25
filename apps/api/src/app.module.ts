@@ -37,6 +37,7 @@ const FrontendModule = ServeStaticModule.forRoot({
 			defaultJobOptions: {
 				removeOnComplete: true,
 				removeOnFail: true,
+				delay: 500,
 			},
 		}),
 		FrontendModule,
