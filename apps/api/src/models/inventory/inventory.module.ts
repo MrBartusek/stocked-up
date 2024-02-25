@@ -12,8 +12,8 @@ import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.sch
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(InventoryItem, InventoryItemSchema),
-		forwardRef(() => SecurityModule),
 		forwardRef(() => OrganizationResolverModule),
+		SecurityModule,
 	],
 	controllers: [InventoryController],
 	providers: [

@@ -12,9 +12,9 @@ import { Product, ProductSchema } from './schemas/product.schema';
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Product, ProductSchema),
-		forwardRef(() => ImagesModule),
-		forwardRef(() => SecurityModule),
 		forwardRef(() => OrganizationResolverModule),
+		SecurityModule,
+		ImagesModule,
 	],
 	controllers: [ProductsController],
 	providers: [ProductsService, ProductsRepository, OrganizationDeletedListener],

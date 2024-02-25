@@ -24,14 +24,12 @@ import { Organization, OrganizationSchema } from './schemas/organization.schema'
 @Module({
 	imports: [
 		MongooseModuleHelper.forFeature(Organization, OrganizationSchema),
-
 		BullModule.registerQueue({
 			name: 'org-recalculate',
 		}),
 		BullModule.registerQueue({
 			name: 'products-count',
 		}),
-
 		forwardRef(() => ProductsModule),
 		forwardRef(() => SecurityModule),
 		forwardRef(() => WarehousesModule),

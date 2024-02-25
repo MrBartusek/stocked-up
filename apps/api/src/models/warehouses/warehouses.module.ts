@@ -22,10 +22,10 @@ import { WarehousesService } from './warehouses.service';
 		BullModule.registerQueue({
 			name: 'warehouse-recalculate',
 		}),
-		forwardRef(() => OrganizationsModule),
-		forwardRef(() => InventoryModule),
 		forwardRef(() => SecurityModule),
 		forwardRef(() => OrganizationResolverModule),
+		forwardRef(() => OrganizationsModule),
+		forwardRef(() => InventoryModule),
 	],
 	controllers: [WarehousesController],
 	providers: [
