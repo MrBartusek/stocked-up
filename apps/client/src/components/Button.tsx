@@ -16,12 +16,15 @@ export type buttonVariant =
 	| 'success'
 	| 'success-outline';
 
+export type buttonSizes = 'regular' | 'large';
+
 export interface ButtonProps extends HTMLButtonProps {
 	loading?: boolean;
 	variant?: buttonVariant;
+	size?: buttonSizes;
 }
 
-function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
+function Button({ loading, variant = 'primary', size = 'regular', ...props }: ButtonProps) {
 	if (loading) {
 		props.disabled = true;
 	}
@@ -38,12 +41,18 @@ function Button({ loading, variant = 'primary', ...props }: ButtonProps) {
 		'success-outline': 'border border-success text-success hover:bg-success hover:text-light',
 	};
 
+	const colorSizes: { [key in buttonSizes]: string } = {
+		regular: 'text-md px-3.5 py-2.5',
+		large: 'text-lg px-8 py-3',
+	};
+
 	return (
 		<button
 			{...props}
 			className={classNames(
-				'rounded-md px-3.5 py-2.5 transition-all',
+				'rounded-md transition-all',
 				colorVariants[variant],
+				colorSizes[size],
 				{ 'pointer-events-none opacity-75': props.disabled },
 				props.className,
 			)}

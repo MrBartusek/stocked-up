@@ -1,3 +1,4 @@
+import BasicFooter from './BasicFooter';
 import Navbar from './Navbar';
 
 export interface LayoutProps {
@@ -9,6 +10,7 @@ function BasicLayout({ children }: LayoutProps) {
 		<>
 			<Navbar />
 			<main>{children}</main>
+			<BasicFooter />
 		</>
 	);
 }

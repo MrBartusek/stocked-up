@@ -6,18 +6,10 @@ function NavbarNavigation() {
 			<ul className="flex items-center gap-6">
 				<li>
 					<Link
-						to="About"
+						to="#features"
 						className="link-muted"
 					>
-						About
-					</Link>
-				</li>
-				<li>
-					<Link
-						to="pricing"
-						className="link-muted"
-					>
-						Pricing
+						Features
 					</Link>
 				</li>
 				<li>
