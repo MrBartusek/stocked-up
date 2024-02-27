@@ -3,7 +3,7 @@
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/MrBartusek/stocked-up/ci.yaml)](https://github.com/MrBartusek/stocked-up/actions) [![Website](https://img.shields.io/website?url=https%3A%2F%2Fstockedup.dokurno.dev&link=https%3A%2F%2Fstockedup.dokurno.dev)](https://stockedup.dokurno.dev)
 [![codecov](https://codecov.io/gh/MrBartusek/stocked-up/graph/badge.svg?token=pQC25vzuqW)](https://codecov.io/gh/MrBartusek/stocked-up) [![Docker Image Version](https://img.shields.io/docker/v/mrbartusek/stocked-up/latest?label=docker%20version&link=https%3A%2F%2Fhub.docker.com%2Frepository%2Fdocker%2Fmrbartusek%2Fstocked-up)](https://hub.docker.com/repository/docker/mrbartusek/stocked-up/general)
 
-[![cover](https://i.imgur.com/2xOyilY.png)](https://stockedup.dokurno.dev)
+[![cover](https://raw.githubusercontent.com/MrBartusek/stocked-up/master/apps/client/src/assets/hero_image.png)](https://stockedup.dokurno.dev)
 
 [**StockedUp**](https://stockedup.dokurno.dev) is a complete Inventory Management System
 that focuses on managing distributed stock for large organizations.
