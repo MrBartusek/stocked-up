@@ -1,13 +1,11 @@
 import { useContext } from 'react';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import { Utils } from '../../utils/utils';
 import BigNumberCard from '../BigNumberCard';
-import Card from '../Card';
 import ChartCard from '../ChartCard';
 import DashboardContent from '../DashboardContent';
-import TotalSalesChart from '../TotalSalesChart';
-import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
 import Currency from '../Helpers/Currency';
+import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
+import WelcomeCard from '../WelcomeCard';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);
@@ -27,12 +25,10 @@ function DashboardHomePage() {
 					</BigNumberCard>
 				</div>
 				<div className="flex flex-col gap-8 xl:flex-row">
-					<ChartCard title="Total sales (last 7 days)">
-						<TotalSalesChart />
-					</ChartCard>
 					<ChartCard title="Warehouses value">
 						<WarehousesValueChart organization={organization} />
 					</ChartCard>
+					<WelcomeCard />
 				</div>
 			</div>
 		</DashboardContent>

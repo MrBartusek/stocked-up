@@ -1,15 +1,19 @@
 import React from 'react';
-import Card from './Card';
+import Card, { CardProps } from './Card';
+import classNames from 'classnames';
 
-export interface CardWithTitleProps {
+export interface CardWithTitleProps extends CardProps {
 	title: string;
 	children: React.ReactNode;
 }
 
-function CardWithTitle({ title, children }: CardWithTitleProps) {
+function CardWithTitle({ title, children, ...props }: CardWithTitleProps) {
 	return (
-		<Card className="flex flex-col items-center justify-center gap-5 text-center">
-			<h2 className="mb-1 text-xl text-muted">{title}</h2>
+		<Card
+			{...props}
+			className={classNames('t flex flex-col items-center gap-5', props.className)}
+		>
+			<h2 className="mb-1 text-center text-xl text-muted">{title}</h2>
 			<div className="w-full">{children}</div>
 		</Card>
 	);
