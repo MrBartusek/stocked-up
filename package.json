@@ -7,7 +7,7 @@
     "scripts": {
         "dev": "dotenv -- turbo run dev",
         "build": "dotenv -- turbo run build",
-        "start": "dotenv -- node apps/api/dist/main",
+        "start": "dotenv -- node apps/api/dist/src/main",
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
         "clean": "turbo daemon clean",
