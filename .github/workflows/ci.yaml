@@ -178,10 +178,10 @@ jobs:
         with:
           push: true
           tags: |
-            mrbartusek/dokchat:${{ steps.vars.outputs.sha_short}}
-            mrbartusek/dokchat:latest
-            ghcr.io/mrbartusek/dokchat:${{ steps.vars.outputs.sha_short}}
-            ghcr.io/mrbartusek/dokchat:latest
+            mrbartusek/stocked-up:${{ steps.vars.outputs.sha_short}}
+            mrbartusek/stocked-up:latest
+            ghcr.io/mrbartusek/stocked-up:${{ steps.vars.outputs.sha_short}}
+            ghcr.io/mrbartusek/stocked-up:latest
 
   codeql:
     name: Perform CodeQL Analysis
