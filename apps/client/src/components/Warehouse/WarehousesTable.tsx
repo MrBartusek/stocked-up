@@ -20,7 +20,6 @@ export interface WarehousesTableProps {
 
 function WarehousesTable({ warehouses, query, handleSortingChange }: WarehousesTableProps) {
 	const navigate = useNavigate();
-	const appContext = useContext(CurrentAppContext);
 
 	const columns = [
 		columnHelper.display({

@@ -3,17 +3,16 @@ import { BsPencil, BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
-import { Utils } from '../../utils/utils';
 import EntityActionsRow from '../Entity/EntityActionsRow';
 import EntityContainer from '../Entity/EntityContainer';
 import EntityImageColumn from '../Entity/EntityImageColumn';
 import EntityInfoTable from '../Entity/EntityInfoTable';
 import HeaderWithHint from '../HeaderWithHint';
 import Blockquote from '../Helpers/Blockquote';
+import Currency from '../Helpers/Currency';
 import IconButton from '../IconButton';
 import ProductAddToInventoryButton from './ProductAddToInventoryButton';
 import ProductInventoryPeek from './ProductInventoryPeek';
-import Currency from '../Helpers/Currency';
 
 export interface ProductEntityInfoProps {
 	product: ProductDto;
