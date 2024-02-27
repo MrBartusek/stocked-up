@@ -1,8 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BasicProductDto, IPageQueryDto } from 'shared-types';
-import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
 import Currency from '../Helpers/Currency';
@@ -20,7 +18,6 @@ export interface ProductsTableProps {
 }
 
 function ProductsTable({ products, query, handleSortingChange }: ProductsTableProps) {
-	const appContext = useContext(CurrentAppContext);
 	const navigate = useNavigate();
 
 	const columns = [
