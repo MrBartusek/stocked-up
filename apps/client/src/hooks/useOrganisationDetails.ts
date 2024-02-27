@@ -11,7 +11,10 @@ function useOrganizationDetails(organizationId?: string) {
 	const { data, error, isLoading } = useQuery<any>(
 		['organizations', organizationId],
 		() => fetchOrganization(organizationId!),
-		{ enabled: organizationId != undefined },
+		{
+			enabled: organizationId != undefined,
+			refetchInterval: 60 * 1000,
+		},
 	);
 
 	return {
