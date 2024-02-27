@@ -17,13 +17,13 @@ function DashboardHomePage() {
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-8 lg:flex-row">
 					<BigNumberCard title="Count of all products">
-						{Utils.humanizeNumber(organization.stats.totalProducts, 0)}
+						{organization.stats.totalProducts}
 					</BigNumberCard>
 					<BigNumberCard title="Total organization value">
 						<Currency>{organization.stats.totalValue}</Currency>
 					</BigNumberCard>
 					<BigNumberCard title="Total inventory quantity">
-						{Utils.humanizeNumber(organization.stats.totalQuantity, 0)}
+						{organization.stats.totalQuantity}
 					</BigNumberCard>
 				</div>
 				<div className="flex flex-col gap-8 xl:flex-row">
