@@ -14,6 +14,7 @@ import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
+import { setTimeout } from 'node:timers/promises';
 
 @Injectable()
 export class DemoService {
@@ -85,6 +86,10 @@ export class DemoService {
 		for await (const name of warehouseNames) {
 			await this.warehousesService.create(organization._id, { name });
 		}
+
+		// wait for all warehouse references to be added
+		await setTimeout(1000);
+
 		return await this.organizationsService.findById(organization._id);
 	}
 
