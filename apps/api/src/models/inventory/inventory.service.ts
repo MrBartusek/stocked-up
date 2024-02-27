@@ -149,4 +149,31 @@ export class InventoryService {
 
 		return result[0].totalValue;
 	}
+
+	/**
+	 * Calculates total quantity of all inventory items with specified
+	 * warehouse id by.
+	 *
+	 * @param warehouseId Warehouse to check quantity for
+	 * @returns total quantity
+	 */
+	async calculateTotalQuantity(warehouseId: Types.ObjectId): Promise<number> {
+		const result = await this.inventoryRepository.aggregate([
+			{
+				$match: { warehouse: warehouseId },
+			},
+			{
+				$group: {
+					_id: null,
+					totalQuantity: { $sum: '$quantity' },
+				},
+			},
+		]);
+
+		if (result.length == 0) {
+			return 0;
+		}
+
+		return result[0].totalQuantity;
+	}
 }

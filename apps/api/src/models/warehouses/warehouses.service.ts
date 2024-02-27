@@ -37,11 +37,11 @@ export class WarehousesService {
 		return warehouse;
 	}
 
-	async updateTotalValue(
+	async updateStats(
 		id: Types.ObjectId,
-		totalValue: number,
+		stats: { totalValue: number; totalQuantity: number },
 	): Promise<WarehouseDocument | null> {
-		return await this.warehouseRepository.findOneByIdAndUpdate(id, { totalValue });
+		return await this.warehouseRepository.findOneByIdAndUpdate(id, { ...stats });
 	}
 
 	findById(id: Types.ObjectId): Promise<WarehouseDocument | undefined> {

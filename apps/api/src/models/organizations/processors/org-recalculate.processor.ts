@@ -21,14 +21,20 @@ export class OrgRecalculateProcessor {
 		if (!organization) return null;
 
 		let totalValue = 0;
+		let totalQuantity = 0;
 
 		const warehousesList = organization.warehouses;
 		for (const warehouseRef of warehousesList) {
 			const warehouse = await this.warehousesService.findById(warehouseRef.id);
 			totalValue += warehouse.totalValue;
+			totalQuantity += warehouse.totalQuantity;
 		}
 
-		await this.organizationService.update(orgId, { 'stats.totalValue': totalValue });
-		this.logger.log(`Recalculated organization {${orgId},${totalValue}$}`);
+		await this.organizationService.update(orgId, {
+			'stats.totalValue': totalValue,
+			'stats.totalQuantity': totalQuantity,
+		});
+		const logData = `{${orgId},val: ${totalValue}$, qty: ${totalQuantity}}`;
+		this.logger.log(`Recalculated organization ${logData}`);
 	}
 }

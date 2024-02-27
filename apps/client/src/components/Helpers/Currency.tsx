@@ -12,7 +12,7 @@ function Currency({ children }: CurrencyProps) {
 	const value = useMemo(() => Utils.humanizeNumber(Number(children)), [children]);
 	return (
 		<div className="flex items-baseline gap-1">
-			{value} <div className="text-muted">{organization.currency}</div>
+			{value} <div className="text-muted">{organization?.currency || 'USD'}</div>
 		</div>
 	);
 }

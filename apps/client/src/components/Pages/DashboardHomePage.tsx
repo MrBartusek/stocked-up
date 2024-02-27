@@ -23,7 +23,7 @@ function DashboardHomePage() {
 						<Currency>{organization.stats.totalValue}</Currency>
 					</BigNumberCard>
 					<BigNumberCard title="Total inventory quantity">
-						{Utils.humanizeNumber(organization.stats.totalQuantityInHand, 0)}
+						{Utils.humanizeNumber(organization.stats.totalQuantity, 0)}
 					</BigNumberCard>
 				</div>
 				<div className="flex flex-col gap-8 xl:flex-row">

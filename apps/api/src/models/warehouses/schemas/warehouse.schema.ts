@@ -18,6 +18,9 @@ export class Warehouse {
 	@Prop({ default: 0 })
 	totalValue: number;
 
+	@Prop({ default: 0 })
+	totalQuantity: number;
+
 	public static toDto(entity: WarehouseDocument): WarehouseDto {
 		return {
 			id: entity._id,

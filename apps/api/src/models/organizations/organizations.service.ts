@@ -27,9 +27,9 @@ export class OrganizationsService {
 
 	async update(
 		id: mongoose.Types.ObjectId,
-		dto: UpdateQuery<OrganizationDocument>,
+		query: UpdateQuery<OrganizationDocument>,
 	): Promise<OrganizationDocument> {
-		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: dto });
+		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: query });
 
 		const event = new OrganizationUpdatedEvent(org);
 		this.eventEmitter.emit('organization.updated', event);

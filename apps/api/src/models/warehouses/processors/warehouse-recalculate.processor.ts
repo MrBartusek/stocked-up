@@ -17,8 +17,6 @@ export class WarehouseRecalculateProcessor {
 		private readonly inventoryService: InventoryService,
 	) {}
 
-	private readonly logger = new Logger(WarehouseRecalculateProcessor.name);
-
 	@Process()
 	async handleRecalculate(job: Job<WarehouseRecalculateJobData>): Promise<void> {
 		const warehouseId = job.data.warehouse;
@@ -30,8 +28,12 @@ export class WarehouseRecalculateProcessor {
 
 		const strategy = organization.settings.valueCalculationStrategy;
 		const totalValue = await this.inventoryService.calculateStockValue(warehouse._id, strategy);
+		const totalQuantity = await this.inventoryService.calculateTotalQuantity(warehouse._id);
 
-		const newWarehouse = await this.warehouseService.updateTotalValue(warehouseId, totalValue);
+		const newWarehouse = await this.warehouseService.updateStats(warehouseId, {
+			totalValue,
+			totalQuantity,
+		});
 
 		const event = new WarehouseRecalculatedEvent(newWarehouse);
 		this.eventEmitter.emit('warehouse.recalculated', event);

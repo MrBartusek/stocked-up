@@ -10,7 +10,7 @@ export class MockOrganizationsRepository extends MockEntityRepository<Organizati
 		super({
 			name: 'test-name',
 			currency: 'USD',
-			stats: { totalQuantityInHand: 100, totalProducts: 100, totalValue: 100 },
+			stats: { totalQuantity: 100, totalProducts: 100, totalValue: 100 },
 			settings: { valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice },
 			acls: [],
 			warehouses: [
