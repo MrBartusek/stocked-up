@@ -9,6 +9,7 @@ import { Utils } from '../../utils/utils';
 import Table from '../Helpers/Table/Table';
 import TableIndex from '../Helpers/Table/TableIndex';
 import WarehouseActions from './WarehouseActions';
+import Currency from '../Helpers/Currency';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 
@@ -45,7 +46,7 @@ function WarehousesTable({ warehouses, query, handleSortingChange }: WarehousesT
 		}),
 		columnHelper.accessor('totalValue', {
 			header: 'Total Stock Value',
-			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			cell: (info) => <Currency>{info.getValue()}</Currency>,
 			enableSorting: true,
 		}),
 		columnHelper.display({

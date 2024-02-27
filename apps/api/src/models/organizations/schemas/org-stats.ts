@@ -12,7 +12,7 @@ export class OrgStats {
 	totalValue: number;
 
 	@Prop({ default: 0 })
-	totalPendingOrders: number;
+	totalQuantityInHand: number;
 }
 
 export const OrgStatsSchema = SchemaFactory.createForClass(OrgStats);

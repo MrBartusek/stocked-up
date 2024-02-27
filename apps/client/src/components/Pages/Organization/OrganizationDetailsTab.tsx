@@ -6,6 +6,7 @@ import EntityInfoTable from '../../Entity/EntityInfoTable';
 import HeaderWithHint from '../../HeaderWithHint';
 import IconButton from '../../IconButton';
 import OrganizationDangerZone from '../../Organization/OrganizationDangerZone';
+import Currency from '../../Helpers/Currency';
 
 function OrganizationDetailsTab() {
 	const organization = useOutletContext<OrganizationDto>();
@@ -26,10 +27,7 @@ function OrganizationDetailsTab() {
 						'internal ID': <code>{organization?.id}</code>,
 						currency: organization?.currency,
 						warehouses: organization?.warehouses.length,
-						'total value': Utils.humanizeCurrency(
-							organization?.stats.totalValue,
-							organization?.currency,
-						),
+						'total value': <Currency>{organization?.stats.totalValue}</Currency>,
 					}}
 				/>
 				<div className="py-6">

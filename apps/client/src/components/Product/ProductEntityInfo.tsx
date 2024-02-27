@@ -13,6 +13,7 @@ import Blockquote from '../Helpers/Blockquote';
 import IconButton from '../IconButton';
 import ProductAddToInventoryButton from './ProductAddToInventoryButton';
 import ProductInventoryPeek from './ProductInventoryPeek';
+import Currency from '../Helpers/Currency';
 
 export interface ProductEntityInfoProps {
 	product: ProductDto;
@@ -34,14 +35,8 @@ function ProductEntityInfo({ product }: ProductEntityInfoProps) {
 						name: product?.name,
 						'internal ID': <code>{product?.id}</code>,
 						SKU: product?.sku,
-						'buy price': Utils.humanizeCurrency(
-							product?.buyPrice,
-							appContext.organization.currency,
-						),
-						'sell price': Utils.humanizeCurrency(
-							product?.sellPrice,
-							appContext.organization.currency,
-						),
+						'buy price': <Currency>{product?.buyPrice}</Currency>,
+						'sell price': <Currency>{product?.sellPrice}</Currency>,
 						unit: product?.unit,
 					}}
 				/>

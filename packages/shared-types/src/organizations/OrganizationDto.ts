@@ -7,7 +7,7 @@ export class OrganizationDto extends BaseDto {
     stats: {
         totalProducts: number,
         totalValue: number,
-        totalPendingOrders: number,
+        totalQuantityInHand: number,
     }
     settings: {
         valueCalculationStrategy: 'buyPrice' | 'sellPrice'

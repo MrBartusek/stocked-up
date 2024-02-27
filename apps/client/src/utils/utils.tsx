@@ -14,20 +14,11 @@ export class HTTPResponseError extends Error {
 }
 
 export class Utils {
-	public static humanizeNumber(input?: number) {
-		return humanFormat(input || 0, { separator: '', decimals: 2 });
+	public static humanizeNumber(input?: number, decimals: number = 2) {
+		return humanFormat(input || 0, { separator: '', decimals });
 	}
 
 	public static humanizeCurrency(input?: number, currency?: string) {
-		const value = this.humanizeNumber(input);
-		return (
-			<div className="flex items-baseline gap-1">
-				{value} <div className="text-muted">{currency}</div>
-			</div>
-		);
-	}
-
-	public static humanizeCurrencyText(input?: number, currency?: string) {
 		const value = this.humanizeNumber(input);
 		return `${value} ${currency}`;
 	}

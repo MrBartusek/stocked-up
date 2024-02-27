@@ -26,7 +26,7 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 		filteredWarehouses.sort((a, b) => b.totalValue - a.totalValue);
 
 		const mappedValues = [...filteredWarehouses].map((w) => ({
-			name: `${w.name} (${Utils.humanizeCurrencyText(w.totalValue, organization.currency)})`,
+			name: `${w.name} (${Utils.humanizeCurrency(w.totalValue, organization.currency)})`,
 			value: w.totalValue,
 		}));
 		return mappedValues;
@@ -66,7 +66,7 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 								/>
 							))}
 							<Label
-								value={`${Utils.humanizeCurrencyText(
+								value={`${Utils.humanizeCurrency(
 									organization.stats.totalValue,
 									organization.currency,
 								)}`}

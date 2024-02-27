@@ -10,6 +10,7 @@ import Table from '../Helpers/Table/Table';
 import TableImage from '../Helpers/Table/TableImage';
 import TableIndex from '../Helpers/Table/TableIndex';
 import ProductActions from './ProductActions';
+import Currency from '../Helpers/Currency';
 
 const columnHelper = createColumnHelper<BasicProductDto>();
 
@@ -46,13 +47,13 @@ function ProductsTable({ products, query, handleSortingChange }: ProductsTablePr
 		}),
 		columnHelper.accessor('buyPrice', {
 			header: 'Buy Price',
-			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			cell: (info) => <Currency>{info.getValue()}</Currency>,
 			maxSize: 200,
 			enableSorting: true,
 		}),
 		columnHelper.accessor('sellPrice', {
 			header: 'Sell Price',
-			cell: (info) => Utils.humanizeCurrency(info.getValue(), appContext.organization.currency),
+			cell: (info) => <Currency>{info.getValue()}</Currency>,
 			maxSize: 200,
 			enableSorting: true,
 		}),

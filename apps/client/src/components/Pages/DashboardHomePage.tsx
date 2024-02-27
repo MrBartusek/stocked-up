@@ -7,6 +7,7 @@ import ChartCard from '../ChartCard';
 import DashboardContent from '../DashboardContent';
 import TotalSalesChart from '../TotalSalesChart';
 import WarehousesValueChart from '../Warehouse/WarehousesValueChart';
+import Currency from '../Helpers/Currency';
 
 function DashboardHomePage() {
 	const { organization } = useContext(CurrentAppContext);
@@ -16,13 +17,13 @@ function DashboardHomePage() {
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-8 lg:flex-row">
 					<BigNumberCard title="Count of all products">
-						{organization.stats.totalProducts}
+						{Utils.humanizeNumber(organization.stats.totalProducts, 0)}
 					</BigNumberCard>
 					<BigNumberCard title="Total organization value">
-						{Utils.humanizeCurrency(organization.stats.totalValue, organization.currency)}
+						<Currency>{organization.stats.totalValue}</Currency>
 					</BigNumberCard>
-					<BigNumberCard title="Count of all pending orders">
-						{organization.stats.totalPendingOrders}
+					<BigNumberCard title="Total inventory quantity">
+						{Utils.humanizeNumber(organization.stats.totalQuantityInHand, 0)}
 					</BigNumberCard>
 				</div>
 				<div className="flex flex-col gap-8 xl:flex-row">
@@ -32,9 +33,6 @@ function DashboardHomePage() {
 					<ChartCard title="Warehouses value">
 						<WarehousesValueChart organization={organization} />
 					</ChartCard>
-				</div>
-				<div className="flex gap-8">
-					<Card>last orders table</Card>
 				</div>
 			</div>
 		</DashboardContent>

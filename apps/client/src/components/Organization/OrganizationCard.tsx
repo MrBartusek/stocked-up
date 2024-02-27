@@ -4,6 +4,7 @@ import { Utils } from '../../utils/utils';
 import WarehousesList from '../Warehouse/WarehousesList';
 import OrganizationSettingsButton from './OrganizationActions';
 import OrganizationStatsChip from './OrganizationStatsChip';
+import Currency from '../Helpers/Currency';
 
 export interface OrganizationCardProps {
 	organization: OrganizationDto;
@@ -20,7 +21,7 @@ function OrganizationCard({ organization }: OrganizationCardProps) {
 				<div className="flex items-center gap-4">
 					<div className="flex items-center gap-3">
 						<OrganizationStatsChip icon={BsWallet}>
-							{Utils.humanizeCurrency(organization.stats.totalValue)}
+							<Currency>{organization.stats.totalValue}</Currency>
 						</OrganizationStatsChip>
 						<OrganizationStatsChip icon={BsTag}>
 							{organization.stats.totalProducts}
