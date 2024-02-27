@@ -1,7 +1,7 @@
 import { useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
 import EntityCard from '../../EntityCard';
 import UserDeleteForm from '../../User/UserDeleteForm';
-import { UserContext } from '../../../context/UserContext';
 
 function UserDeleteTab() {
 	const { user } = useContext(UserContext);

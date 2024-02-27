@@ -1,7 +1,7 @@
 import { BsEnvelopeAt, BsShieldLock } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import IconButton from '../../IconButton';
 import UserDangerZone from '../../User/UserDangerZone';
-import { Link } from 'react-router-dom';
 
 function UserSecurityTab() {
 	return (

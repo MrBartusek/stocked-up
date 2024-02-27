@@ -5,11 +5,10 @@ import { IPageQueryDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
 import useTableAdapter from '../../hooks/useTableAdapter';
 import SortingChangeHandler from '../../types/sortingChangeHandler';
-import { Utils } from '../../utils/utils';
+import Currency from '../Helpers/Currency';
 import Table from '../Helpers/Table/Table';
 import TableIndex from '../Helpers/Table/TableIndex';
 import WarehouseActions from './WarehouseActions';
-import Currency from '../Helpers/Currency';
 
 const columnHelper = createColumnHelper<WarehouseDto>();
 

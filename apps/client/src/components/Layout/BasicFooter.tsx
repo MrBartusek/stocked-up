@@ -1,6 +1,6 @@
 import { BsCupHot, BsHeart } from 'react-icons/bs';
-import Container from '../Container';
 import { Link } from 'react-router-dom';
+import Container from '../Container';
 
 const PORTFOLIO_LINK =
 	'https://dokurno.dev/?utm_source=stockedup&utm_medium=footer&utm_campaign=stockedup_footer';

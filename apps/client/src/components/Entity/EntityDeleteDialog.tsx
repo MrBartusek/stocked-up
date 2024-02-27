@@ -8,12 +8,12 @@ import { To, useNavigate } from 'react-router-dom';
 import { IImageDto } from 'shared-types';
 import { Utils } from '../../utils/utils';
 import Button from '../Button';
+import EntityCard from '../EntityCard';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
-import EntityCard from '../EntityCard';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;

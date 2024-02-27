@@ -1,9 +1,8 @@
 import { useContext } from 'react';
-import CardWithTitle from './CardWithTitle';
-import { UserContext } from '../context/UserContext';
-import { Link } from 'react-router-dom';
 import { BsGeoAltFill, BsPersonPlusFill, BsSliders, BsTagFill } from 'react-icons/bs';
 import { CurrentAppContext } from '../context/CurrentAppContext';
+import { UserContext } from '../context/UserContext';
+import CardWithTitle from './CardWithTitle';
 import WelcomeActionLink from './WelcomeActionLink';
 
 function WelcomeCard() {

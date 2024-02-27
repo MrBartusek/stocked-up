@@ -1,12 +1,11 @@
 import { BsPencil } from 'react-icons/bs';
 import { Link, useOutletContext } from 'react-router-dom';
 import { OrganizationDto } from 'shared-types';
-import { Utils } from '../../../utils/utils';
 import EntityInfoTable from '../../Entity/EntityInfoTable';
 import HeaderWithHint from '../../HeaderWithHint';
+import Currency from '../../Helpers/Currency';
 import IconButton from '../../IconButton';
 import OrganizationDangerZone from '../../Organization/OrganizationDangerZone';
-import Currency from '../../Helpers/Currency';
 
 function OrganizationDetailsTab() {
 	const organization = useOutletContext<OrganizationDto>();
