@@ -1,0 +1,12 @@
+services:
+  web:
+    image: mrbartusek/stocked-up:latest
+    environment:
+      - PORT=8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+  postgres:
+    restart: unless-stopped
+  redis:
+    restart: unless-stopped

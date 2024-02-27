@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - data:/data/db
+    ports:
+      - '27017:27017'
+    command: mongod --quiet --logpath /dev/null 
+
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
+  web:
+    build: .
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - MONGO_URL=mongodb://mongo/stockedUp
+      - REDIS_HOST=redis
+    env_file: .env
+    ports:
+      - 3000:3000
+
+volumes:
+  data:
+  cache:
