@@ -4,12 +4,12 @@ import LogoWhite from '../assets/stockedup-logo-white.png';
 
 type LogoVariant = 'black' | 'white';
 
-interface DokChatLogoProps
+interface StockedUpLogoProps
 	extends React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
 	variant: LogoVariant;
 }
 
-function StockedUpLogo(props: DokChatLogoProps) {
+function StockedUpLogo(props: StockedUpLogoProps) {
 	const variant = props.variant;
 
 	function getSrc(variant: LogoVariant): string {
