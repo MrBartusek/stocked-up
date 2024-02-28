@@ -50,7 +50,8 @@ We have also configured [Docker](https://www.docker.com) for simpler deployments
     git clone https://github.com/MrBartusek/stocked-up.git
     cd stocked-up
     ```
-2. Run the project with compose
+2. Copy the `.env.example` file and rename it to `.env`. Fill this configuration file with your API keys and other configuration options. For reference, see the [configuration guide](./docs/configuration.md).
+3. Run the project with compose
     ```sh
     docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d
     ```
