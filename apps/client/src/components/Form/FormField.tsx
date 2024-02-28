@@ -5,7 +5,7 @@ import { UserContext } from '../../context/UserContext';
 import { BsXCircle } from 'react-icons/bs';
 
 export interface FormFieldProps {
-	label: string;
+	label?: string;
 	errors?: FieldError | undefined;
 	hint?: string;
 	required?: boolean;
