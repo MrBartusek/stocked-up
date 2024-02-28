@@ -16,7 +16,6 @@ type Inputs = {
 	email: string;
 	username: string;
 	password: string;
-	passwordConfirm: string;
 };
 
 function RegisterForm() {
@@ -78,14 +77,6 @@ function RegisterForm() {
 				maxLength={32}
 				placeholder="Type your password"
 				{...register('password', { required: true })}
-				icon={BsShieldLock}
-				disabled={loading}
-			/>
-			<FancyInput
-				label="Confirm password"
-				type="password"
-				placeholder="Re-type your password"
-				{...register('passwordConfirm', { required: true })}
 				icon={BsShieldLock}
 				disabled={loading}
 			/>
