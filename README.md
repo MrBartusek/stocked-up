@@ -13,6 +13,8 @@ If you want to start using StockedUp, You can see [live demo](https://stockedup.
 For simplicity's sake, you can also create
 [a demo account](https://stockedup.dokurno.dev/register/demo) and skip the registration process.
 
+You can also setup local instance on your machine or deploy this project to a cloud. For instructions please reefer to the [setup guide](SETUP.md).
+
 ## About
 
 StockedUp is an easy-to-use service that allows for managing vast amounts of inventory data
