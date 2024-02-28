@@ -17,7 +17,11 @@ type Inputs = {
 };
 
 function UserEmailChangeForm() {
-	const { register, handleSubmit } = useForm<Inputs>();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -49,22 +53,22 @@ function UserEmailChangeForm() {
 			<FormField
 				label="Current password"
 				hint="Confirm your current password"
+				errors={errors.password}
 				required
 			>
 				<FormInput
 					type="password"
-					required
 					{...register('password', { required: true })}
 				/>
 			</FormField>
 
 			<FormField
 				label="New E-mail address"
+				errors={errors.email}
 				required
 			>
 				<FormInput
 					type="email"
-					required
 					{...register('email', { required: true })}
 				/>
 			</FormField>

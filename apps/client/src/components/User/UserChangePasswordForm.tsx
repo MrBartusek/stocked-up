@@ -18,7 +18,12 @@ type Inputs = {
 };
 
 function UserChangePasswordForm() {
-	const { register, handleSubmit } = useForm<Inputs>();
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -50,33 +55,33 @@ function UserChangePasswordForm() {
 			<FormField
 				label="Current password"
 				hint="Confirm your current password"
+				errors={errors.oldPassword}
 				required
 			>
 				<FormInput
 					type="password"
-					required
 					{...register('oldPassword', { required: true })}
 				/>
 			</FormField>
 
 			<FormField
 				label="New password"
+				errors={errors.newPassword}
 				required
 			>
 				<FormInput
 					type="password"
-					required
 					{...register('newPassword', { required: true })}
 				/>
 			</FormField>
 
 			<FormField
 				label="Re-type new password"
+				errors={errors.newPasswordConfirm}
 				required
 			>
 				<FormInput
 					type="password"
-					required
 					{...register('newPasswordConfirm', { required: true })}
 				/>
 			</FormField>

@@ -22,7 +22,12 @@ type Inputs = {
 function UserDetailsForm() {
 	const { user } = useContext(UserContext);
 
-	const { register, handleSubmit, control } = useForm<Inputs>({
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = useForm<Inputs>({
 		defaultValues: { username: user.username, image: user.image },
 	});
 
@@ -72,11 +77,10 @@ function UserDetailsForm() {
 
 			<FormField
 				label="Username"
-				required
+				errors={errors.username}
 				demoLocked
 			>
 				<FormInput
-					required
 					demoLocked
 					{...register('username', { required: true })}
 				/>

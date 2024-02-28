@@ -2,18 +2,27 @@ import classNames from 'classnames';
 import { useContext } from 'react';
 import { FieldError } from 'react-hook-form';
 import { UserContext } from '../../context/UserContext';
+import { BsXCircle } from 'react-icons/bs';
 
 export interface FormFieldProps {
-	label?: string;
+	label: string;
+	errors?: FieldError | undefined;
 	hint?: string;
 	required?: boolean;
 	className?: string;
 	children?: React.ReactNode;
-	errors?: FieldError;
 	demoLocked?: boolean;
 }
 
-function FormField({ label, hint, required, className, children, demoLocked }: FormFieldProps) {
+function FormField({
+	label,
+	hint,
+	required,
+	className,
+	children,
+	demoLocked,
+	errors,
+}: FormFieldProps) {
 	const { user } = useContext(UserContext);
 
 	const disabledByDemo = demoLocked && user.isDemo;
@@ -28,8 +37,13 @@ function FormField({ label, hint, required, className, children, demoLocked }: F
 					{disabledByDemo ? <span className="text-danger">(Disabled in demo)</span> : null}
 				</span>
 			</div>
-
 			<div className="flex items-center gap-4">{children}</div>
+			{errors && (
+				<span className="ms-1 mt-1 flex items-center gap-1 text-danger">
+					<BsXCircle />
+					{errors.message}
+				</span>
+			)}
 		</div>
 	);
 }
