@@ -7,7 +7,6 @@ import RedisStore from 'connect-redis';
 import { json } from 'express';
 import * as session from 'express-session';
 import * as passport from 'passport';
-import { join } from 'path';
 import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis/connect';
@@ -16,10 +15,6 @@ async function bootstrapNestApp() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
 	configureNestApp(app);
-
-	// Serve public folder (not frontend)
-	app.useStaticAssets(join(__dirname, '../..', 'public'), { prefix: '/public/' });
-
 	setupSwagger(app);
 
 	await app.listen(3000);

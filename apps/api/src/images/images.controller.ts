@@ -2,6 +2,8 @@ import { Controller, Get, Header, NotFoundException, Param, Redirect, Res } from
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ImagesService } from './images.service';
+import { createReadStream } from 'node:fs';
+import { join } from 'node:path';
 
 const ONE_DAY = 24 * 60 * 60;
 const CACHE_TIME = 30 * ONE_DAY;
@@ -13,8 +15,10 @@ export class ImagesController {
 
 	@Get('default')
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
-	@Redirect('/public/default.png', 302)
-	getDefault() {}
+	getDefault(@Res() res: Response) {
+		const file = createReadStream(join(process.cwd(), '/src/assets/default.png'));
+		file.pipe(res);
+	}
 
 	@Get(':key')
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
