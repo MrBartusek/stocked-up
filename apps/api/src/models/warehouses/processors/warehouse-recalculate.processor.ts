@@ -1,5 +1,4 @@
 import { Process, Processor } from '@nestjs/bull';
-import { Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Job } from 'bull';
 import { InventoryService } from '../../inventory/inventory.service';

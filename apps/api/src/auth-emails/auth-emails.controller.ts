@@ -1,11 +1,9 @@
 import { Body, Controller, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { AuthEmailsService } from './auth-emails.service';
+import { Request } from 'express';
+import { Types } from 'mongoose';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
-import { Types } from 'mongoose';
-import { Request } from 'express';
-import { PrivateUserDto } from 'shared-types';
-import { User } from '../models/users/schemas/user.schema';
+import { AuthEmailsService } from './auth-emails.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth-emails')
