@@ -9,8 +9,7 @@
 that focuses on managing distributed stock for large organizations.
 
 ## Quick Start
-
-If you want to start using StockedUp, I host a fully-fledged [live demo](https://stockedup.dokurno.dev).
+If you want to start using StockedUp, You can see [live demo](https://stockedup.dokurno.dev) hosted on AWS.
 For simplicity's sake, you can also create
 [a demo account](https://stockedup.dokurno.dev/register/demo) and skip the registration process.
 
