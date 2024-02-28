@@ -82,7 +82,14 @@ function UserChangePasswordForm() {
 			>
 				<FormInput
 					type="password"
-					{...register('newPasswordConfirm', { required: true })}
+					{...register('newPasswordConfirm', {
+						required: true,
+						validate: (val: string) => {
+							if (watch('newPassword') != val) {
+								return 'Your passwords confirmation does not match';
+							}
+						},
+					})}
 				/>
 			</FormField>
 

@@ -31,6 +31,10 @@ function ResetPasswordForm({ user, token }: ResetPasswordFormProps) {
 	const navigate = useNavigate();
 
 	function onSubmit(inputs: Inputs) {
+		if (inputs.password != inputs.passwordConfirm) {
+			setError('Your passwords confirmation does not match');
+			return;
+		}
 		setLoading(true);
 		setError(null);
 
