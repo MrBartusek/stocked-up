@@ -81,6 +81,7 @@ export class AuthController {
 	}
 
 	@Post('change-email')
+	@UseGuards(NotDemoGuard)
 	@UseGuards(AuthenticatedGuard)
 	async changeEmail(@Req() request: Request, @Body() dto: UpdateEmailDto) {
 		const userId = new Types.ObjectId(request.user.id);
