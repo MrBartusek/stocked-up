@@ -7,7 +7,7 @@ export interface LayoutProps {
 
 function DashboardLayout({ children }: LayoutProps) {
 	return (
-		<div className="flex h-full flex-col">
+		<div className="flex h-full flex-col overflow-y-scroll">
 			<DashboardNavbar />
 			<main className="flex flex-1 flex-col">{children}</main>
 			<DashboardFooter />
