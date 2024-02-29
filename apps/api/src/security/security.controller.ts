@@ -28,8 +28,10 @@ import { SecurityUtils } from './helpers/security.utils';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('security')
+@ApiTags('security')
 export class SecurityController {
 	constructor(
 		private readonly securityService: SecurityService,

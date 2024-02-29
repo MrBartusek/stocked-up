@@ -5,8 +5,10 @@ import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { AuthEmailsService } from './auth-emails.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth-emails')
+@ApiTags('auth-emails')
 export class AuthEmailsController {
 	constructor(private readonly authEmailsService: AuthEmailsService) {}
 
