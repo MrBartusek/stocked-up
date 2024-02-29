@@ -65,7 +65,7 @@ function UserDeleteForm() {
 			<div className="flex items-center gap-4">
 				<FormSubmitButton
 					variant="danger"
-					className="mt-0"
+					disableTopMargin
 					disabled={!passwordValue || passwordValue.length < 4}
 				>
 					Delete my account
