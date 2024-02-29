@@ -9,13 +9,13 @@ export interface SideBySideImageProps {
 
 function SideBySideImage({ imageSrc, children, className }: SideBySideImageProps) {
 	return (
-		<div className={classNames(className, 'flex flex-row items-center lg:gap-24')}>
+		<div className={classNames(className, 'flex flex-1 flex-row items-center lg:gap-24')}>
 			<img
-				className="hidden w-full max-w-[43%] lg:block"
+				className="hidden max-h-96 w-full max-w-[43%] lg:block"
 				width={150}
 				height={50}
 				src={imageSrc}
-			></img>
+			/>
 			<div className="flex flex-1 flex-col">{children}</div>
 		</div>
 	);

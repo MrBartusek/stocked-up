@@ -11,8 +11,8 @@ function FullFocusContainer({ children, className }: FullFocusContainerProps) {
 			<div
 				className={classNames(
 					className,
-					'mx-4 rounded-xl border border-gray-300 bg-light p-16 shadow-xl',
-					'flex max-w-5xl flex-1',
+					'mx-4 rounded-xl border border-gray-300 bg-light px-24 py-20 shadow-xl',
+					'flex max-w-6xl flex-1',
 				)}
 			>
 				{children}

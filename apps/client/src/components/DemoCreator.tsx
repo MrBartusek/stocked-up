@@ -6,7 +6,6 @@ import { UserContext } from '../context/UserContext';
 import { Utils } from '../utils/utils';
 import Button from './Button';
 import Alert from './Helpers/Alert';
-import RegisterGoBack from './RegisterGoBack';
 
 function DemoCreator() {
 	const [loading, setLoading] = useState(false);
@@ -31,20 +30,19 @@ function DemoCreator() {
 
 	return (
 		<div className="mt-8">
-			<RegisterGoBack />
+			<div className="my-8">
+				{error && <Alert>{error}</Alert>}
+				<p className="mb-2">
+					We are going to create temporary demonstration StockedUp account. It will be filled with
+					fake warehouses and products.
+				</p>
+				<p>This account will be removed in 24 hours</p>
+			</div>
 
-			{error && <Alert>{error}</Alert>}
-
-			<ul className="my-10 list-disc">
-				<li>We are going to create an temporary demo StockedUp account</li>
-				<li>We will fill it up with fake items, warehouses and employees</li>
-				<li>
-					You won&apos;t be able to login back when you log out and, it will be removed in 24 hours
-				</li>
-			</ul>
 			<Button
 				className="mt-3 w-full"
 				onClick={handleClick}
+				size="large"
 				loading={loading}
 			>
 				Create demo account

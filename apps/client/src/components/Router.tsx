@@ -1,10 +1,11 @@
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DashboardContainer from './DashboardContainer';
-import DemoCreator from './DemoCreator';
 import ApplicationError from './Errors/ApplicationError';
 import PassContextOutlet from './Helpers/PassContextOutlet';
 import DashboardHomePage from './Pages/DashboardHomePage';
 import DashboardPage from './Pages/DashboardPage';
+import DemoPage from './Pages/DemoPage';
+import EmailConfirmPage from './Pages/EmailConfirmPage';
 import HomePage from './Pages/HomePage';
 import InventoryAddPage from './Pages/Inventory/InventoryAddPage';
 import InventoryDeletePage from './Pages/Inventory/InventoryDeletePage';
@@ -23,6 +24,7 @@ import OrganizationSelectPage from './Pages/Organization/OrganizationSelectPage'
 import OrganizationSettingsPage from './Pages/Organization/OrganizationSettingsPage';
 import OrganizationUpdateTab from './Pages/Organization/OrganizationUpdateTab';
 import OrganizationWarehousesTab from './Pages/Organization/OrganizationWarehousesTab';
+import PasswordResetPage from './Pages/PasswordResetPage';
 import ProductDeletePage from './Pages/Product/ProductDeletePage';
 import ProductUpdatePage from './Pages/Product/ProductUpdatePage';
 import ProductViewPage from './Pages/Product/ProductViewPage';
@@ -30,25 +32,21 @@ import ProductsCreatePage from './Pages/Product/ProductsCreatePage';
 import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
+import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
+import UserDeleteTab from './Pages/User/UserDeleteTab';
 import UserDetailsTab from './Pages/User/UserDetailsTab';
+import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
+import UserPasswordChangeTab from './Pages/User/UserPasswordChangeTab';
 import UserSecurityTab from './Pages/User/UserSecurityTab';
 import UserSettingsPage from './Pages/User/UserSettingsPage';
+import UserUpdateTab from './Pages/User/UserUpdateTab';
 import WarehouseDeletePage from './Pages/Warehouse/WarehouseDeletePage';
 import WarehouseUpdatePage from './Pages/Warehouse/WarehouseUpdatePage';
 import WarehouseViewPage from './Pages/Warehouse/WarehouseViewPage';
 import WarehousesCreatePage from './Pages/Warehouse/WarehousesCreatePage';
 import WarehousesListPage from './Pages/Warehouse/WarehousesListPage';
 import WarehousesPage from './Pages/Warehouse/WarehousesPage';
-import RegisterForm from './RegisterForm';
-import RegisterSelect from './RegisterSelect';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import EmailConfirmPage from './Pages/EmailConfirmPage';
-import PasswordResetPage from './Pages/PasswordResetPage';
-import UserUpdateTab from './Pages/User/UserUpdateTab';
-import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
-import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
-import UserDeleteTab from './Pages/User/UserDeleteTab';
-import UserPasswordChangeTab from './Pages/User/UserPasswordChangeTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -70,24 +68,17 @@ function Router() {
 			path: 'register',
 			element: (
 				<PublicRoute>
-					<RegisterPage />
+					<RegisterPage />,
 				</PublicRoute>
 			),
-			errorElement: <ApplicationError />,
-			children: [
-				{
-					path: '',
-					element: <RegisterSelect />,
-				},
-				{
-					path: 'new',
-					element: <RegisterForm />,
-				},
-				{
-					path: 'demo',
-					element: <DemoCreator />,
-				},
-			],
+		},
+		{
+			path: 'register/demo',
+			element: (
+				<PublicRoute>
+					<DemoPage />
+				</PublicRoute>
+			),
 		},
 		{
 			path: 'confirm-email',

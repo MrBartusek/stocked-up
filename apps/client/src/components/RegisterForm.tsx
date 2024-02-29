@@ -10,7 +10,6 @@ import { Utils } from '../utils/utils';
 import Button from './Button';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
-import RegisterGoBack from './RegisterGoBack';
 
 type Inputs = {
 	email: string;
@@ -48,8 +47,6 @@ function RegisterForm() {
 			className="mt-8"
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<RegisterGoBack />
-
 			{error && <Alert>{error}</Alert>}
 
 			<FancyInput

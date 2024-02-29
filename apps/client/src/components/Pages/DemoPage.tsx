@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import UndrawAircraft from '../../assets/undraw_aircraft.svg';
+import UndrawPressPlay from '../../assets/undraw_press_play.svg';
+import DemoCreator from '../DemoCreator';
 import FullFocusContainer from '../FullFocusContainer';
-import RegisterForm from '../RegisterForm';
 import SideBySideImage from '../SideBySideImage';
 
-function RegisterPage() {
+function DemoPage() {
 	return (
 		<FullFocusContainer>
-			<SideBySideImage imageSrc={UndrawAircraft}>
-				<h2 className="mb-2 text-center text-4xl">Create new account</h2>
+			<SideBySideImage imageSrc={UndrawPressPlay}>
+				<h2 className="mb-2 text-center text-4xl">Create demo account</h2>
 				<div className="flex flex-row justify-center gap-1">
 					<span>Already have an account?</span>{' '}
 					<Link
@@ -18,9 +18,9 @@ function RegisterPage() {
 						Login instead
 					</Link>
 				</div>
-				<RegisterForm />
+				<DemoCreator />
 			</SideBySideImage>
 		</FullFocusContainer>
 	);
 }
-export default RegisterPage;
+export default DemoPage;
