@@ -10,6 +10,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import { useQueryClient } from 'react-query';
 
 type Inputs = {
 	password: string;
@@ -26,6 +27,7 @@ function UserEmailChangeForm() {
 	const [error, setError] = useState<string | null>(null);
 
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	function onSubmit(inputs: Inputs) {
 		setLoading(true);
@@ -37,6 +39,7 @@ function UserEmailChangeForm() {
 			.post<void>(`/api/auth/change-email`, dto)
 			.then(async () => {
 				navigate('..');
+				queryClient.invalidateQueries(['users', 'me']);
 				toast.success(`Successfully changed e-mail address`);
 			})
 			.catch((err) => setError(Utils.requestErrorToString(err)))
