@@ -20,6 +20,7 @@ describe('WarehousesController', () => {
 		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) =>
 			mockRepo.create({ ...organization, ...dto }),
 		),
+		findByOrg: jest.fn(() => mockRepo.find()),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => mockRepo.findOneByIdAndUpdate(id, dto)),
 		delete: jest.fn((id) => mockRepo.deleteOneById(id)),
 	};
