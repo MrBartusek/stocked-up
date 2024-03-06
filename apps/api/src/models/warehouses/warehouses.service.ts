@@ -62,7 +62,7 @@ export class WarehousesService {
 		return this.warehouseRepository.exist({ _id: id });
 	}
 
-	paginate(
+	paginateByOrg(
 		orgId: Types.ObjectId,
 		query: PageQueryDto<WarehouseDto>,
 	): Promise<PageDto<WarehouseDocument>> {

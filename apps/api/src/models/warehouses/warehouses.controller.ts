@@ -56,7 +56,7 @@ export class WarehousesController {
 		)
 		pageQuery: PageQueryDto<WarehouseDto>,
 	): Promise<PageDto<WarehouseDto>> {
-		const { items, meta } = await this.warehousesService.paginate(orgId, pageQuery);
+		const { items, meta } = await this.warehousesService.paginateByOrg(orgId, pageQuery);
 
 		const warehouseDTOs = items.map((warehouse) => Warehouse.toDto(warehouse));
 		return {
