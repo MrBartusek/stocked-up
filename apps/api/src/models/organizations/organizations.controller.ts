@@ -16,12 +16,14 @@ import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationDto, OrganizationSecurityRole, PageDto } from 'shared-types';
+import { setTimeout } from 'timers/promises';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
+import { WarehouseDocument } from '../warehouses/schemas/warehouse.schema';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
@@ -49,7 +51,9 @@ export class OrganizationsController {
 		const user = new Types.ObjectId(request.user.id);
 
 		const org = await this.organizationsService.create(createOrganizationDto);
-		await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
+		const warehouse = await this.warehousesService.create(org._id, createOrganizationDto.warehouse);
+
+		await this.awaitWarehouseSetup(warehouse);
 
 		const updatedOrg = await this.organizationsAclService.addRule(org.id, {
 			user,
@@ -123,5 +127,28 @@ export class OrganizationsController {
 		}
 
 		return org.settings;
+	}
+
+	/**
+	 * Waits for warehouse to be added as organization ref.
+	 * This function will timeout after 10 seconds.
+	 */
+	async awaitWarehouseSetup(warehouse: WarehouseDocument) {
+		const MAX_WAIT_TIME = 10_000;
+		let totalWaitTime = 0;
+
+		while (MAX_WAIT_TIME > totalWaitTime) {
+			const organization = await this.organizationsService.findById(warehouse.organization);
+			const hasRef = organization.warehouses.find((w) => w.id.equals(warehouse._id));
+
+			if (hasRef) break;
+
+			totalWaitTime += 500;
+			await setTimeout(500);
+		}
+
+		if (MAX_WAIT_TIME > totalWaitTime) {
+			throw new Error(`Awaiting warehouse setup timeout, after ${MAX_WAIT_TIME / 1000}s`);
+		}
 	}
 }
