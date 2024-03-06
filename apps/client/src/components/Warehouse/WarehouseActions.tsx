@@ -16,6 +16,7 @@ function WarehouseActions({ warehouse }: WarehouseActionsProps) {
 	const navigate = useNavigate();
 
 	const isCurrentWarehouse = warehouse.id == appContext.currentWarehouse.id;
+	const isLastWarehouse = appContext.organization.warehouses.length < 2;
 
 	function onClickSelect(event: React.MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
@@ -55,6 +56,7 @@ function WarehouseActions({ warehouse }: WarehouseActionsProps) {
 			<ActionButton
 				icon={BsTrashFill}
 				onClick={onClickDelete}
+				disabled={isLastWarehouse}
 				className="text-red-600"
 				title="Delete"
 			/>

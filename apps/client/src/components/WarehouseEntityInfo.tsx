@@ -7,6 +7,7 @@ import { Utils } from '../utils/utils';
 import EntityActionsRow from './Entity/EntityActionsRow';
 import EntityInfoTable from './Entity/EntityInfoTable';
 import IconButton from './IconButton';
+import Alert from './Helpers/Alert';
 
 export interface WarehouseEntityInfoProps {
 	warehouse: WarehouseDto;
@@ -17,6 +18,7 @@ function WarehouseEntityInfo({ warehouse }: WarehouseEntityInfoProps) {
 	const navigate = useNavigate();
 
 	const isCurrentWarehouse = warehouse.id == appContext.currentWarehouse.id;
+	const isLastWarehouse = appContext.organization.warehouses.length < 2;
 
 	return (
 		<>
@@ -24,6 +26,17 @@ function WarehouseEntityInfo({ warehouse }: WarehouseEntityInfoProps) {
 				<h2 className="text-3xl">{warehouse?.name}</h2>
 				<span className="text-muted">(warehouse)</span>
 			</div>
+
+			{isLastWarehouse && (
+				<Alert
+					variant="info"
+					className="mb-8"
+				>
+					This warehouse is the only one left in this organization. Every organization needs to have
+					at least one warehouse. In order to delete this warehouse, you need to delete whole
+					organization.
+				</Alert>
+			)}
 			<EntityInfoTable
 				properties={{
 					name: warehouse.name,
@@ -46,14 +59,21 @@ function WarehouseEntityInfo({ warehouse }: WarehouseEntityInfoProps) {
 						)
 					}
 				>
-					{isCurrentWarehouse ? 'This warehouse is already selected' : 'Switch to this warehouse'}
+					{isCurrentWarehouse ? 'Selected' : 'Switch to this warehouse'}
 				</IconButton>
-				<Link to={`../update/${warehouse.id}`}>
-					<IconButton icon={BsPencil}>Update</IconButton>
-				</Link>
-				<Link to={`../delete/${warehouse.id}`}>
-					<IconButton icon={BsTrash}>Delete</IconButton>
-				</Link>
+				<IconButton
+					icon={BsPencil}
+					onClick={() => navigate(`../update/${warehouse.id}`)}
+				>
+					Update
+				</IconButton>
+				<IconButton
+					disabled={isLastWarehouse}
+					onClick={() => navigate(`../delete/${warehouse.id}`)}
+					icon={BsTrash}
+				>
+					Delete
+				</IconButton>
 			</EntityActionsRow>
 		</>
 	);
