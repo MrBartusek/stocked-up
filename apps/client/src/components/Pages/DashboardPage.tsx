@@ -15,7 +15,7 @@ function DashboardPage() {
 				isLoading={appContext.isLoading}
 				isError={appContext.error}
 			>
-				<div className="flex h-full flex-row">
+				<div className="flex min-h-full flex-row">
 					<Sidebar />
 					<Outlet />
 				</div>
