@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { FieldError } from 'react-hook-form';
 import { UserContext } from '../../context/UserContext';
 import { BsXCircle } from 'react-icons/bs';
@@ -27,6 +27,19 @@ function FormField({
 
 	const disabledByDemo = demoLocked && user.isDemo;
 
+	const errorMessage = useMemo(() => getErrorMessage(), [errors]);
+
+	function getErrorMessage() {
+		if (!errors) return null;
+		if (errors.message) return errors.message;
+
+		if (errors.type == 'required') {
+			return 'This field is required';
+		} else {
+			return 'This field is invalid';
+		}
+	}
+
 	return (
 		<div className={classNames(className, 'relative mb-6')}>
 			<div className="mb-2 ms-1">
@@ -41,7 +54,7 @@ function FormField({
 			{errors && (
 				<span className="ms-1 mt-1 flex items-center gap-1 text-danger">
 					<BsXCircle />
-					{errors.message}
+					{errorMessage}
 				</span>
 			)}
 		</div>
