@@ -14,6 +14,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
+import Alert from '../Helpers/Alert';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
@@ -61,6 +62,8 @@ function EntityDeleteDialog({
 
 	return (
 		<div className="flex flex-col">
+			<Alert className="mb-8">{error}</Alert>
+
 			<h1 className="mb-2 text-3xl">Confirm the action</h1>
 			<p className="text-muted">Do you really want to delete this entity:</p>
 
@@ -90,8 +93,6 @@ function EntityDeleteDialog({
 							placeholder={`Type exact ${identifier} name`}
 						/>
 					</FormField>
-
-					<FormError>{error}</FormError>
 				</Form>
 			)}
 
