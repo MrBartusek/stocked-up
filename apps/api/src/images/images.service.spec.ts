@@ -93,6 +93,15 @@ describe('ImagesService', () => {
 
 			expect(result).toBe(null);
 		});
+
+		it('should keep already uploaded image', async () => {
+			const document = { imageKey: 'test-key' } as DocumentWithImage;
+			const dto: ImageDto = { hasImage: true };
+
+			const result = await service.handleImageDtoAndGetKey(document, dto);
+
+			expect(result).toBe('test-key');
+		});
 	});
 
 	describe('Directly remove image', () => {

@@ -42,10 +42,17 @@ export class ImagesService {
 		if (shouldDeleteImage) {
 			await this.s3Service.deleteObject(document.imageKey);
 		}
+
 		if (shouldUploadImage) {
 			return this.uploadBase64(dto.data);
 		}
 
+		const imageWasDeleted = shouldDeleteImage;
+		if (imageWasDeleted) {
+			return null;
+		} else if (documentHasImage) {
+			return document.imageKey;
+		}
 		return null;
 	}
 
