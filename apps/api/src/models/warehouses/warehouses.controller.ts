@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	Delete,
@@ -81,10 +82,17 @@ export class WarehousesController {
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
 	): Promise<WarehouseDto> {
-		const warehouse = await this.warehousesService.delete(id);
-
+		const warehouse = await this.warehousesService.findById(id);
 		if (!warehouse) throw new NotFoundException();
 
+		const allWarehouses = await this.warehousesService.findByOrg(warehouse.organization);
+		if (allWarehouses.length < 2) {
+			throw new BadRequestException(
+				'Cannot delete warehouse, organizations need to have at least one warehouse.',
+			);
+		}
+
+		await this.warehousesService.delete(id);
 		return Warehouse.toDto(warehouse);
 	}
 }

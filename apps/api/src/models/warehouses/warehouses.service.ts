@@ -62,6 +62,10 @@ export class WarehousesService {
 		return this.warehouseRepository.exist({ _id: id });
 	}
 
+	findByOrg(organization: Types.ObjectId): Promise<WarehouseDocument[]> {
+		return this.warehouseRepository.find({ organization });
+	}
+
 	paginateByOrg(
 		orgId: Types.ObjectId,
 		query: PageQueryDto<WarehouseDto>,
