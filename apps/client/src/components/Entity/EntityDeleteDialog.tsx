@@ -62,7 +62,7 @@ function EntityDeleteDialog({
 
 	return (
 		<div className="flex flex-col">
-			<Alert className="mb-8">{error}</Alert>
+			{error && <Alert className="mb-8">{error}</Alert>}
 
 			<h1 className="mb-2 text-3xl">Confirm the action</h1>
 			<p className="text-muted">Do you really want to delete this entity:</p>
