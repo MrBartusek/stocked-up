@@ -54,6 +54,8 @@ describe('ProductsController', () => {
 		const product = await controller.create({
 			organization: new Types.ObjectId().toString(),
 			name: 'created-product',
+			buyPrice: 0,
+			sellPrice: 0,
 		});
 
 		expect(product).toEqual(
@@ -68,6 +70,8 @@ describe('ProductsController', () => {
 		const product = await controller.update(new Types.ObjectId(), {
 			organization: orgId.toString(),
 			name: 'updated-product',
+			buyPrice: 0,
+			sellPrice: 0,
 			image: { hasImage: false },
 		});
 

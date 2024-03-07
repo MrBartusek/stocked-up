@@ -57,6 +57,8 @@ describe('ProductsService', () => {
 	it('should create product', async () => {
 		const product = await service.create({
 			organization: new Types.ObjectId().toString(),
+			buyPrice: 0,
+			sellPrice: 0,
 			name: 'created-product',
 		});
 
@@ -72,6 +74,8 @@ describe('ProductsService', () => {
 		const product = await service.update(new Types.ObjectId(), {
 			organization: new Types.ObjectId().toString(),
 			name: 'updated-product',
+			buyPrice: 0,
+			sellPrice: 0,
 			image: { hasImage: false },
 		});
 
