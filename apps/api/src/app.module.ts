@@ -23,7 +23,7 @@ import { S3Module } from './s3/s3.module';
 import { SecurityModule } from './security/security.module';
 
 const FrontendModule = ServeStaticModule.forRoot({
-	rootPath: join(__dirname, '../../..', 'client', 'dist'),
+	rootPath: join(__dirname, '../..', 'client', 'dist'),
 });
 
 @Module({
