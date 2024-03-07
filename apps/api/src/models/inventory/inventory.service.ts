@@ -35,8 +35,13 @@ export class InventoryService {
 		return item;
 	}
 
-	async update(id: Types.ObjectId, dto: UpdateInventoryItemDto) {
+	async update(
+		id: Types.ObjectId,
+		dto: UpdateInventoryItemDto,
+	): Promise<InventoryItemDocument | null> {
 		const item = await this.inventoryRepository.findOneAndUpdate(id, { $set: dto });
+
+		if (!item) return null;
 
 		const event = new InventoryUpdatedEvent(item);
 		this.eventEmitter.emit('inventory.updated', event);
@@ -44,11 +49,14 @@ export class InventoryService {
 		return item;
 	}
 
-	async delete(id: Types.ObjectId) {
+	async delete(id: Types.ObjectId): Promise<InventoryItemDocument | null> {
 		const item = await this.inventoryRepository.deleteOneById(id);
+
+		if (!item) return null;
 
 		const event = new InventoryDeletedEvent(item);
 		this.eventEmitter.emit('inventory.deleted', event);
+
 		return item;
 	}
 

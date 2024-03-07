@@ -28,8 +28,9 @@ export class OrganizationsService {
 	async update(
 		id: mongoose.Types.ObjectId,
 		query: UpdateQuery<OrganizationDocument>,
-	): Promise<OrganizationDocument> {
+	): Promise<OrganizationDocument | null> {
 		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: query });
+		if (!org) return;
 
 		const event = new OrganizationUpdatedEvent(org);
 		this.eventEmitter.emit('organization.updated', event);
@@ -37,11 +38,15 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async updateSettings(id: mongoose.Types.ObjectId, settings: FilterQuery<OrgSettingsDocument>) {
+	async updateSettings(
+		id: mongoose.Types.ObjectId,
+		settings: FilterQuery<OrgSettingsDocument | null>,
+	) {
 		const org = await this.organizationRepository.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { settings: settings } },
 		);
+		if (!org) return;
 
 		const event = new OrganizationUpdatedEvent(org);
 		this.eventEmitter.emit('organization.settings.updated', event);
@@ -49,8 +54,10 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
+	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument | null> {
 		const org = await this.organizationRepository.deleteOneById(id);
+
+		if (!org) return;
 
 		const event = new OrganizationDeleteEvent(org);
 		this.eventEmitter.emit('organization.deleted', event);

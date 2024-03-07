@@ -77,8 +77,10 @@ export class UsersService {
 		});
 	}
 
-	async delete(id: Types.ObjectId): Promise<UserDocument> {
+	async delete(id: Types.ObjectId): Promise<UserDocument | null> {
 		const user = await this.userRepository.deleteOneById(id);
+		if (!user) return null;
+
 		await this.imagesService.deleteImage(user.profile);
 
 		const event = new UserDeletedEvent(user);
