@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ICreateSecurityRuleDto, OrganizationDto } from 'shared-types';
 import useUserRole from '../../hooks/useUserRole';
-import { SecurityUtils } from '../../utils/secuirtyUtils';
+import { SecurityUtils } from '../../utils/securityUtils';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';

@@ -4,7 +4,7 @@ import { useQueryClient } from 'react-query';
 import { IUpdateSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
 import useUserRole from '../hooks/useUserRole';
 import RealtimeSelect, { RealtimeSelectProps } from './RealtimeSelect';
-import { SecurityUtils } from '../utils/secuirtyUtils';
+import { SecurityUtils } from '../utils/securityUtils';
 
 export interface RealtimeOrgSettingSelectProps extends Omit<RealtimeSelectProps, 'options'> {
 	organization: OrganizationDto;
