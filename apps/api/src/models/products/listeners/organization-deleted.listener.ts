@@ -7,7 +7,7 @@ import { ProductsService } from '../products.service';
 export class OrganizationDeletedListener {
 	constructor(private readonly productsService: ProductsService) {}
 
-	@OnEvent('organization.deleted', { async: true })
+	@OnEvent('organization.deleted', { async: true, suppressErrors: false })
 	async handleProductDelete(event: OrganizationDeleteEvent) {
 		await this.productsService.deleteManyByOrg(event.id);
 	}

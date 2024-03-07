@@ -7,7 +7,7 @@ import { WarehouseStatsService } from '../warehouse-stats.service';
 export class OrganizationSettingsUpdatedListener {
 	constructor(private readonly warehouseStatsService: WarehouseStatsService) {}
 
-	@OnEvent('organization.settings.updated', { async: true })
+	@OnEvent('organization.settings.updated', { async: true, suppressErrors: false })
 	async handleOrganizationUpdated(event: OrganizationUpdatedEvent) {
 		const organization = event.payload;
 		const warehouseList = organization.warehouses;

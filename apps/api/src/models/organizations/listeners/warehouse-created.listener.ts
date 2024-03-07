@@ -10,7 +10,7 @@ import {
 export class WarehouseCreatedListener {
 	constructor(private readonly refService: OrganizationsWarehouseRefService) {}
 
-	@OnEvent('warehouse.created', { async: true })
+	@OnEvent('warehouse.created', { async: true, suppressErrors: false })
 	async handleWarehouseCreate(event: WarehouseCreatedEvent) {
 		const org = event.payload.organization._id;
 		const data: WarehouseReferenceData = { id: event.id, name: event.payload.name };

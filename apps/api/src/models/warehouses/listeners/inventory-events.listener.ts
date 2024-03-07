@@ -11,7 +11,7 @@ type InventoryEvent = InventoryCreatedEvent | InventoryUpdatedEvent | InventoryD
 export class InventoryEventListener {
 	constructor(private readonly warehouseStatsService: WarehouseStatsService) {}
 
-	@OnEvent('inventory.*', { async: true })
+	@OnEvent('inventory.*', { async: true, suppressErrors: false })
 	async handleInventoryEvent(event: InventoryEvent) {
 		const warehouse = event.payload.warehouse;
 		await this.warehouseStatsService.recalculateTotalValue(warehouse);

@@ -11,7 +11,7 @@ export class WarehouseDeletedListener {
 		private readonly organizationsStatsService: OrganizationsStatsService,
 	) {}
 
-	@OnEvent('warehouse.deleted', { async: true })
+	@OnEvent('warehouse.deleted', { async: true, suppressErrors: false })
 	async handleWarehouseDelete(event: WarehouseDeletedEvent) {
 		const org = event.payload.organization;
 		await this.refService.deleteRef(org, event.id);

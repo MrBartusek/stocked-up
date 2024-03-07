@@ -11,7 +11,7 @@ export class ProductUpdatedListener {
 		private readonly organizationsService: OrganizationsService,
 	) {}
 
-	@OnEvent('product.updated', { async: true })
+	@OnEvent('product.updated', { async: true, suppressErrors: false })
 	async handleProductUpdated(event: ProductUpdatedEvent) {
 		/**
 		 * Product price may have been changed so, recalculate all warehouses

@@ -8,8 +8,8 @@ import { OrganizationsStatsService } from '../organizations-stats.service';
 export class ProductEventsListener {
 	constructor(private readonly organizationsStatsService: OrganizationsStatsService) {}
 
-	@OnEvent('product.created', { async: true })
-	@OnEvent('product.deleted', { async: true })
+	@OnEvent('product.created', { async: true, suppressErrors: false })
+	@OnEvent('product.deleted', { async: true, suppressErrors: false })
 	async handleProductEvent(event: ProductUpdatedEvent | ProductDeletedEvent) {
 		const orgId = event.payload.organization;
 		await this.organizationsStatsService.updateProductsCount(orgId);

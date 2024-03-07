@@ -14,7 +14,7 @@ export class UserDeletedListener {
 
 	private readonly logger = new Logger('OrganizationsModule.' + UserDeletedListener.name);
 
-	@OnEvent('user.deleted', { async: true })
+	@OnEvent('user.deleted', { async: true, suppressErrors: false })
 	async handleUserDelete(event: UserDeletedEvent) {
 		const userId = event.id;
 		const userOrgList = await this.organizationsService.listAllForUser(userId);
