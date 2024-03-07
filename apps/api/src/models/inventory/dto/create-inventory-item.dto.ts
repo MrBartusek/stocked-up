@@ -1,4 +1,4 @@
-import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
+import { IsMongoId, IsNumber, IsOptional, Min } from 'class-validator';
 import { ICreateInventoryItemDto } from 'shared-types';
 import { HasOrganizationAccess } from '../../../security/decorators/has-organization-access.decorator';
 import { HasProductAccess } from '../../../security/decorators/has-product-access.decorator';
@@ -18,6 +18,6 @@ export class CreateInventoryItemDto implements ICreateInventoryItemDto {
 	productId: string;
 
 	@IsNumber()
-	@IsOptional()
-	quantity?: number;
+	@Min(0)
+	quantity: number;
 }

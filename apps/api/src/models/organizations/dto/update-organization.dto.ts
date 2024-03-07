@@ -1,10 +1,12 @@
-import { Length } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 import { IUpdateOrganizationDto } from 'shared-types';
 
 export class UpdateOrganizationDto implements IUpdateOrganizationDto {
-	@Length(2, 32)
+	@IsString()
+	@Length(4, 64)
 	name: string;
 
+	@IsString()
 	@Length(1, 16)
 	currency: string;
 }

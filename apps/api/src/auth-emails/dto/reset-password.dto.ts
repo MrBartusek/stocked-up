@@ -8,6 +8,7 @@ export class ResetPasswordDto implements IResetPasswordDto {
 	@IsString()
 	token: string;
 
+	@IsString()
 	@Length(4, 32)
-	public password: string;
+	password: string;
 }
