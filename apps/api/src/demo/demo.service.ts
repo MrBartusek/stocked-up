@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Types } from 'mongoose';
 import * as crypto from 'node:crypto';
+import { setTimeout } from 'node:timers/promises';
 import { OrganizationSecurityRole } from 'shared-types';
 import Utils from '../helpers/utils';
 import { InventoryService } from '../models/inventory/inventory.service';
@@ -14,7 +15,6 @@ import { UserDocument } from '../models/users/schemas/user.schema';
 import { UsersService } from '../models/users/users.service';
 import { WarehousesService } from '../models/warehouses/warehouses.service';
 import DEMO_CONFIG from './demo.config';
-import { setTimeout } from 'node:timers/promises';
 
 @Injectable()
 export class DemoService {

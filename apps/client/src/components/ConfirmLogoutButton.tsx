@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import ConfirmLogoutModal from './ConfirmLogoutModal';
 import { createPortal } from 'react-dom';
+import ConfirmLogoutModal from './ConfirmLogoutModal';
 
 type ButtonProps = React.DetailedHTMLProps<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,

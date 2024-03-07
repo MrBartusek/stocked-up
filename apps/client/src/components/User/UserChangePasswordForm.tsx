@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IChangePasswordDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	oldPassword: string;

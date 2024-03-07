@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IImageDto, IUpdateProductDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormCurrencyInput from '../Form/FormCurrencyInput';
@@ -15,7 +16,6 @@ import FormImageInput from '../Form/FormImageInput';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;

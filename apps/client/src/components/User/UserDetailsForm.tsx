@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IImageDto, IUpdateUserDto, UserDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
@@ -13,7 +14,6 @@ import FormImageInput from '../Form/FormImageInput';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	username: string;

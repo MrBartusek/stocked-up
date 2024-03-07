@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import React from 'react';
 import Card, { CardProps } from './Card';
-import classNames from 'classnames';
 
 export interface CardWithTitleProps extends CardProps {
 	title: string;

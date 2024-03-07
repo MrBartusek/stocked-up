@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthEmailsController } from './auth-emails.controller';
-import { AuthEmailsService } from './auth-emails.service';
-import { mockUserRequest } from '../mocks/mock-user-request';
 import { Types } from 'mongoose';
 import { IResetPasswordDto } from 'shared-types';
+import { mockUserRequest } from '../mocks/mock-user-request';
+import { AuthEmailsController } from './auth-emails.controller';
+import { AuthEmailsService } from './auth-emails.service';
 
 describe('AuthEmailsController', () => {
 	let controller: AuthEmailsController;

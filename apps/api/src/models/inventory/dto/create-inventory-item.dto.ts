@@ -1,4 +1,4 @@
-import { IsMongoId, IsNumber, IsOptional, Min } from 'class-validator';
+import { IsMongoId, IsNumber, Min } from 'class-validator';
 import { ICreateInventoryItemDto } from 'shared-types';
 import { HasOrganizationAccess } from '../../../security/decorators/has-organization-access.decorator';
 import { HasProductAccess } from '../../../security/decorators/has-product-access.decorator';

@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ICreateProductDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormCurrencyInput from '../Form/FormCurrencyInput';
@@ -13,7 +14,6 @@ import FormField from '../Form/FormField';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	name: string;

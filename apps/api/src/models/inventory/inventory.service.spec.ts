@@ -1,9 +1,9 @@
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { InventoryRepository } from './inventory.repository';
 import { InventoryService } from './inventory.service';
 import { MockInventoryRepository } from './mocks/mock-inventory-repository';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('InventoryService', () => {
 	let service: InventoryService;

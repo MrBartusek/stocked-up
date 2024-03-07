@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { IDeleteAccountDto } from 'shared-types';
 import { UserContext } from '../../context/UserContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Button from '../Button';
 import Form from '../Form/Form';
@@ -12,7 +13,6 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	password: string;

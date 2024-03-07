@@ -6,13 +6,13 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IUpdateWarehouseDto, ProductDto, WarehouseDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 export interface WarehouseUpdateFormProps {
 	warehouse: WarehouseDto;

@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { OrganizationsStatsService } from './organizations-stats.service';
 import { getQueueToken } from '@nestjs/bull';
+import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { OrganizationsStatsService } from './organizations-stats.service';
 
 describe('OrganizationsStatsService', () => {
 	let service: OrganizationsStatsService;

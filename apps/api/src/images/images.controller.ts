@@ -1,9 +1,9 @@
-import { Controller, Get, Header, NotFoundException, Param, Redirect, Res } from '@nestjs/common';
+import { Controller, Get, Header, NotFoundException, Param, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { ImagesService } from './images.service';
 import { createReadStream } from 'node:fs';
 import { join } from 'node:path';
+import { ImagesService } from './images.service';
 
 const ONE_DAY = 24 * 60 * 60;
 const CACHE_TIME = 30 * ONE_DAY;

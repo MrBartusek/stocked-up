@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IUpdateInventoryItemDto, InventoryItemDto, ProductDto } from 'shared-types';
 import { CurrentAppContext } from '../../context/CurrentAppContext';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormError from '../Form/FormError';
@@ -13,7 +14,6 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormRelativeInput from '../Form/FormRelativeInput/FormRelativeInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;

@@ -1,7 +1,7 @@
+import classNames from 'classnames';
 import { useContext } from 'react';
 import Button, { ButtonProps } from '../Button';
 import { FormContext } from './Form';
-import classNames from 'classnames';
 
 export interface FormSubmitButtonProps extends ButtonProps {
 	disableTopMargin?: boolean;

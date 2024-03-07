@@ -1,11 +1,11 @@
 import { Body, Controller, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { AuthEmailsService } from './auth-emails.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth-emails')
 @ApiTags('auth-emails')

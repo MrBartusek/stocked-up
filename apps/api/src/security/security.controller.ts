@@ -13,6 +13,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
@@ -28,7 +29,6 @@ import { SecurityUtils } from './helpers/security.utils';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
-import { ApiTags } from '@nestjs/swagger';
 
 @Controller('security')
 @ApiTags('security')

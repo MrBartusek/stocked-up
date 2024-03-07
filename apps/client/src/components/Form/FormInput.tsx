@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { FormContext } from './Form';
 import { REGULAR_INPUT_CLASSNAMES } from './regularInputClassnames';
-import { UserContext } from '../../context/UserContext';
 
 type InputProps = React.DetailedHTMLProps<
 	React.InputHTMLAttributes<HTMLInputElement>,

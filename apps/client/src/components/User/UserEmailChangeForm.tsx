@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IUpdateEmailDto } from 'shared-types';
+import FieldTransformers from '../../utils/fieldTransformers';
 import { Utils } from '../../utils/utils';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
-import { useQueryClient } from 'react-query';
-import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	password: string;

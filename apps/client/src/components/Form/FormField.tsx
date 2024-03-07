@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useContext, useMemo } from 'react';
 import { FieldError } from 'react-hook-form';
-import { UserContext } from '../../context/UserContext';
 import { BsXCircle } from 'react-icons/bs';
+import { UserContext } from '../../context/UserContext';
 
 export interface FormFieldProps {
 	label?: string;
