@@ -14,6 +14,7 @@ const port = process.env.REDIS_PORT as unknown as number;
 const logger = new Logger('Redis');
 
 const client = new Redis({
+	keyPrefix: 'stocked-up:',
 	password: password,
 	port: port,
 	host: host,
