@@ -10,11 +10,10 @@ import { Utils } from '../../utils/utils';
 import Button from '../Button';
 import EntityCard from '../EntityCard';
 import Form from '../Form/Form';
-import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
-import IconButton from '../IconButton';
 import Alert from '../Helpers/Alert';
+import IconButton from '../IconButton';
 
 export interface EntityDeleteDialogProps {
 	entityName: string;
