@@ -11,13 +11,15 @@ import { AppModule } from './app.module';
 import Utils from './helpers/utils';
 import redisClient from './redis/connect';
 
+const { PORT } = process.env;
+
 async function bootstrapNestApp() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
 	configureNestApp(app);
 	setupSwagger(app);
 
-	await app.listen(3000);
+	await app.listen(PORT || 3000);
 }
 
 export function configureNestApp(app: INestApplication): void {
