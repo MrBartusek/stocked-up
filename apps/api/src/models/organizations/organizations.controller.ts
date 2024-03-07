@@ -133,7 +133,7 @@ export class OrganizationsController {
 	 * Waits for warehouse to be added as organization ref.
 	 * This function will timeout after 10 seconds.
 	 */
-	async awaitWarehouseSetup(warehouse: WarehouseDocument) {
+	private async awaitWarehouseSetup(warehouse: WarehouseDocument) {
 		const MAX_WAIT_TIME = 10_000;
 		let totalWaitTime = 0;
 
