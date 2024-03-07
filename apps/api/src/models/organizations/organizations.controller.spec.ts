@@ -4,7 +4,6 @@ import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
 import { mockUserRequest } from '../../mocks/mock-user-request';
 import { HasOrganizationAccessPipe } from '../../security/pipes/has-organization-access.pipe';
 import { HasOwnerAccessPipe } from '../../security/pipes/has-owner-access.pipe';
-import { CreateWarehouseDto } from '../warehouses/dto/create-warehouse.dto';
 import { WarehousesService } from '../warehouses/warehouses.service';
 import { PatchOrganizationSettingsDto } from './dto/path-organization-settings.dto';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
@@ -19,13 +18,7 @@ describe('OrganizationsController', () => {
 	const mockOrgRepo = new MockOrganizationsRepository();
 
 	const mockWarehousesService = {
-		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) => {
-			return {
-				_id: new Types.ObjectId(),
-				organization,
-				...dto,
-			};
-		}),
+		create: jest.fn(),
 	};
 
 	const mockOrganizationsService = {
@@ -79,6 +72,15 @@ describe('OrganizationsController', () => {
 	});
 
 	it('should create organization', async () => {
+		const warehouseId = new Types.ObjectId();
+		mockWarehousesService.create.mockResolvedValue({
+			name: 'test-warehouse',
+			_id: warehouseId,
+		});
+		mockOrganizationsService.findById.mockResolvedValue({
+			warehouses: [{ name: 'test-warehouse', id: warehouseId }],
+		});
+
 		const org = await controller.create(
 			{
 				name: 'test-name',
@@ -90,11 +92,7 @@ describe('OrganizationsController', () => {
 			mockUserRequest,
 		);
 
-		expect(org).toEqual(
-			expect.objectContaining({
-				name: 'test-name',
-			}),
-		);
+		expect(org.warehouses[0].id).toEqual(warehouseId);
 		expect(addAclRuleSpy).toHaveBeenCalled();
 	});
 
@@ -131,6 +129,10 @@ describe('OrganizationsController', () => {
 		);
 	});
 	it('should find organization', async () => {
+		mockOrganizationsService.findById.mockResolvedValue({
+			name: 'test-name',
+		});
+
 		const org = await controller.findById(new Types.ObjectId());
 
 		expect(org).toEqual(
