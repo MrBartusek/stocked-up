@@ -11,6 +11,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FromHeading from '../Form/FromHeading';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	name: string;
@@ -61,7 +62,7 @@ function OrganizationCreateForm() {
 				<FormInput
 					placeholder="My company"
 					required
-					{...register('name', { required: true })}
+					{...register('name', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -79,14 +80,14 @@ function OrganizationCreateForm() {
 				<FormInput
 					placeholder="US West Main"
 					required
-					{...register('warehouseName', { required: true })}
+					{...register('warehouseName', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
 			<FormField label="Warehouse address">
 				<FormInput
 					placeholder="18 Milton Street"
-					{...register('warehouseAddress')}
+					{...register('warehouseAddress', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

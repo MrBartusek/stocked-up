@@ -11,6 +11,7 @@ import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
 import { useQueryClient } from 'react-query';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	password: string;
@@ -61,7 +62,7 @@ function UserEmailChangeForm() {
 			>
 				<FormInput
 					type="password"
-					{...register('password', { required: true })}
+					{...register('password', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -72,7 +73,7 @@ function UserEmailChangeForm() {
 			>
 				<FormInput
 					type="email"
-					{...register('email', { required: true })}
+					{...register('email', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

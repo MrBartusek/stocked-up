@@ -15,6 +15,7 @@ import FormImageInput from '../Form/FormImageInput';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 export interface ProductCreateFormProps {
 	product: ProductDto;
@@ -91,7 +92,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				<FromInput
 					placeholder="Engine oil filter"
 					required
-					{...register('name', { required: true })}
+					{...register('name', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -99,7 +100,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 				label="Product description"
 				errors={errors.description}
 			>
-				<FormTextArea {...register('description')} />
+				<FormTextArea {...register('description', { setValueAs: FieldTransformers.string })} />
 			</FormField>
 
 			<FormField label="Product image">
@@ -116,7 +117,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 			>
 				<FromInput
 					placeholder="ICWP-PL-WSSV"
-					{...register('sku')}
+					{...register('sku', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -127,7 +128,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 			>
 				<FormCurrencyInput
 					placeholder="8.00"
-					{...register('buyPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+					{...register('buyPrice', { setValueAs: FieldTransformers.number })}
 				/>
 			</FormField>
 
@@ -138,7 +139,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 			>
 				<FormCurrencyInput
 					placeholder="12.00"
-					{...register('sellPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+					{...register('sellPrice', { setValueAs: FieldTransformers.number })}
 				/>
 			</FormField>
 
@@ -148,7 +149,7 @@ function ProductUpdateForm({ product }: ProductCreateFormProps) {
 			>
 				<FromInput
 					placeholder="part / box / barrel"
-					{...register('unit')}
+					{...register('unit', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

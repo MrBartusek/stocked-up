@@ -10,6 +10,7 @@ import { Utils } from '../utils/utils';
 import Button from './Button';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
+import FieldTransformers from '../utils/fieldTransformers';
 
 type Inputs = {
 	email: string;
@@ -53,7 +54,7 @@ function RegisterForm() {
 				label="E-Mail"
 				placeholder="Type your e-mail address"
 				type="email"
-				{...register('email', { required: true })}
+				{...register('email', { required: true, setValueAs: FieldTransformers.string })}
 				icon={BsEnvelopeAt}
 				disabled={loading}
 				autoFocus
@@ -61,19 +62,15 @@ function RegisterForm() {
 			<FancyInput
 				label="Username"
 				placeholder="Select new username"
-				minLength={4}
-				maxLength={16}
-				{...register('username', { required: true })}
+				{...register('username', { required: true, setValueAs: FieldTransformers.string })}
 				icon={BsPerson}
 				disabled={loading}
 			/>
 			<FancyInput
 				label="Password"
 				type="password"
-				minLength={4}
-				maxLength={32}
 				placeholder="Type your password"
-				{...register('password', { required: true })}
+				{...register('password', { required: true, setValueAs: FieldTransformers.string })}
 				icon={BsShieldLock}
 				disabled={loading}
 			/>

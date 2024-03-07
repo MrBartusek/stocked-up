@@ -12,6 +12,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	password: string;
@@ -58,7 +59,7 @@ function UserDeleteForm() {
 				<FormInput
 					type="password"
 					required
-					{...register('password', { required: true })}
+					{...register('password', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

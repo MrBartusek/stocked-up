@@ -13,6 +13,7 @@ import FormImageInput from '../Form/FormImageInput';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	username: string;
@@ -82,7 +83,7 @@ function UserDetailsForm() {
 			>
 				<FormInput
 					demoLocked
-					{...register('username', { required: true })}
+					{...register('username', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

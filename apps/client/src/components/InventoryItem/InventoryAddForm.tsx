@@ -12,6 +12,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormProductSelect from '../Form/FormProductSelector';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	quantity: number;
@@ -79,7 +80,7 @@ function InventoryAddForm() {
 				<FormInput
 					placeholder="0"
 					type="number"
-					{...register('quantity', { setValueAs: (v) => (v == null ? 0 : +v) })}
+					{...register('quantity', { setValueAs: FieldTransformers.number })}
 				/>
 			</FormField>
 

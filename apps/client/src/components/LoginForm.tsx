@@ -9,6 +9,7 @@ import { Utils } from '../utils/utils';
 import Button from './Button';
 import TextInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
+import FieldTransformers from '../utils/fieldTransformers';
 
 type Inputs = {
 	username: string;
@@ -49,7 +50,7 @@ function LoginForm() {
 			<TextInput
 				label="Username"
 				placeholder="Type your username"
-				{...register('username', { required: true })}
+				{...register('username', { required: true, setValueAs: FieldTransformers.string })}
 				disabled={loading}
 				icon={BsPerson}
 				autoComplete="on"
@@ -59,7 +60,7 @@ function LoginForm() {
 				label="Password"
 				type="password"
 				placeholder="Type your password"
-				{...register('password', { required: true })}
+				{...register('password', { required: true, setValueAs: FieldTransformers.string })}
 				disabled={loading}
 				icon={BsShieldLock}
 				autoComplete="on"

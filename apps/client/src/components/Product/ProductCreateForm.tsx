@@ -13,6 +13,7 @@ import FormField from '../Form/FormField';
 import FromInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import FormTextArea from '../Form/FormTextArea';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	name: string;
@@ -72,7 +73,7 @@ function ProductCreateForm() {
 				<FromInput
 					placeholder="Engine oil filter"
 					required
-					{...register('name', { required: true })}
+					{...register('name', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -80,7 +81,7 @@ function ProductCreateForm() {
 				label="Product description"
 				errors={errors.description}
 			>
-				<FormTextArea {...register('description')} />
+				<FormTextArea {...register('description', { setValueAs: FieldTransformers.string })} />
 			</FormField>
 
 			<FormField
@@ -90,7 +91,7 @@ function ProductCreateForm() {
 			>
 				<FromInput
 					placeholder="ICWP-PL-WSSV"
-					{...register('sku')}
+					{...register('sku', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -101,7 +102,7 @@ function ProductCreateForm() {
 			>
 				<FormCurrencyInput
 					placeholder="8.00"
-					{...register('buyPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+					{...register('buyPrice', { setValueAs: FieldTransformers.number })}
 				/>
 			</FormField>
 
@@ -112,7 +113,7 @@ function ProductCreateForm() {
 			>
 				<FormCurrencyInput
 					placeholder="12.00"
-					{...register('sellPrice', { setValueAs: (v) => (v == null ? 0 : +v) })}
+					{...register('sellPrice', { setValueAs: FieldTransformers.number })}
 				/>
 			</FormField>
 
@@ -122,7 +123,7 @@ function ProductCreateForm() {
 			>
 				<FromInput
 					placeholder="part / box / barrel"
-					{...register('unit')}
+					{...register('unit', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

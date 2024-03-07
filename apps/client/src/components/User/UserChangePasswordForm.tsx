@@ -10,6 +10,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
 import Alert from '../Helpers/Alert';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	oldPassword: string;
@@ -60,7 +61,7 @@ function UserChangePasswordForm() {
 			>
 				<FormInput
 					type="password"
-					{...register('oldPassword', { required: true })}
+					{...register('oldPassword', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -71,7 +72,7 @@ function UserChangePasswordForm() {
 			>
 				<FormInput
 					type="password"
-					{...register('newPassword', { required: true })}
+					{...register('newPassword', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
@@ -89,6 +90,7 @@ function UserChangePasswordForm() {
 								return 'Your passwords confirmation does not match';
 							}
 						},
+						setValueAs: FieldTransformers.string,
 					})}
 				/>
 			</FormField>

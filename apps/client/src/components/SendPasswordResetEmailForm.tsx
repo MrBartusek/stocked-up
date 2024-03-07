@@ -8,6 +8,7 @@ import { Utils } from '../utils/utils';
 import Button from './Button';
 import FancyInput from './Form/FancyInput';
 import Alert from './Helpers/Alert';
+import FieldTransformers from '../utils/fieldTransformers';
 
 type Inputs = {
 	email: string;
@@ -50,7 +51,7 @@ function SendPasswordResetEmailForm() {
 						label="E-Mail"
 						placeholder="Type your e-mail address"
 						type="email"
-						{...register('email', { required: true })}
+						{...register('email', { required: true, setValueAs: FieldTransformers.string })}
 						icon={BsEnvelopeAt}
 						disabled={loading}
 						autoFocus

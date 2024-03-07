@@ -13,6 +13,7 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormRelativeInput from '../Form/FormRelativeInput/FormRelativeInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 export interface InventoryItemUpdateFormProps {
 	inventoryItem: InventoryItemDto;
@@ -80,7 +81,7 @@ function InventoryItemUpdateForm({ inventoryItem }: InventoryItemUpdateFormProps
 			>
 				<FormInput
 					placeholder="shelf / aisle / bin number"
-					{...register('location')}
+					{...register('location', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 

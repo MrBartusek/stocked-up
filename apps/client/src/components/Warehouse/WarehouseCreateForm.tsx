@@ -12,6 +12,7 @@ import FormError from '../Form/FormError';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import FormSubmitButton from '../Form/FormSubmitButton';
+import FieldTransformers from '../../utils/fieldTransformers';
 
 type Inputs = {
 	name: string;
@@ -59,14 +60,14 @@ function WarehouseCreateForm() {
 				<FormInput
 					placeholder="US West Main"
 					required
-					{...register('name', { required: true })}
+					{...register('name', { required: true, setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
 			<FormField label="Address">
 				<FormInput
 					placeholder="18 Milton Street"
-					{...register('address')}
+					{...register('address', { setValueAs: FieldTransformers.string })}
 				/>
 			</FormField>
 
