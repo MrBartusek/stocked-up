@@ -24,6 +24,7 @@ export interface EntityDeleteDialogProps {
 	confirmBeforeDelete?: boolean;
 	image?: IImageDto;
 	navigateTo?: To;
+	onDelete?: () => Promise<void> | void;
 }
 
 function EntityDeleteDialog({
@@ -35,6 +36,7 @@ function EntityDeleteDialog({
 	confirmBeforeDelete = false,
 	navigateTo = '..',
 	image,
+	onDelete,
 }: EntityDeleteDialogProps) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -50,7 +52,11 @@ function EntityDeleteDialog({
 
 		axios
 			.delete(`/api/${resourceName}/${entityId}`)
-			.then(() => {
+			.then(async () => {
+				if (onDelete) {
+					await onDelete();
+				}
+
 				navigate(navigateTo);
 				toast.success(`Successfully deleted ${identifier}`);
 				queryClient.invalidateQueries([resourceName]);
