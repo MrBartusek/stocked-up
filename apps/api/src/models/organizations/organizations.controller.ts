@@ -147,7 +147,7 @@ export class OrganizationsController {
 			await setTimeout(500);
 		}
 
-		if (MAX_WAIT_TIME > totalWaitTime) {
+		if (MAX_WAIT_TIME <= totalWaitTime) {
 			throw new Error(`Awaiting warehouse setup timeout, after ${MAX_WAIT_TIME / 1000}s`);
 		}
 	}
