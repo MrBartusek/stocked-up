@@ -22,7 +22,7 @@ async function bootstrapNestApp() {
 	await app.listen(PORT || 3000);
 }
 
-export function configureNestApp(app: INestApplication): void {
+export function configureNestApp(app: NestExpressApplication): void {
 	// Allow for base64 attachments
 	app.use(json({ limit: '50mb' }));
 
@@ -41,7 +41,7 @@ export function configureNestApp(app: INestApplication): void {
 	app.use(passport.session());
 }
 
-async function setupSwagger(app: INestApplication) {
+async function setupSwagger(app: NestExpressApplication) {
 	const config = new DocumentBuilder()
 		.setTitle('StockedUp API')
 		.setDescription('StockedUp API documentation')
@@ -51,11 +51,19 @@ async function setupSwagger(app: INestApplication) {
 	SwaggerModule.setup('api', app, document);
 }
 
-async function setupSession(app: INestApplication) {
+async function setupSession(app: NestExpressApplication) {
 	const redisStore = new RedisStore({
 		client: redisClient,
 		prefix: 'session:',
 	});
+
+	const isProduction = Utils.isProduction();
+
+	if (isProduction) {
+		// Allow for setting secure cookies via reverse proxy
+		// Recommended deployment way is NGINX reverse proxy
+		app.set('trust proxy', 1);
+	}
 
 	app.use(
 		session({
