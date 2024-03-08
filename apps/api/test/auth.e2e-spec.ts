@@ -6,7 +6,7 @@ import { configureNestTestApp } from './configure-test-app';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 describe('AuthController (e2e)', () => {
-	let app: INestApplication;
+	let app: NestExpressApplication;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
