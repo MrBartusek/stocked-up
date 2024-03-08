@@ -1,5 +1,5 @@
 import { Controller, Post } from '@nestjs/common';
-import { ApiExcludeController, ApiHideProperty, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { PrivateUserDto } from 'shared-types';
 import { User } from '../models/users/schemas/user.schema';
 import { DemoService } from './demo.service';
