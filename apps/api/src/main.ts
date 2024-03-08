@@ -65,10 +65,12 @@ async function setupSession(app: NestExpressApplication) {
 		app.set('trust proxy', 1);
 	}
 
+	const sessionSecret = Utils.isTest() ? 'keyboard cat' : process.env.SESSION_SECRET;
+
 	app.use(
 		session({
 			store: redisStore,
-			secret: Utils.isTest() ? 'keyboard cat' : process.env.SESSION_SECRET,
+			secret: sessionSecret,
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
