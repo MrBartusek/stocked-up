@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { configureNestApp } from '../src/main';
 
-export function configureNestTestApp(app: INestApplication) {
+export function configureNestTestApp(app: NestExpressApplication) {
 	configureNestApp(app);
 }
