@@ -16,7 +16,8 @@ export class ImagesController {
 	@Get('default')
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
 	getDefault(@Res() res: Response) {
-		const file = createReadStream(join(process.cwd(), '/src/assets/default.png'));
+		const assetsFolder = join(__dirname, '../..', 'src/assets');
+		const file = createReadStream(join(assetsFolder, 'default.png'));
 		file.pipe(res);
 	}
 
