@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { configureNestTestApp } from './configure-test-app';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 describe('AuthController (e2e)', () => {
 	let app: INestApplication;
@@ -12,7 +13,7 @@ describe('AuthController (e2e)', () => {
 			imports: [AppModule],
 		}).compile();
 
-		app = moduleFixture.createNestApplication();
+		app = moduleFixture.createNestApplication<NestExpressApplication>();
 		configureNestTestApp(app);
 		await app.init();
 	});
