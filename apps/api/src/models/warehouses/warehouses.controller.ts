@@ -10,7 +10,7 @@ import {
 	Put,
 	Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, WarehouseDto } from 'shared-types';
 import { PageQueryDto } from '../../dto/page-query.dto';
@@ -30,6 +30,7 @@ export class WarehousesController {
 	constructor(private readonly warehousesService: WarehousesService) {}
 
 	@Post()
+	@ApiOperation({ summary: 'Create new warehouse in organization' })
 	async create(@Body(SecurityValidationPipe) dto: CreateWarehouseInOrgDto): Promise<WarehouseDto> {
 		const orgId = new Types.ObjectId(dto.organizationId);
 		const warehouse = await this.warehousesService.create(orgId, dto.warehouse);
@@ -37,6 +38,7 @@ export class WarehousesController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'Get warehouse by id' })
 	async findOne(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
 	): Promise<WarehouseDto> {
@@ -48,6 +50,7 @@ export class WarehousesController {
 	}
 
 	@Get('list/:id')
+	@ApiOperation({ summary: 'List warehouses in organization' })
 	async list(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) orgId: Types.ObjectId,
 		@Query(
@@ -67,6 +70,7 @@ export class WarehousesController {
 	}
 
 	@Put(':id')
+	@ApiOperation({ summary: 'Update warehouses by id' })
 	async update(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
 		@Body(SecurityValidationPipe) dto: UpdateWarehouseDto,
@@ -79,6 +83,7 @@ export class WarehousesController {
 	}
 
 	@Delete(':id')
+	@ApiOperation({ summary: 'Delete warehouses by id' })
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) id: Types.ObjectId,
 	): Promise<WarehouseDto> {

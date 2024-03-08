@@ -13,7 +13,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
@@ -40,6 +40,7 @@ export class SecurityController {
 
 	@Post()
 	@UseGuards(ConfirmedGuard)
+	@ApiOperation({ summary: 'Create new security rule' })
 	async create(@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto): Promise<any> {
 		const org = new Types.ObjectId(dto.organization);
 
@@ -57,6 +58,7 @@ export class SecurityController {
 	}
 
 	@Put()
+	@ApiOperation({ summary: 'Update a security rule by id' })
 	async update(
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: UpdateSecurityRuleDto,
@@ -74,6 +76,7 @@ export class SecurityController {
 	}
 
 	@Delete()
+	@ApiOperation({ summary: 'Delete a security rule by id' })
 	async delete(
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: DeleteSecurityRuleDto,
@@ -91,6 +94,7 @@ export class SecurityController {
 	}
 
 	@Delete(':org/leave')
+	@ApiOperation({ summary: 'Leave organization by id' })
 	async leave(
 		@Req() request: Request,
 		@Param('org', ParseObjectIdPipe, HasOrganizationAccessPipe) org: Types.ObjectId,
@@ -111,6 +115,7 @@ export class SecurityController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'List organization security rules' })
 	async listRules(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) organization: Types.ObjectId,
 		@Query(
@@ -125,6 +130,7 @@ export class SecurityController {
 	}
 
 	@Get(':org/me')
+	@ApiOperation({ summary: 'Get security rule of authenticated user' })
 	async getMeRule(
 		@Req() request: Request,
 		@Param('org', ParseObjectIdPipe, HasOrganizationAccessPipe) organization: Types.ObjectId,

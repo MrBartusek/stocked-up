@@ -12,7 +12,7 @@ import {
 	Query,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
@@ -35,7 +35,7 @@ export class InventoryController {
 	constructor(private readonly inventoryService: InventoryService) {}
 
 	@Post()
-	@HttpCode(201)
+	@ApiOperation({ summary: 'Create new inventory item' })
 	async create(@Body(SecurityValidationPipe) dto: CreateInventoryItemDto) {
 		const warehouseId = new Types.ObjectId(dto.warehouseId);
 		const productId = new Types.ObjectId(dto.productId);
@@ -52,6 +52,7 @@ export class InventoryController {
 
 	@Put(':id')
 	@HttpCode(200)
+	@ApiOperation({ summary: 'Update inventory item by id' })
 	async update(
 		@Param('id', ParseObjectIdPipe) id: Types.ObjectId,
 		@Body(SecurityValidationPipe) dto: UpdateInventoryItemDto,
@@ -61,11 +62,13 @@ export class InventoryController {
 
 	@Delete(':id')
 	@HttpCode(200)
+	@ApiOperation({ summary: 'Delete inventory item by id' })
 	async delete(@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId) {
 		await this.inventoryService.delete(id);
 	}
 
 	@Get('by-product')
+	@ApiOperation({ summary: 'Get inventory item by warehouse id and product id' })
 	async findByProduct(
 		@Query('warehouseId', ParseObjectIdPipe, HasWarehouseAccessPipe) warehouseId: Types.ObjectId,
 		@Query('productId', ParseObjectIdPipe, HasProductAccessPipe) productId: Types.ObjectId,
@@ -80,6 +83,7 @@ export class InventoryController {
 	}
 
 	@Get('by-warehouse/:id')
+	@ApiOperation({ summary: 'List inventory items in warehouse' })
 	async list(
 		@Param('id', ParseObjectIdPipe, HasWarehouseAccessPipe) warehouseId: Types.ObjectId,
 		@Query(
@@ -100,6 +104,7 @@ export class InventoryController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'Get inventory item by id' })
 	async findOne(
 		@Param('id', ParseObjectIdPipe, HasInventoryAccessPipe) id: Types.ObjectId,
 	): Promise<InventoryItemDto> {

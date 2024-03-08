@@ -10,7 +10,7 @@ import {
 	Query,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
@@ -33,6 +33,7 @@ export class ProductsController {
 	constructor(private readonly productsService: ProductsService) {}
 
 	@Post()
+	@ApiOperation({ summary: 'Create new product definition' })
 	async create(@Body(SecurityValidationPipe) dto: CreateProductDto): Promise<ProductDto> {
 		const product = await this.productsService.create(dto);
 
@@ -40,6 +41,7 @@ export class ProductsController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'Get a product by id' })
 	async findOne(
 		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
 	): Promise<ProductDto> {
@@ -48,6 +50,7 @@ export class ProductsController {
 	}
 
 	@Get('list/:id')
+	@ApiOperation({ summary: 'List all products in organization' })
 	async list(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) orgId: Types.ObjectId,
 		@Query(
@@ -67,6 +70,7 @@ export class ProductsController {
 	}
 
 	@Put(':id')
+	@ApiOperation({ summary: 'Update a product by id' })
 	async update(
 		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
 		@Body(SecurityValidationPipe) dto: UpdateProductDto,
@@ -76,6 +80,7 @@ export class ProductsController {
 	}
 
 	@Delete(':id')
+	@ApiOperation({ summary: 'Delete product by id' })
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasProductAccessPipe) id: Types.ObjectId,
 	): Promise<ProductDto> {

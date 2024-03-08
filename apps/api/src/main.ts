@@ -44,7 +44,10 @@ export function configureNestApp(app: NestExpressApplication): void {
 async function setupSwagger(app: NestExpressApplication) {
 	const config = new DocumentBuilder()
 		.setTitle('StockedUp API')
-		.setDescription('StockedUp API documentation')
+		.setDescription(
+			'StockedUp official API documentation! ' +
+				'API keys are coming: [#61](https://github.com/MrBartusek/stocked-up/issues/61)',
+		)
 		.setVersion('1.0')
 		.build();
 	const document = SwaggerModule.createDocument(app, config);

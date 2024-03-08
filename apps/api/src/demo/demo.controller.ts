@@ -1,11 +1,12 @@
 import { Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiHideProperty, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PrivateUserDto } from 'shared-types';
 import { User } from '../models/users/schemas/user.schema';
 import { DemoService } from './demo.service';
 
-@ApiTags('demo')
 @Controller('demo')
+@ApiTags('demo')
+@ApiExcludeController()
 export class DemoController {
 	constructor(private readonly demoService: DemoService) {}
 

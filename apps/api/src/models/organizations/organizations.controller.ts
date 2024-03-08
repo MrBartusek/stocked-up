@@ -12,7 +12,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationDto, OrganizationSecurityRole, PageDto } from 'shared-types';
@@ -44,6 +44,7 @@ export class OrganizationsController {
 	) {}
 
 	@Post()
+	@ApiOperation({ summary: 'Create new organization' })
 	async create(
 		@Body() createOrganizationDto: CreateOrganizationDto,
 		@Req() request: Request,
@@ -64,6 +65,7 @@ export class OrganizationsController {
 	}
 
 	@Get()
+	@ApiOperation({ summary: 'List organizations that authenticated user has access to' })
 	async list(
 		@Req() request: Request,
 		@Query(
@@ -85,6 +87,7 @@ export class OrganizationsController {
 	}
 
 	@Put(':id')
+	@ApiOperation({ summary: 'Update a organization by id' })
 	async update(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
@@ -97,6 +100,7 @@ export class OrganizationsController {
 	}
 
 	@Delete(':id')
+	@ApiOperation({ summary: 'Delete a organization by id' })
 	async delete(
 		@Param('id', ParseObjectIdPipe, HasOwnerAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -108,6 +112,7 @@ export class OrganizationsController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'Get a organization by id' })
 	async findById(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 	): Promise<OrganizationDto> {
@@ -116,6 +121,7 @@ export class OrganizationsController {
 	}
 
 	@Patch(':id/settings')
+	@ApiOperation({ summary: 'Update organization settings by id' })
 	async updateSettings(
 		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,

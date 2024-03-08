@@ -1,5 +1,5 @@
 import { Controller, Get, Header, NotFoundException, Param, Res } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { createReadStream } from 'node:fs';
 import { join } from 'node:path';
@@ -15,6 +15,7 @@ export class ImagesController {
 
 	@Get('default')
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
+	@ApiOperation({ summary: 'Get default image' })
 	getDefault(@Res() res: Response) {
 		const assetsFolder = join(__dirname, '../..', 'src/assets');
 		const file = createReadStream(join(assetsFolder, 'default.png'));
@@ -23,6 +24,7 @@ export class ImagesController {
 
 	@Get(':key')
 	@Header('Cache-Control', `public, max-age=${CACHE_TIME}`)
+	@ApiOperation({ summary: "Get a image by it's key" })
 	async getByKey(@Param('key') key: string, @Res() response: Response) {
 		const object = await this.imagesService.getObject(key);
 		if (!object) {

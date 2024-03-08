@@ -10,7 +10,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { PrivateUserDto, UserDto } from 'shared-types';
@@ -27,6 +27,7 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get('me')
+	@ApiOperation({ summary: 'Get authenticated user data' })
 	async findAuthenticated(@Req() request: Request): Promise<PrivateUserDto> {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.usersService.findById(userId);
@@ -39,6 +40,7 @@ export class UsersController {
 	}
 
 	@Get(':id')
+	@ApiOperation({ summary: 'Get user data by id' })
 	async findOne(@Param('id', ParseObjectIdPipe) id: Types.ObjectId): Promise<UserDto> {
 		const user = await this.usersService.findById(id);
 
@@ -50,6 +52,7 @@ export class UsersController {
 	}
 
 	@Put()
+	@ApiOperation({ summary: 'Update authenticated user profile' })
 	async updateProfile(@Req() request: Request, @Body() dto: UpdateUserDto) {
 		const userId = new Types.ObjectId(request.user.id);
 
