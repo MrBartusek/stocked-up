@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, Length, Max, isNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, Length, MaxLength } from 'class-validator';
 import { ICreateWarehouseDto } from 'shared-types';
 
 export class CreateWarehouseDto implements ICreateWarehouseDto {
@@ -8,7 +8,7 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
 
 	@IsOptional()
 	@IsNotEmpty()
-	@Max(64)
+	@MaxLength(64)
 	@IsString()
 	address?: string;
 }
