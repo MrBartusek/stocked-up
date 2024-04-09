@@ -5,11 +5,15 @@ export interface UserAvatarProps {
 	user?: UserDto;
 	variant?: 'square' | 'circle';
 	size?: number;
+	className?: string;
 }
 
-function UserAvatar({ user, variant = 'square', size = 6 }: UserAvatarProps) {
+function UserAvatar({ user, variant = 'square', size = 6, className }: UserAvatarProps) {
 	return (
-		<div style={{ width: `${size / 4}rem` }}>
+		<div
+			style={{ width: `${size / 4}rem` }}
+			className={className}
+		>
 			<img
 				height={size * 4}
 				width={size * 4}

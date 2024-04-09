@@ -18,7 +18,7 @@ function OrganizationCard({ organization }: OrganizationCardProps) {
 					<h3>{organization.name}</h3>
 				</span>
 				<div className="flex items-center gap-4">
-					<div className="flex items-center gap-3">
+					<div className="hidden items-center gap-3 md:flex">
 						<OrganizationStatsChip icon={BsWallet}>
 							<Currency>{organization.stats.totalValue}</Currency>
 						</OrganizationStatsChip>

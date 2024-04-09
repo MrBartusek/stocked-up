@@ -26,6 +26,7 @@ function UserInfo() {
 				<UserAvatar
 					user={user}
 					variant="circle"
+					className="hidden sm:block"
 				/>
 				<div>{user.username}</div>
 				{user.isDemo && (
