@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "dotenv-cli": "^7.3.0",
-        "express-session": "^1.17.3"
+        "express-session": "^1.17.3",
+        "react-animate-height": "^3.2.3"
     }
 }
