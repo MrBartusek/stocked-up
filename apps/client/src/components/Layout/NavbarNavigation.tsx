@@ -1,8 +1,5 @@
 import classNames from 'classnames';
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import UserInfo from '../UserInfo';
 
 export type NavigationLinks = 'features' | 'login' | 'register' | 'demo' | 'github';
 
