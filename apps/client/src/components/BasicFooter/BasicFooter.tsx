@@ -12,10 +12,17 @@ function BasicFooter() {
 	return (
 		<footer className="border-t border-gray-200 bg-gray-100 px-4 py-8">
 			<Container>
-				<div className="flex justify-between pb-8">
+				<div className="flex flex-col gap-8 pb-8 lg:flex-row lg:gap-24 xl:gap-48">
 					<BasicFooterBrand />
-					<BasicFooterNavigation />
-					<BasicFooterContact />
+					<div
+						className={classNames(
+							'flex flex-1 flex-col  justify-between gap-12',
+							'items-center sm:flex-row sm:items-start',
+						)}
+					>
+						<BasicFooterNavigation />
+						<BasicFooterContact />
+					</div>
 				</div>
 
 				<div
