@@ -10,7 +10,7 @@ import NavbarNavigation from './NavbarNavigation';
 function Navbar() {
 	const { isAuthenticated } = useContext(UserContext);
 	return (
-		<header className="border-b border-gray-200 bg-gray-150 p-4">
+		<header className="border-b border-gray-200 bg-gray-100 p-4">
 			<Container className="flex items-center justify-between">
 				<StockedUpLogo
 					variant="black"

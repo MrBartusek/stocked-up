@@ -1,4 +1,4 @@
-import BasicFooter from './BasicFooter';
+import BasicFooter from '../BasicFooter/BasicFooter';
 import Navbar from './Navbar';
 
 export interface LayoutProps {
