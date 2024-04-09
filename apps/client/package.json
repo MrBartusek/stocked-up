@@ -21,6 +21,7 @@
         "postcss": "^8.4.29",
         "prettier-plugin-tailwindcss": "^0.5.4",
         "react": "^18.2.0",
+        "react-animate-height": "^3.2.3",
         "react-dom": "^18.2.0",
         "react-error-boundary": "^4.0.11",
         "react-hook-form": "^7.47.0",
