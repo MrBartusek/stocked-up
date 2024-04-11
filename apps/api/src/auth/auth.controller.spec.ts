@@ -4,6 +4,8 @@ import { AuthEmailsService } from '../auth-emails/auth-emails.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
+import { BadRequestException } from '@nestjs/common';
+import { mockUserRequest } from '../mocks/mock-user-request';
 
 describe('AuthController', () => {
 	let controller: AuthController;
@@ -36,6 +38,29 @@ describe('AuthController', () => {
 
 	it('should be defined', () => {
 		expect(controller).toBeDefined();
+	});
+
+	it('should login', async () => {
+		const result = await controller.login();
+		expect(result.statusCode).toBe(200);
+	});
+
+	describe('Logout', () => {
+		it('should logout successfully', async () => {
+			const request = Object.assign({}, mockUserRequest);
+			request.logout = jest.fn((done) => done(null)) as any;
+
+			const result = await controller.logout(request);
+			expect(result.statusCode).toBe(200);
+		});
+
+		it('should handle error', async () => {
+			const request = Object.assign({}, mockUserRequest);
+			request.logout = jest.fn((done) => done('error')) as any;
+
+			const result = controller.logout(request);
+			expect(result).rejects.toThrowError(BadRequestException);
+		});
 	});
 
 	it('should register', async () => {
