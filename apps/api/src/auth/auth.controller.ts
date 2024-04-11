@@ -76,6 +76,11 @@ export class AuthController {
 	): Promise<PrivateUserDto> {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, body.oldPassword);
+
+		if (!user) {
+			throw new BadRequestException('Provided old password is not valid.');
+		}
+
 		await this.authService.updateUserPassword(user._id, body.newPassword);
 		return User.toPrivateDto(user);
 	}
@@ -86,6 +91,10 @@ export class AuthController {
 	async changeEmail(@Req() request: Request, @Body() dto: UpdateEmailDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);
+
+		if (!user) {
+			throw new BadRequestException('Provided password is not valid.');
+		}
 
 		await this.authService.updateUserEmail(user._id, dto.email);
 		await this.authEmailsService.sendEmailConfirmation(user._id);
@@ -99,6 +108,10 @@ export class AuthController {
 	async deleteAccount(@Req() request: Request, @Body() dto: DeleteAccountDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);
+
+		if (!user) {
+			throw new BadRequestException('Provided password is not valid.');
+		}
 
 		await this.authService.deleteUserAccount(user._id);
 

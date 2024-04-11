@@ -21,23 +21,38 @@ export class AuthService {
 		return user;
 	}
 
-	async validateUserByUsername(username: string, password: string): Promise<UserDocument> {
+	/**
+	 * Validates user password of user with provided username. This is simply
+	 * a check of username:password pair.
+	 *
+	 * @param username username of user
+	 * @param password raw password
+	 * @returns user if user is found and password is valid; null if not
+	 */
+	async validateUserByUsername(username: string, password: string): Promise<UserDocument | null> {
 		const user = await this.usersService.findOne(username);
 		const valid = await this.validateUser(user, password);
 
 		if (!user || !valid) {
-			throw new BadRequestException('Provided username and password details are not valid');
+			return null;
 		}
 
 		return user;
 	}
 
-	async validateUserByUserId(id: Types.ObjectId, password: string): Promise<UserDocument> {
+	/**
+	 * Validates user password of user with provided id.
+	 *
+	 * @param id id of checked user
+	 * @param password raw password
+	 * @returns user if user is found and password is valid; null if not
+	 */
+	async validateUserByUserId(id: Types.ObjectId, password: string): Promise<UserDocument | null> {
 		const user = await this.usersService.findById(id);
 		const valid = await this.validateUser(user, password);
 
 		if (!user || !valid) {
-			throw new BadRequestException('Provided current password is not valid');
+			return null;
 		}
 
 		return user;

@@ -79,9 +79,7 @@ describe('AuthService', () => {
 		it('should not validate a user that does not exist', async () => {
 			mockUsersService.findOne.mockResolvedValue(null);
 
-			expect(service.validateUserByUsername('test', 'password')).rejects.toThrowError(
-				BadRequestException,
-			);
+			expect(service.validateUserByUsername('test', 'password')).resolves.toBeNull();
 		});
 
 		it('should validate a user with invalid credentials', async () => {
@@ -97,9 +95,7 @@ describe('AuthService', () => {
 				},
 			});
 
-			expect(service.validateUserByUsername('test', invalidPassword)).rejects.toThrowError(
-				BadRequestException,
-			);
+			expect(service.validateUserByUsername('test', invalidPassword)).resolves.toBeNull();
 		});
 	});
 
