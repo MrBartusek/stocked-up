@@ -3,7 +3,7 @@ ignore:
   - "**/*initializer.*"
   - "**/*main.*"
   - "**/*.repository.*"
-  - "**/mongoose-module-helper.ts"
+  - "**/mongoose-module.helper.ts"
   - "**/redis/connect.ts"
   - "**/redis.factory.ts"
   - "**/*.serializer.*"
