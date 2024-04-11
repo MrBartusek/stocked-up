@@ -6,14 +6,20 @@ import { AuthService } from './auth.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { BadRequestException } from '@nestjs/common';
 import { mockUserRequest } from '../mocks/mock-user-request';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 
 describe('AuthController', () => {
 	let controller: AuthController;
+
+	const mockUserRepo = new MockUserRepository();
 
 	const mockAuthService = {
 		registerUser: jest.fn((dto: UserRegisterDto) => {
 			return { _id: new Types.ObjectId(), profile: dto };
 		}),
+		validateUserByUserId: jest.fn(() => mockUserRepo.findOne()),
+		updateUserPassword: jest.fn(),
 	};
 
 	const mockAuthEmailService = {
@@ -77,5 +83,32 @@ describe('AuthController', () => {
 
 		expect(sendEmailConfirmationSpy).toBeCalledTimes(1);
 		expect(sendEmailConfirmationSpy).toBeCalledWith(user.id);
+	});
+
+	describe('Change password', () => {
+		it('should change password with valid credentials', async () => {
+			const user = await mockUserRepo.findOne();
+			mockAuthService.validateUserByUserId.mockResolvedValue(user);
+
+			const dto: ChangePasswordDto = {
+				oldPassword: 'old',
+				newPassword: 'new',
+			};
+			const result = await controller.changePassword(mockUserRequest, dto);
+
+			expect(result.username).toBe(user.profile.username);
+		});
+
+		it('should throw on invalid credentials', async () => {
+			mockAuthService.validateUserByUserId.mockResolvedValue(null);
+
+			const dto: ChangePasswordDto = {
+				oldPassword: 'old',
+				newPassword: 'new',
+			};
+			const result = controller.changePassword(mockUserRequest, dto);
+
+			expect(result).rejects.toThrowError(BadRequestException);
+		});
 	});
 });
