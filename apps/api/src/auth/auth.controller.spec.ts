@@ -8,6 +8,7 @@ import { BadRequestException } from '@nestjs/common';
 import { mockUserRequest } from '../mocks/mock-user-request';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
+import { UpdateEmailDto } from './dto/update-email.dto';
 
 describe('AuthController', () => {
 	let controller: AuthController;
@@ -20,6 +21,17 @@ describe('AuthController', () => {
 		}),
 		validateUserByUserId: jest.fn(() => mockUserRepo.findOne()),
 		updateUserPassword: jest.fn(),
+		updateUserEmail: jest.fn(async (id, email) => {
+			const user = await mockUserRepo.findOne();
+			return {
+				...user,
+				_id: id,
+				profile: {
+					...user.profile,
+					email,
+				},
+			};
+		}),
 	};
 
 	const mockAuthEmailService = {
@@ -107,6 +119,33 @@ describe('AuthController', () => {
 				newPassword: 'new',
 			};
 			const result = controller.changePassword(mockUserRequest, dto);
+
+			expect(result).rejects.toThrowError(BadRequestException);
+		});
+	});
+
+	describe('Change E-mail', () => {
+		it('should change email with valid credentials', async () => {
+			const user = await mockUserRepo.findOne();
+			mockAuthService.validateUserByUserId.mockResolvedValue(user);
+
+			const dto: UpdateEmailDto = {
+				password: 'test',
+				email: 'changed@dokurno.dev',
+			};
+			const result = await controller.changeEmail(mockUserRequest, dto);
+
+			expect(result.email).toBe('changed@dokurno.dev');
+		});
+
+		it('should throw on invalid credentials', async () => {
+			mockAuthService.validateUserByUserId.mockResolvedValue(null);
+
+			const dto: UpdateEmailDto = {
+				password: 'test',
+				email: 'changed@dokurno.dev',
+			};
+			const result = controller.changeEmail(mockUserRequest, dto);
 
 			expect(result).rejects.toThrowError(BadRequestException);
 		});

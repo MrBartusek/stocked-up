@@ -96,10 +96,10 @@ export class AuthController {
 			throw new BadRequestException('Provided password is not valid.');
 		}
 
-		await this.authService.updateUserEmail(user._id, dto.email);
+		const newUser = await this.authService.updateUserEmail(user._id, dto.email);
 		await this.authEmailsService.sendEmailConfirmation(user._id);
 
-		return User.toPrivateDto(user);
+		return User.toPrivateDto(newUser);
 	}
 
 	@Delete('delete')
