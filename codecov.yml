@@ -3,14 +3,15 @@ ignore:
   - "**/*initializer.*"
   - "**/*main.*"
   - "**/*.repository.*"
-  - "**/mongoose-module.helper.ts"
-  - "**/redis/connect.ts"
-  - "**/redis.factory.ts"
   - "**/*.serializer.*"
-  - "**/*.dto.*"
-  - "**/resend.factory.*"
-  - "**/*.mock.*"
-  - "**/*.exception.*"
+  - "**/mongoose-module.helper.ts" # Not testable
+  - "**/redis/connect.ts" # Mainly configuration file, not testable
+  - "**/redis.factory.ts" # Not worth testing - constructor only
+  - "**/*.dto.*" # Skip .toDto() functions coverage
+  - "**/resend.factory.*" # Not worth testing - constructor only
+  - "**/*.mock.*" # Mocks are only used in tests, they don't need to be tested twice
+  - "**/*.exception.*" # We don't need to test error contractors
+  - "**/images.controller.*" # Testing .pipe() in this file is not worth the effort
 
 coverage:
   status:
