@@ -8,6 +8,8 @@ ignore:
   - "**/redis.factory.ts"
   - "**/*.serializer.*"
   - "**/*.dto.*"
+  - "**/resend.factory.ts"
+  - "**/*.mock.*"
 
 coverage:
   status:
