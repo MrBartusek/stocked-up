@@ -4,14 +4,30 @@ import * as bcrypt from 'bcrypt';
 import { Types } from 'mongoose';
 import { UsersService } from '../models/users/users.service';
 import { AuthService } from './auth.service';
+import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 
 describe('AuthService', () => {
 	let service: AuthService;
+
+	const mockUserRepository = new MockUserRepository();
 
 	const mockUsersService = {
 		findOne: jest.fn(),
 		findById: jest.fn(),
 		findOneByIdAndUpdate: jest.fn(),
+		setConfirmed: jest.fn(),
+		delete: jest.fn((id) => mockUserRepository.deleteOneById(id)),
+		updateEmail: jest.fn(async (id, email) => {
+			const user = await mockUserRepository.findOne();
+			return {
+				...user,
+				_id: id,
+				profile: {
+					...user.profile,
+					email,
+				},
+			};
+		}),
 		create: jest.fn((data) => {
 			return {
 				_id: new Types.ObjectId(),
@@ -27,6 +43,7 @@ describe('AuthService', () => {
 	};
 
 	const userUpdateSpy = jest.spyOn(mockUsersService, 'findOneByIdAndUpdate');
+	const userSetConfirmedSpy = jest.spyOn(mockUsersService, 'setConfirmed');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -82,7 +99,7 @@ describe('AuthService', () => {
 			expect(service.validateUserByUsername('test', 'password')).resolves.toBeNull();
 		});
 
-		it('should validate a user with invalid credentials', async () => {
+		it('should not validate a user with invalid credentials', async () => {
 			const invalidPassword = 'other-password';
 			const hashedValidPassword = await bcrypt.hash('password', 4);
 
@@ -117,6 +134,31 @@ describe('AuthService', () => {
 				expect.objectContaining({ profile: expect.objectContaining({ username: 'test' }) }),
 			);
 		});
+
+		it('should not validate a user that does not exist', async () => {
+			mockUsersService.findById.mockResolvedValue(null);
+
+			const result = await service.validateUserByUserId(new Types.ObjectId(), 'password');
+
+			expect(result).toBeNull();
+		});
+
+		it('should not validate a user with invalid credentials', async () => {
+			const invalidPassword = 'other-password';
+			const hashedValidPassword = await bcrypt.hash('password', 4);
+			mockUsersService.findById.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: hashedValidPassword,
+				},
+			});
+
+			const result = await service.validateUserByUserId(new Types.ObjectId(), invalidPassword);
+
+			expect(result).toBeNull();
+		});
 	});
 
 	describe('updateUserPassword', () => {
@@ -129,5 +171,20 @@ describe('AuthService', () => {
 			expect(userUpdateSpy).toBeCalledTimes(1);
 			expect(userUpdateSpy).toBeCalledWith(userId, { 'auth.password': expect.any(String) });
 		});
+	});
+
+	it('should update email', async () => {
+		const userId = new Types.ObjectId();
+
+		const user = await service.updateUserEmail(userId, 'changed@dokurno.dev');
+
+		expect(userSetConfirmedSpy).toBeCalledWith(userId, false);
+		expect(user.profile.email).toBe('changed@dokurno.dev');
+	});
+
+	it('should delete user', async () => {
+		const userId = new Types.ObjectId();
+		const user = await service.deleteUserAccount(userId);
+		expect(user._id).toBe(userId);
 	});
 });
