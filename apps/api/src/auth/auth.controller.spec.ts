@@ -9,6 +9,7 @@ import { mockUserRequest } from '../mocks/mock-user-request';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 import { UpdateEmailDto } from './dto/update-email.dto';
+import { DeleteAccountDto } from './dto/delete-account.dto';
 
 describe('AuthController', () => {
 	let controller: AuthController;
@@ -21,6 +22,7 @@ describe('AuthController', () => {
 		}),
 		validateUserByUserId: jest.fn(() => mockUserRepo.findOne()),
 		updateUserPassword: jest.fn(),
+		deleteUserAccount: jest.fn(),
 		updateUserEmail: jest.fn(async (id, email) => {
 			const user = await mockUserRepo.findOne();
 			return {
@@ -146,6 +148,27 @@ describe('AuthController', () => {
 				email: 'changed@dokurno.dev',
 			};
 			const result = controller.changeEmail(mockUserRequest, dto);
+
+			expect(result).rejects.toThrowError(BadRequestException);
+		});
+	});
+
+	describe('Delete account', () => {
+		it('should delete account with valid credentials', async () => {
+			const user = await mockUserRepo.findOne();
+			mockAuthService.validateUserByUserId.mockResolvedValue(user);
+
+			const dto: DeleteAccountDto = { password: 'test' };
+			const result = await controller.deleteAccount(mockUserRequest, dto);
+
+			expect(result.statusCode).toBe(200);
+		});
+
+		it('should throw on invalid credentials', async () => {
+			mockAuthService.validateUserByUserId.mockResolvedValue(null);
+
+			const dto: DeleteAccountDto = { password: 'test' };
+			const result = controller.deleteAccount(mockUserRequest, dto);
 
 			expect(result).rejects.toThrowError(BadRequestException);
 		});
