@@ -32,7 +32,7 @@ export class S3CacheService {
 	}
 
 	private async getCachedObject(key: string): Promise<Readable | null> {
-		const redisKey = `${REDIS_PREFIX}${key}`;
+		const redisKey = this.generateKey(key);
 
 		const exist = await this.redis.client.exists(redisKey);
 		if (exist == 0) return null;
@@ -43,11 +43,15 @@ export class S3CacheService {
 	}
 
 	private async cacheObject(key: string, object: Readable): Promise<void> {
-		const redisKey = `${REDIS_PREFIX}${key}`;
+		const redisKey = this.generateKey(key);
 
 		const buffer = await Utils.streamToBuffer(object);
 		await this.redis.client.set(redisKey, buffer);
 		await this.redis.client.expire(redisKey, CACHE_TIME);
 		this.logger.log(`Cached s3 object with key "${key}" for ${CACHE_TIME}s`);
+	}
+
+	private generateKey(key: string) {
+		return `${REDIS_PREFIX}${key}`;
 	}
 }
