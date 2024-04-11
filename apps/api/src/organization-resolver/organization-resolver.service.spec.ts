@@ -51,6 +51,10 @@ describe('OrganizationResolverService', () => {
 		expect(service).toBeDefined();
 	});
 
+	it('should resolve from organization', () => {
+		expect(service.resolve(MOCK_ORG_ID, OrganizationResourceType.ORGANIZATION)).toBe(MOCK_ORG_ID);
+	});
+
 	it('should resolve from product', () => {
 		const productId = new Types.ObjectId();
 		expect(service.resolve(productId, OrganizationResourceType.PRODUCT)).toBe(MOCK_ORG_ID);
