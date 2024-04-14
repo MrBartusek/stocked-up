@@ -10,9 +10,10 @@ import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe'
 import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { describe } from 'node:test';
 import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
-import { OrganizationSecurityRole } from 'shared-types';
+import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
 import { mockUserRequest } from '../mocks/mock-user-request';
 import e from 'express';
+import { PageQueryDto } from '../dto/page-query.dto';
 
 describe('SecurityController', () => {
 	let controller: SecurityController;
@@ -21,6 +22,7 @@ describe('SecurityController', () => {
 		addRule: jest.fn(),
 		getUserRole: jest.fn(),
 		updateRule: jest.fn(),
+		paginateMembers: jest.fn(() => ({ meta: { page: 1 }, items: [] }) as PageDto<SecurityRuleDto>),
 	};
 
 	const mockUserService = {
@@ -138,5 +140,20 @@ describe('SecurityController', () => {
 
 			expect(result).rejects.toThrow(ForbiddenException);
 		});
+	});
+
+	it('should list rules', async () => {
+		const result = await controller.listRules(new Types.ObjectId(), { page: 1 });
+
+		expect(result.meta.page).toBe(1);
+	});
+
+	it('should get own security rule', async () => {
+		const request = mockUserRequest;
+		mockSecurityService.getUserRole.mockReturnValue(OrganizationSecurityRole.ADMIN);
+
+		const result = await controller.getMeRule(request, new Types.ObjectId());
+
+		expect(result.role).toBe(OrganizationSecurityRole.ADMIN);
 	});
 });
