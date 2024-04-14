@@ -135,4 +135,14 @@ describe('UsersService', () => {
 		const user = await service.setConfirmed(new Types.ObjectId(), true);
 		expect(user.profile.username).toStrictEqual(expect.any(String));
 	});
+
+	it('should check if exist', async () => {
+		const exist = await service.exist(new Types.ObjectId());
+		expect(exist).toBe(true);
+	});
+
+	it('should find one by id and update', async () => {
+		const user = await service.findOneByIdAndUpdate(new Types.ObjectId(), { username: 'test' });
+		expect(user.profile.username).toStrictEqual(expect.any(String));
+	});
 });
