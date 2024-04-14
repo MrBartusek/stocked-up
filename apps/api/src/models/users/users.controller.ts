@@ -66,6 +66,10 @@ export class UsersController {
 				throw new ForbiddenException('This action is not available for demo accounts');
 			}
 
+			// Username taken check should ideally be an DTO decorator.
+			// But since this project is designed to use PUT requests.
+			// Users won't be able to update their username, since it will
+			// always be taken, by them
 			const usernameTaken = await this.usersService.isUsernameTaken(dto.username);
 			if (usernameTaken) {
 				throw new BadRequestException('This username is already taken');

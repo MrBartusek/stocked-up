@@ -3,6 +3,9 @@ import { Request } from 'express';
 import { Types } from 'mongoose';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { mockUserRequest } from '../../mocks/mock-user-request';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { BadRequestException } from '@nestjs/common';
 
 describe('UsersController', () => {
 	let controller: UsersController;
@@ -20,6 +23,13 @@ describe('UsersController', () => {
 				},
 			};
 		}),
+		updateProfile: jest.fn((id, dto) => {
+			return {
+				_id: id,
+				profile: dto,
+			};
+		}),
+		isUsernameTaken: jest.fn(),
 	};
 
 	beforeEach(async () => {
@@ -39,7 +49,9 @@ describe('UsersController', () => {
 	});
 
 	it('should get user by id', () => {
-		expect(controller.findOne(new Types.ObjectId())).resolves.toEqual({
+		const user = controller.findOne(new Types.ObjectId());
+
+		expect(user).resolves.toEqual({
 			id: expect.any(Types.ObjectId),
 			username: expect.any(String),
 			image: {
@@ -49,10 +61,12 @@ describe('UsersController', () => {
 		});
 	});
 
-	it('should get authenticated user', () => {
-		const mockRequest = { user: { id: new Types.ObjectId().toString() } } as Request;
+	it('should get authenticated user', async () => {
+		const request = mockUserRequest;
 
-		expect(controller.findAuthenticated(mockRequest)).resolves.toEqual({
+		const user = await controller.findAuthenticated(request);
+
+		expect(user).toEqual({
 			id: expect.any(Types.ObjectId),
 			username: expect.any(String),
 			email: expect.any(String),
@@ -60,6 +74,38 @@ describe('UsersController', () => {
 				hasImage: expect.any(Boolean),
 				url: expect.any(String),
 			},
+		});
+	});
+
+	describe('Update profile', () => {
+		it('should update profile', async () => {
+			const request = mockUserRequest;
+			mockUserService.isUsernameTaken.mockResolvedValue(false);
+
+			const dto: UpdateUserDto = {
+				username: 'updated',
+				image: { hasImage: false },
+			};
+			const user = await controller.updateProfile(request, dto);
+
+			expect(user).toStrictEqual(
+				expect.objectContaining({
+					username: 'updated',
+				}),
+			);
+		});
+
+		it('should error on taken username', async () => {
+			const request = mockUserRequest;
+			mockUserService.isUsernameTaken.mockResolvedValue(true);
+
+			const dto: UpdateUserDto = {
+				username: 'updated',
+				image: { hasImage: false },
+			};
+			const user = controller.updateProfile(request, dto);
+
+			expect(user).rejects.toThrowError(BadRequestException);
 		});
 	});
 });
