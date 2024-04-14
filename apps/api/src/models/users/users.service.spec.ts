@@ -6,6 +6,7 @@ import { ImagesService } from '../../images/images.service';
 import { MockUserRepository } from './mocks/mock-user-repository';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 describe('UsersService', () => {
 	let service: UsersService;
@@ -14,6 +15,7 @@ describe('UsersService', () => {
 
 	const mockImagesService = {
 		uploadImage: jest.fn(() => 'key'),
+		handleImageDtoAndGetKey: jest.fn(() => 'key'),
 		deleteImage: jest.fn(),
 	};
 
@@ -105,5 +107,32 @@ describe('UsersService', () => {
 			expect.objectContaining({ imageKey: 'test-image-key' }),
 		);
 		expect(emitSpy).toBeCalledWith('user.deleted', expect.anything());
+	});
+
+	it('should find user by email', async () => {
+		const user = await service.findByEmail('test@dokurno.dev');
+
+		expect(user.profile.username).toStrictEqual(expect.any(String));
+	});
+
+	it('should find user', async () => {
+		const users = await service.find({ username: 'test' });
+
+		expect(users[0].profile.username).toStrictEqual(expect.any(String));
+	});
+
+	it('should check if email is taken', async () => {
+		const taken = await service.isEmailTaken('test@dokurno.dev');
+		expect(taken).toBe(true);
+	});
+
+	it('should check if username is taken', async () => {
+		const taken = await service.isUsernameTaken('test');
+		expect(taken).toBe(true);
+	});
+
+	it('should activate account', async () => {
+		const user = await service.setConfirmed(new Types.ObjectId(), true);
+		expect(user.profile.username).toStrictEqual(expect.any(String));
 	});
 });
