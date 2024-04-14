@@ -120,7 +120,6 @@ describe('SecurityController', () => {
 			const requester = new Types.ObjectId(request.user.id);
 
 			mockSecurityService.getUserRole.mockImplementation((org, user) => {
-				console.log(user);
 				if (targetId.equals(user)) {
 					return OrganizationSecurityRole.OWNER;
 				} else if (requester.equals(user)) {
