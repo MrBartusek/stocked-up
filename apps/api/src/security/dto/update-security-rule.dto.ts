@@ -7,6 +7,7 @@ export class UpdateSecurityRuleDto implements IUpdateSecurityRuleDto {
 	@HasOrganizationAccess(OrganizationSecurityRole.ADMIN)
 	organization: string;
 
+	@IsMongoId()
 	user: string;
 
 	@IsEnum(OrganizationSecurityRole)
