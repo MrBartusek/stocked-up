@@ -12,6 +12,7 @@ ignore:
   - "**/*.mock.*" # Mocks are only used in tests, they don't need to be tested twice
   - "**/*.exception.*" # We don't need to test error constructors
   - "**/images.controller.*" # Testing .pipe() in this file is not worth the effort
+  - "**/*.decorator.*" # Hard to test, not prone to errors
 
 coverage:
   status:
