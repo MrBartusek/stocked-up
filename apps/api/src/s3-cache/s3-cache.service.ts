@@ -8,6 +8,8 @@ const ONE_DAY = 24 * 60 * 60;
 const REDIS_PREFIX = 's3-cache:';
 const CACHE_TIME = 30 * ONE_DAY;
 
+export { REDIS_PREFIX as S3_CACHE_REDIS_PREFIX };
+
 @Injectable()
 export class S3CacheService {
 	private readonly logger = new Logger(S3CacheService.name);
