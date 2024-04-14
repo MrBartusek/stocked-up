@@ -40,7 +40,8 @@ export class MockEntityRepository<T = any> {
 		id: Types.ObjectId,
 		updateEntityData: UpdateQuery<T>,
 	): Promise<Partial<T> | null> {
-		return { ...this.findById(id), ...updateEntityData };
+		const base = await this.findById(id);
+		return { ...base, ...updateEntityData };
 	}
 
 	async deleteMany(): Promise<boolean> {
