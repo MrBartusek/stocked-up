@@ -10,7 +10,7 @@ ignore:
   - "**/*.dto.*" # Skip .toDto() functions coverage
   - "**/resend.factory.*" # Not worth testing - constructor only
   - "**/*.mock.*" # Mocks are only used in tests, they don't need to be tested twice
-  - "**/*.exception.*" # We don't need to test error contractors
+  - "**/*.exception.*" # We don't need to test error constructors
   - "**/images.controller.*" # Testing .pipe() in this file is not worth the effort
 
 coverage:
