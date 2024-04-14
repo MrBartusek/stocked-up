@@ -14,6 +14,7 @@ import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types
 import { mockUserRequest } from '../mocks/mock-user-request';
 import e from 'express';
 import { PageQueryDto } from '../dto/page-query.dto';
+import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
 
 describe('SecurityController', () => {
 	let controller: SecurityController;
@@ -22,6 +23,7 @@ describe('SecurityController', () => {
 		addRule: jest.fn(),
 		getUserRole: jest.fn(),
 		updateRule: jest.fn(),
+		deleteRule: jest.fn(),
 		paginateMembers: jest.fn(() => ({ meta: { page: 1 }, items: [] }) as PageDto<SecurityRuleDto>),
 	};
 
@@ -139,6 +141,54 @@ describe('SecurityController', () => {
 			const result = controller.update(request, dto);
 
 			expect(result).rejects.toThrow(ForbiddenException);
+		});
+	});
+
+	it('should delete security rule', async () => {
+		const orgId = new Types.ObjectId();
+		const targetId = new Types.ObjectId();
+		const request = mockUserRequest;
+		const requester = new Types.ObjectId(request.user.id);
+
+		mockSecurityService.getUserRole.mockImplementation((org, user) => {
+			console.log(user);
+			if (targetId.equals(user)) {
+				return OrganizationSecurityRole.MEMBER;
+			} else if (requester.equals(user)) {
+				return OrganizationSecurityRole.ADMIN;
+			}
+			return null;
+		});
+
+		const dto: DeleteSecurityRuleDto = {
+			organization: orgId.toString(),
+			user: targetId.toString(),
+		};
+
+		await controller.delete(request, dto);
+
+		expect(mockSecurityService.deleteRule).toHaveBeenCalledWith(orgId, targetId);
+	});
+
+	describe('Leave organization', () => {
+		it('should leave organization', async () => {
+			const orgId = new Types.ObjectId();
+			const request = mockUserRequest;
+			mockSecurityService.getUserRole.mockResolvedValue(OrganizationSecurityRole.MEMBER);
+
+			await controller.leave(request, orgId);
+
+			expect(mockSecurityService.deleteRule).toBeCalledWith(orgId, request.user.id);
+		});
+
+		it('should not leave organization when requester is owner', async () => {
+			const orgId = new Types.ObjectId();
+			const request = mockUserRequest;
+			mockSecurityService.getUserRole.mockResolvedValue(OrganizationSecurityRole.OWNER);
+
+			const result = controller.leave(request, orgId);
+
+			expect(result).rejects.toThrowError(BadRequestException);
 		});
 	});
 
