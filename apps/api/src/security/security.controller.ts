@@ -5,6 +5,8 @@ import {
 	Delete,
 	ForbiddenException,
 	Get,
+	HttpCode,
+	HttpStatus,
 	NotFoundException,
 	Param,
 	Post,
@@ -41,6 +43,7 @@ export class SecurityController {
 	@Post()
 	@UseGuards(ConfirmedGuard)
 	@ApiOperation({ summary: 'Create new security rule' })
+	@HttpCode(201)
 	async create(@Body(SecurityValidationPipe) dto: CreateSecurityRuleDto): Promise<any> {
 		const org = new Types.ObjectId(dto.organization);
 
@@ -49,16 +52,13 @@ export class SecurityController {
 			throw new NotFoundException('This user does not exist');
 		}
 
-		const resultOrg = await this.securityService.addRule(org, user._id);
-		if (!resultOrg) {
-			throw new NotFoundException('This organization does not exist');
-		}
-
+		await this.securityService.addRule(org, user._id);
 		return { statusCode: 201 };
 	}
 
 	@Put()
 	@ApiOperation({ summary: 'Update a security rule by id' })
+	@HttpCode(200)
 	async update(
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: UpdateSecurityRuleDto,
@@ -68,15 +68,13 @@ export class SecurityController {
 
 		await this.validateIfCanManage(dto, request);
 
-		const resultOrg = await this.securityService.updateRule(org, target, dto.role);
-		if (!resultOrg) {
-			throw new NotFoundException();
-		}
+		await this.securityService.updateRule(org, target, dto.role);
 		return { statusCode: 200 };
 	}
 
 	@Delete()
 	@ApiOperation({ summary: 'Delete a security rule by id' })
+	@HttpCode(200)
 	async delete(
 		@Req() request: Request,
 		@Body(SecurityValidationPipe) dto: DeleteSecurityRuleDto,
@@ -86,15 +84,13 @@ export class SecurityController {
 
 		await this.validateIfCanManage(dto, request);
 
-		const resultOrg = await this.securityService.deleteRule(org, target);
-		if (!resultOrg) {
-			throw new NotFoundException();
-		}
+		await this.securityService.deleteRule(org, target);
 		return { statusCode: 200 };
 	}
 
 	@Delete(':org/leave')
 	@ApiOperation({ summary: 'Leave organization by id' })
+	@HttpCode(200)
 	async leave(
 		@Req() request: Request,
 		@Param('org', ParseObjectIdPipe, HasOrganizationAccessPipe) org: Types.ObjectId,
