@@ -13,6 +13,7 @@ ignore:
   - "**/*.exception.*" # We don't need to test error constructors
   - "**/images.controller.*" # Testing .pipe() in this file is not worth the effort
   - "**/*.decorator.*" # Hard to test, not prone to errors
+  - "**/*.type.*" # Mainly classes and interfaces without methods
 
 coverage:
   status:
