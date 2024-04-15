@@ -4,7 +4,7 @@ import { Job } from 'bull';
 import { InventoryService } from '../../inventory/inventory.service';
 import { OrganizationsService } from '../../organizations/organizations.service';
 import { WarehouseRecalculatedEvent } from '../events/warehouse-recalculated.event';
-import { WarehouseRecalculateJobData } from '../types/warehouse-recalculate-job-data';
+import { WarehouseRecalculateJobData } from '../types/warehouse-recalculate-job-data.type';
 import { WarehousesService } from '../warehouses.service';
 
 @Processor('warehouse-recalculate')

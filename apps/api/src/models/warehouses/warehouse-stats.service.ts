@@ -2,7 +2,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Job, Queue } from 'bull';
 import { Types } from 'mongoose';
-import { WarehouseRecalculateJobData } from './types/warehouse-recalculate-job-data';
+import { WarehouseRecalculateJobData } from './types/warehouse-recalculate-job-data.type';
 
 @Injectable()
 export class WarehouseStatsService {
