@@ -9,6 +9,7 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
+import { BadRequestException } from '@nestjs/common';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;
@@ -20,7 +21,7 @@ describe('WarehousesController', () => {
 		create: jest.fn((organization: Types.ObjectId, dto: CreateWarehouseDto) =>
 			mockRepo.create({ ...organization, ...dto }),
 		),
-		findByOrg: jest.fn(() => mockRepo.find()),
+		findByOrg: jest.fn(),
 		update: jest.fn((id, dto: UpdateWarehouseDto) => mockRepo.findOneByIdAndUpdate(id, dto)),
 		delete: jest.fn((id) => mockRepo.deleteOneById(id)),
 	};
@@ -95,15 +96,29 @@ describe('WarehousesController', () => {
 		);
 	});
 
-	it('should delete warehouse', async () => {
-		const warehouseId = new Types.ObjectId();
-		const warehouse = await controller.delete(warehouseId);
+	describe('Delete warehouse', () => {
+		it('should delete warehouse', async () => {
+			const warehouseId = new Types.ObjectId();
+			mockWarehouseService.findByOrg.mockImplementation(async () => await mockRepo.find());
 
-		expect(warehouse).toEqual(
-			expect.objectContaining({
-				id: warehouseId,
-				name: 'test-name',
-			}),
-		);
+			const warehouse = await controller.delete(warehouseId);
+
+			expect(warehouse).toEqual(
+				expect.objectContaining({
+					id: warehouseId,
+					name: 'test-name',
+				}),
+			);
+		});
+
+		it('should not delete last warehouse', async () => {
+			const warehouseId = new Types.ObjectId();
+			const mockWarehouse = await mockRepo.findOne();
+			mockWarehouseService.findByOrg.mockResolvedValue([mockWarehouse]);
+
+			const result = controller.delete(warehouseId);
+
+			expect(result).rejects.toThrow(BadRequestException);
+		});
 	});
 });
