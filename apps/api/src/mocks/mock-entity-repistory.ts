@@ -10,10 +10,14 @@ export class MockEntityRepository<T = any> {
 		return { _id: new Types.ObjectId(), ...this.mockModel };
 	}
 
-	async find(): Promise<T[] | null> {
+	async find(entityFilterQuery?: FilterQuery<T>): Promise<T[] | null> {
 		return Array(10)
 			.fill(this.mockModel)
-			.map((model) => ({ ...model, _id: new Types.ObjectId() }));
+			.map((model) => ({
+				...model,
+				_id: new Types.ObjectId(),
+				...entityFilterQuery,
+			}));
 	}
 
 	async findById(id: Types.ObjectId): Promise<Partial<T> | null> {
