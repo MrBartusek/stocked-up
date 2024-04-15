@@ -93,4 +93,29 @@ describe('WarehousesService', () => {
 			}),
 		);
 	});
+
+	it('should update warehouse stats', async () => {
+		const stats = {
+			totalQuantity: 32,
+			totalValue: 64,
+		};
+		const warehouse = await service.updateStats(new Types.ObjectId(), stats);
+
+		expect(warehouse).toStrictEqual(expect.objectContaining(stats));
+	});
+
+	it('should find warehouse by organization', async () => {
+		const orgId = new Types.ObjectId();
+		const warehouseList = await service.findByOrg(orgId);
+
+		expect(warehouseList[0].organization).toBe(orgId);
+	});
+
+	it('should paginate warehouses', async () => {
+		const orgId = new Types.ObjectId();
+		const result = await service.paginateByOrg(orgId, { page: 1 });
+
+		expect(result.items[0].organization).toBe(orgId);
+		expect(result.items.length).toBeGreaterThan(1);
+	});
 });
