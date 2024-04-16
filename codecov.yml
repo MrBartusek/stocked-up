@@ -4,16 +4,22 @@ ignore:
   - "**/*main.*"
   - "**/*.repository.*"
   - "**/*.serializer.*"
-  - "**/mongoose-module.helper.ts" # Not testable
-  - "**/redis/connect.ts" # Mainly configuration file, not testable
-  - "**/redis.factory.ts" # Not worth testing - constructor only
+
   - "**/*.dto.*" # Skip .toDto() functions coverage
-  - "**/resend.factory.*" # Not worth testing - constructor only
   - "**/*.mock.*" # Mocks are only used in tests, they don't need to be tested twice
-  - "**/*.exception.*" # We don't need to test error constructors
+
+  # Hard to test / not possible to test
+  - "**/mongoose-module.helper.ts"
+  - "**/redis/connect.ts"
   - "**/images.controller.*" # Testing .pipe() in this file is not worth the effort
-  - "**/*.decorator.*" # Hard to test, not prone to errors
-  - "**/*.type.*" # Mainly classes and interfaces without methods
+  - "**/*.decorator.*"
+
+  # Simple classes mainly constructor only
+  - "**/*.type.*"
+  - "**/*.event.*"
+  - "**/resend.factory.*"
+  - "**/redis.factory.ts"
+  - "**/*.exception.*"
 
 coverage:
   status:
