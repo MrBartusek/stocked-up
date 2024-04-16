@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 import { OrganizationsWarehouseRefService } from './organizations-warehouse-ref.service';
 import { OrganizationRepository } from './organizations.repository';
-import { Types } from 'mongoose';
 
 describe('OrganizationsWarehouseRefService', () => {
 	let service: OrganizationsWarehouseRefService;

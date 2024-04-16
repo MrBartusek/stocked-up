@@ -1,12 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { WarehouseDeletedEvent } from '../../warehouses/events/warehouse-deleted.event';
-import { WarehouseDocument } from '../../warehouses/schemas/warehouse.schema';
-import { OrganizationsStatsService } from '../organizations-stats.service';
-import { OrganizationsWarehouseRefService } from '../organizations-warehouse-ref.service';
-import { WarehouseDeletedListener } from './warehouse-deleted.listener';
-import { WarehouseUpdatedListener } from './warehouse-updated.listener';
 import { WarehouseUpdatedEvent } from '../../warehouses/events/warehouse-updated.event';
+import { WarehouseDocument } from '../../warehouses/schemas/warehouse.schema';
+import { OrganizationsWarehouseRefService } from '../organizations-warehouse-ref.service';
+import { WarehouseUpdatedListener } from './warehouse-updated.listener';
 
 describe('WarehouseUpdatedListener', () => {
 	let listener: WarehouseUpdatedListener;

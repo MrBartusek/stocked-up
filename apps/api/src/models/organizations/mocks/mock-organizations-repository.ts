@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Types, UpdateQuery } from 'mongoose';
+import { FilterQuery, Types, UpdateQuery } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
+import { PageQueryDto } from '../../../dto/page-query.dto';
 import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { OrgValueCalculationStrategy } from '../schemas/org-settings';
 import { Organization } from '../schemas/organization.schema';
-import { OrganizationSecurityRole } from 'shared-types';
-import { PageQueryDto } from '../../../dto/page-query.dto';
-import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class MockOrganizationsRepository extends MockEntityRepository<Organization> {
