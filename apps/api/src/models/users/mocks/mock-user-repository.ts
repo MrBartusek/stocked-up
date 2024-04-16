@@ -1,4 +1,4 @@
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { User } from '../schemas/user.schema';
 
 export class MockUserRepository extends MockEntityRepository<User> {

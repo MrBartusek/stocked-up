@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { Warehouse } from '../schemas/warehouse.schema';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FilterQuery, Types } from 'mongoose';
 import { PageQueryDto } from '../../../dto/page-query.dto';
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { ProductDocument } from '../../products/schemas/product.schema';
 import { InventoryItem } from '../schemas/inventory-item.schema';
 

@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { Product } from '../schemas/product.schema';
 
 export class MockProductsRepository extends MockEntityRepository<Product> {

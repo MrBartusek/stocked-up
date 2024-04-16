@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Types, UpdateQuery } from 'mongoose';
-import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
+import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { OrgValueCalculationStrategy } from '../schemas/org-settings';
 import { Organization } from '../schemas/organization.schema';
 import { OrganizationSecurityRole } from 'shared-types';
