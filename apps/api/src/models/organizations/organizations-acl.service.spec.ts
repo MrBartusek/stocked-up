@@ -3,7 +3,7 @@ import { MockOrganizationsRepository } from './mocks/mock-organizations-reposito
 import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationRepository } from './organizations.repository';
 
-describe('OrganizationsRolesService', () => {
+describe('OrganizationsAclService', () => {
 	let service: OrganizationsAclService;
 
 	const mockOrgRepository = new MockOrganizationsRepository();
