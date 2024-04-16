@@ -8,7 +8,7 @@ export class OrganizationDeletedListener {
 	constructor(private readonly warehousesService: WarehousesService) {}
 
 	@OnEvent('organization.deleted', { async: true, suppressErrors: false })
-	async handleProductDelete(event: OrganizationDeleteEvent) {
+	async handleOrgDelete(event: OrganizationDeleteEvent) {
 		const warehouseList = event.payload.warehouses;
 
 		for (const warehouse of warehouseList) {
