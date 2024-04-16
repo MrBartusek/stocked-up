@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { WarehouseCreatedEvent } from '../../warehouses/events/warehouse-created.event';
+import { WarehouseUpdatedEvent } from '../../warehouses/events/warehouse-updated.event';
 import {
 	OrganizationsWarehouseRefService,
 	WarehouseReferenceData,
@@ -11,7 +11,7 @@ export class WarehouseUpdatedListener {
 	constructor(private readonly refService: OrganizationsWarehouseRefService) {}
 
 	@OnEvent('warehouse.updated', { async: true, suppressErrors: false })
-	async handleWarehouseUpdate(event: WarehouseCreatedEvent) {
+	async handleWarehouseUpdate(event: WarehouseUpdatedEvent) {
 		const org = event.payload.organization;
 		const data: WarehouseReferenceData = { id: event.id, name: event.payload.name };
 
