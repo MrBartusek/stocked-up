@@ -42,10 +42,9 @@ export class OrganizationsService {
 		id: mongoose.Types.ObjectId,
 		settings: FilterQuery<OrgSettingsDocument | null>,
 	) {
-		const org = await this.organizationRepository.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { settings: settings } },
-		);
+		const org = await this.organizationRepository.findOneByIdAndUpdate(id, {
+			$set: { settings: settings },
+		});
 		if (!org) return;
 
 		const event = new OrganizationUpdatedEvent(org);
