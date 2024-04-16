@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import { MockOrganizationsRepository } from './mocks/mock-organizations-repository';
 import { OrganizationRepository } from './organizations.repository';
 import { OrganizationsService } from './organizations.service';
+import { OrgValueCalculationStrategy } from './schemas/org-settings';
 
 describe('OrganizationsService', () => {
 	let service: OrganizationsService;
@@ -32,6 +33,10 @@ describe('OrganizationsService', () => {
 		}).compile();
 
 		service = module.get<OrganizationsService>(OrganizationsService);
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	it('should be defined', () => {
@@ -71,5 +76,27 @@ describe('OrganizationsService', () => {
 	it('should check if name is taken', async () => {
 		const taken = await service.nameTaken('taken');
 		expect(taken).toBe(true);
+	});
+
+	it('should update organization settings', async () => {
+		const org = await service.updateSettings(new Types.ObjectId(), {
+			valueCalculationStrategy: OrgValueCalculationStrategy.SellPrice,
+		});
+
+		expect(org.settings.valueCalculationStrategy).toBe(OrgValueCalculationStrategy.SellPrice);
+		expect(emitSpy).toHaveBeenCalledWith('organization.settings.updated', expect.anything());
+	});
+
+	it('should list all of user', async () => {
+		const orgs = await service.listAllForUser(new Types.ObjectId());
+
+		expect(orgs.length).toBeGreaterThan(1);
+	});
+
+	it('should paginate all of user', async () => {
+		const orgs = await service.paginateAllForUser(new Types.ObjectId(), { page: 1 });
+
+		expect(orgs.items.length).toBeGreaterThan(1);
+		expect(orgs.meta.page).toBe(1);
 	});
 });
