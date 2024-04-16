@@ -21,14 +21,10 @@ ignore:
   - "**/redis.factory.ts"
   - "**/*.exception.*"
 
-fixes:
-  - "apps/api/src/::"
-
 coverage:
-  range: 70..90
+  range: 65..80
   status:
     project:
       default:
-        target: 70%
-        informational: true
+        target: 65%
     patch: off
