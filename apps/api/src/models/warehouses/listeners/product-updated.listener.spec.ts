@@ -1,13 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrganizationUpdatedEvent } from '../../organizations/events/organization-updated.event';
-import { OrganizationSettingsUpdatedListener } from './organization-settings-updated.listener';
-import { WarehouseStatsService } from '../warehouse-stats.service';
-import { OrganizationDocument } from '../../organizations/schemas/organization.schema';
 import { Types } from 'mongoose';
-import { ProductUpdatedListener } from './product-updated.listener';
 import { OrganizationsService } from '../../organizations/organizations.service';
 import { ProductUpdatedEvent } from '../../products/events/product-updated.event';
 import { ProductDocument } from '../../products/schemas/product.schema';
+import { WarehouseStatsService } from '../warehouse-stats.service';
+import { ProductUpdatedListener } from './product-updated.listener';
 
 describe('ProductUpdatedListener', () => {
 	let listener: ProductUpdatedListener;

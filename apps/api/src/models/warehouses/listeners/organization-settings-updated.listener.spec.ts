@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrganizationUpdatedEvent } from '../../organizations/events/organization-updated.event';
-import { OrganizationSettingsUpdatedListener } from './organization-settings-updated.listener';
-import { WarehouseStatsService } from '../warehouse-stats.service';
-import { OrganizationDocument } from '../../organizations/schemas/organization.schema';
 import { Types } from 'mongoose';
+import { OrganizationUpdatedEvent } from '../../organizations/events/organization-updated.event';
+import { OrganizationDocument } from '../../organizations/schemas/organization.schema';
+import { WarehouseStatsService } from '../warehouse-stats.service';
+import { OrganizationSettingsUpdatedListener } from './organization-settings-updated.listener';
 
 describe('OrganizationSettingsUpdatedListener', () => {
 	let listener: OrganizationSettingsUpdatedListener;
