@@ -4,6 +4,8 @@ import { MockEntityRepository } from '../../../mocks/mock-entity-repository';
 import { OrgValueCalculationStrategy } from '../schemas/org-settings';
 import { Organization } from '../schemas/organization.schema';
 import { OrganizationSecurityRole } from 'shared-types';
+import { PageQueryDto } from '../../../dto/page-query.dto';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class MockOrganizationsRepository extends MockEntityRepository<Organization> {
@@ -56,5 +58,13 @@ export class MockOrganizationsRepository extends MockEntityRepository<Organizati
 			return this.findById(id);
 		}
 		return { ...this.findById(id), ...updateEntityData };
+	}
+
+	async paginateAcls(match: FilterQuery<Organization>, pageQueryDto: PageQueryDto) {
+		const paginateResult = await this.paginate(match, pageQueryDto);
+		return {
+			...paginateResult,
+			items: paginateResult.items.flatMap((org) => org.acls),
+		};
 	}
 }

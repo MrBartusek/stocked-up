@@ -100,4 +100,11 @@ describe('OrganizationsAclService', () => {
 
 		expect(exist).toBe(true);
 	});
+
+	it('should paginate rules', async () => {
+		const rules = await service.paginateRules(new Types.ObjectId(), { page: 1 });
+
+		expect(rules.items.length).toBeGreaterThan(1);
+		expect(rules.meta.page).toBe(1);
+	});
 });
