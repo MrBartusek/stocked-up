@@ -3,6 +3,7 @@ import { Types, UpdateQuery } from 'mongoose';
 import { MockEntityRepository } from '../../../mocks/mock-entity-repistory';
 import { OrgValueCalculationStrategy } from '../schemas/org-settings';
 import { Organization } from '../schemas/organization.schema';
+import { OrganizationSecurityRole } from 'shared-types';
 
 @Injectable()
 export class MockOrganizationsRepository extends MockEntityRepository<Organization> {
@@ -10,13 +11,36 @@ export class MockOrganizationsRepository extends MockEntityRepository<Organizati
 		super({
 			name: 'test-name',
 			currency: 'USD',
-			stats: { totalQuantity: 100, totalProducts: 100, totalValue: 100 },
-			settings: { valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice },
-			acls: [],
+			stats: {
+				totalQuantity: 100,
+				totalProducts: 100,
+				totalValue: 100,
+			},
+			settings: {
+				valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
+			},
+			acls: [
+				{
+					user: new Types.ObjectId(),
+					role: OrganizationSecurityRole.OWNER,
+				},
+				{
+					user: new Types.ObjectId(),
+					role: OrganizationSecurityRole.ADMIN,
+				},
+				{
+					user: new Types.ObjectId(),
+					role: OrganizationSecurityRole.MEMBER,
+				},
+				{
+					user: new Types.ObjectId(),
+					role: OrganizationSecurityRole.MEMBER,
+				},
+			],
 			warehouses: [
 				{
 					name: 'test-warehouse',
-					id: new Types.ObjectId() as any,
+					id: new Types.ObjectId(),
 				},
 			],
 		});
