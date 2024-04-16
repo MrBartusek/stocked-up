@@ -16,7 +16,6 @@ ignore:
 
   # Simple classes mainly constructor only
   - "**/*.type.*"
-  - "**/*.event.*"
   - "**/resend.factory.*"
   - "**/redis.factory.ts"
   - "**/*.exception.*"
