@@ -22,17 +22,16 @@ export class UserDeletedListener {
 		for await (const userOrg of userOrgList) {
 			const org = await this.organizationsAclService.deleteRule(userOrg._id, userId);
 			if (!org) continue;
-			const orgId = org._id;
 
-			const orgBecameEmpty = org.acls.length == 0;
+			const orgBecameEmpty = userOrg.acls.length == 1;
 			if (orgBecameEmpty) {
-				await this.deleteEmptyOrg(orgId, userId);
+				await this.deleteEmptyOrg(userOrg._id, userId);
 				return;
 			}
 
-			const hasOwner = await this.organizationsAclService.hasOwner(orgId);
+			const hasOwner = await this.organizationsAclService.hasOwner(userOrg._id);
 			if (!hasOwner) {
-				await this.replaceOrganizationOwner(orgId);
+				await this.replaceOrganizationOwner(userOrg._id);
 			}
 		}
 	}
