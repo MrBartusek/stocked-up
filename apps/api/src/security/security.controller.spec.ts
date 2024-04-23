@@ -1,20 +1,17 @@
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
+import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
+import { MockSecurityPipe } from '../mocks/mock-security.pipe';
+import { mockUserRequest } from '../mocks/mock-user-request';
+import { UsersService } from '../models/users/users.service';
+import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
+import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
+import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
+import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
+import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityController } from './security.controller';
 import { SecurityService } from './security.service';
-import { UsersService } from '../models/users/users.service';
-import { SecurityValidationPipe } from './pipes/security-validation.pipe';
-import { MockSecurityPipe } from '../mocks/mock-security.pipe';
-import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
-import { Types } from 'mongoose';
-import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
-import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
-import { describe } from 'node:test';
-import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
-import { OrganizationSecurityRole, PageDto, SecurityRuleDto } from 'shared-types';
-import { mockUserRequest } from '../mocks/mock-user-request';
-import e from 'express';
-import { PageQueryDto } from '../dto/page-query.dto';
-import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
 
 describe('SecurityController', () => {
 	let controller: SecurityController;
@@ -93,7 +90,6 @@ describe('SecurityController', () => {
 			const requester = new Types.ObjectId(request.user.id);
 
 			mockSecurityService.getUserRole.mockImplementation((org, user) => {
-				console.log(user);
 				if (targetId.equals(user)) {
 					return OrganizationSecurityRole.MEMBER;
 				} else if (requester.equals(user)) {
@@ -151,7 +147,6 @@ describe('SecurityController', () => {
 		const requester = new Types.ObjectId(request.user.id);
 
 		mockSecurityService.getUserRole.mockImplementation((org, user) => {
-			console.log(user);
 			if (targetId.equals(user)) {
 				return OrganizationSecurityRole.MEMBER;
 			} else if (requester.equals(user)) {

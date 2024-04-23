@@ -1,11 +1,10 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Request } from 'express';
 import { Types } from 'mongoose';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
 import { mockUserRequest } from '../../mocks/mock-user-request';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { BadRequestException } from '@nestjs/common';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
 
 describe('UsersController', () => {
 	let controller: UsersController;

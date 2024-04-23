@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
 import { UserDeletedEvent } from '../../users/events/user-deleted.event';
 import { UserDocument } from '../../users/schemas/user.schema';
 import { OrganizationsAclService } from '../organizations-acl.service';
 import { OrganizationsService } from '../organizations.service';
 import { UserDeletedListener } from './user-deleted.listener';
-import { OrganizationSecurityRole } from 'shared-types';
 
 describe('UserDeletedListener', () => {
 	let listener: UserDeletedListener;

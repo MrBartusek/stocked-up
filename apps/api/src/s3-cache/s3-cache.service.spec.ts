@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { S3CacheService, S3_CACHE_REDIS_PREFIX } from './s3-cache.service';
-import { S3Service } from '../s3/s3.service';
-import { RedisService } from '../redis/redis.service';
+import Redis from 'ioredis-mock';
 import { Readable } from 'stream';
 import Utils from '../helpers/utils';
-import Redis from 'ioredis-mock';
+import { RedisService } from '../redis/redis.service';
+import { S3Service } from '../s3/s3.service';
+import { S3CacheService, S3_CACHE_REDIS_PREFIX } from './s3-cache.service';
 
 describe('S3CacheService', () => {
 	let service: S3CacheService;

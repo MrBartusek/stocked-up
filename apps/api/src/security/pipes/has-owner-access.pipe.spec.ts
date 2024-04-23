@@ -1,13 +1,10 @@
-import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
-import { Test, TestingModule } from '@nestjs/testing';
+import { ForbiddenException } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { OrganizationSecurityRole } from 'shared-types';
 import { mockUserRequest } from '../../mocks/mock-user-request';
 import { SecurityServiceMock } from '../mocks/security-service.mock';
 import { SecurityService } from '../security.service';
-import { HasOrganizationAccessPipe } from './has-organization-access.pipe';
 import { HasOwnerAccessPipe } from './has-owner-access.pipe';
-import { OrganizationSecurityRole } from 'shared-types';
 
 const VALID_ORG_ID = new Types.ObjectId();
 const ORG_OWNER = new Types.ObjectId();

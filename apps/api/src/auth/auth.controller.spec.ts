@@ -1,15 +1,15 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { AuthEmailsService } from '../auth-emails/auth-emails.service';
+import { mockUserRequest } from '../mocks/mock-user-request';
+import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UserRegisterDto } from './dto/user-register.dto';
-import { BadRequestException } from '@nestjs/common';
-import { mockUserRequest } from '../mocks/mock-user-request';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
-import { UpdateEmailDto } from './dto/update-email.dto';
 import { DeleteAccountDto } from './dto/delete-account.dto';
+import { UpdateEmailDto } from './dto/update-email.dto';
+import { UserRegisterDto } from './dto/user-register.dto';
 
 describe('AuthController', () => {
 	let controller: AuthController;

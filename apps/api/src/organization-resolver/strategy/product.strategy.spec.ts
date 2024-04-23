@@ -1,7 +1,7 @@
-import { ProductsService } from '../../models/products/products.service';
-import { Types } from 'mongoose';
-import { ProductsStrategy } from './products.strategy';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
+import { ProductsService } from '../../models/products/products.service';
+import { ProductsStrategy } from './products.strategy';
 
 describe('ProductsStrategy', () => {
 	let strategy: ProductsStrategy;

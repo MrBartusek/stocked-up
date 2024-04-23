@@ -1,6 +1,6 @@
-import { OrganizationStrategy } from './organization.strategy';
-import { Types } from 'mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
+import { OrganizationStrategy } from './organization.strategy';
 
 describe('OrganizationStrategy', () => {
 	let strategy: OrganizationStrategy;

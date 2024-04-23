@@ -6,7 +6,6 @@ import { ImagesService } from '../../images/images.service';
 import { MockUserRepository } from './mocks/mock-user-repository';
 import { UserRepository } from './users.repository';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 describe('UsersService', () => {
 	let service: UsersService;

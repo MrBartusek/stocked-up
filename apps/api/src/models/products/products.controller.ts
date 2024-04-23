@@ -10,7 +10,7 @@ import {
 	Query,
 	UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, ProductDto } from 'shared-types';
 import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';

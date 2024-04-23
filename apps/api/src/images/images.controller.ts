@@ -1,5 +1,5 @@
 import { Controller, Get, Header, NotFoundException, Param, Res } from '@nestjs/common';
-import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { createReadStream } from 'node:fs';
 import { join } from 'node:path';

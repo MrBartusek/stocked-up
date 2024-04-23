@@ -1,10 +1,9 @@
-import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { Types } from 'mongoose';
+import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 import { UsersService } from '../models/users/users.service';
 import { AuthService } from './auth.service';
-import { MockUserRepository } from '../models/users/mocks/mock-user-repository';
 
 describe('AuthService', () => {
 	let service: AuthService;

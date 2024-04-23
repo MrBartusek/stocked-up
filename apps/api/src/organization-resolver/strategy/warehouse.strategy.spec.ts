@@ -1,7 +1,7 @@
-import { WarehouseStrategy } from './warehouse.strategy';
+import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { WarehousesService } from '../../models/warehouses/warehouses.service';
-import { Test, TestingModule } from '@nestjs/testing';
+import { WarehouseStrategy } from './warehouse.strategy';
 
 describe('WarehouseStrategy', () => {
 	let strategy: WarehouseStrategy;

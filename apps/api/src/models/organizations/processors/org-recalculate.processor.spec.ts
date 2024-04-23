@@ -1,13 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Job } from 'bull';
 import { Types } from 'mongoose';
-import { ProductsService } from '../../products/products.service';
-import { OrganizationsService } from '../organizations.service';
-import { ProductsCountJobData } from '../types/products-count-job-data';
-import { ProductsCountProcessor } from './products-count.processor';
-import { OrgRecalculateProcessor } from './org-recalculate.processor';
 import { WarehousesService } from '../../warehouses/warehouses.service';
+import { OrganizationsService } from '../organizations.service';
 import { OrgRecalculateJobData } from '../types/org-recalculate-job-data';
+import { OrgRecalculateProcessor } from './org-recalculate.processor';
 
 describe('OrgRecalculateProcessor', () => {
 	let processor: OrgRecalculateProcessor;

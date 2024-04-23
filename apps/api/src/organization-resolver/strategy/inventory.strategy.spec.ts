@@ -1,7 +1,7 @@
-import { Types } from 'mongoose';
-import { InventoryStrategy } from './inventory.strategy'; // Assuming this is the correct path to your InventoryStrategy class
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { InventoryService } from '../../models/inventory/inventory.service';
+import { InventoryStrategy } from './inventory.strategy'; // Assuming this is the correct path to your InventoryStrategy class
 
 describe('InventoryStrategy', () => {
 	let strategy: InventoryStrategy;

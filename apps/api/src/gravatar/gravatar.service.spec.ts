@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GravatarService } from './gravatar.service';
 import * as sharp from 'sharp';
+import { GravatarService } from './gravatar.service';
 
 // Both of these e-mails are controlled by me
 // So i can control if they are registered or not

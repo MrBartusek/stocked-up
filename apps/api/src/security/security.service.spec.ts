@@ -1,10 +1,10 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { OrganizationSecurityRole } from 'shared-types';
+import { PageQueryDto } from '../dto/page-query.dto';
 import { OrganizationsAclService } from '../models/organizations/organizations-acl.service';
 import { SecurityService } from './security.service';
-import { PageQueryDto } from '../dto/page-query.dto';
-import { BadRequestException } from '@nestjs/common';
 
 const PRIVILEGED_USER_ID = new Types.ObjectId();
 

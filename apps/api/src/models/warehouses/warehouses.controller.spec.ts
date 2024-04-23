@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { MockSecurityPipe } from '../../mocks/mock-security.pipe';
@@ -9,7 +10,6 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { MockWarehousesRepository } from './mocks/mock-warehouses-repository';
 import { WarehousesController } from './warehouses.controller';
 import { WarehousesService } from './warehouses.service';
-import { BadRequestException } from '@nestjs/common';
 
 describe('WarehousesController', () => {
 	let controller: WarehousesController;

@@ -1,18 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { Types } from 'mongoose';
-import { OrganizationsService } from '../../organizations/organizations.service';
-import { Job } from 'bull';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Job } from 'bull';
+import { Types } from 'mongoose';
 import { InventoryService } from '../../inventory/inventory.service';
+import { OrganizationsService } from '../../organizations/organizations.service';
+import { OrgValueCalculationStrategy } from '../../organizations/schemas/org-settings';
+import { OrganizationDocument } from '../../organizations/schemas/organization.schema';
+import { WarehouseRecalculatedEvent } from '../events/warehouse-recalculated.event';
+import { WarehouseRecalculateJobData } from '../types/warehouse-recalculate-job-data.type';
 import { WarehousesService } from '../warehouses.service';
 import { WarehouseRecalculateProcessor } from './warehouse-recalculate.processor';
-import { WarehouseRecalculateJobData } from '../types/warehouse-recalculate-job-data.type';
-import { OrgValueCalculationStrategy } from '../../organizations/schemas/org-settings';
-import {
-	Organization,
-	OrganizationDocument,
-} from '../../organizations/schemas/organization.schema';
-import { WarehouseRecalculatedEvent } from '../events/warehouse-recalculated.event';
 
 describe('WarehouseRecalculateProcessor', () => {
 	let processor: WarehouseRecalculateProcessor;
