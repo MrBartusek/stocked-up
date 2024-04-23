@@ -16,7 +16,7 @@ export class ProductsCountProcessor {
 	private readonly logger = new Logger(ProductsCountProcessor.name);
 
 	@Process()
-	async handleRecalculate(job: Job<ProductsCountJobData>): Promise<void> {
+	async handleCount(job: Job<ProductsCountJobData>): Promise<void> {
 		const orgId = new Types.ObjectId(job.data.organization);
 
 		const totalProduct = await this.productsService.countAll(orgId);
