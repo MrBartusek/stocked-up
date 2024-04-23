@@ -1,8 +1,8 @@
 import { BsBoxes, BsGlobeAmericas, BsTag, BsWallet } from 'react-icons/bs';
 import { OrganizationDto } from 'shared-types';
-import Currency from '../components/Helpers/Currency';
-import OrganizationSettingsButton from '../components/Organization/OrganizationActions';
-import OrganizationStatsChip from '../components/Organization/OrganizationStatsChip';
+import Currency from '../Helpers/Currency';
+import OrganizationSettingsButton from '../Organization/OrganizationActions';
+import OrganizationStatsChip from '../Organization/OrganizationStatsChip';
 
 export interface OrganizationCardProps {
 	organization: OrganizationDto;

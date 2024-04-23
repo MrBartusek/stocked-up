@@ -7,7 +7,7 @@ import DashboardLayout from '../../Layout/DasboardLayout';
 import LoadMoreButton from '../../LoadMoreButton';
 import Loader from '../../Loader';
 import NoOrganizationsInfo from '../../Organization/NoOrganizationsInfo';
-import OrganizationCard from '../../../OrganizationCard/OrganizationCard';
+import OrganizationCard from '../../OrganizationCard/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationSelectPage() {
