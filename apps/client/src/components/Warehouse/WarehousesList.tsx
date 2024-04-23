@@ -19,7 +19,7 @@ function WarehousesList({ organization, disableExpander }: WarehousesListProps) 
 	const needExpander = warehouseElements.length > 3;
 
 	return (
-		<div className="my-4">
+		<div className="mx-4 my-2">
 			{disableExpander ? warehouseElements : warehouseElements.slice(0, needExpander ? 3 : 4)}
 			{needExpander && !disableExpander && (
 				<ExpandableList>{warehouseElements.slice(3)}</ExpandableList>

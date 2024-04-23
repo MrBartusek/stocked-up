@@ -7,7 +7,7 @@ import DashboardLayout from '../../Layout/DasboardLayout';
 import LoadMoreButton from '../../LoadMoreButton';
 import Loader from '../../Loader';
 import NoOrganizationsInfo from '../../Organization/NoOrganizationsInfo';
-import OrganizationCard from '../../Organization/OrganizationCard';
+import OrganizationCard from '../../../OrganizationCard/OrganizationCard';
 import { SecondaryNavbar } from '../../SecondaryNavbar';
 
 function OrganizationSelectPage() {
@@ -24,7 +24,7 @@ function OrganizationSelectPage() {
 					<IconButton icon={BsPlusCircle}>New</IconButton>
 				</Link>
 			</SecondaryNavbar>
-			<Container className="flex flex-col">
+			<Container className="flex flex-col gap-12 py-8">
 				<Loader
 					isLoading={isLoading}
 					isError={error != null}

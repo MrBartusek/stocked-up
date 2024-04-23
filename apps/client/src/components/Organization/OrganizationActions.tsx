@@ -12,6 +12,7 @@ function OrganizationSettingsButton({ organization }: OrganizationSettingsButton
 		<Link to={`/dashboard/settings/${organization.id}`}>
 			<ActionButton
 				icon={BsSliders}
+				className="border border-gray-200"
 				title="Settings"
 			/>
 		</Link>

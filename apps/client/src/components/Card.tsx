@@ -12,7 +12,7 @@ function Card(props: CardProps) {
 		<div
 			{...props}
 			className={classNames(
-				'flex-1 rounded-md border border-gray-300 bg-gray-50 px-8 py-10',
+				'flex-1 rounded-md border border-gray-300 bg-gray-50 px-8 py-10 shadow-sm',
 				props.className,
 			)}
 		/>

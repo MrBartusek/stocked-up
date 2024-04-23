@@ -14,12 +14,12 @@ function WarehouseInfoRow({ warehouse, organizationId }: WarehouseInfoRowProps) 
 		<Link
 			className={classNames(
 				'flex items-center justify-between border-b border-gray-200',
-				'p-5 ps-6 hover:bg-gray-150',
+				'px-4 py-5 hover:bg-gray-150',
 			)}
 			to={Utils.dashboardUrl(organizationId, warehouse.id)}
 		>
 			<div className="flex items-center gap-6">
-				<div className="text-xl text-primary">
+				<div className="text-xl text-secondary">
 					<BsBoxSeamFill />
 				</div>
 				<h4>{warehouse.name}</h4>
