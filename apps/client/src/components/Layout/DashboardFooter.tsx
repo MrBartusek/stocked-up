@@ -14,7 +14,9 @@ function DashboardFooter() {
 	return (
 		<footer className="border-t border-gray-300 bg-gray-200 px-4 py-8">
 			<Container className="flex justify-between text-sm text-muted">
-				<div>{stockedUpLink}</div>
+				<div>
+					<span className="font-bold">StockedUp</span> • Inventory Management System
+				</div>
 				<div>
 					{stockedUpLink} &copy; {new Date().getFullYear()}
 				</div>
