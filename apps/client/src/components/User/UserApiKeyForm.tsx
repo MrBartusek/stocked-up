@@ -1,12 +1,12 @@
-import { BsArrowRepeat, BsClipboard2, BsEye, BsEyeSlash } from 'react-icons/bs';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { BsClipboard2, BsEye, BsEyeSlash } from 'react-icons/bs';
+import useApiKey from '../../hooks/useApiKey';
 import ActionButton from '../ActionButton';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
-import IconButton from '../IconButton';
-import { useState } from 'react';
-import useApiKey from '../../hooks/useApiKey';
-import toast from 'react-hot-toast';
+import RegenerateApiKeyButton from '../RegenerateApiKeyButton';
 
 function UserApiKeyForm() {
 	const [showKey, setShowKey] = useState(false);
@@ -49,7 +49,7 @@ function UserApiKeyForm() {
 				</FormField>
 			</Form>
 
-			<IconButton icon={BsArrowRepeat}>Generate new API Key</IconButton>
+			<RegenerateApiKeyButton />
 		</div>
 	);
 }
