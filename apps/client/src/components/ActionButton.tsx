@@ -19,7 +19,7 @@ function ActionButton({ icon, className, ...props }: ActionButtonProps) {
 			{...props}
 			className={classNames(
 				'rounded-md p-2 hover:bg-gray-300 disabled:pointer-events-none disabled:text-gray-400',
-				'flex items-center justify-center',
+				'flex items-center justify-center active:bg-gray-400',
 				className,
 			)}
 		>
