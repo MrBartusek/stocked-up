@@ -38,6 +38,10 @@ body,
   @apply text-muted hover:underline;
 }
 
-code {
+code, pre{
   @apply bg-gray-150 px-1.5 py-1 rounded-md text-pink-600;
+}
+
+pre {
+  @apply px-4 py-4 my-4
 }

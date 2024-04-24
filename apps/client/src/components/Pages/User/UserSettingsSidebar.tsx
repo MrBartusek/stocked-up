@@ -1,4 +1,11 @@
-import { BsBoxArrowLeft, BsPersonFill, BsShieldLockFill } from 'react-icons/bs';
+import {
+	BsBoxArrowLeft,
+	BsCodeSlash,
+	BsKey,
+	BsKeyFill,
+	BsPersonFill,
+	BsShieldLockFill,
+} from 'react-icons/bs';
 import ConfirmLogoutButton from '../../ConfirmLogoutButton';
 import SidebarLink from '../../Sidebar/SidebarLink';
 import SidebarSection from '../../Sidebar/SidebarSection';
@@ -18,6 +25,18 @@ function UserSettingsSidebar() {
 					to={`${baseUrl}/security`}
 					icon={BsShieldLockFill}
 					text="Privacy & Security"
+				/>
+			</SidebarSection>
+			<SidebarSection name="Developer">
+				<SidebarLink
+					to={`${baseUrl}/developer`}
+					icon={BsCodeSlash}
+					text="Documentation"
+				/>
+				<SidebarLink
+					to={`${baseUrl}/developer/keys`}
+					icon={BsKeyFill}
+					text="API Key"
 				/>
 			</SidebarSection>
 			<SidebarSection name="Actions">

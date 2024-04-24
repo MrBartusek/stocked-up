@@ -47,6 +47,8 @@ import WarehousesCreatePage from './Pages/Warehouse/WarehousesCreatePage';
 import WarehousesListPage from './Pages/Warehouse/WarehousesListPage';
 import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
+import UserDocumentationTab from './Pages/User/UserDocumentationTab';
+import UserApiKeysTab from './Pages/User/UserApiKeyTab';
 
 function Router() {
 	const router = createBrowserRouter([
@@ -109,7 +111,6 @@ function Router() {
 				},
 				{
 					path: 'user',
-					element: <Outlet />,
 					children: [
 						{
 							path: 'me',
@@ -142,6 +143,19 @@ function Router() {
 								{
 									path: 'change-password',
 									element: <UserPasswordChangeTab />,
+								},
+								{
+									path: 'developer',
+									children: [
+										{
+											path: '',
+											element: <UserDocumentationTab />,
+										},
+										{
+											path: 'keys',
+											element: <UserApiKeysTab />,
+										},
+									],
 								},
 							],
 						},
