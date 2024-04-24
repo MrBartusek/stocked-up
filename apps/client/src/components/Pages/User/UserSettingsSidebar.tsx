@@ -1,7 +1,6 @@
 import {
 	BsBoxArrowLeft,
 	BsCodeSlash,
-	BsKey,
 	BsKeyFill,
 	BsPersonFill,
 	BsShieldLockFill,
