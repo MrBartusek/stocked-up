@@ -5,17 +5,23 @@ import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
 import IconButton from '../IconButton';
 import { useState } from 'react';
+import useApiKey from '../../hooks/useApiKey';
+import toast from 'react-hot-toast';
 
 function UserApiKeyForm() {
 	const [showKey, setShowKey] = useState(false);
+	const { apiKey } = useApiKey();
 
 	function handleEyeClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		event.preventDefault();
 		setShowKey((show) => !show);
 	}
 
-	function handleCopy(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+	async function handleCopy(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		event.preventDefault();
+		if (!apiKey) return;
+		toast.success('Copied API Key to clipboard', { id: 'api-key-clipboard' });
+		await navigator.clipboard.writeText(apiKey);
 	}
 
 	return (
@@ -26,7 +32,8 @@ function UserApiKeyForm() {
 					hint="Use this API key for each request"
 				>
 					<FormInput
-						value="0f5b995f-0483-4cfb-aa29-aa81d9b9987f"
+						value={apiKey || '...'}
+						type={showKey ? 'text' : 'password'}
 						readOnly
 					/>
 					<div className="flex">
