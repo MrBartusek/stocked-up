@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
+import * as crypto from 'node:crypto';
 import { ApiKeyDto } from 'shared-types';
 import { UserRepository } from '../models/users/users.repository';
-import * as crypto from 'node:crypto';
 
 @Injectable()
 export class ApiKeysService {

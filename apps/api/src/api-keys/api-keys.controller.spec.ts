@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { mockUserRequest } from '../mocks/mock-user-request';
 import { ApiKeysController } from './api-keys.controller';
 import { ApiKeysService } from './api-keys.service';
-import { mockUserRequest } from '../mocks/mock-user-request';
 
 describe('ApiKeysController', () => {
 	let controller: ApiKeysController;

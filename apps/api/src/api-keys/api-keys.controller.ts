@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiExcludeController, ApiHideProperty, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController } from '@nestjs/swagger';
+import { Request } from 'express';
 import { Types } from 'mongoose';
+import { ApiKeyDto } from 'shared-types';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { ApiKeysService } from './api-keys.service';
-import { Request } from 'express';
-import { ApiKeyDto } from 'shared-types';
 
 @Controller('api-keys')
 @ApiExcludeController()

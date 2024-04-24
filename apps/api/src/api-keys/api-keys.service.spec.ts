@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ApiKeysService } from './api-keys.service';
-import { UserRepository } from '../models/users/users.repository';
 import { Types } from 'mongoose';
+import { UserRepository } from '../models/users/users.repository';
+import { ApiKeysService } from './api-keys.service';
 
 describe('ApiKeysService', () => {
 	let service: ApiKeysService;
