@@ -1,4 +1,4 @@
-import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DashboardContainer from './DashboardContainer';
 import ApplicationError from './Errors/ApplicationError';
 import PassContextOutlet from './Helpers/PassContextOutlet';
@@ -32,9 +32,11 @@ import ProductsCreatePage from './Pages/Product/ProductsCreatePage';
 import ProductsListPage from './Pages/Product/ProductsListPage';
 import ProductsPage from './Pages/Product/ProductsPage';
 import RegisterPage from './Pages/RegisterPage';
+import UserApiKeysTab from './Pages/User/UserApiKeyTab';
 import UserConfirmEmailTab from './Pages/User/UserConfirmEmailTab';
 import UserDeleteTab from './Pages/User/UserDeleteTab';
 import UserDetailsTab from './Pages/User/UserDetailsTab';
+import UserDocumentationTab from './Pages/User/UserDocumentationTab';
 import UserEmailChangeTab from './Pages/User/UserEmailChangeTab';
 import UserPasswordChangeTab from './Pages/User/UserPasswordChangeTab';
 import UserSecurityTab from './Pages/User/UserSecurityTab';
@@ -47,8 +49,6 @@ import WarehousesCreatePage from './Pages/Warehouse/WarehousesCreatePage';
 import WarehousesListPage from './Pages/Warehouse/WarehousesListPage';
 import WarehousesPage from './Pages/Warehouse/WarehousesPage';
 import { ProtectedRoute, PublicRoute } from './SpecialRoutes';
-import UserDocumentationTab from './Pages/User/UserDocumentationTab';
-import UserApiKeysTab from './Pages/User/UserApiKeyTab';
 
 function Router() {
 	const router = createBrowserRouter([
