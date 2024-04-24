@@ -5,9 +5,11 @@ import { Types } from 'mongoose';
 import { ApiKeyDto } from 'shared-types';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { ApiKeysService } from './api-keys.service';
+import { NotDemoGuard } from '../models/users/guards/not-demo.guard';
 
 @Controller('api-keys')
 @ApiExcludeController()
+@UseGuards(NotDemoGuard)
 @UseGuards(AuthenticatedGuard)
 export class ApiKeysController {
 	constructor(private readonly apiKeysService: ApiKeysService) {}
