@@ -1,3 +1,4 @@
+import { ApiKeyDto } from './ApiKeyDto';
 import { IImageDto } from './ImageDto';
 import { OrganizationSecurityRole } from './OrganizationSecurityRole';
 import { SimpleResponseDto } from './SimpleResponseDto';
@@ -73,6 +74,7 @@ export {
     IResetPasswordDto,
     IChangePasswordDto,
     IUpdateEmailDto,
-    IDeleteAccountDto
+    IDeleteAccountDto,
+    ApiKeyDto,
 };
 

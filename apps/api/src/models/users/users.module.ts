@@ -12,6 +12,6 @@ import { UsersService } from './users.service';
 	imports: [MongooseModuleHelper.forFeature(User, UserSchema), ImagesModule, GravatarModule],
 	controllers: [UsersController],
 	providers: [UsersService, UserRepository, UsersTokenService],
-	exports: [UsersService, UsersTokenService],
+	exports: [UsersService, UsersTokenService, UserRepository],
 })
 export class UsersModule {}
