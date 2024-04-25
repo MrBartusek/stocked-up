@@ -1,15 +1,14 @@
 import { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsClipboard2, BsEye, BsEyeSlash } from 'react-icons/bs';
+import { UserContext } from '../../context/UserContext';
 import useApiKey from '../../hooks/useApiKey';
 import ActionButton from '../ActionButton';
 import Form from '../Form/Form';
 import FormField from '../Form/FormField';
 import FormInput from '../Form/FormInput';
-import RegenerateApiKeyButton from '../RegenerateApiKeyButton';
-import useUser from '../../hooks/useUser';
-import { UserContext } from '../../context/UserContext';
 import Alert from '../Helpers/Alert';
+import RegenerateApiKeyButton from '../RegenerateApiKeyButton';
 
 function UserApiKeyForm() {
 	const { apiKey, error } = useApiKey();
