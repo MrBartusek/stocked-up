@@ -8,10 +8,13 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
+import { BearerStrategy } from './strategies/bearer.strategy';
+import { ApiKeysModule } from '../api-keys/api-keys.module';
 
 @Module({
 	imports: [
 		PassportModule.register({ session: true }),
+		ApiKeysModule,
 		UsersModule,
 		forwardRef(() => AuthEmailsModule),
 	],
@@ -19,6 +22,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 	providers: [
 		AuthService,
 		LocalStrategy,
+		BearerStrategy,
 		SessionSerializer,
 		UsernameNotTakenRule,
 		EmailNotTakenRule,

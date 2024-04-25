@@ -10,7 +10,7 @@ import { NotDemoGuard } from '../models/users/guards/not-demo.guard';
 @Controller('api-keys')
 @ApiExcludeController()
 @UseGuards(NotDemoGuard)
-@UseGuards(AuthGuard)
+@UseGuards(new AuthGuard({ disablePublicApiAccess: true }))
 export class ApiKeysController {
 	constructor(private readonly apiKeysService: ApiKeysService) {}
 
