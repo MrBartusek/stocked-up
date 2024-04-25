@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import * as crypto from 'node:crypto';
 import { ApiKeyDto } from 'shared-types';
+import { UserProfile } from '../models/users/schemas/user-profile.schema';
 import { UserRepository } from '../models/users/users.repository';
 
 @Injectable()
@@ -28,6 +29,19 @@ export class ApiKeysService {
 		if (!user) return null;
 
 		return { user: userId.toString(), apiKey };
+	}
+
+	async validateKey(input: string): Promise<UserProfile | null> {
+		const [userIdString] = input.split('.');
+		if (!userIdString) return null;
+		const userId = new Types.ObjectId(userIdString);
+
+		const user = await this.userRepository.findById(userId);
+		if (!user) return null;
+
+		const apiKey = user.auth.apiKey;
+		const keyValid = apiKey == input;
+		return keyValid ? user.profile : null;
 	}
 
 	private generateApiKey(userId: Types.ObjectId): string {

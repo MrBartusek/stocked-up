@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { UserRepository } from '../models/users/users.repository';
 import { ApiKeysService } from './api-keys.service';
+import { profile } from 'node:console';
 
 describe('ApiKeysService', () => {
 	let service: ApiKeysService;
@@ -75,5 +76,47 @@ describe('ApiKeysService', () => {
 		});
 		const [user] = dto.apiKey.split('.');
 		expect(user).toEqual(userId.toString());
+	});
+
+	describe('Validate key', () => {
+		it('should get user on valid key', async () => {
+			const userId = new Types.ObjectId();
+			mockUserRepository.findById.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: 'password',
+					apiKey: `${userId}.current-key`,
+				},
+			});
+
+			const user = await service.validateKey(`${userId}.current-key`);
+			expect(user.username).toBe('test');
+		});
+
+		it('should not get user on invalid key', async () => {
+			const userId = new Types.ObjectId();
+			mockUserRepository.findById.mockResolvedValue({
+				profile: {
+					username: 'test',
+				},
+				auth: {
+					password: 'password',
+					apiKey: `${userId}.current-key`,
+				},
+			});
+
+			const user = await service.validateKey(`${userId}.invalid-key`);
+			expect(user).toBeNull();
+		});
+
+		it('should not get invalid user', async () => {
+			mockUserRepository.findById.mockResolvedValue(null);
+
+			const user = await service.validateKey(`${new Types.ObjectId()}.key`);
+
+			expect(user).toBeNull();
+		});
 	});
 });
