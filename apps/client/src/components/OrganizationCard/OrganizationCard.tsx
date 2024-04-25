@@ -9,7 +9,7 @@ export interface OrganizationCardProps {
 
 function OrganizationCard({ organization }: OrganizationCardProps) {
 	return (
-		<Card className="!p-0">
+		<Card className="pb--4 !px-0 !pt-0 pb-12">
 			<OrganizationCardHeader organization={organization} />
 			<WarehousesList organization={organization} />
 		</Card>
