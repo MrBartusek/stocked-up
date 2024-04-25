@@ -13,7 +13,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { PageDto, ProductDto } from 'shared-types';
-import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -27,7 +27,7 @@ import { Product } from './schemas/product.schema';
 
 @ApiTags('products')
 @Controller('products')
-@UseGuards(AuthenticatedGuard)
+@UseGuards(AuthGuard)
 @Injectable()
 export class ProductsController {
 	constructor(private readonly productsService: ProductsService) {}

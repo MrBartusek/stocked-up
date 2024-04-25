@@ -14,7 +14,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { PrivateUserDto, UserDto } from 'shared-types';
-import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
@@ -22,7 +22,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 @ApiTags('users')
-@UseGuards(AuthenticatedGuard)
+@UseGuards(AuthGuard)
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 

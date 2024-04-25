@@ -15,7 +15,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { BasicInventoryItemDto, InventoryItemDto, PageDto } from 'shared-types';
-import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -30,7 +30,7 @@ import { InventoryItem } from './schemas/inventory-item.schema';
 
 @ApiTags('inventory')
 @Controller('inventory')
-@UseGuards(AuthenticatedGuard)
+@UseGuards(AuthGuard)
 export class InventoryController {
 	constructor(private readonly inventoryService: InventoryService) {}
 

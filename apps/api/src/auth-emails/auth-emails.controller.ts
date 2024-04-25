@@ -2,7 +2,7 @@ import { Body, Controller, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { ParseObjectIdPipe } from '../pipes/prase-object-id.pipe';
 import { AuthEmailsService } from './auth-emails.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -13,7 +13,7 @@ export class AuthEmailsController {
 	constructor(private readonly authEmailsService: AuthEmailsService) {}
 
 	@Post('confirm-email/start')
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(AuthGuard)
 	async startEmailConfirmation(@Req() request: Request): Promise<any> {
 		const userId = new Types.ObjectId(request.user.id);
 		await this.authEmailsService.sendEmailConfirmation(userId);

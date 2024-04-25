@@ -17,7 +17,7 @@ import { Request } from 'express';
 import { Types } from 'mongoose';
 import { OrganizationDto, OrganizationSecurityRole, PageDto } from 'shared-types';
 import { setTimeout } from 'timers/promises';
-import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { PageQueryValidationPipe } from '../../pipes/page-query-validation.pipe';
 import { ParseObjectIdPipe } from '../../pipes/prase-object-id.pipe';
@@ -35,7 +35,7 @@ import { Organization } from './schemas/organization.schema';
 
 @ApiTags('organizations')
 @Controller('organizations')
-@UseGuards(AuthenticatedGuard)
+@UseGuards(AuthGuard)
 export class OrganizationsController {
 	constructor(
 		private readonly organizationsService: OrganizationsService,

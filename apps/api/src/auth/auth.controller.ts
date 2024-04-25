@@ -21,7 +21,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { DeleteAccountDto } from './dto/delete-account.dto';
 import { UpdateEmailDto } from './dto/update-email.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { AuthenticatedGuard } from './guards/authenticated.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
@@ -41,7 +41,7 @@ export class AuthController {
 		return { message: 'Logged in!', statusCode: 200 };
 	}
 
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(AuthGuard)
 	@HttpCode(200)
 	@Post('logout')
 	logout(@Req() request: Request): Promise<any> {
@@ -69,7 +69,7 @@ export class AuthController {
 
 	@Post('change-password')
 	@UseGuards(NotDemoGuard)
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(AuthGuard)
 	async changePassword(
 		@Req() request: Request,
 		@Body() body: ChangePasswordDto,
@@ -87,7 +87,7 @@ export class AuthController {
 
 	@Post('change-email')
 	@UseGuards(NotDemoGuard)
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(AuthGuard)
 	async changeEmail(@Req() request: Request, @Body() dto: UpdateEmailDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);
@@ -103,7 +103,7 @@ export class AuthController {
 	}
 
 	@Delete('delete')
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(AuthGuard)
 	@UseGuards(NotDemoGuard)
 	async deleteAccount(@Req() request: Request, @Body() dto: DeleteAccountDto) {
 		const userId = new Types.ObjectId(request.user.id);

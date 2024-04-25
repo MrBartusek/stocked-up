@@ -3,14 +3,14 @@ import { ApiExcludeController } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { ApiKeyDto } from 'shared-types';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { ApiKeysService } from './api-keys.service';
 import { NotDemoGuard } from '../models/users/guards/not-demo.guard';
 
 @Controller('api-keys')
 @ApiExcludeController()
 @UseGuards(NotDemoGuard)
-@UseGuards(AuthenticatedGuard)
+@UseGuards(AuthGuard)
 export class ApiKeysController {
 	constructor(private readonly apiKeysService: ApiKeysService) {}
 
