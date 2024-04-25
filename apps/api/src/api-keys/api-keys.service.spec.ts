@@ -92,7 +92,7 @@ describe('ApiKeysService', () => {
 			});
 
 			const user = await service.validateKey(`${userId}.current-key`);
-			expect(user.username).toBe('test');
+			expect(user.profile.username).toBe('test');
 		});
 
 		it('should not get user on invalid key', async () => {

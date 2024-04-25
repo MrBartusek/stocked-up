@@ -4,6 +4,7 @@ import * as crypto from 'node:crypto';
 import { ApiKeyDto } from 'shared-types';
 import { UserProfile } from '../models/users/schemas/user-profile.schema';
 import { UserRepository } from '../models/users/users.repository';
+import { UserDocument } from '../models/users/schemas/user.schema';
 
 @Injectable()
 export class ApiKeysService {
@@ -31,7 +32,7 @@ export class ApiKeysService {
 		return { user: userId.toString(), apiKey };
 	}
 
-	async validateKey(input: string): Promise<UserProfile | null> {
+	async validateKey(input: string): Promise<UserDocument | null> {
 		const [userIdString] = input.split('.');
 		if (!userIdString) return null;
 		const userId = new Types.ObjectId(userIdString);
@@ -41,7 +42,7 @@ export class ApiKeysService {
 
 		const apiKey = user.auth.apiKey;
 		const keyValid = apiKey == input;
-		return keyValid ? user.profile : null;
+		return keyValid ? user : null;
 	}
 
 	private generateApiKey(userId: Types.ObjectId): string {
