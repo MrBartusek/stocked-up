@@ -14,7 +14,7 @@ import { ICreateOrganizationDto } from './organizations/ICreateOrganizationDto';
 import { OrganizationDto } from './organizations/OrganizationDto';
 import { IPatchOrganizationSettingsDto } from './organizations/PatchOrganizationSettingsDto';
 import { SecurityRuleDto } from './organizations/SecurityRuleDto';
-import { IUpdateOrganizationDto } from './organizations/UpdateOrganizationDto';
+import { IUpdateOrganizationDto } from './organizations/IUpdateOrganizationDto';
 import { IPageQueryDto } from './page/IPageQueryDto';
 import { PageDto } from './page/PageDto';
 import { PageMeta } from './page/PageMeta';
