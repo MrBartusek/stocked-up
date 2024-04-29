@@ -21,7 +21,9 @@ function OrganizationCardHeader({ organization }: OrganizationCardProps) {
 			<div className="flex items-center gap-4">
 				<div className="hidden items-center gap-3 md:flex">
 					<OrganizationStatsChip icon={BsWallet}>
-						<Currency>{organization.stats.totalValue}</Currency>
+						<Currency suffix={organization.settings.currency}>
+							{organization.stats.totalValue}
+						</Currency>
 					</OrganizationStatsChip>
 					<OrganizationStatsChip icon={BsTag}>
 						{organization.stats.totalProducts}

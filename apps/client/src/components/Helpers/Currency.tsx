@@ -4,15 +4,17 @@ import { Utils } from '../../utils/utils';
 
 export interface CurrencyProps {
 	children: string | number;
+	suffix?: string;
 }
 
-function Currency({ children }: CurrencyProps) {
+function Currency({ children, suffix }: CurrencyProps) {
 	const { organization } = useContext(CurrentAppContext);
+	const resolvedSuffix = organization?.settings.currency || 'USD';
 
 	const value = useMemo(() => Utils.humanizeNumber(Number(children)), [children]);
 	return (
 		<div className="flex items-baseline gap-1">
-			{value} <div className="text-muted">{organization?.settings.currency || 'USD'}</div>
+			{value} <div className="text-muted">{suffix || resolvedSuffix}</div>
 		</div>
 	);
 }
