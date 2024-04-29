@@ -32,6 +32,7 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsService } from './organizations.service';
 import { OrgSettings } from './schemas/org-settings';
 import { Organization } from './schemas/organization.schema';
+import { HasAdminAccessPipe } from '../../security/pipes/has-admin-access.pipe';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -89,7 +90,7 @@ export class OrganizationsController {
 	@Put(':id')
 	@ApiOperation({ summary: 'Update a organization by id' })
 	async update(
-		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasAdminAccessPipe) id: Types.ObjectId,
 		@Body() dto: UpdateOrganizationDto,
 	): Promise<OrganizationDto> {
 		const org = await this.organizationsService.update(id, dto);
@@ -123,7 +124,7 @@ export class OrganizationsController {
 	@Patch(':id/settings')
 	@ApiOperation({ summary: 'Update organization settings by id' })
 	async updateSettings(
-		@Param('id', ParseObjectIdPipe, HasOrganizationAccessPipe) id: Types.ObjectId,
+		@Param('id', ParseObjectIdPipe, HasAdminAccessPipe) id: Types.ObjectId,
 		@Body() patchOrganizationSettingsDto: PatchOrganizationSettingsDto,
 	): Promise<OrgSettings> {
 		const org = await this.organizationsService.updateSettings(id, patchOrganizationSettingsDto);

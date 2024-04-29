@@ -1,26 +1,17 @@
 import { BsTrashFill } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
-import { OrganizationDto } from 'shared-types';
-import useUserRole from '../../hooks/useUserRole';
+import { Link } from 'react-router-dom';
 import IconButton from '../IconButton';
 
-export interface OrganizationDeleteButtonProps {
-	organization: OrganizationDto;
-}
-
-function OrganizationDeleteButton({ organization }: OrganizationDeleteButtonProps) {
-	const { role } = useUserRole(organization.id);
-	const navigate = useNavigate();
-
+function OrganizationDeleteButton() {
 	return (
-		<IconButton
-			variant="danger"
-			icon={BsTrashFill}
-			disabled={role != 'owner'}
-			onClick={() => navigate('delete')}
-		>
-			Delete organization
-		</IconButton>
+		<Link to="delete">
+			<IconButton
+				variant="danger"
+				icon={BsTrashFill}
+			>
+				Delete organization
+			</IconButton>
+		</Link>
 	);
 }
 export default OrganizationDeleteButton;

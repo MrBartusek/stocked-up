@@ -6,9 +6,14 @@ import HeaderWithHint from '../../HeaderWithHint';
 import Currency from '../../Helpers/Currency';
 import IconButton from '../../IconButton';
 import OrganizationDangerZone from '../../Organization/OrganizationDangerZone';
+import useUserRole from '../../../hooks/useUserRole';
+import { SecurityUtils } from '../../../utils/securityUtils';
 
 function OrganizationDetailsTab() {
 	const organization = useOutletContext<OrganizationDto>();
+	const { role } = useUserRole(organization.id);
+
+	const canEdit = role && SecurityUtils.isRoleEnough(role, 'admin');
 
 	return (
 		<div className="flex flex-col gap-14">
@@ -29,14 +34,16 @@ function OrganizationDetailsTab() {
 						'total value': <Currency>{organization?.stats.totalValue}</Currency>,
 					}}
 				/>
-				<div className="py-6">
-					<Link
-						to="update"
-						className="inline-block"
-					>
-						<IconButton icon={BsPencil}>Edit organization details</IconButton>
-					</Link>
-				</div>
+				{canEdit && (
+					<div className="py-6">
+						<Link
+							to="update"
+							className="inline-block"
+						>
+							<IconButton icon={BsPencil}>Edit organization details</IconButton>
+						</Link>
+					</div>
+				)}
 				<OrganizationDangerZone organization={organization} />
 			</div>
 		</div>

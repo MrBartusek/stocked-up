@@ -3,7 +3,7 @@ import Alert from './Helpers/Alert';
 
 function NoPermissionsAlert() {
 	return (
-		<Alert className="my-12 flex-col py-10">
+		<Alert className="my-12 flex-col !items-start p-10">
 			<div className="flex items-center gap-2 text-xl">
 				<BsShieldLock /> You do not have permissions to do that.
 			</div>
