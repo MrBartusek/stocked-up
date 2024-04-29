@@ -16,9 +16,6 @@ export class Organization {
 	@Prop({ required: true })
 	name: string;
 
-	@Prop({ default: 'USD' })
-	currency: string;
-
 	@Prop({ type: OrgStatsSchema, default: {} })
 	stats: OrgStats;
 
@@ -35,7 +32,6 @@ export class Organization {
 		return {
 			id: document._id,
 			name: document.name,
-			currency: document.currency,
 			stats: document.stats,
 			settings: document.settings,
 			warehouses: document.warehouses,

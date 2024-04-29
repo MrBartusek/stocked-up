@@ -18,7 +18,6 @@ export interface OrganizationUpdateFormProps {
 
 type Inputs = {
 	name: string;
-	currency: string;
 };
 
 function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
@@ -59,17 +58,6 @@ function OrganizationUpdateForm({ organization }: OrganizationUpdateFormProps) {
 					placeholder="My company"
 					required
 					{...register('name', { required: true })}
-				/>
-			</FormField>
-
-			<FormField
-				label="Currency"
-				required
-			>
-				<FormInput
-					placeholder="USD"
-					required
-					{...register('currency', { required: true })}
 				/>
 			</FormField>
 

@@ -22,6 +22,7 @@
         "turbo": "^1.10.13"
     },
     "dependencies": {
+        "country-code-enum": "^1.0.5",
         "dotenv-cli": "^7.3.0"
     }
 }

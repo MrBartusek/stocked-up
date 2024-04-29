@@ -11,7 +11,6 @@ export class MockOrganizationsRepository extends MockEntityRepository<Organizati
 	constructor() {
 		super({
 			name: 'test-name',
-			currency: 'USD',
 			stats: {
 				totalQuantity: 100,
 				totalProducts: 100,
@@ -19,6 +18,7 @@ export class MockOrganizationsRepository extends MockEntityRepository<Organizati
 			},
 			settings: {
 				valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
+				currency: 'USD',
 			},
 			acls: [
 				{

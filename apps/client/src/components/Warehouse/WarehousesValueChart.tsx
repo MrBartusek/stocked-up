@@ -26,14 +26,14 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 		filteredWarehouses.sort((a, b) => b.totalValue - a.totalValue);
 
 		const mappedValues = [...filteredWarehouses].map((w) => ({
-			name: `${w.name} (${Utils.humanizeCurrency(w.totalValue, organization.currency)})`,
+			name: `${w.name} (${Utils.humanizeCurrency(w.totalValue, organization.settings.currency)})`,
 			value: w.totalValue,
 		}));
 		return mappedValues;
 	}
 
 	const data = useMemo(prepareChartData, [
-		organization.currency,
+		organization.settings.currency,
 		organization.stats.totalValue,
 		warehouses,
 	]);
@@ -68,7 +68,7 @@ function WarehousesValueChart({ organization }: WarehousesValueChartProps) {
 							<Label
 								value={`${Utils.humanizeCurrency(
 									organization.stats.totalValue,
-									organization.currency,
+									organization.settings.currency,
 								)}`}
 								position="center"
 							/>

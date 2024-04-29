@@ -29,7 +29,7 @@ function OrganizationDetailsTab() {
 					properties={{
 						name: organization?.name,
 						'internal ID': <code>{organization?.id}</code>,
-						currency: organization?.currency,
+						currency: organization?.settings.currency,
 						warehouses: organization?.warehouses.length,
 						'total value': <Currency>{organization?.stats.totalValue}</Currency>,
 					}}
