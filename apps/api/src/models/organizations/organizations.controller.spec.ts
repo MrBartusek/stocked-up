@@ -11,6 +11,7 @@ import { OrganizationsAclService } from './organizations-acl.service';
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 import { OrgValueCalculationStrategy } from './schemas/org-settings';
+import { HasAdminAccessPipe } from '../../security/pipes/has-admin-access.pipe';
 
 describe('OrganizationsController', () => {
 	let controller: OrganizationsController;
@@ -57,6 +58,8 @@ describe('OrganizationsController', () => {
 			.overridePipe(HasOrganizationAccessPipe)
 			.useValue(MockSecurityPipe)
 			.overridePipe(HasOwnerAccessPipe)
+			.useValue(MockSecurityPipe)
+			.overridePipe(HasAdminAccessPipe)
 			.useValue(MockSecurityPipe)
 			.compile();
 
