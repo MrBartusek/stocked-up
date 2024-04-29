@@ -7,7 +7,7 @@ import useUserRole from '../../../hooks/useUserRole';
 
 function OrganizationSettingsSidebar() {
 	const { id } = useParams();
-	const { role } = useUserRole(id);
+	const { role } = useUserRole(id!);
 
 	const baseUrl = `/dashboard/settings/${id}`;
 	const hasAdmin = role && SecurityUtils.isRoleEnough(role, 'admin');
