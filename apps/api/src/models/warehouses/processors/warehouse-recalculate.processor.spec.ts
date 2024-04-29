@@ -72,6 +72,7 @@ describe('WarehouseRecalculateProcessor', () => {
 			_id: orgId,
 			settings: {
 				valueCalculationStrategy: OrgValueCalculationStrategy.BuyPrice,
+				currency: 'USD',
 			},
 		};
 
