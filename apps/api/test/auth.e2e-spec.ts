@@ -8,7 +8,7 @@ describe('AuthController (e2e)', () => {
 	let app: NestExpressApplication;
 	let agent: request.SuperAgentTest;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule],
 		}).compile();
@@ -23,9 +23,13 @@ describe('AuthController (e2e)', () => {
 	it('/auth/register (POST)', async () => {
 		const payload = { username: 'test-user', email: 'test@dokurno.dev', password: 'Test123!' };
 
-		const test = await agent.post('/api/auth/register').send(payload).expect(200);
-
-		expect(test.body.email).toBe('test@dokurno.dev');
+		return agent
+			.post('/api/auth/register')
+			.send(payload)
+			.expect(200)
+			.then((res) => {
+				expect(res.body.email).toBe('test@dokurno.dev');
+			});
 	});
 
 	it('/auth/login (POST)', async () => {
@@ -36,5 +40,9 @@ describe('AuthController (e2e)', () => {
 			.send(payload)
 			.expect('set-cookie', /connect.sid/)
 			.expect(200);
+	});
+
+	it('/auth/logout (POST)', async () => {
+		return agent.post('/api/auth/logout').expect(200);
 	});
 });
