@@ -6,6 +6,7 @@ import { configureNestTestApp } from './configure-test-app';
 
 describe('AuthController (e2e)', () => {
 	let app: NestExpressApplication;
+	let agent: request.SuperAgentTest;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -15,15 +16,14 @@ describe('AuthController (e2e)', () => {
 		app = moduleFixture.createNestApplication<NestExpressApplication>();
 		configureNestTestApp(app);
 		await app.init();
+
+		agent = request.agent(app.getHttpServer());
 	});
 
 	it('/auth/register (POST)', async () => {
 		const payload = { username: 'test-user', email: 'test@dokurno.dev', password: 'Test123!' };
 
-		const test = await request(app.getHttpServer())
-			.post('/api/auth/register')
-			.send(payload)
-			.expect(200);
+		const test = await agent.post('/api/auth/register').send(payload).expect(200);
 
 		expect(test.body.email).toBe('test@dokurno.dev');
 	});
@@ -31,6 +31,10 @@ describe('AuthController (e2e)', () => {
 	it('/auth/login (POST)', async () => {
 		const payload = { username: 'test-user', password: 'Test123!' };
 
-		return request(app.getHttpServer()).post('/api/auth/login').send(payload).expect(200);
+		return agent
+			.post('/api/auth/login')
+			.send(payload)
+			.expect('set-cookie', /connect.sid/)
+			.expect(200);
 	});
 });
