@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import NestSetup from '../src/setup';
 import { setupTestUser } from './setup-user';
+import { UpdateUserDto } from '../src/models/users/dto/update-user.dto';
 
 describe('UsersController (e2e)', () => {
 	let app: NestExpressApplication;
@@ -23,8 +24,16 @@ describe('UsersController (e2e)', () => {
 	});
 
 	it('/users/me (GET)', async () => {
-		return agent.get('/api/users/me').then((res) => {
-			expect(res.body.email).toBe('test@dokurno.dev');
-		});
+		const res = await agent.get('/api/users/me');
+		expect(res.body.email).toBe('test@dokurno.dev');
+	});
+
+	it('/users (PUT)', async () => {
+		const dto: UpdateUserDto = {
+			username: 'updated-username',
+			image: { hasImage: false },
+		};
+		const res = await agent.put('/api/users').send(dto).expect(200);
+		expect(res.body.username).toBe('updated-username');
 	});
 });
