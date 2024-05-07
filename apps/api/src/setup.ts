@@ -24,7 +24,7 @@ export default class NestSetup {
 		this.configureNestApp(app);
 		this.setupSwagger(app);
 
-		await app.listen(port);
+		await app.listen(port || 3000);
 	}
 
 	static configureNestApp(app: NestExpressApplication): void {
