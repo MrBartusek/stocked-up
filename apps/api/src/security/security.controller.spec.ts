@@ -12,6 +12,7 @@ import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe'
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityController } from './security.controller';
 import { SecurityService } from './security.service';
+import { HasOwnerAccessPipe } from './pipes/has-owner-access.pipe';
 
 describe('SecurityController', () => {
 	let controller: SecurityController;
@@ -40,6 +41,8 @@ describe('SecurityController', () => {
 			.overridePipe(SecurityValidationPipe)
 			.useValue(MockSecurityPipe)
 			.overridePipe(HasOrganizationAccessPipe)
+			.useValue(MockSecurityPipe)
+			.overridePipe(HasOwnerAccessPipe)
 			.useValue(MockSecurityPipe)
 			.compile();
 
