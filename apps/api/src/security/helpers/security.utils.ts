@@ -18,7 +18,7 @@ export class SecurityUtils {
 			case OrganizationSecurityRole.MEMBER:
 				return 1;
 			default:
-				throw new TypeError(`Unknown ACL role: ${role}`);
+				return 0;
 		}
 	}
 }
