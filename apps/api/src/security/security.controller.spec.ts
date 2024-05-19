@@ -9,10 +9,10 @@ import { CreateSecurityRuleDto } from './dto/create-security-rule.dto';
 import { DeleteSecurityRuleDto } from './dto/delete-security-rule.dto';
 import { UpdateSecurityRuleDto } from './dto/update-security-rule.dto';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
+import { HasOwnerAccessPipe } from './pipes/has-owner-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityController } from './security.controller';
 import { SecurityService } from './security.service';
-import { HasOwnerAccessPipe } from './pipes/has-owner-access.pipe';
 
 describe('SecurityController', () => {
 	let controller: SecurityController;
@@ -23,6 +23,7 @@ describe('SecurityController', () => {
 		updateRule: jest.fn(),
 		deleteRule: jest.fn(),
 		paginateMembers: jest.fn(() => ({ meta: { page: 1 }, items: [] }) as PageDto<SecurityRuleDto>),
+		transferOwnership: jest.fn(),
 	};
 
 	const mockUserService = {
@@ -203,5 +204,14 @@ describe('SecurityController', () => {
 		const result = await controller.getMeRule(request, new Types.ObjectId());
 
 		expect(result.role).toBe(OrganizationSecurityRole.ADMIN);
+	});
+
+	it('should transfer ownership', async () => {
+		const organization = new Types.ObjectId();
+		const to = new Types.ObjectId();
+		const result = await controller.transfer(organization, { user: to.toString() });
+
+		expect(result.statusCode).toBe(200);
+		expect(mockSecurityService.transferOwnership).toBeCalledWith(organization, to);
 	});
 });

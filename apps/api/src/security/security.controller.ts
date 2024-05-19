@@ -119,7 +119,6 @@ export class SecurityController {
 		@Body() body: TransferOrganizationDto,
 	): Promise<any> {
 		const to = new Types.ObjectId(body.user);
-
 		await this.securityService.transferOwnership(org, to);
 		return { statusCode: 200 };
 	}
