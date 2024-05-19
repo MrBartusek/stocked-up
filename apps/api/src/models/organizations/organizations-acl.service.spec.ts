@@ -101,6 +101,18 @@ describe('OrganizationsAclService', () => {
 		expect(exist).toBe(true);
 	});
 
+	it('should check if org has owner', async () => {
+		const orgId = new Types.ObjectId();
+		const hasOwner = await service.hasOwner(orgId);
+		expect(hasOwner).toBe(true);
+	});
+
+	it('should get org owner', async () => {
+		const orgId = new Types.ObjectId();
+		const owner = await service.getOwner(orgId);
+		expect(owner).toEqual(expect.any(Types.ObjectId));
+	});
+
 	it('should paginate rules', async () => {
 		const rules = await service.paginateRules(new Types.ObjectId(), { page: 1 });
 

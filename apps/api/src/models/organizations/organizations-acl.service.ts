@@ -79,16 +79,25 @@ export class OrganizationsAclService {
 	}
 
 	/**
-	 * Checks does specified organization has a designated owner.
+	 * Get id of designated owner of organization, returns null if organization
+	 * has no designated owner.
 	 */
-	async hasOwner(organization: Types.ObjectId): Promise<boolean> {
+	async getOwner(organization: Types.ObjectId): Promise<Types.ObjectId> {
 		const allRules = await this.getAllRules(organization);
 		if (!allRules) {
 			throw new Error('Organization not found');
 		}
 
 		const rule = allRules.find((rule) => rule.role == OrganizationSecurityRole.OWNER);
-		return rule != undefined;
+		return rule ? rule.user : null;
+	}
+
+	/**
+	 * Checks does specified organization has a designated owner.
+	 */
+	async hasOwner(organization: Types.ObjectId): Promise<boolean> {
+		const owner = await this.getOwner(organization);
+		return owner != undefined;
 	}
 
 	/**
