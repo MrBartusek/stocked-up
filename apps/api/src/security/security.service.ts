@@ -43,7 +43,7 @@ export class SecurityService {
 	async transferOwnership(organization: Types.ObjectId, to: Types.ObjectId) {
 		const owner = await this.organizationAclService.getOwner(organization);
 
-		if (owner.equals(to)) {
+		if (owner && owner.equals(to)) {
 			throw new BadRequestException('Provided user is already owner of this organization');
 		}
 

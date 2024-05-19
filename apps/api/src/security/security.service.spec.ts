@@ -26,6 +26,7 @@ describe('SecurityService', () => {
 		updateRule: jest.fn(),
 		paginateRules: jest.fn(),
 		ruleExist: jest.fn(),
+		getOwner: jest.fn(),
 	};
 
 	beforeEach(async () => {
@@ -40,6 +41,10 @@ describe('SecurityService', () => {
 		}).compile();
 
 		service = module.get<SecurityService>(SecurityService);
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	it('should be defined', () => {
@@ -114,6 +119,41 @@ describe('SecurityService', () => {
 			await service.paginateMembers(organizationId, pageQueryDto);
 
 			expect(mockAclService.paginateRules).toHaveBeenCalledWith(organizationId, pageQueryDto);
+		});
+	});
+
+	describe('Ownership transfer', () => {
+		it('should transfer organization ownership', async () => {
+			const organization = new Types.ObjectId();
+			const user = new Types.ObjectId();
+
+			mockAclService.ruleExist.mockImplementation((org, target) => {
+				return organization.equals(org) && target.equals(user);
+			});
+
+			await service.transferOwnership(organization, user);
+
+			expect(mockAclService.updateRule).toBeCalledWith(
+				organization,
+				user,
+				OrganizationSecurityRole.OWNER,
+			);
+		});
+
+		it('should not transfer ownership to the same user', async () => {
+			const organization = new Types.ObjectId();
+			const user = new Types.ObjectId();
+			mockAclService.getOwner.mockResolvedValue(user);
+
+			expect(service.transferOwnership(organization, user)).rejects.toThrow(BadRequestException);
+		});
+
+		it('should not transfer ownership to the user that is not part of organization', async () => {
+			const organization = new Types.ObjectId();
+			const user = new Types.ObjectId();
+			mockAclService.ruleExist.mockResolvedValue(false);
+
+			expect(service.transferOwnership(organization, user)).rejects.toThrow(BadRequestException);
 		});
 	});
 });
