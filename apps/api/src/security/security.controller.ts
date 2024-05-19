@@ -30,6 +30,8 @@ import { SecurityUtils } from './helpers/security.utils';
 import { HasOrganizationAccessPipe } from './pipes/has-organization-access.pipe';
 import { SecurityValidationPipe } from './pipes/security-validation.pipe';
 import { SecurityService } from './security.service';
+import { HasOwnerAccessPipe } from './pipes/has-owner-access.pipe';
+import { TransferOrganizationDto } from './dto/transfer-organization.dto';
 
 @Controller('security')
 @ApiTags('security')
@@ -106,6 +108,19 @@ export class SecurityController {
 
 		await this.securityService.deleteRule(org, requester);
 
+		return { statusCode: 200 };
+	}
+
+	@Post(':org/transfer')
+	@ApiOperation({ summary: 'Transfer organization ownership to another user' })
+	@HttpCode(200)
+	async transfer(
+		@Param('org', ParseObjectIdPipe, HasOwnerAccessPipe) org: Types.ObjectId,
+		@Body() body: TransferOrganizationDto,
+	): Promise<any> {
+		const to = new Types.ObjectId(body.user);
+
+		await this.securityService.transferOwnership(org, to);
 		return { statusCode: 200 };
 	}
 

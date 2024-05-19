@@ -24,7 +24,11 @@ export class SecurityService {
 		return rule ? rule.role : null;
 	}
 
-	async addRule(org: Types.ObjectId, user: Types.ObjectId) {
+	async addRule(
+		org: Types.ObjectId,
+		user: Types.ObjectId,
+		role: OrganizationSecurityRole = OrganizationSecurityRole.MEMBER,
+	) {
 		const ruleExist = await this.ruleExist(org, user._id);
 		if (ruleExist) {
 			throw new BadRequestException('This user is already a member of this organization');
@@ -32,8 +36,37 @@ export class SecurityService {
 
 		return this.organizationAclService.addRule(org, {
 			user: user._id,
-			role: OrganizationSecurityRole.MEMBER,
+			role,
 		});
+	}
+
+	async transferOwnership(organization: Types.ObjectId, to: Types.ObjectId) {
+		const owner = await this.organizationAclService.getOwner(organization);
+
+		if (owner.equals(to)) {
+			throw new BadRequestException('Provided user is already owner of this organization');
+		}
+
+		const isTargetAnMember = await this.ruleExist(organization, to);
+		if (!isTargetAnMember) {
+			throw new BadRequestException('Provided user is not a part of this organization');
+		}
+
+		const role = await this.organizationAclService.updateRule(
+			organization,
+			to,
+			OrganizationSecurityRole.OWNER,
+		);
+
+		if (owner) {
+			await this.organizationAclService.updateRule(
+				organization,
+				owner,
+				OrganizationSecurityRole.ADMIN,
+			);
+		}
+
+		return role;
 	}
 
 	async updateRule(org: Types.ObjectId, user: Types.ObjectId, newRole: OrganizationSecurityRole) {

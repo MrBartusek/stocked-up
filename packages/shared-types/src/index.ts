@@ -36,6 +36,7 @@ import { ICreateWarehouseDto } from './warehouse/ICreateWarehouseDto';
 import { ICreateWarehouseInOrgDto } from './warehouse/ICreateWarehouseInOrgDto';
 import { IUpdateWarehouseDto } from './warehouse/IUpdateWarehouseDto';
 import { WarehouseDto } from './warehouse/WarehouseDto';
+import { ITransferOrganizationDto } from './organizations/ITransferOrganizationDto';
 
 export {
     BasicInventoryItemDto,
@@ -76,5 +77,6 @@ export {
     IUpdateEmailDto,
     IDeleteAccountDto,
     ApiKeyDto,
+    ITransferOrganizationDto,
 };
 
