@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import * as mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { PageQueryDto } from '../../dto/page-query.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
@@ -26,7 +26,7 @@ export class OrganizationsService {
 	}
 
 	async update(
-		id: mongoose.Types.ObjectId,
+		id: Types.ObjectId,
 		query: UpdateQuery<OrganizationDocument>,
 	): Promise<OrganizationDocument | null> {
 		const org = await this.organizationRepository.findOneByIdAndUpdate(id, { $set: query });
@@ -38,10 +38,7 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async updateSettings(
-		id: mongoose.Types.ObjectId,
-		settings: FilterQuery<OrgSettingsDocument | null>,
-	) {
+	async updateSettings(id: Types.ObjectId, settings: FilterQuery<OrgSettingsDocument | null>) {
 		const org = await this.organizationRepository.findOneByIdAndUpdate(id, {
 			$set: { settings: settings },
 		});
@@ -53,7 +50,7 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async delete(id: mongoose.Types.ObjectId): Promise<OrganizationDocument | null> {
+	async delete(id: Types.ObjectId): Promise<OrganizationDocument | null> {
 		const org = await this.organizationRepository.deleteOneById(id);
 
 		if (!org) return;
@@ -65,19 +62,19 @@ export class OrganizationsService {
 		return org;
 	}
 
-	async listAllForUser(id: mongoose.Types.ObjectId): Promise<OrganizationDocument[]> {
+	async listAllForUser(id: Types.ObjectId): Promise<OrganizationDocument[]> {
 		return this.organizationRepository.find({ 'acls.user': id });
 	}
 
-	async paginateAllForUser(id: mongoose.Types.ObjectId, pageQueryDto: PageQueryDto) {
+	async paginateAllForUser(id: Types.ObjectId, pageQueryDto: PageQueryDto) {
 		return this.organizationRepository.paginate({ 'acls.user': id }, pageQueryDto);
 	}
 
-	async findById(id: mongoose.Types.ObjectId): Promise<OrganizationDocument> {
+	async findById(id: Types.ObjectId): Promise<OrganizationDocument> {
 		return this.organizationRepository.findById(id);
 	}
 
-	async exist(id: mongoose.Types.ObjectId): Promise<boolean> {
+	async exist(id: Types.ObjectId): Promise<boolean> {
 		return this.organizationRepository.exist({ _id: id });
 	}
 
