@@ -1,8 +1,7 @@
-import { BsArrowRight, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import ActionButton from '../../ActionButton';
 import Dropdown from '../../Dropdown/Dropdown';
-import DropdownItem from '../../Dropdown/DropdownItem';
 import DropdownMenu from '../../Dropdown/DropdownMenu';
 import DropdownToggle from '../../Dropdown/DropdownToggle';
 import RemoveMemberOption from './RemoveMemberOption';

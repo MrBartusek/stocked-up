@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { IDeleteSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
 import useUserData from '../../../hooks/useUserData';
@@ -12,7 +13,6 @@ import ModalDialog, { ModalDialogProps } from '../../Modal/ModalDialog';
 import ModalHeader from '../../Modal/ModalHeader';
 import ModalTitle from '../../Modal/ModalTitle';
 import ModelFooter from '../../Modal/ModelFooter';
-import toast from 'react-hot-toast';
 
 export interface ConfirmMemberDeleteModalProps extends ModalDialogProps {
 	organization: OrganizationDto;

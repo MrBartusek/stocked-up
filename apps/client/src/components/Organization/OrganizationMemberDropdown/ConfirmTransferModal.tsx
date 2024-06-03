@@ -1,25 +1,19 @@
 import axios from 'axios';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { BsArrowRight } from 'react-icons/bs';
 import { useQueryClient } from 'react-query';
-import {
-	IDeleteSecurityRuleDto,
-	ITransferOrganizationDto,
-	OrganizationDto,
-	SecurityRuleDto,
-} from 'shared-types';
+import { ITransferOrganizationDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
 import useUserData from '../../../hooks/useUserData';
 import { Utils } from '../../../utils/utils';
-import Button from '../../Button';
 import Alert from '../../Helpers/Alert';
+import IconButton from '../../IconButton';
 import ModalBody from '../../Modal/ModalBody';
 import ModalCloseButton from '../../Modal/ModalCloseButton';
 import ModalDialog, { ModalDialogProps } from '../../Modal/ModalDialog';
 import ModalHeader from '../../Modal/ModalHeader';
 import ModalTitle from '../../Modal/ModalTitle';
 import ModelFooter from '../../Modal/ModelFooter';
-import { BsArrowRight } from 'react-icons/bs';
-import IconButton from '../../IconButton';
-import toast from 'react-hot-toast';
 
 export interface ConfirmTransferModalProps extends ModalDialogProps {
 	organization: OrganizationDto;

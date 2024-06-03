@@ -1,7 +1,7 @@
 import { OrganizationDto } from 'shared-types';
+import useUserRole from '../../hooks/useUserRole';
 import OrganizationDeleteButton from './OrganizationDeleteButton';
 import OrganizationLeaveButton from './OrganizationLeaveButton';
-import useUserRole from '../../hooks/useUserRole';
 
 export interface OrganizationDangerZoneProps {
 	organization: OrganizationDto;
