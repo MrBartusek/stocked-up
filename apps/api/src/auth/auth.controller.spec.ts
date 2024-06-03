@@ -10,6 +10,8 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { DeleteAccountDto } from './dto/delete-account.dto';
 import { UpdateEmailDto } from './dto/update-email.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
+import { NotOrgOwnerGuard } from '../models/users/guards/org-owner.guard';
+import { MockGuard } from '../mocks/mock.guard';
 
 describe('AuthController', () => {
 	let controller: AuthController;
@@ -51,6 +53,8 @@ describe('AuthController', () => {
 			.useValue(mockAuthService)
 			.overrideProvider(AuthEmailsService)
 			.useValue(mockAuthEmailService)
+			.overrideGuard(NotOrgOwnerGuard)
+			.useValue(MockGuard)
 			.compile();
 
 		controller = module.get<AuthController>(AuthController);
