@@ -15,7 +15,12 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { OrganizationDto, OrganizationSecurityRole, PageDto } from 'shared-types';
+import {
+	GenericResponseDto,
+	OrganizationDto,
+	OrganizationSecurityRole,
+	PageDto,
+} from 'shared-types';
 import { setTimeout } from 'timers/promises';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PageQueryDto } from '../../dto/page-query.dto';
@@ -85,6 +90,19 @@ export class OrganizationsController {
 			meta,
 			items: orgDTOs,
 		};
+	}
+
+	@Get('owner-check')
+	@ApiOperation({
+		summary: 'Check if authenticated user is owner of any organization',
+		description: 'This is mostly an internal check called when deleting user account',
+	})
+	async ownerCheck(@Req() request: Request): Promise<GenericResponseDto> {
+		const userId = new Types.ObjectId(request.user.id);
+		console.log(userId);
+		const response = await this.organizationsService.isUserOwnerOfAny(userId);
+
+		return { response };
 	}
 
 	@Put(':id')
