@@ -9,7 +9,7 @@ function useUserRole(organization: string) {
 	};
 
 	const { data, error, isLoading } = useQuery(
-		['security', organization, 'me'],
+		['organizations', 'owner-check'],
 		() => fetchSecurityRules(organization),
 		{
 			enabled: organization != undefined,
