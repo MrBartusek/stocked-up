@@ -21,6 +21,7 @@ function DropdownItem({
 	className,
 	active = false,
 	externalLink = false,
+	disabled,
 	...props
 }: DropdownItemProps) {
 	const iconElement = icon ? React.createElement(icon) : null;
@@ -31,9 +32,10 @@ function DropdownItem({
 				'flex w-full items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-150',
 				'justify-center',
 				{ 'bg-gray-150 text-primary': active },
+				{ '!text-gray-300 hover:bg-inherit': disabled },
 				className,
 			)}
-			disabled={active}
+			disabled={active || disabled}
 			{...props}
 		>
 			{iconElement}
