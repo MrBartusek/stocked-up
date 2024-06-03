@@ -6,7 +6,7 @@ import useUserRole from '../../../hooks/useUserRole';
 import { SecurityUtils } from '../../../utils/securityUtils';
 import { ActionButtonProps } from '../../ActionButton';
 import DropdownItem from '../../Dropdown/DropdownItem';
-import ConfirmMemberDeleteModal from '../ConfirmMemberDeleteModal';
+import ConfirmMemberDeleteModal from './ConfirmMemberDeleteModal';
 
 export interface RemoveMemberOptionProps extends Omit<ActionButtonProps, 'icon' | 'onClick'> {
 	organization: OrganizationDto;
