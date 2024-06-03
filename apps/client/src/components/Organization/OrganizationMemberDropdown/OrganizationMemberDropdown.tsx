@@ -6,6 +6,7 @@ import DropdownItem from '../../Dropdown/DropdownItem';
 import DropdownMenu from '../../Dropdown/DropdownMenu';
 import DropdownToggle from '../../Dropdown/DropdownToggle';
 import RemoveMemberOption from './RemoveMemberOption';
+import TransferOwnershipOption from './TransferOwnershipOption';
 
 export interface OrganizationMemberDropdownProps {
 	organization: OrganizationDto;
@@ -28,12 +29,10 @@ function OrganizationMemberDropdown({
 				/>
 			</DropdownToggle>
 			<DropdownMenu>
-				<DropdownItem
-					icon={BsArrowRight}
-					disabled={true}
-				>
-					Transfer Ownership
-				</DropdownItem>
+				<TransferOwnershipOption
+					organization={organization}
+					rule={rule}
+				/>
 				<RemoveMemberOption
 					organization={organization}
 					rule={rule}

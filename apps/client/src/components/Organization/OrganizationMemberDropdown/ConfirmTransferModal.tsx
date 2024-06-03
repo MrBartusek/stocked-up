@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { IDeleteSecurityRuleDto, OrganizationDto, SecurityRuleDto } from 'shared-types';
+import {
+	IDeleteSecurityRuleDto,
+	ITransferOrganizationDto,
+	OrganizationDto,
+	SecurityRuleDto,
+} from 'shared-types';
 import useUserData from '../../../hooks/useUserData';
 import { Utils } from '../../../utils/utils';
 import Button from '../../Button';
@@ -12,14 +17,16 @@ import ModalDialog, { ModalDialogProps } from '../../Modal/ModalDialog';
 import ModalHeader from '../../Modal/ModalHeader';
 import ModalTitle from '../../Modal/ModalTitle';
 import ModelFooter from '../../Modal/ModelFooter';
+import { BsArrowRight } from 'react-icons/bs';
+import IconButton from '../../IconButton';
 import toast from 'react-hot-toast';
 
-export interface ConfirmMemberDeleteModalProps extends ModalDialogProps {
+export interface ConfirmTransferModalProps extends ModalDialogProps {
 	organization: OrganizationDto;
 	rule: SecurityRuleDto;
 }
 
-function ConfirmMemberDeleteModal({ organization, rule, ...props }: ConfirmMemberDeleteModalProps) {
+function ConfirmTransferModal({ organization, rule, ...props }: ConfirmTransferModalProps) {
 	const { user } = useUserData(rule.user);
 	const queryClient = useQueryClient();
 
@@ -30,16 +37,12 @@ function ConfirmMemberDeleteModal({ organization, rule, ...props }: ConfirmMembe
 		setLoading(true);
 		setError(null);
 
-		const dto: IDeleteSecurityRuleDto = {
-			organization: organization.id,
-			user: rule.user,
-		};
-
+		const dto: ITransferOrganizationDto = { user: rule.user };
 		axios
-			.delete(`/api/security`, { data: dto })
+			.post(`/api/security/${organization.id}/transfer`, dto)
 			.then(() => {
 				queryClient.invalidateQueries(['security', organization.id]);
-				toast.success(`Removed ${user?.username} from organization`);
+				toast.success(`Transfered organization to ${user?.username}`);
 				if (!props.handleClose) return;
 				props.handleClose();
 			})
@@ -50,28 +53,28 @@ function ConfirmMemberDeleteModal({ organization, rule, ...props }: ConfirmMembe
 	return (
 		<ModalDialog {...props}>
 			<ModalHeader closeButton>
-				<ModalTitle>Confirm the action</ModalTitle>
+				<ModalTitle>Transfer organization ownership</ModalTitle>
 			</ModalHeader>
 
 			<ModalBody>
 				{error && <Alert>{error}</Alert>}
-				You are about to remove <span className="font-bold">{rule.role} access</span> from user{' '}
-				<span className="font-bold">{user?.username || '...'}</span> to{' '}
-				<span className="font-bold">{organization.name}</span> organization. They will immediately
-				lose access to all of the organization resources. Are you sure?
+				You are about to transfer ownership of this organization ({organization.name}) to{' '}
+				{user?.username || '...'}. You will immediately lose owner access, this action is not
+				reversible. Are you sure?
 			</ModalBody>
 
 			<ModelFooter>
-				<Button
+				<IconButton
+					icon={BsArrowRight}
 					variant="danger"
 					loading={loading}
 					onClick={handleClick}
 				>
-					Remove Member
-				</Button>
+					Transfer
+				</IconButton>
 				<ModalCloseButton />
 			</ModelFooter>
 		</ModalDialog>
 	);
 }
-export default ConfirmMemberDeleteModal;
+export default ConfirmTransferModal;
