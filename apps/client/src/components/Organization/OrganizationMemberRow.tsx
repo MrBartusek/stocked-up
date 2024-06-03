@@ -5,7 +5,7 @@ import useUser from '../../hooks/useUser';
 import useUserData from '../../hooks/useUserData';
 import RealtimeOrgRoleSelect from '../RealtimeOrgRoleSelect';
 import UserAvatar from '../UserAvatar';
-import DeleteMemberButton from './DeleteMemberButton';
+import OrganizationMemberDropdown from './OrganizationMemberDropdown/OrganizationMemberDropdown';
 
 export interface OrganizationMemberRow {
 	organization: OrganizationDto;
@@ -32,13 +32,13 @@ function OrganizationMemberRow({ organization, rule }: OrganizationMemberRow) {
 				</span>
 			</div>
 			<div className="flex gap-2">
-				<DeleteMemberButton
-					disabled={isOwnRow}
+				<RealtimeOrgRoleSelect
+					isDisabled={isOwnRow || !user}
 					organization={organization}
 					rule={rule}
 				/>
-				<RealtimeOrgRoleSelect
-					isDisabled={isOwnRow || !user}
+				<OrganizationMemberDropdown
+					disabled={isOwnRow || !user}
 					organization={organization}
 					rule={rule}
 				/>
