@@ -23,6 +23,7 @@ import { UpdateEmailDto } from './dto/update-email.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthGuard } from './guards/auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { NotOrgOwnerGuard } from '../models/users/guards/org-owner.guard';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -105,6 +106,7 @@ export class AuthController {
 	@Delete('delete')
 	@UseGuards(AuthGuard)
 	@UseGuards(NotDemoGuard)
+	@UseGuards(NotOrgOwnerGuard)
 	async deleteAccount(@Req() request: Request, @Body() dto: DeleteAccountDto) {
 		const userId = new Types.ObjectId(request.user.id);
 		const user = await this.authService.validateUserByUserId(userId, dto.password);

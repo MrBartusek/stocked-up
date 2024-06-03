@@ -13,7 +13,7 @@ import { InventoryItem, InventoryItemSchema } from './schemas/inventory-item.sch
 	imports: [
 		MongooseModuleHelper.forFeature(InventoryItem, InventoryItemSchema),
 		forwardRef(() => OrganizationResolverModule),
-		SecurityModule,
+		forwardRef(() => SecurityModule),
 	],
 	controllers: [InventoryController],
 	providers: [

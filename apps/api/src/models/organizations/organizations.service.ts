@@ -9,6 +9,7 @@ import { OrganizationUpdatedEvent } from './events/organization-updated.event';
 import { OrganizationRepository } from './organizations.repository';
 import { OrgSettingsDocument } from './schemas/org-settings';
 import { OrganizationDocument } from './schemas/organization.schema';
+import { OrganizationSecurityRole } from 'shared-types';
 
 @Injectable()
 export class OrganizationsService {
@@ -64,6 +65,16 @@ export class OrganizationsService {
 
 	async listAllForUser(id: Types.ObjectId): Promise<OrganizationDocument[]> {
 		return this.organizationRepository.find({ 'acls.user': id });
+	}
+
+	/**
+	 * Check if specified user is owner of any organization
+	 */
+	async isUserOwnerOfAny(id: Types.ObjectId): Promise<boolean> {
+		return this.organizationRepository.exist({
+			'acls.user': id,
+			'acls.role': OrganizationSecurityRole.OWNER,
+		});
 	}
 
 	async paginateAllForUser(id: Types.ObjectId, pageQueryDto: PageQueryDto) {

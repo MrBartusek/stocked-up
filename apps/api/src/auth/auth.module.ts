@@ -10,13 +10,15 @@ import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
 import { BearerStrategy } from './strategies/bearer.strategy';
 import { ApiKeysModule } from '../api-keys/api-keys.module';
+import { OrganizationsModule } from '../models/organizations/organizations.module';
 
 @Module({
 	imports: [
 		PassportModule.register({ session: true }),
 		ApiKeysModule,
-		UsersModule,
+		forwardRef(() => UsersModule),
 		forwardRef(() => AuthEmailsModule),
+		forwardRef(() => OrganizationsModule),
 	],
 	controllers: [AuthController],
 	providers: [

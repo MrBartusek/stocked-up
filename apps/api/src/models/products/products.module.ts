@@ -13,7 +13,7 @@ import { Product, ProductSchema } from './schemas/product.schema';
 	imports: [
 		MongooseModuleHelper.forFeature(Product, ProductSchema),
 		forwardRef(() => OrganizationResolverModule),
-		SecurityModule,
+		forwardRef(() => SecurityModule),
 		ImagesModule,
 	],
 	controllers: [ProductsController],
