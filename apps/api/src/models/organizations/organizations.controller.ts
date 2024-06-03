@@ -99,9 +99,7 @@ export class OrganizationsController {
 	})
 	async ownerCheck(@Req() request: Request): Promise<GenericResponseDto> {
 		const userId = new Types.ObjectId(request.user.id);
-		console.log(userId);
 		const response = await this.organizationsService.isUserOwnerOfAny(userId);
-
 		return { response };
 	}
 
