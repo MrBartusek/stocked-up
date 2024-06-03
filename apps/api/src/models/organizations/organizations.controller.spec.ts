@@ -36,6 +36,7 @@ describe('OrganizationsController', () => {
 				settings: dto,
 			};
 		}),
+		isUserOwnerOfAny: jest.fn(() => true),
 	};
 
 	const mockAclService = {
@@ -108,6 +109,12 @@ describe('OrganizationsController', () => {
 				name: 'test-name',
 			}),
 		);
+	});
+
+	it('should check is user owner of any org', async () => {
+		const result = await controller.ownerCheck(mockUserRequest);
+
+		expect(result.response).toBe(true);
 	});
 
 	it('should update organization', async () => {

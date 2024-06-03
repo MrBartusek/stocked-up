@@ -78,6 +78,11 @@ describe('OrganizationsService', () => {
 		expect(taken).toBe(true);
 	});
 
+	it('should check if user is owner of any org', async () => {
+		const result = await service.isUserOwnerOfAny(new Types.ObjectId());
+		expect(result).toBe(true);
+	});
+
 	it('should update organization settings', async () => {
 		const org = await service.updateSettings(new Types.ObjectId(), {
 			valueCalculationStrategy: OrgValueCalculationStrategy.SellPrice,
