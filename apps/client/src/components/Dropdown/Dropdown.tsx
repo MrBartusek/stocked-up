@@ -36,7 +36,11 @@ function Dropdown({ children }: DropdownProps) {
 	});
 
 	const click = useClick(context);
-	const dismiss = useDismiss(context, { ancestorScroll: true });
+	const dismiss = useDismiss(context, {
+		ancestorScroll: true,
+		bubbles: true,
+		referencePress: true,
+	});
 
 	const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss]);
 
