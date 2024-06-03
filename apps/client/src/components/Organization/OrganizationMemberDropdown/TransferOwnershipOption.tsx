@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { BsArrowRight } from 'react-icons/bs';
-import { OrganizationDto, OrganizationSecurityRole, SecurityRuleDto } from 'shared-types';
+import { OrganizationDto, SecurityRuleDto } from 'shared-types';
 import useUserRole from '../../../hooks/useUserRole';
 import { ActionButtonProps } from '../../ActionButton';
 import DropdownItem from '../../Dropdown/DropdownItem';
@@ -16,7 +16,7 @@ function TransferOwnershipOption({ rule, organization, ...props }: TransferOwner
 	const [open, setOpen] = useState(false);
 
 	const { role } = useUserRole(organization.id);
-	const isOwner = role == OrganizationSecurityRole.OWNER;
+	const isOwner = role == 'owner';
 
 	return (
 		<>
