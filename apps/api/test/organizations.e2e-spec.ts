@@ -33,7 +33,7 @@ describe('OrganizationsController (e2e)', () => {
 			name: 'test-org',
 			warehouse: {
 				name: 'test-warehouse',
-				address: 'test-adress',
+				address: 'test-address',
 			},
 		};
 		const res = await agent.post('/api/organizations').send(dto).expect(201);
